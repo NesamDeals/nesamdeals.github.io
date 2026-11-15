@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nesam Deals</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#002C9D">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@600;700;800&family=Hind+Madurai:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&family=Noto+Sans+Gurmukhi:wght@400;600;700&family=Noto+Sans+Oriya:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout idea: royal-blue brand header (from the logo), yellow action buttons, red discount tags, swipeable photo cards in a day-grouped feed. */
+  --hdr:#002C9D; --hdr-ink:#FFFFFF;
+  --ink:#141B3A; --muted:#5B6385; --bg:#F2F5FC; --card:#FFFFFF; --line:#DFE4F2; --chip:#E6EBF8;
+  --brand:#1546C6; --accent:#FFC20E; --accent-ink:#14213D; --hot:#D81E2D; --save:#0A8A5F;
+  --shadow:0 1px 2px rgba(20,27,58,.06),0 8px 22px rgba(20,27,58,.08);
+  --display:'Baloo Thambi 2','Noto Sans Devanagari','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Malayalam','Noto Sans Bengali','Noto Sans Gujarati','Noto Sans Gurmukhi','Noto Sans Oriya','Noto Naskh Arabic','Hind Madurai',system-ui,sans-serif;
+  --body:'Hind Madurai','Noto Sans Devanagari','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Malayalam','Noto Sans Bengali','Noto Sans Gujarati','Noto Sans Gurmukhi','Noto Sans Oriya','Noto Naskh Arabic',system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --hdr:#0A1F55; --ink:#EDF1FF; --muted:#9BA5C7; --bg:#0B1022; --card:#141B34; --line:#26304F; --chip:#1D2745;
+    --brand:#8CB3FF; --hot:#FF5468; --save:#34D399; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --hdr:#0A1F55; --ink:#EDF1FF; --muted:#9BA5C7; --bg:#0B1022; --card:#141B34; --line:#26304F; --chip:#1D2745;
+  --brand:#8CB3FF; --hot:#FF5468; --save:#34D399; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+
+/* header */
+.hdr{background:var(--hdr);color:var(--hdr-ink);position:sticky;top:0;z-index:20;padding:calc(10px + env(safe-area-inset-top)) 14px 11px}
+.hdr-in{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;text-align:left;min-width:0;color:inherit}
+.mark{width:40px;height:40px;border-radius:12px;background:var(--accent);display:grid;place-items:center;flex:none;overflow:hidden}
+.mark img{width:100%;height:100%;object-fit:cover;display:block}
+.bt{display:flex;flex-direction:column;min-width:0}
+.word{font-family:var(--display);font-weight:800;font-style:italic;font-size:24px;line-height:1.05;letter-spacing:-.2px}
+.word b{color:var(--accent);font-weight:800}
+.tag{font-size:12.5px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-r{display:flex;align-items:center;gap:8px;flex:none}
+.hdr select{height:40px;border-radius:12px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;padding:0 8px;font-size:14px;font-weight:600;max-width:112px}
+.hdr select option{color:#141B3A;background:#fff}
+.hbtn{width:40px;height:40px;border-radius:12px;border:1.5px solid rgba(255,255,255,.35);background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;cursor:pointer}
+
+.wrap{max-width:1040px;margin:0 auto;padding:14px 16px calc(96px + env(safe-area-inset-bottom))}
+.strip{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 14px;margin-bottom:12px}
+.strip strong{font-family:var(--display);font-size:22px;color:var(--brand);line-height:1}
+.strip span{color:var(--muted);font-size:14px}
+.demo{background:#FFF3C4;color:#5B4500;border-radius:12px;padding:8px 12px;font-size:14px;margin-bottom:12px}
+.slow{background:var(--chip);border-radius:12px;padding:8px 12px;font-size:14px;margin-bottom:12px;color:var(--muted)}
+.search{position:relative;margin-bottom:10px}
+.search input{width:100%;height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);padding:0 16px 0 44px;font-size:16px}
+.search svg{position:absolute;left:14px;top:13px;color:var(--muted)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:0 0 12px;scrollbar-width:none;align-items:center}
+.filters::-webkit-scrollbar{display:none}
+.filters select{flex:none;height:36px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);padding:0 12px;font-size:14px;font-weight:600}
+.join{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--hdr);color:#fff;border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.join b{font-family:var(--display);font-size:17px}
+.join a{background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none;border-radius:999px;padding:7px 14px;font-size:14px;margin-left:6px}
+
+/* feed + cards */
+.feed{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.day{grid-column:1/-1;font-family:var(--display);font-weight:700;font-size:18px;margin:8px 0 -2px;display:flex;align-items:center;gap:10px}
+.day::after{content:"";flex:1;height:1px;background:var(--line)}
+.day.star{color:var(--hot)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0}
+.media{position:relative;aspect-ratio:4/3;background:var(--chip)}
+.track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;height:100%}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;-webkit-user-drag:none}
+.off{position:absolute;left:10px;top:10px;background:var(--hot);color:#fff;font-weight:700;font-size:14px;padding:3px 10px;border-radius:999px;pointer-events:none}
+.flags{position:absolute;right:10px;top:10px;display:flex;gap:6px;pointer-events:none}
+.flag{background:rgba(20,27,58,.88);color:#fff;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px}
+.flag.loot{background:var(--hot)}
+.flag.star{background:var(--accent);color:var(--accent-ink)}
+.dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:5px;pointer-events:none}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.dots i.on{background:#fff;width:18px;border-radius:6px}
+.count{position:absolute;right:10px;bottom:8px;background:rgba(20,27,58,.78);color:#fff;font-size:12px;padding:1px 8px;border-radius:999px;pointer-events:none}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#141B3A;display:none;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.arrow.l{left:8px}.arrow.r{right:8px}
+@media (hover:hover){.media:hover .arrow{display:grid}}
+.ended{position:absolute;inset:0;background:rgba(11,16,34,.66);color:#fff;display:grid;place-items:center;font-family:var(--display);font-size:22px;font-weight:700;pointer-events:none;text-align:center;padding:12px}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meta{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.title{margin:0;font-size:17px;font-weight:700;line-height:1.35;text-wrap:balance;overflow-wrap:anywhere}
+.price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.now{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.now.offer{font-size:20px;color:var(--hot)}
+.was{color:var(--muted);text-decoration:line-through;font-variant-numeric:tabular-nums}
+.saving{color:var(--save);font-weight:700;font-size:14px}
+.extra{background:color-mix(in srgb,var(--save) 14%,transparent);color:var(--save);font-weight:700;font-size:14px;border-radius:10px;padding:5px 10px}
+.coupon{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px dashed var(--brand);border-radius:12px;padding:6px 6px 6px 12px}
+.coupon small{display:block;color:var(--muted);font-size:12px;line-height:1.1}
+.coupon code{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:16px;letter-spacing:.5px;user-select:all;overflow-wrap:anywhere}
+.coupon button{height:36px;border-radius:9px;border:0;background:var(--brand);color:#fff;font-weight:700;padding:0 14px;cursor:pointer;flex:none}
+.timer{font-size:13px;font-weight:700;color:var(--hot)}
+.checked{font-size:12.5px;color:var(--muted)}
+.desc{margin:0;color:var(--muted);font-size:15px;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.desc.open{display:block}
+.more{align-self:flex-start;background:none;border:0;padding:0;color:var(--brand);font-weight:700;cursor:pointer;font-size:14px}
+.actions{display:flex;gap:8px;margin-top:auto;padding-top:4px}
+.buy{flex:1;display:inline-flex;align-items:center;justify-content:center;height:46px;border-radius:13px;background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none;font-size:16px;text-align:center;padding:0 10px}
+.buy[aria-disabled="true"]{background:var(--chip);color:var(--muted);pointer-events:none}
+.ico{width:46px;height:46px;flex:none;border-radius:13px;border:1.5px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;text-decoration:none}
+.ico[aria-pressed="true"]{color:var(--hot);border-color:var(--hot)}
+.empty{grid-column:1/-1;text-align:center;padding:42px 18px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:18px}
+.empty b{display:block;font-family:var(--display);font-size:20px;color:var(--ink);margin-bottom:4px}
+.moreb{grid-column:1/-1;justify-self:center;height:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);padding:0 22px;font-weight:700;cursor:pointer}
+.back{display:inline-flex;align-items:center;height:42px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);padding:0 16px;font-weight:700;cursor:pointer;margin-bottom:12px}
+.foot{max-width:1040px;margin:26px auto 0;color:var(--muted);font-size:13px;line-height:1.6}
+.foot p{margin:0 0 6px}
+
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);z-index:25;padding-bottom:env(safe-area-inset-bottom)}
+.nav-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.nav button{background:none;border:0;padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;min-height:56px}
+.nav button[aria-current="page"]{color:var(--brand)}
+.badge{background:var(--hot);color:#fff;border-radius:999px;font-size:11px;padding:0 6px;margin-left:4px}
+
+.ptitle{font-family:var(--display);font-size:22px;margin:4px 0 4px;line-height:1.25}
+.catgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,160px),1fr))}
+.cattile{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 14px 14px 20px;cursor:pointer;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;overflow:hidden;box-shadow:var(--shadow)}
+.cattile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--cc,var(--brand))}
+.cattile b{font-family:var(--display);font-size:18px;line-height:1.25}
+.cattile span{color:var(--muted);font-size:13px}
+.cattile.zero{opacity:.55}
+.catbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.catbar h2{font-family:var(--display);margin:0;font-size:22px}
+.catbar .back{margin:0}
+.social{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;text-decoration:none;margin-bottom:10px;box-shadow:var(--shadow);max-width:560px}
+.sb{width:46px;height:46px;border-radius:14px;color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;flex:none;font-family:var(--display)}
+.sn{flex:1;min-width:0;display:flex;flex-direction:column;overflow-wrap:anywhere}
+.sn small{color:var(--muted)}
+.go2{color:var(--brand);font-weight:700;font-size:14px;flex:none}
+.srow{border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.srow input,.srow select{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:16px;width:100%;min-height:44px;min-width:0}
+.srow button{align-self:flex-end;min-height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:600;padding:0 12px;cursor:pointer}
+.lb{position:fixed;inset:0;background:rgba(5,8,20,.94);z-index:50;display:flex;flex-direction:column}
+.lb .track{flex:1}
+.lb .slide{display:grid;place-items:center;height:100%}
+.lb .slide img{width:100%;height:100%;object-fit:contain;cursor:default}
+.lb-top{display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 14px 8px;color:#fff}
+.lb-top button{width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:22px;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--hdr);color:#fff;padding:10px 16px;border-radius:12px;z-index:60;font-size:14px;max-width:90%}
+
+/* seller studio (admin only) */
+.sbar{background:var(--hdr);color:#fff;border-radius:16px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sbar b{font-family:var(--display);font-size:19px}
+.sbar button{height:40px;border-radius:12px;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:0 14px;cursor:pointer}
+.stabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto}
+.stabs button{flex:1;min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font-weight:700;cursor:pointer;white-space:nowrap;padding:0 12px}
+.stabs button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;max-width:680px}
+.panel h2{font-family:var(--display);margin:0 0 12px;font-size:21px}
+.fld{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.fld label,.lbl{font-size:14px;font-weight:700}
+.fld input,.fld select,.fld textarea{min-width:0;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;font-size:16px;width:100%;min-height:44px}
+.fld textarea{min-height:120px;resize:vertical}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.hint{font-size:13px;color:var(--muted)}
+.err{color:var(--hot);font-size:14px;font-weight:700;margin:0 0 10px}
+.ok{color:var(--save);font-size:14px;font-weight:700;margin:0 0 10px}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.ph{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--chip)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .x{position:absolute;right:4px;top:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;cursor:pointer;font-size:16px;line-height:1}
+.ph .first{position:absolute;left:4px;bottom:4px;border:0;background:rgba(0,0,0,.7);color:#fff;border-radius:8px;font-size:12px;padding:2px 7px;cursor:pointer}
+.ph .cov{position:absolute;left:4px;bottom:4px;background:var(--accent);color:var(--accent-ink);border-radius:8px;font-size:12px;font-weight:700;padding:2px 7px}
+.addph{aspect-ratio:1;border-radius:12px;border:2px dashed var(--line);background:var(--bg);display:grid;place-items:center;text-align:center;cursor:pointer;font-weight:700;color:var(--brand);font-size:14px}
+.addph input{display:none}
+.chk{display:flex;gap:10px;align-items:center;font-weight:600;min-height:44px}
+.chk input{width:22px;height:22px}
+.btns{display:flex;gap:10px;margin-top:8px}
+.btns button{flex:1;height:48px;border-radius:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:var(--card)}
+.btns .go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btns button[disabled]{opacity:.55;cursor:progress}
+.lst{display:flex;flex-direction:column;gap:10px;max-width:760px}
+.row{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px}
+.row img{width:76px;height:76px;border-radius:12px;object-fit:cover;flex:none;background:var(--chip)}
+.row .info{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.row .t{font-weight:700;overflow-wrap:anywhere;line-height:1.3}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tg{font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--chip)}
+.tg.r{background:var(--hot);color:#fff}.tg.g{background:var(--save);color:#fff}.tg.y{background:var(--accent);color:var(--accent-ink)}
+.racts{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.racts button{min-height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:13px;padding:0 10px;cursor:pointer}
+.racts .del[data-arm="1"]{background:var(--hot);border-color:var(--hot);color:#fff}
+.logoprev{width:72px;height:72px;border-radius:16px;background:var(--accent);object-fit:cover;display:block}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-2px)}.track{scroll-behavior:smooth}}
+/* ===== v3 polish: friendlier colours, bigger touch targets, price zones, admin dashboard ===== */
+body{font-size:17px}
+.hdr{background:linear-gradient(120deg,var(--hdr),color-mix(in srgb,var(--hdr) 55%,var(--brand)));box-shadow:0 3px 14px rgba(0,0,0,.22)}
+.word{font-size:25px}
+.tag{font-size:13px}
+.strip{background:linear-gradient(120deg,color-mix(in srgb,var(--brand) 12%,var(--card)),var(--card));border-color:color-mix(in srgb,var(--brand) 25%,var(--line))}
+.card{border-radius:20px;border-color:color-mix(in srgb,var(--brand) 10%,var(--line))}
+.title{font-size:18px}
+.now{color:var(--save);font-size:28px}
+.now.offer{color:var(--hot)}
+.off{background:linear-gradient(135deg,#FF3D54,#D81E2D);font-size:15px;padding:4px 11px;box-shadow:0 2px 8px rgba(216,30,45,.4)}
+.buy{height:50px;font-size:17px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 80%,#fff),var(--accent));box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 60%,#000),0 6px 14px rgba(0,0,0,.14);border-radius:14px}
+.buy:active{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.buy[aria-disabled="true"]{box-shadow:none;background:var(--chip)}
+.ico{height:50px;width:50px;border-radius:14px}
+.ico.wa{color:#1FA855;border-color:#1FA855}
+.chip{min-height:40px;font-size:15px}
+.chip[aria-pressed="true"]{box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.meta{gap:8px}
+.cbadge{display:inline-flex;align-items:center;gap:4px;max-width:100%;border:0;border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:700;cursor:pointer;color:#fff;background:var(--cc,var(--brand));text-align:start;line-height:1.3;font-family:inherit}
+span.cbadge{cursor:default}
+.ann{display:block;background:linear-gradient(120deg,#FF8A00,#D81E2D);color:#fff;text-decoration:none;font-weight:700;border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:15.5px}
+.zones{margin-bottom:8px}
+.zt{font-family:var(--display);font-weight:700;font-size:17px;margin:2px 0 8px}
+.zrow{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}
+.zrow::-webkit-scrollbar{display:none}
+.zone{flex:none;min-width:116px;border:0;border-radius:18px;padding:10px 12px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:start;background:linear-gradient(145deg,var(--zc),color-mix(in srgb,var(--zc) 60%,#000));box-shadow:0 4px 12px color-mix(in srgb,var(--zc) 40%,transparent);font-family:inherit}
+.zone .ze{font-size:22px;line-height:1}
+.zone b{font-family:var(--display);font-size:17px;line-height:1.2;white-space:nowrap}
+.zone small{opacity:.9;font-size:12px}
+.zone[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:2px}
+.cattile{border-radius:18px;min-height:104px;padding:14px 14px 14px 22px;background:linear-gradient(135deg,var(--card),color-mix(in srgb,var(--cc) 10%,var(--card)))}
+.cattile::before{width:8px}
+.cattile .ce{font-size:30px;line-height:1}
+.nav button{font-size:13px}
+.nav button[aria-current="page"]{color:var(--brand);font-weight:700}
+.nav button[aria-current="page"] svg{transform:scale(1.12)}
+.about{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px;max-width:560px;white-space:pre-line}
+/* admin */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px;max-width:760px}
+.stat{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--sc);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column}
+.stat b{font-family:var(--display);font-size:28px;line-height:1.1;color:var(--sc)}
+.stat span{font-size:13px;color:var(--muted)}
+.bar{display:grid;grid-template-columns:minmax(120px,170px) 1fr 34px;align-items:center;gap:8px;margin:6px 0;font-size:14px}
+.bar i{display:block;height:12px;border-radius:6px}
+.bar b{text-align:end}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pk{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-weight:600;font-size:14.5px;cursor:pointer;min-height:40px}
+.pk[aria-pressed="true"]{background:var(--cc,var(--brand));border-color:var(--cc,var(--brand));color:#fff}
+.pk.sub{font-size:13.5px;min-height:36px}
+.prev{margin-top:8px;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.zh{margin:-4px 0 10px;color:var(--save);font-weight:700}
+.sws{display:flex;flex-wrap:wrap;gap:10px}
+.sw{width:84px;height:62px;border-radius:14px;border:3px solid transparent;cursor:pointer;display:flex;align-items:flex-end;padding:0}
+.sw small{display:block;width:100%;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:2px 4px;border-radius:0 0 10px 10px;text-align:center}
+.sw[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--accent)}
+.hidl{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 12px}
+.stabs{flex-wrap:wrap}
+.stabs button{font-size:15px;flex:1 1 auto}
+.fld input[type=checkbox]{width:22px;min-height:22px;height:22px}
+.vidbtn{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:42px;border-radius:12px;border:2px solid var(--hot);background:color-mix(in srgb,var(--hot) 8%,var(--card));color:var(--hot);font-weight:700;font-size:15px;padding:0 14px;cursor:pointer;font-family:inherit}
+.vframe{flex:1;display:grid;place-items:center;padding:0 0 calc(12px + env(safe-area-inset-bottom))}
+.vframe iframe{width:100%;max-width:520px;height:min(80vh,calc(100vw*1.6));border:0;background:#000}
+/* right-to-left (Urdu) */
+[dir=rtl] .search svg{left:auto;right:14px}
+[dir=rtl] .search input{padding:0 44px 0 16px}
+[dir=rtl] .cattile{padding:14px 22px 14px 14px}
+[dir=rtl] .cattile::before{left:auto;right:0}
+[dir=rtl] .off{left:auto;right:10px}
+[dir=rtl] .flags{right:auto;left:10px}
+.media,.lb .track{direction:ltr}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <button class="brand" id="brand" aria-label="Nesam Deals">
+      <span class="mark" id="mark" aria-hidden="true"></span>
+      <span class="bt"><span class="word" id="word">Nesam <b>Deals</b></span><span class="tag" id="tagline"></span></span>
+    </button>
+    <div class="hdr-r">
+      <select id="lang" aria-label="Language"></select>
+      <button class="hbtn" id="sellerBtn" hidden aria-label="Seller studio">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M9 20v-6h6v6"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="shop">
+  <div id="banners"></div>
+  <div id="focus" hidden></div>
+  <div id="browse">
+    <div class="strip" id="strip"></div>
+    <div id="joinhost"></div>
+    <div id="zones" class="zones"></div>
+    <div id="catbar" class="catbar" hidden></div>
+    <div class="search" id="searchbox">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off">
+    </div>
+    <div class="chips" id="chips" role="group"></div>
+    <div class="filters" id="filters"></div>
+    <div class="feed" id="feed" aria-live="polite"></div>
+    <div class="catgrid" id="catgrid" hidden></div>
+    <div id="followview" hidden></div>
+  </div>
+  <footer class="foot">
+    <p id="disc1"></p><p id="disc2"></p><p id="disc3" hidden>As an Amazon Associate I earn from qualifying purchases.</p>
+  </footer>
+</main>
+
+<main class="wrap" id="seller" hidden></main>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <button id="tab-home" aria-current="page">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
+      <span id="nav-home"></span>
+    </button>
+    <button id="tab-cats">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+      <span id="nav-cats"></span>
+    </button>
+    <button id="tab-saved">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 0 0-7.4 7.4L12 21.8l8.8-8.8a5.2 5.2 0 0 0 0-7.4Z"/></svg>
+      <span><span id="nav-saved"></span><b class="badge" id="savedcount" hidden></b></span>
+    </button>
+    <button id="tab-follow">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      <span id="nav-follow"></span>
+    </button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  /* ============ translations (customer side) ============ */
+  var T={
+    en:{tagline:"What's the deal today?",search:'Search deals (e.g. earbuds, kurti)',all:'All',isNew:'NEW',loot:'LOOT',off:'{n}% OFF',saveAmt:'Save {x}',buy:'Get this deal →',share:'Share on WhatsApp',save:'Save',unsave:'Remove from saved',more:'Read more',less:'Show less',ended:'Deal ended',today:"Today's deals",yesterday:"Yesterday's deals",dealsOf:'{d} deals',now:'just now',min:'{n} min ago',hr:'{n} hr ago',day:'{n} d ago',checked:'Price checked {t}',stripNew:'new deals today',stripLast:'last added {t}',emptyNoneT:'No deals yet today',emptyNoneS:'Check back in a little while.',emptySearchT:'No deals match this search',emptySearchS:'Try another word or category.',emptySavedT:'Nothing saved yet',emptySavedS:'Tap the heart on a deal you like.',loading:'Loading deals…',loadingS:'One moment',slow:'Deals are taking a while. Check your connection.',failed:"Couldn't load deals. Reopen the page.",pinned:'Deal of the day',coupon:'Coupon code',copy:'Copy',copied:'Code copied',endsIn:'{t} left',under:'Under ₹{n}',sortNew:'Newest first',sortOff:'Biggest discount',sortLow:'Lowest price',free:'FREE',joinT:'Get deals first on your phone',joinWA:'WhatsApp channel',joinTG:'Telegram',navDeals:'Deals',navSaved:'Saved',backAll:'See all deals',sample:'Sample deal',noLink:'Link not added',moreDeals:'Show more deals',notFound:'This deal is not available.',discGen:'Nesam Deals is an affiliate deals app. If you buy through links here, we may earn a small commission at no extra cost to you.',discPrice:'Prices and stock can change anytime. Please check the price on the next page before you buy.',hh:'h',mm:'m',
+      navCats:'Categories',navFollow:'Follow',catsTitle:'Shop by category',dealsN:'{n} deals',allSub:'All',followT:'Follow us for daily deals',followS:'Join a page below and never miss a deal.',noSocial:'Our pages will be added soon.',openSoc:'Open',cat:{Women:'Women',Men:'Men',Kids:'Kids',Electronics:'Electronics',Home:'Home & Kitchen',Beauty:'Beauty & Health',Accessories:'Accessories',Grocery:'Grocery',Gifts:'Gifts',Digital:'Digital & Services',Others:'Others'}},
+    ta:{tagline:'இன்னைக்கு என்ன டீல்?',search:'டீல் தேடுங்க… (எ.கா. earbuds, kurti)',all:'எல்லாம்',isNew:'புதுசு',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} மிச்சம்',buy:'இந்த டீலை வாங்க →',share:'WhatsApp-ல பகிர்',save:'சேமி',unsave:'சேமிச்சதை நீக்கு',more:'முழுசா படிக்க',less:'குறைவா காட்டு',ended:'டீல் முடிஞ்சது',today:'இன்றைய டீல்ஸ்',yesterday:'நேற்றைய டீல்ஸ்',dealsOf:'{d} டீல்ஸ்',now:'இப்போ',min:'{n} நிமிடம் முன்',hr:'{n} மணி நேரம் முன்',day:'{n} நாள் முன்',checked:'{t} விலை சரிபார்த்தது',stripNew:'இன்னைக்கு புதிய டீல்ஸ்',stripLast:'கடைசியா {t}',emptyNoneT:'இன்னைக்கான டீல்ஸ் இன்னும் வரல',emptyNoneS:'கொஞ்ச நேரத்துல மறுபடி பாருங்க.',emptySearchT:'இந்த தேடலுக்கு டீல் இல்ல',emptySearchS:'வேற வார்த்தை அல்லது வகையை பாருங்க.',emptySavedT:'சேமிச்ச டீல் எதுவும் இல்ல',emptySavedS:'பிடிச்ச டீலோட இதய பட்டனை அழுத்துங்க.',loading:'டீல்ஸ் வருது…',loadingS:'ஒரு நிமிஷம்',slow:'டீல்ஸ் வர கொஞ்சம் நேரம் ஆகுது. இணைப்பை சரிபாருங்க.',failed:'டீல்ஸ் லோட் ஆகல. பக்கத்தை மறுபடி திறங்க.',pinned:'இன்றைய சிறப்பு டீல்',coupon:'கூப்பன் கோட்',copy:'காப்பி',copied:'கோட் காப்பி ஆச்சு',endsIn:'{t} மீதம்',under:'₹{n}-க்குள்',sortNew:'புதுசு முதல்ல',sortOff:'அதிக தள்ளுபடி',sortLow:'குறைந்த விலை',free:'இலவசம்',joinT:'டீல்ஸ் முதல்ல உங்க போன்ல',joinWA:'WhatsApp சேனல்',joinTG:'Telegram',navDeals:'டீல்ஸ்',navSaved:'சேமித்தவை',backAll:'எல்லா டீல்ஸும் பாரு',sample:'மாதிரி டீல்',noLink:'லிங்க் இல்ல',moreDeals:'இன்னும் டீல்ஸ் காட்டு',notFound:'இந்த டீல் இப்போ இல்ல.',discGen:'Nesam Deals ஒரு affiliate டீல்ஸ் ஆப். இங்க இருக்கற லிங்க்ஸ்ல இருந்து வாங்கினா, உங்க விலை கூடாம எங்களுக்கு சின்ன கமிஷன் கிடைக்கும்.',discPrice:'விலையும் ஸ்டாக்கும் எப்ப வேணா மாறலாம். வாங்கறதுக்கு முன்னாடி அடுத்த பக்கத்துல விலையை ஒரு தடவை பாருங்க.',hh:'மணி',mm:'நிமி',
+      navCats:'வகைகள்',navFollow:'பின்தொடர',catsTitle:'வகை வாரியா பாருங்க',dealsN:'{n} டீல்ஸ்',allSub:'எல்லாம்',followT:'தினமும் டீல்ஸ் வேணுமா? எங்களை பின்தொடருங்க',followS:'கீழ ஒரு பக்கத்துல சேருங்க, எந்த டீலும் மிஸ் ஆகாது.',noSocial:'எங்க பக்கங்கள் சீக்கிரம் வரும்.',openSoc:'திற',cat:{Women:'பெண்கள்',Men:'ஆண்கள்',Kids:'குழந்தைகள்',Electronics:'எலக்ட்ரானிக்ஸ்',Home:'வீடு & சமையலறை',Beauty:'அழகு & ஆரோக்கியம்',Accessories:'ஆக்சஸரீஸ்',Grocery:'மளிகை',Gifts:'பரிசுகள்',Digital:'டிஜிட்டல் & சேவைகள்',Others:'மற்றவை'}},
+    hi:{tagline:'आज का डील क्या है?',search:'डील खोजें (जैसे earbuds, kurti)',all:'सभी',isNew:'नया',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} की बचत',buy:'यह डील पाएं →',share:'WhatsApp पर शेयर करें',save:'सेव करें',unsave:'सेव से हटाएं',more:'पूरा पढ़ें',less:'कम दिखाएं',ended:'डील खत्म',today:'आज के डील',yesterday:'कल के डील',dealsOf:'{d} के डील',now:'अभी',min:'{n} मिनट पहले',hr:'{n} घंटे पहले',day:'{n} दिन पहले',checked:'कीमत {t} जांची गई',stripNew:'आज के नए डील',stripLast:'आखिरी {t}',emptyNoneT:'आज के डील अभी नहीं आए',emptyNoneS:'थोड़ी देर बाद फिर देखें।',emptySearchT:'इस खोज के लिए कोई डील नहीं',emptySearchS:'दूसरा शब्द या श्रेणी आज़माएं।',emptySavedT:'अभी कुछ सेव नहीं है',emptySavedS:'पसंद के डील पर दिल का बटन दबाएं।',loading:'डील आ रहे हैं…',loadingS:'एक पल',slow:'डील आने में समय लग रहा है। इंटरनेट जांचें।',failed:'डील लोड नहीं हुए। पेज दोबारा खोलें।',pinned:'आज का खास डील',coupon:'कूपन कोड',copy:'कॉपी',copied:'कोड कॉपी हो गया',endsIn:'{t} बाकी',under:'₹{n} से कम',sortNew:'सबसे नया',sortOff:'सबसे ज़्यादा छूट',sortLow:'सबसे कम कीमत',free:'मुफ़्त',joinT:'डील सबसे पहले अपने फोन पर पाएं',joinWA:'WhatsApp चैनल',joinTG:'Telegram',navDeals:'डील',navSaved:'सेव किए',backAll:'सभी डील देखें',sample:'नमूना डील',noLink:'लिंक नहीं है',moreDeals:'और डील दिखाएं',notFound:'यह डील अभी उपलब्ध नहीं है।',discGen:'Nesam Deals एक एफिलिएट डील ऐप है। यहां के लिंक से खरीदने पर हमें छोटा कमीशन मिल सकता है, आपकी कीमत नहीं बढ़ती।',discPrice:'कीमत और स्टॉक कभी भी बदल सकते हैं। खरीदने से पहले अगले पेज पर कीमत जांच लें।',hh:'घं',mm:'मि',
+      navCats:'श्रेणियां',navFollow:'फॉलो',catsTitle:'श्रेणी के अनुसार देखें',dealsN:'{n} डील',allSub:'सभी',followT:'रोज़ के डील के लिए हमें फॉलो करें',followS:'नीचे किसी पेज से जुड़ें, कोई डील मिस नहीं होगा।',noSocial:'हमारे पेज जल्द जोड़े जाएंगे।',openSoc:'खोलें',cat:{Women:'महिलाएं',Men:'पुरुष',Kids:'बच्चे',Electronics:'इलेक्ट्रॉनिक्स',Home:'घर और किचन',Beauty:'ब्यूटी और हेल्थ',Accessories:'एक्सेसरीज़',Grocery:'किराना',Gifts:'गिफ्ट',Digital:'डिजिटल और सेवाएं',Others:'अन्य'}},
+    te:{tagline:'ఈ రోజు డీల్ ఏంటి?',search:'డీల్స్ వెతకండి (ఉదా. earbuds, kurti)',all:'అన్నీ',isNew:'కొత్త',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} ఆదా',buy:'ఈ డీల్ పొందండి →',share:'WhatsApp లో షేర్ చేయండి',save:'సేవ్',unsave:'సేవ్ నుండి తీసివేయి',more:'పూర్తిగా చదవండి',less:'తక్కువ చూపించు',ended:'డీల్ ముగిసింది',today:'ఈ రోజు డీల్స్',yesterday:'నిన్నటి డీల్స్',dealsOf:'{d} డీల్స్',now:'ఇప్పుడే',min:'{n} నిమిషాల క్రితం',hr:'{n} గంటల క్రితం',day:'{n} రోజుల క్రితం',checked:'ధర {t} తనిఖీ చేశాం',stripNew:'ఈ రోజు కొత్త డీల్స్',stripLast:'చివరిది {t}',emptyNoneT:'ఈ రోజు డీల్స్ ఇంకా రాలేదు',emptyNoneS:'కొంచెం సేపటి తర్వాత మళ్లీ చూడండి.',emptySearchT:'ఈ శోధనకు డీల్స్ లేవు',emptySearchS:'మరొక పదం లేదా వర్గం ప్రయత్నించండి.',emptySavedT:'ఇంకా ఏమీ సేవ్ చేయలేదు',emptySavedS:'నచ్చిన డీల్‌పై గుండె బటన్ నొక్కండి.',loading:'డీల్స్ వస్తున్నాయి…',loadingS:'ఒక్క క్షణం',slow:'డీల్స్ రావడానికి సమయం పడుతోంది. ఇంటర్నెట్ చెక్ చేయండి.',failed:'డీల్స్ లోడ్ కాలేదు. పేజీని మళ్లీ తెరవండి.',pinned:'ఈ రోజు ప్రత్యేక డీల్',coupon:'కూపన్ కోడ్',copy:'కాపీ',copied:'కోడ్ కాపీ అయింది',endsIn:'{t} మిగిలింది',under:'₹{n} లోపు',sortNew:'కొత్తవి ముందు',sortOff:'ఎక్కువ తగ్గింపు',sortLow:'తక్కువ ధర',free:'ఉచితం',joinT:'డీల్స్ ముందుగా మీ ఫోన్‌లో',joinWA:'WhatsApp ఛానల్',joinTG:'Telegram',navDeals:'డీల్స్',navSaved:'సేవ్ చేసినవి',backAll:'అన్ని డీల్స్ చూడండి',sample:'నమూనా డీల్',noLink:'లింక్ లేదు',moreDeals:'మరిన్ని డీల్స్ చూపించు',notFound:'ఈ డీల్ ఇప్పుడు అందుబాటులో లేదు.',discGen:'Nesam Deals ఒక అఫిలియేట్ డీల్స్ యాప్. ఇక్కడి లింక్‌ల ద్వారా కొంటే మాకు చిన్న కమిషన్ రావచ్చు, మీ ధర పెరగదు.',discPrice:'ధర, స్టాక్ ఎప్పుడైనా మారవచ్చు. కొనే ముందు తదుపరి పేజీలో ధర చూసుకోండి.',hh:'గం',mm:'ని',
+      navCats:'వర్గాలు',navFollow:'ఫాలో',catsTitle:'వర్గాల వారీగా చూడండి',dealsN:'{n} డీల్స్',allSub:'అన్నీ',followT:'రోజూ డీల్స్ కోసం మమ్మల్ని ఫాలో అవ్వండి',followS:'కింద ఒక పేజీలో చేరండి, ఏ డీల్ మిస్ కాదు.',noSocial:'మా పేజీలు త్వరలో వస్తాయి.',openSoc:'తెరువు',cat:{Women:'మహిళలు',Men:'పురుషులు',Kids:'పిల్లలు',Electronics:'ఎలక్ట్రానిక్స్',Home:'ఇల్లు & వంటగది',Beauty:'బ్యూటీ & ఆరోగ్యం',Accessories:'యాక్సెసరీలు',Grocery:'కిరాణా',Gifts:'బహుమతులు',Digital:'డిజిటల్ & సేవలు',Others:'ఇతరాలు'}},
+    kn:{tagline:'ಇಂದಿನ ಡೀಲ್ ಏನು?',search:'ಡೀಲ್ ಹುಡುಕಿ (ಉದಾ. earbuds, kurti)',all:'ಎಲ್ಲಾ',isNew:'ಹೊಸದು',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} ಉಳಿತಾಯ',buy:'ಈ ಡೀಲ್ ಪಡೆಯಿರಿ →',share:'WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ',save:'ಉಳಿಸಿ',unsave:'ಉಳಿಸಿದ್ದನ್ನು ತೆಗೆಯಿರಿ',more:'ಪೂರ್ತಿ ಓದಿ',less:'ಕಡಿಮೆ ತೋರಿಸಿ',ended:'ಡೀಲ್ ಮುಗಿದಿದೆ',today:'ಇಂದಿನ ಡೀಲ್‌ಗಳು',yesterday:'ನಿನ್ನೆಯ ಡೀಲ್‌ಗಳು',dealsOf:'{d} ಡೀಲ್‌ಗಳು',now:'ಈಗಷ್ಟೇ',min:'{n} ನಿಮಿಷ ಹಿಂದೆ',hr:'{n} ಗಂಟೆ ಹಿಂದೆ',day:'{n} ದಿನ ಹಿಂದೆ',checked:'ಬೆಲೆ {t} ಪರಿಶೀಲಿಸಲಾಗಿದೆ',stripNew:'ಇಂದಿನ ಹೊಸ ಡೀಲ್‌ಗಳು',stripLast:'ಕೊನೆಯದು {t}',emptyNoneT:'ಇಂದಿನ ಡೀಲ್‌ಗಳು ಇನ್ನೂ ಬಂದಿಲ್ಲ',emptyNoneS:'ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ನೋಡಿ.',emptySearchT:'ಈ ಹುಡುಕಾಟಕ್ಕೆ ಡೀಲ್ ಇಲ್ಲ',emptySearchS:'ಬೇರೆ ಪದ ಅಥವಾ ವರ್ಗ ಪ್ರಯತ್ನಿಸಿ.',emptySavedT:'ಇನ್ನೂ ಏನೂ ಉಳಿಸಿಲ್ಲ',emptySavedS:'ಇಷ್ಟವಾದ ಡೀಲ್‌ನ ಹೃದಯ ಬಟನ್ ಒತ್ತಿ.',loading:'ಡೀಲ್‌ಗಳು ಬರುತ್ತಿವೆ…',loadingS:'ಒಂದು ಕ್ಷಣ',slow:'ಡೀಲ್‌ಗಳು ಬರಲು ಸಮಯ ಹಿಡಿಯುತ್ತಿದೆ. ಇಂಟರ್ನೆಟ್ ಪರಿಶೀಲಿಸಿ.',failed:'ಡೀಲ್‌ಗಳು ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಪುಟವನ್ನು ಮತ್ತೆ ತೆರೆಯಿರಿ.',pinned:'ಇಂದಿನ ವಿಶೇಷ ಡೀಲ್',coupon:'ಕೂಪನ್ ಕೋಡ್',copy:'ಕಾಪಿ',copied:'ಕೋಡ್ ಕಾಪಿ ಆಯಿತು',endsIn:'{t} ಬಾಕಿ',under:'₹{n} ಒಳಗೆ',sortNew:'ಹೊಸದು ಮೊದಲು',sortOff:'ಹೆಚ್ಚು ರಿಯಾಯಿತಿ',sortLow:'ಕಡಿಮೆ ಬೆಲೆ',free:'ಉಚಿತ',joinT:'ಡೀಲ್‌ಗಳು ಮೊದಲು ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ',joinWA:'WhatsApp ಚಾನೆಲ್',joinTG:'Telegram',navDeals:'ಡೀಲ್‌ಗಳು',navSaved:'ಉಳಿಸಿದವು',backAll:'ಎಲ್ಲಾ ಡೀಲ್‌ಗಳನ್ನು ನೋಡಿ',sample:'ಮಾದರಿ ಡೀಲ್',noLink:'ಲಿಂಕ್ ಇಲ್ಲ',moreDeals:'ಇನ್ನಷ್ಟು ಡೀಲ್‌ಗಳನ್ನು ತೋರಿಸಿ',notFound:'ಈ ಡೀಲ್ ಈಗ ಲಭ್ಯವಿಲ್ಲ.',discGen:'Nesam Deals ಒಂದು ಅಫಿಲಿಯೇಟ್ ಡೀಲ್ ಆ್ಯಪ್. ಇಲ್ಲಿನ ಲಿಂಕ್‌ಗಳ ಮೂಲಕ ಖರೀದಿಸಿದರೆ ನಮಗೆ ಸಣ್ಣ ಕಮಿಷನ್ ಸಿಗಬಹುದು, ನಿಮ್ಮ ಬೆಲೆ ಹೆಚ್ಚಾಗುವುದಿಲ್ಲ.',discPrice:'ಬೆಲೆ ಮತ್ತು ಸ್ಟಾಕ್ ಯಾವಾಗ ಬೇಕಾದರೂ ಬದಲಾಗಬಹುದು. ಖರೀದಿಸುವ ಮೊದಲು ಮುಂದಿನ ಪುಟದಲ್ಲಿ ಬೆಲೆ ನೋಡಿ.',hh:'ಗಂ',mm:'ನಿ',
+      navCats:'ವರ್ಗಗಳು',navFollow:'ಫಾಲೋ',catsTitle:'ವರ್ಗದ ಪ್ರಕಾರ ನೋಡಿ',dealsN:'{n} ಡೀಲ್‌ಗಳು',allSub:'ಎಲ್ಲಾ',followT:'ದಿನವೂ ಡೀಲ್‌ಗಳಿಗಾಗಿ ನಮ್ಮನ್ನು ಫಾಲೋ ಮಾಡಿ',followS:'ಕೆಳಗಿನ ಪುಟಕ್ಕೆ ಸೇರಿ, ಯಾವ ಡೀಲ್ ಕೂಡ ಮಿಸ್ ಆಗುವುದಿಲ್ಲ.',noSocial:'ನಮ್ಮ ಪುಟಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ.',openSoc:'ತೆರೆಯಿರಿ',cat:{Women:'ಮಹಿಳೆಯರು',Men:'ಪುರುಷರು',Kids:'ಮಕ್ಕಳು',Electronics:'ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್',Home:'ಮನೆ & ಅಡುಗೆಮನೆ',Beauty:'ಬ್ಯೂಟಿ & ಆರೋಗ್ಯ',Accessories:'ಪರಿಕರಗಳು',Grocery:'ದಿನಸಿ',Gifts:'ಉಡುಗೊರೆಗಳು',Digital:'ಡಿಜಿಟಲ್ & ಸೇವೆಗಳು',Others:'ಇತರೆ'}},
+    ml:{tagline:'ഇന്നത്തെ ഡീൽ എന്താണ്?',search:'ഡീൽ തിരയുക (ഉദാ. earbuds, kurti)',all:'എല്ലാം',isNew:'പുതിയത്',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} ലാഭം',buy:'ഈ ഡീൽ നേടുക →',share:'WhatsApp-ൽ പങ്കിടുക',save:'സേവ്',unsave:'സേവ് ചെയ്തത് നീക്കുക',more:'മുഴുവൻ വായിക്കുക',less:'കുറച്ച് കാണിക്കുക',ended:'ഡീൽ കഴിഞ്ഞു',today:'ഇന്നത്തെ ഡീലുകൾ',yesterday:'ഇന്നലത്തെ ഡീലുകൾ',dealsOf:'{d} ഡീലുകൾ',now:'ഇപ്പോൾ',min:'{n} മിനിറ്റ് മുമ്പ്',hr:'{n} മണിക്കൂർ മുമ്പ്',day:'{n} ദിവസം മുമ്പ്',checked:'വില {t} പരിശോധിച്ചു',stripNew:'ഇന്നത്തെ പുതിയ ഡീലുകൾ',stripLast:'അവസാനം {t}',emptyNoneT:'ഇന്നത്തെ ഡീലുകൾ ഇതുവരെ വന്നിട്ടില്ല',emptyNoneS:'കുറച്ച് കഴിഞ്ഞ് വീണ്ടും നോക്കൂ.',emptySearchT:'ഈ തിരയലിന് ഡീലുകൾ ഇല്ല',emptySearchS:'മറ്റൊരു വാക്കോ വിഭാഗമോ നോക്കൂ.',emptySavedT:'ഒന്നും സേവ് ചെയ്തിട്ടില്ല',emptySavedS:'ഇഷ്ടപ്പെട്ട ഡീലിലെ ഹൃദയ ബട്ടൺ അമർത്തുക.',loading:'ഡീലുകൾ വരുന്നു…',loadingS:'ഒരു നിമിഷം',slow:'ഡീലുകൾ വരാൻ സമയമെടുക്കുന്നു. ഇന്റർനെറ്റ് പരിശോധിക്കുക.',failed:'ഡീലുകൾ ലോഡ് ആയില്ല. പേജ് വീണ്ടും തുറക്കുക.',pinned:'ഇന്നത്തെ പ്രത്യേക ഡീൽ',coupon:'കൂപ്പൺ കോഡ്',copy:'കോപ്പി',copied:'കോഡ് കോപ്പി ചെയ്തു',endsIn:'{t} ബാക്കി',under:'₹{n}-ൽ താഴെ',sortNew:'പുതിയത് ആദ്യം',sortOff:'കൂടുതൽ കിഴിവ്',sortLow:'കുറഞ്ഞ വില',free:'സൗജന്യം',joinT:'ഡീലുകൾ ആദ്യം നിങ്ങളുടെ ഫോണിൽ',joinWA:'WhatsApp ചാനൽ',joinTG:'Telegram',navDeals:'ഡീലുകൾ',navSaved:'സേവ് ചെയ്തവ',backAll:'എല്ലാ ഡീലുകളും കാണുക',sample:'സാമ്പിൾ ഡീൽ',noLink:'ലിങ്ക് ഇല്ല',moreDeals:'കൂടുതൽ ഡീലുകൾ കാണിക്കുക',notFound:'ഈ ഡീൽ ഇപ്പോൾ ലഭ്യമല്ല.',discGen:'Nesam Deals ഒരു അഫിലിയേറ്റ് ഡീൽസ് ആപ്പാണ്. ഇവിടെയുള്ള ലിങ്കുകൾ വഴി വാങ്ങിയാൽ ഞങ്ങൾക്ക് ചെറിയ കമ്മീഷൻ ലഭിച്ചേക്കാം, നിങ്ങളുടെ വില കൂടില്ല.',discPrice:'വിലയും സ്റ്റോക്കും എപ്പോൾ വേണമെങ്കിലും മാറാം. വാങ്ങുന്നതിന് മുമ്പ് അടുത്ത പേജിൽ വില നോക്കുക.',hh:'മ',mm:'മി',
+      navCats:'വിഭാഗങ്ങൾ',navFollow:'ഫോളോ',catsTitle:'വിഭാഗം തിരിച്ച് കാണുക',dealsN:'{n} ഡീലുകൾ',allSub:'എല്ലാം',followT:'ദിവസവും ഡീലുകൾക്കായി ഞങ്ങളെ ഫോളോ ചെയ്യൂ',followS:'താഴെയുള്ള ഒരു പേജിൽ ചേരൂ, ഒരു ഡീലും മിസ്സാകില്ല.',noSocial:'ഞങ്ങളുടെ പേജുകൾ ഉടൻ വരും.',openSoc:'തുറക്കുക',cat:{Women:'സ്ത്രീകൾ',Men:'പുരുഷന്മാർ',Kids:'കുട്ടികൾ',Electronics:'ഇലക്ട്രോണിക്സ്',Home:'വീട് & അടുക്കള',Beauty:'ബ്യൂട്ടി & ആരോഗ്യം',Accessories:'ആക്സസറികൾ',Grocery:'പലചരക്ക്',Gifts:'സമ്മാനങ്ങൾ',Digital:'ഡിജിറ്റൽ & സേവനങ്ങൾ',Others:'മറ്റുള്ളവ'}}
+  };
+  /* ---- more Indian languages (customer side) ---- */
+  T.mr={tagline:'आजचा डील काय?',search:'डील शोधा (उदा. earbuds, kurti)',all:'सर्व',isNew:'नवीन',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} बचत',buy:'हा डील मिळवा →',share:'WhatsApp वर शेअर करा',save:'सेव्ह',unsave:'सेव्हमधून काढा',more:'पूर्ण वाचा',less:'कमी दाखवा',ended:'डील संपला',today:'आजचे डील',yesterday:'कालचे डील',dealsOf:'{d} चे डील',now:'आत्ता',min:'{n} मिनिटांपूर्वी',hr:'{n} तासांपूर्वी',day:'{n} दिवसांपूर्वी',checked:'किंमत {t} तपासली',stripNew:'आजचे नवे डील',stripLast:'शेवटचा {t}',emptyNoneT:'आजचे डील अजून आले नाहीत',emptyNoneS:'थोड्या वेळाने पुन्हा पहा.',emptySearchT:'या शोधासाठी डील नाही',emptySearchS:'दुसरा शब्द किंवा विभाग वापरून पहा.',emptySavedT:'अजून काही सेव्ह नाही',emptySavedS:'आवडत्या डीलवरील हृदय बटण दाबा.',loading:'डील येत आहेत…',loadingS:'एक क्षण',slow:'डील यायला वेळ लागत आहे. इंटरनेट तपासा.',failed:'डील लोड झाले नाहीत. पेज पुन्हा उघडा.',pinned:'आजचा खास डील',coupon:'कूपन कोड',copy:'कॉपी',copied:'कोड कॉपी झाला',endsIn:'{t} बाकी',under:'₹{n} पेक्षा कमी',over:'₹{n} च्या वर',zoneT:'किंमतीनुसार खरेदी',smpDesc:'हा फक्त एक नमुना डील आहे.',sortNew:'नवीन आधी',sortOff:'सर्वाधिक सूट',sortLow:'सर्वात कमी किंमत',free:'मोफत',joinT:'डील सर्वात आधी तुमच्या फोनवर',joinWA:'WhatsApp चॅनेल',joinTG:'Telegram',navDeals:'डील',navSaved:'सेव्ह केलेले',backAll:'सर्व डील पहा',sample:'नमुना डील',noLink:'लिंक नाही',moreDeals:'आणखी डील दाखवा',notFound:'हा डील आता उपलब्ध नाही.',discGen:'Nesam Deals हे एक अफिलिएट डील ॲप आहे. येथील लिंकवरून खरेदी केल्यास आम्हाला छोटे कमिशन मिळू शकते, तुमची किंमत वाढत नाही.',discPrice:'किंमत आणि स्टॉक कधीही बदलू शकतो. खरेदीपूर्वी पुढील पेजवर किंमत तपासा.',hh:'तास',mm:'मि',navCats:'विभाग',navFollow:'फॉलो',catsTitle:'विभागानुसार पहा',dealsN:'{n} डील',allSub:'सर्व',followT:'रोज डीलसाठी आम्हाला फॉलो करा',followS:'खालील एखाद्या पेजवर जॉइन व्हा, एकही डील चुकणार नाही.',noSocial:'आमची पेजेस लवकरच येतील.',openSoc:'उघडा'};
+  T.bn={tagline:'আজকের ডিল কী?',search:'ডিল খুঁজুন (যেমন earbuds, kurti)',all:'সব',isNew:'নতুন',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} সাশ্রয়',buy:'এই ডিলটি নিন →',share:'WhatsApp-এ শেয়ার করুন',save:'সেভ',unsave:'সেভ থেকে সরান',more:'পুরোটা পড়ুন',less:'কম দেখান',ended:'ডিল শেষ',today:'আজকের ডিল',yesterday:'গতকালের ডিল',dealsOf:'{d}-এর ডিল',now:'এইমাত্র',min:'{n} মিনিট আগে',hr:'{n} ঘণ্টা আগে',day:'{n} দিন আগে',checked:'দাম {t} যাচাই করা',stripNew:'আজকের নতুন ডিল',stripLast:'সর্বশেষ {t}',emptyNoneT:'আজকের ডিল এখনও আসেনি',emptyNoneS:'কিছুক্ষণ পরে আবার দেখুন।',emptySearchT:'এই খোঁজে কোনো ডিল নেই',emptySearchS:'অন্য শব্দ বা বিভাগ চেষ্টা করুন।',emptySavedT:'এখনও কিছু সেভ করা নেই',emptySavedS:'পছন্দের ডিলে হার্ট বোতাম চাপুন।',loading:'ডিল আসছে…',loadingS:'এক মুহূর্ত',slow:'ডিল আসতে সময় লাগছে। ইন্টারনেট দেখুন।',failed:'ডিল লোড হয়নি। পেজটি আবার খুলুন।',pinned:'আজকের বিশেষ ডিল',coupon:'কুপন কোড',copy:'কপি',copied:'কোড কপি হয়েছে',endsIn:'{t} বাকি',under:'₹{n}-এর নিচে',over:'₹{n}-এর উপরে',zoneT:'দাম অনুযায়ী কিনুন',smpDesc:'এটি শুধু একটি নমুনা ডিল।',sortNew:'নতুন আগে',sortOff:'সবচেয়ে বেশি ছাড়',sortLow:'সবচেয়ে কম দাম',free:'বিনামূল্যে',joinT:'ডিল সবার আগে আপনার ফোনে',joinWA:'WhatsApp চ্যানেল',joinTG:'Telegram',navDeals:'ডিল',navSaved:'সেভ করা',backAll:'সব ডিল দেখুন',sample:'নমুনা ডিল',noLink:'লিংক নেই',moreDeals:'আরও ডিল দেখান',notFound:'এই ডিলটি এখন নেই।',discGen:'Nesam Deals একটি অ্যাফিলিয়েট ডিল অ্যাপ। এখানকার লিংক থেকে কিনলে আমরা সামান্য কমিশন পেতে পারি, আপনার দাম বাড়ে না।',discPrice:'দাম ও স্টক যেকোনো সময় বদলাতে পারে। কেনার আগে পরের পেজে দাম দেখে নিন।',hh:'ঘ',mm:'মি',navCats:'বিভাগ',navFollow:'ফলো',catsTitle:'বিভাগ অনুযায়ী দেখুন',dealsN:'{n}টি ডিল',allSub:'সব',followT:'প্রতিদিন ডিলের জন্য আমাদের ফলো করুন',followS:'নিচের কোনো একটি পেজে যোগ দিন, কোনো ডিল মিস হবে না।',noSocial:'আমাদের পেজ শীঘ্রই আসছে।',openSoc:'খুলুন'};
+  T.gu={tagline:'આજની ડીલ શું છે?',search:'ડીલ શોધો (જેમ કે earbuds, kurti)',all:'બધું',isNew:'નવું',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} બચત',buy:'આ ડીલ મેળવો →',share:'WhatsApp પર શેર કરો',save:'સેવ',unsave:'સેવમાંથી હટાવો',more:'પૂરું વાંચો',less:'ઓછું બતાવો',ended:'ડીલ પૂરી',today:'આજની ડીલ',yesterday:'ગઈકાલની ડીલ',dealsOf:'{d}ની ડીલ',now:'હમણાં',min:'{n} મિનિટ પહેલાં',hr:'{n} કલાક પહેલાં',day:'{n} દિવસ પહેલાં',checked:'કિંમત {t} તપાસી',stripNew:'આજની નવી ડીલ',stripLast:'છેલ્લી {t}',emptyNoneT:'આજની ડીલ હજી આવી નથી',emptyNoneS:'થોડી વાર પછી ફરી જુઓ.',emptySearchT:'આ શોધ માટે ડીલ નથી',emptySearchS:'બીજો શબ્દ કે વિભાગ અજમાવો.',emptySavedT:'હજી કંઈ સેવ નથી',emptySavedS:'ગમતી ડીલ પર હૃદય બટન દબાવો.',loading:'ડીલ આવી રહી છે…',loadingS:'એક ક્ષણ',slow:'ડીલ આવતા વાર લાગે છે. ઇન્ટરનેટ તપાસો.',failed:'ડીલ લોડ ન થઈ. પેજ ફરી ખોલો.',pinned:'આજની ખાસ ડીલ',coupon:'કૂપન કોડ',copy:'કૉપિ',copied:'કોડ કૉપિ થયો',endsIn:'{t} બાકી',under:'₹{n} થી ઓછા',over:'₹{n} થી વધુ',zoneT:'કિંમત મુજબ ખરીદો',smpDesc:'આ ફક્ત એક નમૂનાની ડીલ છે.',sortNew:'નવું પહેલાં',sortOff:'સૌથી વધુ છૂટ',sortLow:'સૌથી ઓછી કિંમત',free:'મફત',joinT:'ડીલ સૌથી પહેલાં તમારા ફોનમાં',joinWA:'WhatsApp ચેનલ',joinTG:'Telegram',navDeals:'ડીલ',navSaved:'સેવ કરેલા',backAll:'બધી ડીલ જુઓ',sample:'નમૂના ડીલ',noLink:'લિંક નથી',moreDeals:'વધુ ડીલ બતાવો',notFound:'આ ડીલ હવે ઉપલબ્ધ નથી.',discGen:'Nesam Deals એક એફિલિએટ ડીલ એપ છે. અહીંની લિંકથી ખરીદો તો અમને નાનું કમિશન મળી શકે છે, તમારી કિંમત વધતી નથી.',discPrice:'કિંમત અને સ્ટોક ગમે ત્યારે બદલાઈ શકે છે. ખરીદતા પહેલાં આગળના પેજ પર કિંમત તપાસો.',hh:'ક',mm:'મિ',navCats:'વિભાગ',navFollow:'ફોલો',catsTitle:'વિભાગ મુજબ જુઓ',dealsN:'{n} ડીલ',allSub:'બધું',followT:'રોજ ડીલ માટે અમને ફોલો કરો',followS:'નીચેના કોઈ પેજ સાથે જોડાઓ, એક પણ ડીલ ચૂકશો નહીં.',noSocial:'અમારા પેજ જલ્દી આવશે.',openSoc:'ખોલો'};
+  T.pa={tagline:'ਅੱਜ ਦੀ ਡੀਲ ਕੀ ਹੈ?',search:'ਡੀਲ ਲੱਭੋ (ਜਿਵੇਂ earbuds, kurti)',all:'ਸਭ',isNew:'ਨਵਾਂ',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} ਬਚਤ',buy:'ਇਹ ਡੀਲ ਲਓ →',share:'WhatsApp ਤੇ ਸਾਂਝਾ ਕਰੋ',save:'ਸੇਵ',unsave:'ਸੇਵ ਤੋਂ ਹਟਾਓ',more:'ਪੂਰਾ ਪੜ੍ਹੋ',less:'ਘੱਟ ਦਿਖਾਓ',ended:'ਡੀਲ ਖਤਮ',today:'ਅੱਜ ਦੀਆਂ ਡੀਲਾਂ',yesterday:'ਕੱਲ੍ਹ ਦੀਆਂ ਡੀਲਾਂ',dealsOf:'{d} ਦੀਆਂ ਡੀਲਾਂ',now:'ਹੁਣੇ',min:'{n} ਮਿੰਟ ਪਹਿਲਾਂ',hr:'{n} ਘੰਟੇ ਪਹਿਲਾਂ',day:'{n} ਦਿਨ ਪਹਿਲਾਂ',checked:'ਕੀਮਤ {t} ਜਾਂਚੀ',stripNew:'ਅੱਜ ਦੀਆਂ ਨਵੀਆਂ ਡੀਲਾਂ',stripLast:'ਆਖਰੀ {t}',emptyNoneT:'ਅੱਜ ਦੀਆਂ ਡੀਲਾਂ ਅਜੇ ਨਹੀਂ ਆਈਆਂ',emptyNoneS:'ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਫਿਰ ਵੇਖੋ।',emptySearchT:'ਇਸ ਖੋਜ ਲਈ ਕੋਈ ਡੀਲ ਨਹੀਂ',emptySearchS:'ਕੋਈ ਹੋਰ ਸ਼ਬਦ ਜਾਂ ਸ਼੍ਰੇਣੀ ਅਜ਼ਮਾਓ।',emptySavedT:'ਅਜੇ ਕੁਝ ਸੇਵ ਨਹੀਂ',emptySavedS:'ਪਸੰਦੀਦਾ ਡੀਲ ਤੇ ਦਿਲ ਵਾਲਾ ਬਟਨ ਦਬਾਓ।',loading:'ਡੀਲਾਂ ਆ ਰਹੀਆਂ ਹਨ…',loadingS:'ਇੱਕ ਪਲ',slow:'ਡੀਲਾਂ ਆਉਣ ਵਿੱਚ ਸਮਾਂ ਲੱਗ ਰਿਹਾ ਹੈ। ਇੰਟਰਨੈੱਟ ਜਾਂਚੋ।',failed:'ਡੀਲਾਂ ਲੋਡ ਨਹੀਂ ਹੋਈਆਂ। ਪੇਜ ਮੁੜ ਖੋਲ੍ਹੋ।',pinned:'ਅੱਜ ਦੀ ਖਾਸ ਡੀਲ',coupon:'ਕੂਪਨ ਕੋਡ',copy:'ਕਾਪੀ',copied:'ਕੋਡ ਕਾਪੀ ਹੋ ਗਿਆ',endsIn:'{t} ਬਾਕੀ',under:'₹{n} ਤੋਂ ਘੱਟ',over:'₹{n} ਤੋਂ ਵੱਧ',zoneT:'ਕੀਮਤ ਮੁਤਾਬਕ ਖਰੀਦੋ',smpDesc:'ਇਹ ਸਿਰਫ਼ ਇੱਕ ਨਮੂਨਾ ਡੀਲ ਹੈ।',sortNew:'ਨਵਾਂ ਪਹਿਲਾਂ',sortOff:'ਸਭ ਤੋਂ ਵੱਧ ਛੋਟ',sortLow:'ਸਭ ਤੋਂ ਘੱਟ ਕੀਮਤ',free:'ਮੁਫ਼ਤ',joinT:'ਡੀਲਾਂ ਸਭ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਡੇ ਫ਼ੋਨ ਤੇ',joinWA:'WhatsApp ਚੈਨਲ',joinTG:'Telegram',navDeals:'ਡੀਲਾਂ',navSaved:'ਸੇਵ ਕੀਤੇ',backAll:'ਸਾਰੀਆਂ ਡੀਲਾਂ ਵੇਖੋ',sample:'ਨਮੂਨਾ ਡੀਲ',noLink:'ਲਿੰਕ ਨਹੀਂ',moreDeals:'ਹੋਰ ਡੀਲਾਂ ਦਿਖਾਓ',notFound:'ਇਹ ਡੀਲ ਹੁਣ ਉਪਲਬਧ ਨਹੀਂ।',discGen:'Nesam Deals ਇੱਕ ਐਫੀਲੀਏਟ ਡੀਲ ਐਪ ਹੈ। ਇੱਥੋਂ ਦੇ ਲਿੰਕਾਂ ਤੋਂ ਖਰੀਦਣ ਤੇ ਸਾਨੂੰ ਛੋਟਾ ਕਮਿਸ਼ਨ ਮਿਲ ਸਕਦਾ ਹੈ, ਤੁਹਾਡੀ ਕੀਮਤ ਨਹੀਂ ਵਧਦੀ।',discPrice:'ਕੀਮਤ ਅਤੇ ਸਟਾਕ ਕਦੇ ਵੀ ਬਦਲ ਸਕਦੇ ਹਨ। ਖਰੀਦਣ ਤੋਂ ਪਹਿਲਾਂ ਅਗਲੇ ਪੇਜ ਤੇ ਕੀਮਤ ਵੇਖੋ।',hh:'ਘੰ',mm:'ਮਿ',navCats:'ਸ਼੍ਰੇਣੀਆਂ',navFollow:'ਫਾਲੋ',catsTitle:'ਸ਼੍ਰੇਣੀ ਮੁਤਾਬਕ ਵੇਖੋ',dealsN:'{n} ਡੀਲਾਂ',allSub:'ਸਭ',followT:'ਰੋਜ਼ ਡੀਲਾਂ ਲਈ ਸਾਨੂੰ ਫਾਲੋ ਕਰੋ',followS:'ਹੇਠਾਂ ਕਿਸੇ ਇੱਕ ਪੇਜ ਨਾਲ ਜੁੜੋ, ਕੋਈ ਡੀਲ ਨਹੀਂ ਖੁੰਝੇਗੀ।',noSocial:'ਸਾਡੇ ਪੇਜ ਜਲਦੀ ਆ ਰਹੇ ਹਨ।',openSoc:'ਖੋਲ੍ਹੋ'};
+  T.or={tagline:'ଆଜିର ଡିଲ୍ କଣ?',search:'ଡିଲ୍ ଖୋଜନ୍ତୁ (ଯଥା earbuds, kurti)',all:'ସବୁ',isNew:'ନୂଆ',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} ସଞ୍ଚୟ',buy:'ଏହି ଡିଲ୍ ନିଅନ୍ତୁ →',share:'WhatsApp ରେ ସେୟାର୍ କରନ୍ତୁ',save:'ସେଭ୍',unsave:'ସେଭ୍ ରୁ ହଟାନ୍ତୁ',more:'ପୂରା ପଢ଼ନ୍ତୁ',less:'କମ୍ ଦେଖାନ୍ତୁ',ended:'ଡିଲ୍ ଶେଷ',today:'ଆଜିର ଡିଲ୍',yesterday:'ଗତକାଲିର ଡିଲ୍',dealsOf:'{d} ର ଡିଲ୍',now:'ଏବେ',min:'{n} ମିନିଟ୍ ପୂର୍ବେ',hr:'{n} ଘଣ୍ଟା ପୂର୍ବେ',day:'{n} ଦିନ ପୂର୍ବେ',checked:'ମୂଲ୍ୟ {t} ଯାଞ୍ଚ',stripNew:'ଆଜିର ନୂଆ ଡିଲ୍',stripLast:'ଶେଷ {t}',emptyNoneT:'ଆଜିର ଡିଲ୍ ଏପର୍ଯ୍ୟନ୍ତ ଆସିନାହିଁ',emptyNoneS:'କିଛି ସମୟ ପରେ ପୁଣି ଦେଖନ୍ତୁ।',emptySearchT:'ଏହି ସନ୍ଧାନ ପାଇଁ ଡିଲ୍ ନାହିଁ',emptySearchS:'ଅନ୍ୟ ଶବ୍ଦ କିମ୍ବା ବର୍ଗ ଚେଷ୍ଟା କରନ୍ତୁ।',emptySavedT:'ଏପର୍ଯ୍ୟନ୍ତ କିଛି ସେଭ୍ ନାହିଁ',emptySavedS:'ପସନ୍ଦର ଡିଲ୍ ରେ ହୃଦୟ ବଟନ୍ ଦବାନ୍ତୁ।',loading:'ଡିଲ୍ ଆସୁଛି…',loadingS:'ଏକ ମୁହୂର୍ତ୍ତ',slow:'ଡିଲ୍ ଆସିବାକୁ ସମୟ ଲାଗୁଛି। ଇଣ୍ଟରନେଟ୍ ଦେଖନ୍ତୁ।',failed:'ଡିଲ୍ ଲୋଡ୍ ହେଲା ନାହିଁ। ପେଜ୍ ପୁଣି ଖୋଲନ୍ତୁ।',pinned:'ଆଜିର ବିଶେଷ ଡିଲ୍',coupon:'କୁପନ୍ କୋଡ୍',copy:'କପି',copied:'କୋଡ୍ କପି ହେଲା',endsIn:'{t} ବାକି',under:'₹{n} ତଳେ',over:'₹{n} ଠାରୁ ଅଧିକ',zoneT:'ମୂଲ୍ୟ ଅନୁସାରେ କିଣନ୍ତୁ',smpDesc:'ଏହା କେବଳ ଏକ ନମୁନା ଡିଲ୍।',sortNew:'ନୂଆ ପ୍ରଥମେ',sortOff:'ସର୍ବାଧିକ ରିହାତି',sortLow:'ସର୍ବନିମ୍ନ ମୂଲ୍ୟ',free:'ମାଗଣା',joinT:'ଡିଲ୍ ସବୁଠୁ ଆଗରୁ ଆପଣଙ୍କ ଫୋନରେ',joinWA:'WhatsApp ଚ୍ୟାନେଲ୍',joinTG:'Telegram',navDeals:'ଡିଲ୍',navSaved:'ସେଭ୍ ହୋଇଥିବା',backAll:'ସବୁ ଡିଲ୍ ଦେଖନ୍ତୁ',sample:'ନମୁନା ଡିଲ୍',noLink:'ଲିଙ୍କ୍ ନାହିଁ',moreDeals:'ଆହୁରି ଡିଲ୍ ଦେଖାନ୍ତୁ',notFound:'ଏହି ଡିଲ୍ ଏବେ ଉପଲବ୍ଧ ନାହିଁ।',discGen:'Nesam Deals ଏକ ଆଫିଲିଏଟ୍ ଡିଲ୍ ଆପ୍। ଏଠାକାର ଲିଙ୍କ୍ ରୁ କିଣିଲେ ଆମକୁ ଟିକିଏ କମିଶନ୍ ମିଳିପାରେ, ଆପଣଙ୍କ ମୂଲ୍ୟ ବଢ଼େ ନାହିଁ।',discPrice:'ମୂଲ୍ୟ ଓ ଷ୍ଟକ୍ ଯେକୌଣସି ସମୟରେ ବଦଳିପାରେ। କିଣିବା ପୂର୍ବରୁ ପରବର୍ତ୍ତୀ ପେଜ୍ ରେ ମୂଲ୍ୟ ଦେଖନ୍ତୁ।',hh:'ଘ',mm:'ମି',navCats:'ବର୍ଗ',navFollow:'ଫଲୋ',catsTitle:'ବର୍ଗ ଅନୁସାରେ ଦେଖନ୍ତୁ',dealsN:'{n} ଡିଲ୍',allSub:'ସବୁ',followT:'ପ୍ରତିଦିନ ଡିଲ୍ ପାଇଁ ଆମକୁ ଫଲୋ କରନ୍ତୁ',followS:'ତଳେ ଥିବା କୌଣସି ପେଜ୍ ରେ ଯୋଗ ଦିଅନ୍ତୁ, କୌଣସି ଡିଲ୍ ଛାଡ଼ିବେ ନାହିଁ।',noSocial:'ଆମର ପେଜ୍ ଶୀଘ୍ର ଆସୁଛି।',openSoc:'ଖୋଲନ୍ତୁ'};
+  T.as={tagline:'আজিৰ ডিল কি?',search:'ডিল বিচাৰক (যেনে earbuds, kurti)',all:'সকলো',isNew:'নতুন',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} সাশ্ৰয়',buy:'এই ডিলটো লওক →',share:'WhatsApp-ত শ্বেয়াৰ কৰক',save:'ছেভ',unsave:'ছেভৰ পৰা আঁতৰাওক',more:'সম্পূৰ্ণ পঢ়ক',less:'কম দেখুৱাওক',ended:'ডিল শেষ',today:'আজিৰ ডিল',yesterday:'যোৱাকালিৰ ডিল',dealsOf:'{d}ৰ ডিল',now:'এতিয়াই',min:'{n} মিনিট আগতে',hr:'{n} ঘণ্টা আগতে',day:'{n} দিন আগতে',checked:'দাম {t} পৰীক্ষা কৰা',stripNew:'আজিৰ নতুন ডিল',stripLast:'শেষৰটো {t}',emptyNoneT:'আজিৰ ডিল এতিয়াও অহা নাই',emptyNoneS:'অলপ পিছত পুনৰ চাওক।',emptySearchT:'এই সন্ধানৰ বাবে ডিল নাই',emptySearchS:'অন্য শব্দ বা শ্ৰেণী চেষ্টা কৰক।',emptySavedT:'এতিয়াও একো ছেভ কৰা নাই',emptySavedS:'ভাল লগা ডিলত হৃদয় বুটাম টিপক।',loading:'ডিল আহি আছে…',loadingS:'এক মুহূৰ্ত',slow:'ডিল আহিবলৈ সময় লাগিছে। ইণ্টাৰনেট চাওক।',failed:'ডিল লোড হ’ল নাই। পৃষ্ঠাটো পুনৰ খোলক।',pinned:'আজিৰ বিশেষ ডিল',coupon:'কুপন কোড',copy:'কপি',copied:'কোড কপি হ’ল',endsIn:'{t} বাকী',under:'₹{n}-তকৈ কম',over:'₹{n}-তকৈ বেছি',zoneT:'দাম অনুসৰি কিনক',smpDesc:'এইটো এটা নমুনা ডিল মাত্ৰ।',sortNew:'নতুন আগতে',sortOff:'আটাইতকৈ বেছি ৰেহাই',sortLow:'আটাইতকৈ কম দাম',free:'বিনামূলীয়া',joinT:'ডিল সকলোতকৈ আগতে আপোনাৰ ফোনত',joinWA:'WhatsApp চেনেল',joinTG:'Telegram',navDeals:'ডিল',navSaved:'ছেভ কৰা',backAll:'সকলো ডিল চাওক',sample:'নমুনা ডিল',noLink:'লিংক নাই',moreDeals:'অধিক ডিল দেখুৱাওক',notFound:'এই ডিলটো এতিয়া নাই।',discGen:'Nesam Deals এটা এফিলিয়েট ডিল এপ। ইয়াৰ লিংকৰ পৰা কিনিলে আমি সামান্য কমিছন পাব পাৰোঁ, আপোনাৰ দাম নবাঢ়ে।',discPrice:'দাম আৰু ষ্টক যিকোনো সময়তে সলনি হ’ব পাৰে। কিনাৰ আগতে পিছৰ পৃষ্ঠাত দাম চাওক।',hh:'ঘ',mm:'মি',navCats:'শ্ৰেণী',navFollow:'ফলো',catsTitle:'শ্ৰেণী অনুসৰি চাওক',dealsN:'{n}টা ডিল',allSub:'সকলো',followT:'দৈনিক ডিলৰ বাবে আমাক ফলো কৰক',followS:'তলৰ কোনো এটা পৃষ্ঠাত যোগ দিয়ক, কোনো ডিল মিছ নহ’ব।',noSocial:'আমাৰ পৃষ্ঠা সোনকালে আহিব।',openSoc:'খোলক'};
+  T.ur={tagline:'آج کی ڈیل کیا ہے؟',search:'ڈیل تلاش کریں (مثلاً earbuds, kurti)',all:'سب',isNew:'نیا',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} کی بچت',buy:'یہ ڈیل حاصل کریں →',share:'WhatsApp پر شیئر کریں',save:'محفوظ کریں',unsave:'محفوظ سے ہٹائیں',more:'پورا پڑھیں',less:'کم دکھائیں',ended:'ڈیل ختم',today:'آج کی ڈیلز',yesterday:'کل کی ڈیلز',dealsOf:'{d} کی ڈیلز',now:'ابھی',min:'{n} منٹ پہلے',hr:'{n} گھنٹے پہلے',day:'{n} دن پہلے',checked:'قیمت {t} چیک کی گئی',stripNew:'آج کی نئی ڈیلز',stripLast:'آخری {t}',emptyNoneT:'آج کی ڈیلز ابھی نہیں آئیں',emptyNoneS:'تھوڑی دیر بعد دوبارہ دیکھیں۔',emptySearchT:'اس تلاش کے لیے کوئی ڈیل نہیں',emptySearchS:'کوئی دوسرا لفظ یا زمرہ آزمائیں۔',emptySavedT:'ابھی کچھ محفوظ نہیں',emptySavedS:'پسندیدہ ڈیل پر دل کا بٹن دبائیں۔',loading:'ڈیلز آ رہی ہیں…',loadingS:'ایک لمحہ',slow:'ڈیلز آنے میں وقت لگ رہا ہے۔ انٹرنیٹ چیک کریں۔',failed:'ڈیلز لوڈ نہیں ہوئیں۔ صفحہ دوبارہ کھولیں۔',pinned:'آج کی خاص ڈیل',coupon:'کوپن کوڈ',copy:'کاپی',copied:'کوڈ کاپی ہو گیا',endsIn:'{t} باقی',under:'₹{n} سے کم',over:'₹{n} سے اوپر',zoneT:'قیمت کے مطابق خریدیں',smpDesc:'یہ صرف ایک نمونہ ڈیل ہے۔',sortNew:'پہلے نیا',sortOff:'سب سے زیادہ رعایت',sortLow:'سب سے کم قیمت',free:'مفت',joinT:'ڈیلز سب سے پہلے آپ کے فون پر',joinWA:'WhatsApp چینل',joinTG:'Telegram',navDeals:'ڈیلز',navSaved:'محفوظ شدہ',backAll:'تمام ڈیلز دیکھیں',sample:'نمونہ ڈیل',noLink:'لنک نہیں',moreDeals:'مزید ڈیلز دکھائیں',notFound:'یہ ڈیل اب دستیاب نہیں۔',discGen:'Nesam Deals ایک ایفیلیئٹ ڈیل ایپ ہے۔ یہاں کے لنک سے خریداری پر ہمیں معمولی کمیشن مل سکتا ہے، آپ کی قیمت نہیں بڑھتی۔',discPrice:'قیمت اور اسٹاک کسی بھی وقت بدل سکتے ہیں۔ خریدنے سے پہلے اگلے صفحے پر قیمت دیکھ لیں۔',hh:'گھ',mm:'من',navCats:'زمرے',navFollow:'فالو',catsTitle:'زمرے کے مطابق دیکھیں',dealsN:'{n} ڈیلز',allSub:'سب',followT:'روزانہ ڈیلز کے لیے ہمیں فالو کریں',followS:'نیچے کسی ایک پیج سے جڑیں، کوئی ڈیل نہیں چھوٹے گی۔',noSocial:'ہمارے پیجز جلد آ رہے ہیں۔',openSoc:'کھولیں'};
+  T.ne={tagline:'आजको डिल के छ?',search:'डिल खोज्नुहोस् (जस्तै earbuds, kurti)',all:'सबै',isNew:'नयाँ',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} बचत',buy:'यो डिल लिनुहोस् →',share:'WhatsApp मा सेयर गर्नुहोस्',save:'सेभ',unsave:'सेभबाट हटाउनुहोस्',more:'पूरा पढ्नुहोस्',less:'कम देखाउनुहोस्',ended:'डिल सकियो',today:'आजका डिल',yesterday:'हिजोका डिल',dealsOf:'{d} का डिल',now:'अहिले',min:'{n} मिनेट अघि',hr:'{n} घण्टा अघि',day:'{n} दिन अघि',checked:'मूल्य {t} जाँचिएको',stripNew:'आजका नयाँ डिल',stripLast:'अन्तिम {t}',emptyNoneT:'आजका डिल अझै आएका छैनन्',emptyNoneS:'केही बेरपछि फेरि हेर्नुहोस्।',emptySearchT:'यो खोजका लागि डिल छैन',emptySearchS:'अर्को शब्द वा वर्ग प्रयास गर्नुहोस्।',emptySavedT:'अझै केही सेभ गरिएको छैन',emptySavedS:'मनपर्ने डिलमा मुटुको बटन थिच्नुहोस्।',loading:'डिल आउँदै छन्…',loadingS:'एक क्षण',slow:'डिल आउन समय लागिरहेको छ। इन्टरनेट जाँच्नुहोस्।',failed:'डिल लोड भएन। पेज फेरि खोल्नुहोस्।',pinned:'आजको विशेष डिल',coupon:'कुपन कोड',copy:'कपी',copied:'कोड कपी भयो',endsIn:'{t} बाँकी',under:'₹{n} भन्दा कम',over:'₹{n} भन्दा माथि',zoneT:'मूल्य अनुसार किन्नुहोस्',smpDesc:'यो एउटा नमुना डिल मात्र हो।',sortNew:'नयाँ पहिले',sortOff:'सबैभन्दा बढी छुट',sortLow:'सबैभन्दा कम मूल्य',free:'निःशुल्क',joinT:'डिल सबैभन्दा पहिले तपाईंको फोनमा',joinWA:'WhatsApp च्यानल',joinTG:'Telegram',navDeals:'डिल',navSaved:'सेभ गरिएका',backAll:'सबै डिल हेर्नुहोस्',sample:'नमुना डिल',noLink:'लिङ्क छैन',moreDeals:'थप डिल देखाउनुहोस्',notFound:'यो डिल अहिले उपलब्ध छैन।',discGen:'Nesam Deals एउटा एफिलिएट डिल एप हो। यहाँका लिङ्कबाट किन्दा हामीलाई सानो कमिसन मिल्न सक्छ, तपाईंको मूल्य बढ्दैन।',discPrice:'मूल्य र स्टक जुनसुकै बेला परिवर्तन हुन सक्छ। किन्नुअघि अर्को पेजमा मूल्य हेर्नुहोस्।',hh:'घ',mm:'मि',navCats:'वर्ग',navFollow:'फलो',catsTitle:'वर्ग अनुसार हेर्नुहोस्',dealsN:'{n} डिल',allSub:'सबै',followT:'दैनिक डिलका लागि हामीलाई फलो गर्नुहोस्',followS:'तलको कुनै पेजमा जोडिनुहोस्, कुनै डिल छुट्दैन।',noSocial:'हाम्रा पेजहरू चाँडै आउँदै छन्।',openSoc:'खोल्नुहोस्'};
+
+  /* ---- new keys for the first six languages ---- */
+  var T2={
+    ta:{vid:'பொருளோட வீடியோ பாரு',over:'₹{n}-க்கு மேல்',zoneT:'விலை வாரியா வாங்கு',smpDesc:'இது ஒரு மாதிரி டீல் மட்டும்.'},
+    en:{vid:'Watch product video',over:'Above ₹{n}',zoneT:'Shop by price',smpDesc:'This is only a sample deal.'},
+    hi:{vid:'प्रोडक्ट वीडियो देखें',over:'₹{n} से ऊपर',zoneT:'कीमत के हिसाब से खरीदें',smpDesc:'यह सिर्फ एक नमूना डील है।'},
+    te:{vid:'ఉత్పత్తి వీడియో చూడండి',over:'₹{n} పైన',zoneT:'ధర ప్రకారం కొనండి',smpDesc:'ఇది ఒక నమూనా డీల్ మాత్రమే.'},
+    kn:{vid:'ಉತ್ಪನ್ನ ವೀಡಿಯೊ ನೋಡಿ',over:'₹{n} ಮೇಲೆ',zoneT:'ಬೆಲೆ ಪ್ರಕಾರ ಖರೀದಿಸಿ',smpDesc:'ಇದು ಕೇವಲ ಮಾದರಿ ಡೀಲ್.'},
+    ml:{vid:'ഉൽപ്പന്ന വീഡിയോ കാണുക',over:'₹{n}-ന് മുകളിൽ',zoneT:'വില അനുസരിച്ച് വാങ്ങൂ',smpDesc:'ഇത് ഒരു സാമ്പിൾ ഡീൽ മാത്രം.'},
+    mr:{vid:'प्रॉडक्ट व्हिडिओ पहा'},bn:{vid:'পণ্যের ভিডিও দেখুন'},gu:{vid:'પ્રોડક્ટ વીડિયો જુઓ'},pa:{vid:'ਪ੍ਰੋਡਕਟ ਵੀਡੀਓ ਵੇਖੋ'},or:{vid:'ପ୍ରୋଡକ୍ଟ ଭିଡିଓ ଦେଖନ୍ତୁ'},as:{vid:'প্ৰডাক্ট ভিডিঅ’ চাওক'},ur:{vid:'پروڈکٹ ویڈیو دیکھیں'},ne:{vid:'उत्पादन भिडियो हेर्नुहोस्'}
+  };
+  Object.keys(T2).forEach(function(k){Object.assign(T[k],T2[k])});
+
+  /* ---- category names (all languages) ---- */
+  var CATN={
+    en:{Women:'Women',Men:'Men',Kids:'Kids',Mobiles:'Mobiles',Electronics:'Electronics',Appliances:'Home Appliances',Home:'Home & Kitchen',Beauty:'Beauty',Health:'Health',Accessories:'Accessories',Sports:'Sports & Fitness',Grocery:'Grocery & Food',Stationery:'Books & Stationery',Auto:'Automotive',Pets:'Pet Supplies',Luggage:'Luggage & Travel',Gifts:'Gifts',Digital:'Digital & Services',Others:'Others'},
+    ta:{Women:'பெண்கள்',Men:'ஆண்கள்',Kids:'குழந்தைகள்',Mobiles:'மொபைல்கள்',Electronics:'எலக்ட்ரானிக்ஸ்',Appliances:'வீட்டு உபகரணங்கள்',Home:'வீடு & சமையலறை',Beauty:'அழகு',Health:'ஆரோக்கியம்',Accessories:'ஆக்சஸரீஸ்',Sports:'விளையாட்டு & ஃபிட்னஸ்',Grocery:'மளிகை & உணவு',Stationery:'புத்தகம் & எழுதுபொருள்',Auto:'வாகனங்கள்',Pets:'செல்லப் பிராணிகள்',Luggage:'பைகள் & பயணம்',Gifts:'பரிசுகள்',Digital:'டிஜிட்டல் & சேவைகள்',Others:'மற்றவை'},
+    hi:{Women:'महिलाएं',Men:'पुरुष',Kids:'बच्चे',Mobiles:'मोबाइल',Electronics:'इलेक्ट्रॉनिक्स',Appliances:'होम अप्लायंसेज़',Home:'घर और किचन',Beauty:'ब्यूटी',Health:'सेहत',Accessories:'एक्सेसरीज़',Sports:'खेल और फिटनेस',Grocery:'किराना और खाना',Stationery:'किताबें और स्टेशनरी',Auto:'ऑटोमोबाइल',Pets:'पालतू जानवर',Luggage:'बैग और यात्रा',Gifts:'गिफ्ट',Digital:'डिजिटल और सेवाएं',Others:'अन्य'},
+    te:{Women:'మహిళలు',Men:'పురుషులు',Kids:'పిల్లలు',Mobiles:'మొబైల్స్',Electronics:'ఎలక్ట్రానిక్స్',Appliances:'హోమ్ అప్లయెన్సెస్',Home:'ఇల్లు & వంటగది',Beauty:'బ్యూటీ',Health:'ఆరోగ్యం',Accessories:'యాక్సెసరీస్',Sports:'క్రీడలు & ఫిట్‌నెస్',Grocery:'కిరాణా & ఆహారం',Stationery:'పుస్తకాలు & స్టేషనరీ',Auto:'ఆటోమొబైల్',Pets:'పెంపుడు జంతువులు',Luggage:'బ్యాగులు & ప్రయాణం',Gifts:'బహుమతులు',Digital:'డిజిటల్ & సేవలు',Others:'ఇతరాలు'},
+    kn:{Women:'ಮಹಿಳೆಯರು',Men:'ಪುರುಷರು',Kids:'ಮಕ್ಕಳು',Mobiles:'ಮೊಬೈಲ್‌ಗಳು',Electronics:'ಎಲೆಕ್ಟ್ರಾನಿಕ್ಸ್',Appliances:'ಹೋಮ್ ಅಪ್ಲೈಯನ್ಸ್',Home:'ಮನೆ & ಅಡುಗೆಮನೆ',Beauty:'ಬ್ಯೂಟಿ',Health:'ಆರೋಗ್ಯ',Accessories:'ಆಕ್ಸೆಸರಿಗಳು',Sports:'ಕ್ರೀಡೆ & ಫಿಟ್ನೆಸ್',Grocery:'ದಿನಸಿ & ಆಹಾರ',Stationery:'ಪುಸ್ತಕ & ಸ್ಟೇಷನರಿ',Auto:'ಆಟೋಮೊಬೈಲ್',Pets:'ಸಾಕುಪ್ರಾಣಿಗಳು',Luggage:'ಬ್ಯಾಗ್ & ಪ್ರಯಾಣ',Gifts:'ಉಡುಗೊರೆಗಳು',Digital:'ಡಿಜಿಟಲ್ & ಸೇವೆಗಳು',Others:'ಇತರೆ'},
+    ml:{Women:'സ്ത്രീകൾ',Men:'പുരുഷന്മാർ',Kids:'കുട്ടികൾ',Mobiles:'മൊബൈലുകൾ',Electronics:'ഇലക്ട്രോണിക്സ്',Appliances:'ഹോം അപ്ലയൻസസ്',Home:'വീട് & അടുക്കള',Beauty:'ബ്യൂട്ടി',Health:'ആരോഗ്യം',Accessories:'ആക്സസറികൾ',Sports:'കായികം & ഫിറ്റ്നസ്',Grocery:'പലചരക്ക് & ഭക്ഷണം',Stationery:'പുസ്തകം & സ്റ്റേഷനറി',Auto:'ഓട്ടോമൊബൈൽ',Pets:'വളർത്തുമൃഗങ്ങൾ',Luggage:'ബാഗ് & യാത്ര',Gifts:'സമ്മാനങ്ങൾ',Digital:'ഡിജിറ്റൽ & സേവനങ്ങൾ',Others:'മറ്റുള്ളവ'},
+    mr:{Women:'महिला',Men:'पुरुष',Kids:'मुले',Mobiles:'मोबाइल',Electronics:'इलेक्ट्रॉनिक्स',Appliances:'घरगुती उपकरणे',Home:'घर आणि स्वयंपाकघर',Beauty:'सौंदर्य',Health:'आरोग्य',Accessories:'ॲक्सेसरीज',Sports:'क्रीडा आणि फिटनेस',Grocery:'किराणा आणि अन्न',Stationery:'पुस्तके आणि स्टेशनरी',Auto:'वाहने',Pets:'पाळीव प्राणी',Luggage:'बॅग आणि प्रवास',Gifts:'भेटवस्तू',Digital:'डिजिटल आणि सेवा',Others:'इतर'},
+    bn:{Women:'মহিলা',Men:'পুরুষ',Kids:'শিশু',Mobiles:'মোবাইল',Electronics:'ইলেকট্রনিক্স',Appliances:'গৃহস্থালি যন্ত্র',Home:'ঘর ও রান্নাঘর',Beauty:'বিউটি',Health:'স্বাস্থ্য',Accessories:'অ্যাক্সেসরিজ',Sports:'খেলাধুলা ও ফিটনেস',Grocery:'মুদিখানা ও খাবার',Stationery:'বই ও স্টেশনারি',Auto:'অটোমোবাইল',Pets:'পোষা প্রাণী',Luggage:'ব্যাগ ও ভ্রমণ',Gifts:'উপহার',Digital:'ডিজিটাল ও সেবা',Others:'অন্যান্য'},
+    gu:{Women:'મહિલાઓ',Men:'પુરુષો',Kids:'બાળકો',Mobiles:'મોબાઇલ',Electronics:'ઇલેક્ટ્રોનિક્સ',Appliances:'ઘરેલુ ઉપકરણો',Home:'ઘર અને રસોડું',Beauty:'બ્યુટી',Health:'આરોગ્ય',Accessories:'એક્સેસરીઝ',Sports:'રમતગમત અને ફિટનેસ',Grocery:'કરિયાણું અને ખોરાક',Stationery:'પુસ્તકો અને સ્ટેશનરી',Auto:'ઓટોમોબાઇલ',Pets:'પાળતુ પ્રાણી',Luggage:'બેગ અને પ્રવાસ',Gifts:'ભેટ',Digital:'ડિજિટલ અને સેવાઓ',Others:'અન્ય'},
+    pa:{Women:'ਔਰਤਾਂ',Men:'ਮਰਦ',Kids:'ਬੱਚੇ',Mobiles:'ਮੋਬਾਈਲ',Electronics:'ਇਲੈਕਟ੍ਰਾਨਿਕਸ',Appliances:'ਘਰੇਲੂ ਉਪਕਰਣ',Home:'ਘਰ ਅਤੇ ਰਸੋਈ',Beauty:'ਬਿਊਟੀ',Health:'ਸਿਹਤ',Accessories:'ਐਕਸੈਸਰੀਜ਼',Sports:'ਖੇਡਾਂ ਅਤੇ ਫਿਟਨੈਸ',Grocery:'ਕਰਿਆਨਾ ਅਤੇ ਖਾਣਾ',Stationery:'ਕਿਤਾਬਾਂ ਅਤੇ ਸਟੇਸ਼ਨਰੀ',Auto:'ਆਟੋਮੋਬਾਈਲ',Pets:'ਪਾਲਤੂ ਜਾਨਵਰ',Luggage:'ਬੈਗ ਅਤੇ ਸਫ਼ਰ',Gifts:'ਤੋਹਫ਼ੇ',Digital:'ਡਿਜੀਟਲ ਅਤੇ ਸੇਵਾਵਾਂ',Others:'ਹੋਰ'},
+    or:{Women:'ମହିଳା',Men:'ପୁରୁଷ',Kids:'ଶିଶୁ',Mobiles:'ମୋବାଇଲ୍',Electronics:'ଇଲେକ୍ଟ୍ରୋନିକ୍ସ',Appliances:'ଘରୋଇ ଉପକରଣ',Home:'ଘର ଓ ରୋଷେଇଘର',Beauty:'ବ୍ୟୁଟି',Health:'ସ୍ୱାସ୍ଥ୍ୟ',Accessories:'ଆକ୍ସେସୋରିଜ୍',Sports:'କ୍ରୀଡ଼ା ଓ ଫିଟନେସ୍',Grocery:'ମୁଦିଖାନା ଓ ଖାଦ୍ୟ',Stationery:'ବହି ଓ ଷ୍ଟେସନାରୀ',Auto:'ଅଟୋମୋବାଇଲ୍',Pets:'ପୋଷା ପ୍ରାଣୀ',Luggage:'ବ୍ୟାଗ୍ ଓ ଭ୍ରମଣ',Gifts:'ଉପହାର',Digital:'ଡିଜିଟାଲ୍ ଓ ସେବା',Others:'ଅନ୍ୟାନ୍ୟ'},
+    as:{Women:'মহিলা',Men:'পুৰুষ',Kids:'শিশু',Mobiles:'মোবাইল',Electronics:'ইলেকট্ৰনিক্স',Appliances:'গৃহস্থালী সঁজুলি',Home:'ঘৰ আৰু ৰান্ধনিশাল',Beauty:'বিউটি',Health:'স্বাস্থ্য',Accessories:'এক্সেছৰিজ',Sports:'খেল আৰু ফিটনেছ',Grocery:'মুদিখানা আৰু খাদ্য',Stationery:'কিতাপ আৰু ষ্টেশনাৰী',Auto:'অটোমোবাইল',Pets:'পোহনীয়া জীৱ',Luggage:'বেগ আৰু ভ্ৰমণ',Gifts:'উপহাৰ',Digital:'ডিজিটেল আৰু সেৱা',Others:'অন্যান্য'},
+    ur:{Women:'خواتین',Men:'مرد',Kids:'بچے',Mobiles:'موبائل',Electronics:'الیکٹرانکس',Appliances:'گھریلو آلات',Home:'گھر اور باورچی خانہ',Beauty:'خوبصورتی',Health:'صحت',Accessories:'لوازمات',Sports:'کھیل اور فٹنس',Grocery:'گروسری اور کھانا',Stationery:'کتابیں اور اسٹیشنری',Auto:'آٹوموبائل',Pets:'پالتو جانور',Luggage:'بیگ اور سفر',Gifts:'تحفے',Digital:'ڈیجیٹل اور خدمات',Others:'دیگر'},
+    ne:{Women:'महिला',Men:'पुरुष',Kids:'बालबालिका',Mobiles:'मोबाइल',Electronics:'इलेक्ट्रोनिक्स',Appliances:'घरायसी उपकरण',Home:'घर र भान्सा',Beauty:'सुन्दरता',Health:'स्वास्थ्य',Accessories:'एक्सेसरीज',Sports:'खेलकुद र फिटनेस',Grocery:'किराना र खाना',Stationery:'किताब र स्टेशनरी',Auto:'अटोमोबाइल',Pets:'घरपालुवा जनावर',Luggage:'झोला र यात्रा',Gifts:'उपहार',Digital:'डिजिटल र सेवा',Others:'अन्य'}
+  };
+  var LANGS=[['ta','தமிழ்'],['en','English'],['hi','हिन्दी'],['te','తెలుగు'],['kn','ಕನ್ನಡ'],['ml','മലയാളം'],['mr','मराठी'],['bn','বাংলা'],['gu','ગુજરાતી'],['pa','ਪੰਜਾਬੀ'],['or','ଓଡ଼ିଆ'],['as','অসমীয়া'],['ur','اردو'],['ne','नेपाली']];
+  var LOCALES={ta:'ta-IN',en:'en-IN',hi:'hi-IN',te:'te-IN',kn:'kn-IN',ml:'ml-IN',mr:'mr-IN',bn:'bn-IN',gu:'gu-IN',pa:'pa-IN',or:'or-IN',as:'as-IN',ur:'ur-IN',ne:'ne-NP'};
+  var BASE_TAX=[
+    {id:'Women',e:'👗',subs:['Sarees','Kurtis & Ethnic Wear','Western Wear','Nightwear & Lounge','Innerwear','Jewellery','Footwear','Handbags']},
+    {id:'Men',e:'👔',subs:['T-Shirts','Shirts','Jeans & Trousers','Ethnic Wear','Hoodies & Jackets','Innerwear','Footwear','Grooming']},
+    {id:'Kids',e:'🧸',subs:['Boys Clothing','Girls Clothing','Baby Clothing','Toys & Games','School Bags & Stationery','Footwear','Baby Care','Books']},
+    {id:'Mobiles',e:'📱',subs:['Smartphones','Tablets','Cases & Covers','Chargers & Cables','Power Banks','Screen Guards']},
+    {id:'Electronics',e:'🎧',subs:['Earbuds & Audio','Smart Watches','Speakers','Laptops & Computers','Computer Accessories','TV & Displays','Cameras','Gaming','Storage Devices']},
+    {id:'Appliances',e:'🔌',subs:['Kitchen Appliances','Fans & Coolers','AC & Refrigerators','Washing Machines','Irons & Garment Care','Water Heaters & Purifiers','Vacuum & Cleaning Appliances']},
+    {id:'Home',e:'🏠',subs:['Kitchenware','Cookware & Dinnerware','Home Decor','Bedding & Furnishing','Furniture','Cleaning','Storage & Organisers','Lighting','Clocks','Curtains & Mats']},
+    {id:'Beauty',e:'💄',subs:['Skincare','Haircare','Makeup','Fragrances','Personal Care','Trimmers & Grooming Tools']},
+    {id:'Health',e:'💊',subs:['Vitamins & Supplements','Fitness Equipment','Medical Devices','Wellness']},
+    {id:'Accessories',e:'⌚',subs:['Watches','Bags & Wallets','Sunglasses','Caps & Belts','Umbrellas','Bottles & Lunch Boxes']},
+    {id:'Sports',e:'🏏',subs:['Gym & Yoga','Cricket & Outdoor','Cycling','Sportswear']},
+    {id:'Grocery',e:'🛒',subs:['Groceries','Snacks & Food','Organic & Health Food','Beverages']},
+    {id:'Stationery',e:'📚',subs:['Books','Stationery & Office','Art & Craft']},
+    {id:'Auto',e:'🚗',subs:['Car Accessories','Bike Accessories','Helmets','Tools']},
+    {id:'Pets',e:'🐾',subs:['Pet Food','Pet Accessories']},
+    {id:'Luggage',e:'🧳',subs:['Luggage & Trolley','Backpacks','Travel Accessories']},
+    {id:'Gifts',e:'🎁',subs:['Festival Gifts','Corporate Gifts','Personalised Gifts']},
+    {id:'Digital',e:'💻',subs:['Courses & eBooks','Software & Apps','Subscriptions','Travel & Tickets','Recharge & Bills']},
+    {id:'Others',e:'✨',subs:['Other']}
+  ];
+  var TAX=BASE_TAX.slice(), TAXALL=BASE_TAX.slice();
+  var MAIN_IDS=BASE_TAX.map(function(m){return m.id});
+  var LEGACY={Fashion:'Women'};
+  var CATCOL=['#C2185B','#1546C6','#B45309','#0A8A5F','#6D28D9','#0E7490','#BE123C','#4D7C0F','#9A3412','#0369A1','#475569','#A21CAF','#15803D','#B91C1C','#7C2D12','#1D4ED8','#0F766E','#9333EA','#64748B'];
+  function normCat(c){c=String(c||'Others'); if(LEGACY[c]) c=LEGACY[c]; return MAIN_IDS.indexOf(c)<0?'Others':c}
+  function rebuildTax(){
+    var st=S.settings||{},cc=Array.isArray(st.customCats)?st.customCats:[],hid=Array.isArray(st.hiddenCats)?st.hiddenCats:[];
+    var custom=cc.filter(function(c){return c&&/^c_[a-z0-9]+$/.test(c.id)&&c.name}).map(function(c){return {id:c.id,e:c.emoji||'🏷️',custom:true,name:String(c.name),subs:['Other']}});
+    TAXALL=BASE_TAX.slice(0,-1).concat(custom,[BASE_TAX[BASE_TAX.length-1]]);
+    MAIN_IDS=TAXALL.map(function(m){return m.id});
+    TAX=TAXALL.filter(function(m){return hid.indexOf(m.id)<0});
+  }
+  function isHiddenCat(c){var h2=(S.settings&&S.settings.hiddenCats)||[];return Array.isArray(h2)&&h2.indexOf(c)>-1}
+  var SUBT={
+    ta:{'Sarees':'புடவைகள்','Kurtis & Ethnic Wear':'குர்தி & பாரம்பரிய உடை','Western Wear':'வெஸ்டர்ன் உடைகள்','Nightwear & Lounge':'இரவு & வீட்டு உடைகள்','Innerwear':'உள்ளாடைகள்','Jewellery':'நகைகள்','Footwear':'காலணிகள்','Handbags':'கைப்பைகள்','T-Shirts':'டி-ஷர்ட்','Shirts':'சட்டைகள்','Jeans & Trousers':'ஜீன்ஸ் & பேன்ட்','Ethnic Wear':'பாரம்பரிய உடை','Hoodies & Jackets':'ஹூடி & ஜாக்கெட்','Grooming':'கிரூமிங்','Boys Clothing':'ஆண் குழந்தை உடைகள்','Girls Clothing':'பெண் குழந்தை உடைகள்','Baby Clothing':'கைக்குழந்தை உடைகள்','Toys & Games':'பொம்மைகள் & விளையாட்டு','School Bags & Stationery':'ஸ்கூல் பேக் & எழுதுபொருள்','Baby Care':'குழந்தை பராமரிப்பு','Books':'புத்தகங்கள்','Mobiles':'மொபைல்','Earbuds & Audio':'இயர்பட்ஸ் & ஆடியோ','Smart Watches':'ஸ்மார்ட் வாட்ச்','Chargers & Accessories':'சார்ஜர் & ஆக்சஸரீஸ்','Laptops & Tablets':'லேப்டாப் & டேப்லெட்','TV & Appliances':'டிவி & உபகரணங்கள்','Cameras':'கேமராக்கள்','Kitchenware':'சமையலறை பொருட்கள்','Home Decor':'வீட்டு அலங்காரம்','Bedding & Furnishing':'படுக்கை & திரைச்சீலை','Furniture':'மரச்சாமான்கள்','Cleaning':'சுத்தம் செய்ய','Storage & Organisers':'சேமிப்பு & ஆர்கனைசர்','Lighting':'விளக்குகள்','Clocks':'சுவர் கடிகாரங்கள்','Skincare':'சருமப் பராமரிப்பு','Haircare':'முடி பராமரிப்பு','Makeup':'மேக்கப்','Personal Care':'தனிப்பட்ட பராமரிப்பு','Health & Wellness':'ஆரோக்கியம்','Watches':'கைக்கடிகாரங்கள்','Bags & Wallets':'பைகள் & பர்ஸ்','Sunglasses':'கூலிங் கிளாஸ்','Caps & Belts':'தொப்பி & பெல்ட்','Umbrellas':'குடைகள்','Bottles & Lunch Boxes':'பாட்டில் & லஞ்ச் பாக்ஸ்','Groceries':'மளிகைப் பொருட்கள்','Snacks & Food':'தின்பண்டம் & உணவு','Organic & Health Food':'இயற்கை & ஆரோக்கிய உணவு','Festival Gifts':'பண்டிகை பரிசுகள்','Corporate Gifts':'நிறுவன பரிசுகள்','Personalised Gifts':'தனிப்பயன் பரிசுகள்','Courses & eBooks':'கோர்ஸ் & இ-புக்','Software & Apps':'மென்பொருள் & ஆப்ஸ்','Subscriptions':'சந்தாக்கள்','Travel & Tickets':'பயணம் & டிக்கெட்','Recharge & Bills':'ரீசார்ஜ் & பில்','Other':'மற்றவை'},
+    hi:{'Sarees':'साड़ियां','Kurtis & Ethnic Wear':'कुर्ती और एथनिक','Western Wear':'वेस्टर्न वियर','Nightwear & Lounge':'नाइटवियर और लाउंज','Innerwear':'इनरवियर','Jewellery':'ज्वेलरी','Footwear':'जूते-चप्पल','Handbags':'हैंडबैग','T-Shirts':'टी-शर्ट','Shirts':'शर्ट','Jeans & Trousers':'जींस और ट्राउज़र','Ethnic Wear':'एथनिक वियर','Hoodies & Jackets':'हुडी और जैकेट','Grooming':'ग्रूमिंग','Boys Clothing':'लड़कों के कपड़े','Girls Clothing':'लड़कियों के कपड़े','Baby Clothing':'बेबी कपड़े','Toys & Games':'खिलौने और गेम','School Bags & Stationery':'स्कूल बैग और स्टेशनरी','Baby Care':'बेबी केयर','Books':'किताबें','Mobiles':'मोबाइल','Earbuds & Audio':'इयरबड्स और ऑडियो','Smart Watches':'स्मार्ट वॉच','Chargers & Accessories':'चार्जर और एक्सेसरीज़','Laptops & Tablets':'लैपटॉप और टैबलेट','TV & Appliances':'टीवी और उपकरण','Cameras':'कैमरा','Kitchenware':'किचन का सामान','Home Decor':'होम डेकोर','Bedding & Furnishing':'बिस्तर और फर्निशिंग','Furniture':'फर्नीचर','Cleaning':'सफाई','Storage & Organisers':'स्टोरेज और ऑर्गनाइज़र','Lighting':'लाइटिंग','Clocks':'घड़ियां','Skincare':'स्किनकेयर','Haircare':'हेयरकेयर','Makeup':'मेकअप','Personal Care':'पर्सनल केयर','Health & Wellness':'सेहत','Watches':'घड़ियां','Bags & Wallets':'बैग और वॉलेट','Sunglasses':'धूप के चश्मे','Caps & Belts':'टोपी और बेल्ट','Umbrellas':'छाते','Bottles & Lunch Boxes':'बोतल और लंच बॉक्स','Groceries':'किराना सामान','Snacks & Food':'स्नैक्स और खाना','Organic & Health Food':'ऑर्गेनिक और हेल्थ फूड','Festival Gifts':'त्योहार के गिफ्ट','Corporate Gifts':'कॉर्पोरेट गिफ्ट','Personalised Gifts':'पर्सनलाइज़्ड गिफ्ट','Courses & eBooks':'कोर्स और ई-बुक','Software & Apps':'सॉफ्टवेयर और ऐप','Subscriptions':'सब्सक्रिप्शन','Travel & Tickets':'यात्रा और टिकट','Recharge & Bills':'रिचार्ज और बिल','Other':'अन्य'}
+  };
+  Object.assign(SUBT.ta,{'Smartphones':'ஸ்மார்ட்போன்கள்','Tablets':'டேப்லெட்கள்','Cases & Covers':'கேஸ் & கவர்','Chargers & Cables':'சார்ஜர் & கேபிள்','Power Banks':'பவர் பேங்க்','Screen Guards':'ஸ்கிரீன் கார்டு','Speakers':'ஸ்பீக்கர்கள்','Laptops & Computers':'லேப்டாப் & கம்ப்யூட்டர்','Computer Accessories':'கம்ப்யூட்டர் ஆக்சஸரீஸ்','TV & Displays':'டிவி & டிஸ்ப்ளே','Gaming':'கேமிங்','Storage Devices':'பென்டிரைவ் & ஸ்டோரேஜ்','Kitchen Appliances':'சமையலறை உபகரணங்கள்','Fans & Coolers':'ஃபேன் & கூலர்','AC & Refrigerators':'ஏசி & ஃப்ரிட்ஜ்','Washing Machines':'வாஷிங் மெஷின்','Irons & Garment Care':'அயர்ன் பாக்ஸ் & துணி பராமரிப்பு','Water Heaters & Purifiers':'வாட்டர் ஹீட்டர் & ப்யூரிஃபையர்','Vacuum & Cleaning Appliances':'வேக்யூம் & சுத்தம் செய்யும் கருவிகள்','Cookware & Dinnerware':'சமையல் பாத்திரம் & தட்டு','Curtains & Mats':'திரைச்சீலை & மேட்','Fragrances':'வாசனை திரவியம்','Trimmers & Grooming Tools':'டிரிம்மர் & கிரூமிங் கருவிகள்','Vitamins & Supplements':'வைட்டமின் & சப்ளிமெண்ட்','Fitness Equipment':'ஃபிட்னஸ் உபகரணங்கள்','Medical Devices':'மருத்துவ கருவிகள்','Wellness':'நலம்','Gym & Yoga':'ஜிம் & யோகா','Cricket & Outdoor':'கிரிக்கெட் & வெளிப்புற விளையாட்டு','Cycling':'சைக்கிள்','Sportswear':'விளையாட்டு உடை','Beverages':'பானங்கள்','Stationery & Office':'எழுதுபொருள் & அலுவலகம்','Art & Craft':'ஓவியம் & கைவினை','Car Accessories':'கார் ஆக்சஸரீஸ்','Bike Accessories':'பைக் ஆக்சஸரீஸ்','Helmets':'ஹெல்மெட்','Tools':'கருவிகள்','Pet Food':'செல்லப்பிராணி உணவு','Pet Accessories':'செல்லப்பிராணி பொருட்கள்','Luggage & Trolley':'லக்கேஜ் & ட்ராலி','Backpacks':'முதுகுப் பைகள்','Travel Accessories':'பயண ஆக்சஸரீஸ்'});
+  Object.assign(SUBT.hi,{'Smartphones':'स्मार्टफोन','Tablets':'टैबलेट','Cases & Covers':'केस और कवर','Chargers & Cables':'चार्जर और केबल','Power Banks':'पावर बैंक','Screen Guards':'स्क्रीन गार्ड','Speakers':'स्पीकर','Laptops & Computers':'लैपटॉप और कंप्यूटर','Computer Accessories':'कंप्यूटर एक्सेसरीज़','TV & Displays':'टीवी और डिस्प्ले','Gaming':'गेमिंग','Storage Devices':'पेनड्राइव और स्टोरेज','Kitchen Appliances':'किचन उपकरण','Fans & Coolers':'पंखे और कूलर','AC & Refrigerators':'एसी और फ्रिज','Washing Machines':'वाशिंग मशीन','Irons & Garment Care':'प्रेस और कपड़ों की देखभाल','Water Heaters & Purifiers':'वॉटर हीटर और प्यूरीफायर','Vacuum & Cleaning Appliances':'वैक्यूम और सफाई उपकरण','Cookware & Dinnerware':'कुकवेयर और डिनरवेयर','Curtains & Mats':'पर्दे और मैट','Fragrances':'परफ्यूम','Trimmers & Grooming Tools':'ट्रिमर और ग्रूमिंग टूल','Vitamins & Supplements':'विटामिन और सप्लीमेंट','Fitness Equipment':'फिटनेस उपकरण','Medical Devices':'मेडिकल उपकरण','Wellness':'वेलनेस','Gym & Yoga':'जिम और योग','Cricket & Outdoor':'क्रिकेट और आउटडोर','Cycling':'साइकिलिंग','Sportswear':'स्पोर्ट्सवियर','Beverages':'पेय','Stationery & Office':'स्टेशनरी और ऑफिस','Art & Craft':'आर्ट और क्राफ्ट','Car Accessories':'कार एक्सेसरीज़','Bike Accessories':'बाइक एक्सेसरीज़','Helmets':'हेलमेट','Tools':'औज़ार','Pet Food':'पेट फूड','Pet Accessories':'पेट एक्सेसरीज़','Luggage & Trolley':'सामान और ट्रॉली','Backpacks':'बैकपैक','Travel Accessories':'यात्रा एक्सेसरीज़'});
+  var THEMES=[
+    {id:'blue',n:'ராயல் நீலம்',hdr:'#002C9D',brand:'#1546C6',bd:'#8CB3FF',acc:'#FFC20E'},
+    {id:'green',n:'பச்சை',hdr:'#0B5D3B',brand:'#0A8A5F',bd:'#5EE0A8',acc:'#FFC20E'},
+    {id:'purple',n:'ஊதா',hdr:'#4A1D96',brand:'#6D28D9',bd:'#C4A5FF',acc:'#FFC20E'},
+    {id:'red',n:'சிவப்பு',hdr:'#9B1226',brand:'#D81E2D',bd:'#FF8A97',acc:'#FFD23F'},
+    {id:'orange',n:'ஆரஞ்சு',hdr:'#B45309',brand:'#EA580C',bd:'#FDBA74',acc:'#FFE066'},
+    {id:'teal',n:'டீல் பச்சை',hdr:'#0F5F6B',brand:'#0891B2',bd:'#67E8F9',acc:'#FFC20E'},
+    {id:'pink',n:'ரோஸ்',hdr:'#9D174D',brand:'#DB2777',bd:'#F9A8D4',acc:'#FFD23F'},
+    {id:'black',n:'கருப்பு',hdr:'#111827',brand:'#374151',bd:'#D1D5DB',acc:'#FFC20E'}
+  ];
+  var ZONES=[{k:'u99',n:99,c:'#0A8A5F',e:'🔥'},{k:'u199',n:199,c:'#1546C6',e:'⚡'},{k:'u499',n:499,c:'#7C3AED',e:'💥'},{k:'u999',n:999,c:'#EA580C',e:'🎯'},{k:'o1000',n:1000,over:true,c:'#D81E2D',e:'💎'}];
+  var SOC={whatsapp:['WhatsApp','#1FA855'],telegram:['Telegram','#229ED9'],instagram:['Instagram','#D6249F'],facebook:['Facebook','#1877F2'],youtube:['YouTube','#E11D1D'],x:['X (Twitter)','#141B3A'],other:['Other','#5B6385']};
+  var SOURCES=['Amazon','Meesho','Flipkart','Myntra','Wishlink','Digital product','Other'];
+  var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=5;
+
+  var S={deals:[],settings:{},cat:'all',main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',zone:'',view:'shop',stab:'dash',focus:'',
+    admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null};
+
+  /* ============ helpers ============ */
+  function h(tag,attrs){
+    var e=document.createElement(tag),k,v,i,c;
+    attrs=attrs||{};
+    for(k in attrs){
+      v=attrs[k]; if(v==null||v===false) continue;
+      if(k==='class') e.className=v;
+      else if(k.slice(0,2)==='on') e.addEventListener(k.slice(2),v);
+      else e.setAttribute(k,v===true?'':v);
+    }
+    for(i=2;i<arguments.length;i++){
+      c=arguments[i]; if(c==null||c===false) continue;
+      if(Array.isArray(c)){ c.forEach(function(x){ if(x!=null&&x!==false) e.append(x); }); } else e.append(c);
+    }
+    return e;
+  }
+  function $(id){return document.getElementById(id)}
+  function svgIcon(path,size,sw){
+    var s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('width',size||22);s.setAttribute('height',size||22);s.setAttribute('viewBox','0 0 24 24');s.setAttribute('fill','none');s.setAttribute('stroke','currentColor');s.setAttribute('stroke-width',sw||2);s.setAttribute('stroke-linecap','round');s.setAttribute('stroke-linejoin','round');s.setAttribute('aria-hidden','true');
+    s.innerHTML=path; return s; /* path strings are constants defined in this file */
+  }
+  var P={
+    wa:'<path d="M4 20l1.3-4.1A8 8 0 1 1 8.3 19L4 20Z"/><path d="M9 9c.5 2.5 2.5 4.5 5 5l1.2-1.2 2 .9c-.4 1.4-1.4 1.8-2.4 1.6-3.4-.7-6-3.3-6.6-6.6-.1-1 .3-2 1.6-2.4l.9 2L9 9Z"/>',
+    heart:'<path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 0 0-7.4 7.4L12 21.8l8.8-8.8a5.2 5.2 0 0 0 0-7.4Z"/>',
+    cart:'<circle cx="9" cy="21" r="1.2"/><circle cx="20" cy="21" r="1.2"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
+    left:'<path d="m15 18-6-6 6-6"/>',right:'<path d="m9 18 6-6-6-6"/>'
+  };
+  function T_(){return T[S.lang]||T.en}
+  function t(k,v){
+    var s=T_()[k]; if(s==null) s=T.en[k]; if(s==null) s=k;
+    if(v) for(var x in v) s=s.split('{'+x+'}').join(v[x]);
+    return s;
+  }
+  function taOf(c){c=normCat(c);var m=TAXALL.filter(function(x){return x.id===c})[0];return m&&m.custom?m.name:(CATN.ta[c]||c)}
+  function catLabel(c){c=normCat(c);var m=TAXALL.filter(function(x){return x.id===c})[0];if(m&&m.custom) return m.name;var l=CATN[S.lang];return (l&&l[c])||CATN.en[c]||c}
+  function subLabel(x){var m=SUBT[S.lang]; return (m&&m[x])||x}
+  function taCat(c){return taOf(c)}
+  function taSub(x){return (SUBT.ta&&SUBT.ta[x])||x}
+  function catEmoji(c){c=normCat(c);var m=TAXALL.filter(function(x){return x.id===c})[0];return (m&&m.e)||'🏷️'}
+  function catColor(c){var i=MAIN_IDS.indexOf(normCat(c));return CATCOL[(i<0?0:i)%CATCOL.length]}
+  function lifeDays(){var n=parseInt(S.settings&&S.settings.lifeDays,10);return n>=1&&n<=30?n:7}
+  function lifeMs(){return lifeDays()*864e5}
+  function dTitle(d){return d.sample?(t('sample')+': '+String(d.title||'').replace(/^[^:]*:\s*/,'')):d.title}
+  function dDesc(d){return d.sample?t('smpDesc'):(d.desc||'')}
+  function zoneMatch(d,z){if(!hasPrice(d)) return false; return z.over?d.newPrice>z.n:d.newPrice<=z.n}
+  function zoneLabel(z){return z.over?t('over',{n:z.n}):t('under',{n:z.n})}
+  function zoneOf(d){if(!hasPrice(d)) return null; for(var i=0;i<ZONES.length-1;i++){ if(d.newPrice<=ZONES[i].n) return ZONES[i]; } return d.newPrice>1000?ZONES[4]:ZONES[3]}
+  function socialsList(){
+    var st=S.settings||{};
+    if(Array.isArray(st.socials)) return st.socials.filter(function(x){return x&&safeUrl(x.url)});
+    var a=[]; if(safeUrl(st.whatsappUrl)) a.push({type:'whatsapp',label:'',url:st.whatsappUrl}); if(safeUrl(st.telegramUrl)) a.push({type:'telegram',label:'',url:st.telegramUrl}); return a;
+  }
+  function inr(n){return '₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2})}
+  function hasPrice(d){return typeof d.newPrice==='number'&&isFinite(d.newPrice)}
+  function pct(d){return hasPrice(d)&&d.oldPrice>d.newPrice&&d.oldPrice>0?Math.round((1-d.newPrice/d.oldPrice)*100):0}
+  function safeUrl(u){try{var x=new URL(String(u||'').trim());return /^https?:$/.test(x.protocol)?x.href:''}catch(e){return ''}}
+  function safeImg(s){return typeof s==='string'&&/^data:image\/(jpeg|png|webp)/.test(s)?s:''}
+  function dealImgs(d){
+    var a=Array.isArray(d.imgs)?d.imgs:[]; var out=a.map(safeImg).filter(Boolean);
+    if(!out.length){var one=safeImg(d.img); if(one) out=[one];}
+    return out.slice(0,MAX_PHOTOS);
+  }
+  var PH_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#1546C6" opacity=".14"/><g fill="none" stroke="#1546C6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(150 95) scale(4.2)"><circle cx="9" cy="21" r="1.2"/><circle cx="20" cy="21" r="1.2"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></g></svg>';
+  var PLACEHOLDER='data:image/svg+xml;utf8,'+encodeURIComponent(PH_SVG);
+  function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
+  function fmtDate(ms,o){try{return new Date(ms).toLocaleDateString(LOCALES[S.lang]||'en-IN',o)}catch(e){return new Date(ms).toDateString()}}
+  function dayLabel(ms){
+    var d=new Date(ms),n=new Date(),y=new Date(n.getTime()-864e5);
+    if(sameDay(d,n)) return t('today');
+    if(sameDay(d,y)) return t('yesterday');
+    return t('dealsOf',{d:fmtDate(ms,{day:'numeric',month:'long'})});
+  }
+  function ago(ms){
+    var m=Math.max(0,Math.round((Date.now()-ms)/6e4));
+    if(m<2) return t('now');
+    if(m<60) return t('min',{n:m});
+    var hr=Math.round(m/60);
+    if(hr<24) return t('hr',{n:hr});
+    return t('day',{n:Math.round(hr/24)});
+  }
+  function left(ms){
+    var m=Math.max(0,Math.round((ms-Date.now())/6e4)),hh=Math.floor(m/60),mm=m%60;
+    return hh>0?(hh+' '+t('hh')+' '+mm+' '+t('mm')):(mm+' '+t('mm'));
+  }
+  function isExpired(d){return (d.createdAt||0)>0&&Date.now()-d.createdAt>lifeMs()}
+  function isEnded(d){return !!d.ended||(typeof d.expiresAt==='number'&&d.expiresAt>0&&d.expiresAt<Date.now())}
+  function isAmazon(d){
+    if(d.source==='Amazon') return true;
+    try{return /(^|\.)(amazon\.|amzn\.)/.test(new URL(d.link||'').hostname)}catch(e){return false}
+  }
+  var toastT;
+  function toast(msg){
+    var old=document.querySelector('.toast'); if(old) old.remove();
+    var el=h('div',{class:'toast',role:'status'},msg); document.body.append(el);
+    clearTimeout(toastT); toastT=setTimeout(function(){el.remove()},2600);
+  }
+  function lsGet(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}}
+  function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+  /* ============ photo gallery (swipe) ============ */
+  function makeTrack(imgs,title,onTap){
+    var track=h('div',{class:'track',tabindex:'0','aria-label':title||''});
+    imgs.forEach(function(src,i){
+      track.append(h('div',{class:'slide'},h('img',{src:src,alt:(title||'')+' '+(i+1),loading:'lazy',draggable:'false',onclick:function(){if(onTap) onTap(i)}})));
+    });
+    return track;
+  }
+  function gallery(d){
+    var imgs=dealImgs(d); if(!imgs.length) imgs=[PLACEHOLDER];
+    var media=h('div',{class:'media'});
+    var track=makeTrack(imgs,dTitle(d),imgs[0]===PLACEHOLDER?null:function(i){openLightbox(imgs,i,dTitle(d))});
+    media.append(track);
+    if(imgs.length>1){
+      var dots=h('div',{class:'dots'}); imgs.forEach(function(_,i){dots.append(h('i',{class:i===0?'on':''}))});
+      var count=h('span',{class:'count'},'1/'+imgs.length);
+      var cur=0,raf=0;
+      function go(i){ i=Math.max(0,Math.min(imgs.length-1,i)); track.scrollTo({left:i*track.clientWidth,behavior:'smooth'}); }
+      track.addEventListener('scroll',function(){
+        if(raf) return;
+        raf=requestAnimationFrame(function(){
+          raf=0; var i=Math.round(track.scrollLeft/Math.max(1,track.clientWidth));
+          if(i!==cur){ cur=i; Array.prototype.forEach.call(dots.children,function(x,j){x.className=j===i?'on':''}); count.textContent=(i+1)+'/'+imgs.length; }
+        });
+      });
+      track.addEventListener('keydown',function(e){ if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1); });
+      media.append(dots,count,
+        h('button',{class:'arrow l',type:'button','aria-label':'Previous photo',onclick:function(){go(cur-1)}},svgIcon(P.left,20,2.4)),
+        h('button',{class:'arrow r',type:'button','aria-label':'Next photo',onclick:function(){go(cur+1)}},svgIcon(P.right,20,2.4)));
+    }
+    return media;
+  }
+  function openLightbox(imgs,start,title){
+    var track=makeTrack(imgs,title,null),cnt=h('span',null,(start+1)+'/'+imgs.length);
+    var lb=h('div',{class:'lb',role:'dialog','aria-modal':'true'},
+      h('div',{class:'lb-top'},cnt,h('button',{type:'button','aria-label':'Close',onclick:close},'×')),track);
+    function close(){lb.remove();document.removeEventListener('keydown',key)}
+    function key(e){if(e.key==='Escape') close()}
+    document.addEventListener('keydown',key);
+    track.addEventListener('scroll',function(){cnt.textContent=(Math.round(track.scrollLeft/Math.max(1,track.clientWidth))+1)+'/'+imgs.length});
+    document.body.append(lb);
+    track.style.scrollBehavior='auto'; track.scrollLeft=start*track.clientWidth;
+  }
+
+  /* ============ customer card ============ */
+  function shareLink(d){
+    var base=safeUrl(S.settings.shareUrl)||(S.hosted?safeUrl(location.href):''); if(!base) return '';
+    return base.replace(/#.*$/,'')+'#deal-'+d.id;
+  }
+  function goCat(c,sub){
+    S.tab='cats';S.main=normCat(c);S.sub=(sub&&sub!=='Other')?sub:'';S.q='';S.zone='';$('q').value='';
+    if(S.focus){S.focus='';if(location.hash) location.hash='home'}
+    render();window.scrollTo(0,0);
+  }
+  function catBadge(d){
+    var c=normCat(d.category);
+    return h('button',{class:'cbadge',type:'button',style:'--cc:'+catColor(c),onclick:function(){goCat(c,d.sub)}},
+      catEmoji(c)+' '+catLabel(c)+(d.sub&&d.sub!=='Other'?' › '+subLabel(d.sub):''));
+  }
+  function ytId(u){
+    try{var x=new URL(u),hn=x.hostname.replace(/^www\./,''),id='';
+      if(hn==='youtu.be') id=x.pathname.slice(1);
+      else if(/(^|\.)youtube\.com$/.test(hn)){ if(x.pathname==='/watch') id=x.searchParams.get('v')||''; else { var m=x.pathname.match(/^\/(shorts|embed|live)\/([^/?]+)/); if(m) id=m[2]; } }
+      return /^[A-Za-z0-9_-]{6,15}$/.test(id)?id:'';
+    }catch(e){return ''}
+  }
+  function openVideo(u){
+    var id=ytId(u);
+    if(!id||window.claude){ window.open(u,'_blank','noopener,noreferrer'); return; }
+    var lb=h('div',{class:'lb',role:'dialog','aria-modal':'true'});
+    function close(){lb.remove();document.removeEventListener('keydown',key)}
+    function key(e){if(e.key==='Escape') close()}
+    document.addEventListener('keydown',key);
+    lb.append(h('div',{class:'lb-top'},h('span',null,'▶ '+t('vid')),h('button',{type:'button','aria-label':'Close',onclick:close},'×')),
+      h('div',{class:'vframe'},h('iframe',{src:'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1',allow:'autoplay; encrypted-media; picture-in-picture',allowfullscreen:'true',title:t('vid')})));
+    document.body.append(lb);
+  }
+  function card(d){
+    var p=pct(d),ended=isEnded(d),isNew=Date.now()-(d.createdAt||0)<864e5&&!ended,loot=p>=60&&!ended;
+    var link=safeUrl(d.link),title=dTitle(d),desc=dDesc(d);
+    var ref=d.checkedAt||d.createdAt;
+    var descEl=desc?h('p',{class:'desc'},desc):null,more=null;
+    if(desc&&(desc.length>110||desc.indexOf('\n')>-1)){
+      more=h('button',{class:'more',type:'button',onclick:function(){
+        var open=descEl.classList.toggle('open'); more.textContent=open?t('less'):t('more');
+      }},t('more'));
+    }
+    var priceNode;
+    if(hasPrice(d)){
+      priceNode=h('div',{class:'price'},
+        h('span',{class:'now'},d.newPrice===0?t('free'):inr(d.newPrice)),
+        p>0&&h('span',{class:'was'},inr(d.oldPrice)),
+        p>0&&h('span',{class:'saving'},t('saveAmt',{x:inr(d.oldPrice-d.newPrice)})));
+    } else if(d.offerText){
+      priceNode=h('div',{class:'price'},h('span',{class:'now offer'},d.offerText));
+    }
+    var priceTxt=hasPrice(d)?(d.newPrice===0?t('free'):inr(d.newPrice))+(p?' ('+inr(d.oldPrice)+' → '+p+'% OFF)':''):(d.offerText||'');
+    var sl=shareLink(d);
+    var shareText=title+'\n'+priceTxt+(d.coupon?'\n'+t('coupon')+': '+d.coupon:'')+(sl?'\n'+sl:'')+'\n'+appName();
+    var saved=S.saved.has(d.id);
+    var buy=link&&!d.sample
+      ? h('a',{class:'buy',href:link,target:'_blank',rel:'noopener noreferrer sponsored nofollow'},t('buy'))
+      : h('a',{class:'buy','aria-disabled':'true',href:'#',tabindex:'-1'},d.sample?t('sample'):t('noLink'));
+    var vu=safeUrl(d.videoUrl);
+    var vbtn=(vu&&!ended)?h('button',{class:'vidbtn',type:'button',onclick:function(){openVideo(vu)}},'▶ '+t('vid')):null;
+    var coupon=null;
+    if(d.coupon&&!ended){
+      var cb=h('button',{type:'button'},t('copy'));
+      cb.addEventListener('click',function(){
+        var done=function(){toast(t('copied'))};
+        try{ navigator.clipboard.writeText(d.coupon).then(done,function(){toast(d.coupon)}); }catch(e){ toast(d.coupon); }
+      });
+      coupon=h('div',{class:'coupon'},h('div',null,h('small',null,t('coupon')),h('code',null,d.coupon)),cb);
+    }
+    var showTimer=!ended&&typeof d.expiresAt==='number'&&d.expiresAt>Date.now()&&d.expiresAt-Date.now()<48*36e5;
+    return h('article',{class:'card'},
+      (function(){
+        var m=gallery(d);
+        if(p>0) m.append(h('span',{class:'off'},t('off',{n:p})));
+        m.append(h('div',{class:'flags'},d.pinned&&!ended&&h('span',{class:'flag star'},'★'),isNew&&h('span',{class:'flag'},t('isNew')),loot&&h('span',{class:'flag loot'},t('loot'))));
+        if(ended) m.append(h('div',{class:'ended'},t('ended')));
+        return m;
+      })(),
+      h('div',{class:'body'},
+        h('div',{class:'meta'},catBadge(d),h('span',null,ago(d.createdAt||Date.now()))),
+        h('h3',{class:'title'},title),
+        priceNode,
+        d.extra&&!ended&&h('div',{class:'extra'},d.extra),
+        coupon,
+        showTimer&&h('div',{class:'timer'},t('endsIn',{t:left(d.expiresAt)})),
+        descEl,more,vbtn,
+        !ended&&!d.sample&&ref&&h('div',{class:'checked'},'✔ '+t('checked',{t:ago(ref)})),
+        h('div',{class:'actions'},
+          ended?h('a',{class:'buy','aria-disabled':'true',href:'#',tabindex:'-1'},t('ended')):buy,
+          h('a',{class:'ico wa',href:'https://wa.me/?text='+encodeURIComponent(shareText),target:'_blank',rel:'noopener noreferrer','aria-label':t('share')},svgIcon(P.wa)),
+          (function(){
+            var b=h('button',{class:'ico',type:'button','aria-pressed':saved?'true':'false','aria-label':saved?t('unsave'):t('save'),onclick:function(){toggleSave(d.id)}});
+            var ic=svgIcon(P.heart); if(saved) ic.setAttribute('fill','currentColor'); b.append(ic); return b;
+          })()
+        )
+      )
+    );
+  }
+
+  /* ============ shop view ============ */
+  function customerList(){
+    var q=S.q.trim().toLowerCase(),z=ZONES.filter(function(k){return k.k===S.zone})[0];
+    return S.deals.filter(function(d){
+      if(!d.title||isExpired(d)) return false;
+      var ended=isEnded(d),c=normCat(d.category);
+      if(isHiddenCat(c)) return false;
+      if(S.tab==='saved'){ if(!S.saved.has(d.id)) return false; }
+      else if(ended) return false;
+      if(S.tab==='home'&&S.cat!=='all'&&c!==S.cat) return false;
+      if(S.tab==='cats'){ if(c!==S.main) return false; if(S.sub&&d.sub!==S.sub) return false; }
+      if(z&&!zoneMatch(d,z)) return false;
+      if(q&&((dTitle(d)||'')+' '+dDesc(d)+' '+catLabel(d.category)+' '+(d.sub||'')+' '+subLabel(d.sub||'')).toLowerCase().indexOf(q)<0) return false;
+      return true;
+    });
+  }
+  function sortList(list){
+    var a=list.slice();
+    if(S.sort==='off') a.sort(function(x,y){return pct(y)-pct(x)||(y.createdAt||0)-(x.createdAt||0)});
+    else if(S.sort==='low') a.sort(function(x,y){return (hasPrice(x)?x.newPrice:1e12)-(hasPrice(y)?y.newPrice:1e12)});
+    else a.sort(function(x,y){return (y.createdAt||0)-(x.createdAt||0)});
+    return a;
+  }
+  function show(id,on){var e=$(id); if(e) e.hidden=!on}
+  function renderShop(){
+    var b=$('banners'); b.replaceChildren();
+    if(!S.live&&!S.loading) b.append(h('div',{class:'demo'},'Demo mode · 5× tap the logo = seller (demo data stays on this phone only)'));
+    if(S.live&&S.slow&&S.loading) b.append(h('div',{class:'slow'},t('slow')));
+    var an=S.settings&&S.settings.ann;
+    if(an&&an.on&&String(an.text||'').trim()&&S.tab==='home'&&!S.focus){
+      var au=safeUrl(an.url),txt=String(an.text).trim();
+      b.append(au?h('a',{class:'ann',href:au,target:'_blank',rel:'noopener noreferrer'},'📢 '+txt+' →'):h('div',{class:'ann'},'📢 '+txt));
+    }
+
+    var focusEl=$('focus'),browse=$('browse'),nav=$('nav');
+    if(S.focus){
+      browse.hidden=true; nav.hidden=true; focusEl.hidden=false; focusEl.replaceChildren();
+      var fd=S.deals.filter(function(x){return x.id===S.focus})[0];
+      if(fd&&isExpired(fd)) fd=null;
+      focusEl.append(h('button',{class:'back',type:'button',onclick:function(){S.focus='';location.hash='home';route()}},'← '+t('backAll')));
+      if(S.loading) focusEl.append(h('div',{class:'empty'},h('b',null,t('loading')),t('loadingS')));
+      else if(!fd) focusEl.append(h('div',{class:'empty'},h('b',null,t('notFound'))));
+      else {
+        focusEl.append(h('div',{class:'feed'},card(fd)));
+        var lk=safeUrl(fd.link);
+        /* Outside claude.ai (hosted site or installed app) a shared deal link goes straight to the shop. */
+        if(!window.claude&&lk&&!isEnded(fd)&&!fd.sample&&!S.redirected){S.redirected=true;setTimeout(function(){try{location.replace(lk)}catch(e){}},900)}
+      }
+      renderFooter(fd?[fd]:[]); return;
+    }
+    focusEl.hidden=true; browse.hidden=false; nav.hidden=false;
+
+    var tab=S.tab,isHome=tab==='home',isCats=tab==='cats',isSaved=tab==='saved',isFollow=tab==='follow';
+    var gridMode=isCats&&!S.main;
+    var live=S.deals.filter(function(d){return d.title&&!isEnded(d)&&!isExpired(d)&&!isHiddenCat(normCat(d.category))});
+
+    ['home','cats','saved','follow'].forEach(function(k){$('tab-'+k).setAttribute('aria-current',tab===k?'page':'false')});
+    var sc=$('savedcount'); sc.hidden=S.saved.size===0; sc.textContent=String(S.saved.size);
+    show('strip',isHome); show('joinhost',isHome); show('searchbox',!isFollow&&!gridMode);
+    show('zones',isHome||(isCats&&!!S.main));
+    show('chips',isHome||(isCats&&!!S.main)); show('filters',!isFollow&&!gridMode); show('feed',!isFollow&&!gridMode);
+    show('catgrid',gridMode); show('catbar',isCats&&!!S.main); show('followview',isFollow);
+
+    if(isHome){
+      var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
+      var latest=live.filter(function(d){return !d.sample}).reduce(function(m,d){return Math.max(m,d.createdAt||0)},0);
+      $('strip').replaceChildren(h('strong',null,String(today)),h('span',null,t('stripNew')),latest?h('span',null,'· '+t('stripLast',{t:ago(latest)})):null);
+      var jh=$('joinhost'); jh.replaceChildren();
+      var jl=socialsList().filter(function(x){return x.type==='whatsapp'||x.type==='telegram'}).slice(0,2);
+      if(jl.length) jh.append(h('div',{class:'join'},h('b',null,t('joinT')),h('span',null,jl.map(function(x){return h('a',{href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},SOC[x.type][0])}))));
+    }
+
+    /* price zones: Under 99 / 199 / 499 / 999 and Above 1000 */
+    var zh=$('zones'); zh.replaceChildren();
+    if(isHome||(isCats&&!!S.main)){
+      var base=live.filter(function(d){return isHome?(S.cat==='all'||normCat(d.category)===S.cat):(normCat(d.category)===S.main)});
+      zh.append(h('div',{class:'zt'},'💰 '+t('zoneT')),h('div',{class:'zrow'},ZONES.map(function(z){
+        var n=base.filter(function(d){return zoneMatch(d,z)}).length;
+        return h('button',{class:'zone',type:'button','aria-pressed':S.zone===z.k?'true':'false',style:'--zc:'+z.c,onclick:function(){S.zone=S.zone===z.k?'':z.k;render()}},
+          h('span',{class:'ze'},z.e),h('b',null,zoneLabel(z)),h('small',null,t('dealsN',{n:n})));
+      })));
+    }
+
+    if(gridMode){
+      var g=$('catgrid'); g.replaceChildren();
+      g.append(h('h2',{class:'ptitle',style:'grid-column:1/-1'},t('catsTitle')));
+      TAX.forEach(function(m){
+        var n=live.filter(function(d){return normCat(d.category)===m.id}).length;
+        var tile=h('button',{class:'cattile'+(n?'':' zero'),type:'button',style:'--cc:'+catColor(m.id),onclick:function(){S.main=m.id;S.sub='';S.q='';S.zone='';$('q').value='';render();window.scrollTo(0,0)}},
+          h('span',{class:'ce'},m.e),h('b',null,catLabel(m.id)),h('span',null,t('dealsN',{n:n})));
+        g.append(tile);
+      });
+      renderFooter([]); return;
+    }
+    if(isFollow){
+      var fv=$('followview'); fv.replaceChildren(h('h2',{class:'ptitle'},t('followT')),h('p',{class:'hint'},t('followS')));
+      var about=String((S.settings&&S.settings.about)||'').trim();
+      if(about) fv.append(h('p',{class:'about'},about));
+      var sl=socialsList();
+      if(!sl.length) fv.append(h('div',{class:'empty'},h('b',null,t('noSocial'))));
+      sl.forEach(function(x){
+        var meta=SOC[x.type]||SOC.other,name=x.type==='other'?(x.label||'Link'):meta[0];
+        fv.append(h('a',{class:'social',href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},
+          h('span',{class:'sb',style:'background:'+meta[1]},name.charAt(0).toUpperCase()),
+          h('span',{class:'sn'},h('b',null,name),x.label&&x.type!=='other'?h('small',null,x.label):null),
+          h('span',{class:'go2'},t('openSoc')+' →')));
+      });
+      renderFooter([]); return;
+    }
+
+    var ch=$('chips'); ch.replaceChildren();
+    if(isHome){
+      var mains=[]; live.forEach(function(d){var c=normCat(d.category); if(mains.indexOf(c)<0) mains.push(c)});
+      mains.sort(function(a,c){return MAIN_IDS.indexOf(a)-MAIN_IDS.indexOf(c)});
+      if(S.cat!=='all'&&mains.indexOf(S.cat)<0) S.cat='all';
+      [['all','🛍️ '+t('all')]].concat(mains.map(function(c){return [c,catEmoji(c)+' '+catLabel(c)]})).forEach(function(c){
+        ch.append(h('button',{class:'chip',type:'button','aria-pressed':S.cat===c[0]?'true':'false',onclick:function(){S.cat=c[0];render()}},c[1]));
+      });
+    } else if(isCats){
+      var cb=$('catbar'); cb.replaceChildren(h('button',{class:'back',type:'button',onclick:function(){S.main='';S.sub='';S.zone='';render();window.scrollTo(0,0)}},'← '+t('catsTitle')),h('h2',null,catEmoji(S.main)+' '+catLabel(S.main)));
+      var mainDef=TAXALL.filter(function(m){return m.id===S.main})[0]||{subs:[]};
+      var inMain=live.filter(function(d){return normCat(d.category)===S.main});
+      var subsHere=mainDef.subs.filter(function(x){return inMain.some(function(d){return d.sub===x})});
+      if(S.sub&&subsHere.indexOf(S.sub)<0) S.sub='';
+      [['',t('allSub')]].concat(subsHere.map(function(x){return [x,subLabel(x)]})).forEach(function(c){
+        ch.append(h('button',{class:'chip',type:'button','aria-pressed':S.sub===c[0]?'true':'false',onclick:function(){S.sub=c[0];render()}},c[1]));
+      });
+    }
+
+    var fl=$('filters'); fl.replaceChildren();
+    var sel=h('select',{'aria-label':t('sortNew')},[['new','sortNew'],['off','sortOff'],['low','sortLow']].map(function(o){return h('option',{value:o[0],selected:S.sort===o[0]?true:null},t(o[1]))}));
+    sel.addEventListener('change',function(){S.sort=sel.value;render()});
+    fl.append(sel);
+    if(S.zone) fl.append(h('button',{class:'chip',type:'button','aria-pressed':'true',onclick:function(){S.zone='';render()}},'✕ '+zoneLabel(ZONES.filter(function(k){return k.k===S.zone})[0])));
+
+    var feed=$('feed'); feed.replaceChildren();
+    if(S.loading){ feed.append(h('div',{class:'empty'},h('b',null,t('loading')),t('loadingS'))); renderFooter([]); return; }
+    var list=sortList(customerList());
+    if(!list.length){
+      var m;
+      if(isSaved) m=[t('emptySavedT'),t('emptySavedS')];
+      else if(S.q||S.zone||(isHome&&S.cat!=='all')||(isCats&&S.sub)) m=[t('emptySearchT'),t('emptySearchS')];
+      else m=[t('emptyNoneT'),t('emptyNoneS')];
+      feed.append(h('div',{class:'empty'},h('b',null,m[0]),m[1])); renderFooter([]); return;
+    }
+    var shown=[];
+    if(isHome&&!S.q&&S.sort==='new'&&!S.zone){
+      var pins=list.filter(function(d){return d.pinned}),rest=list.filter(function(d){return !d.pinned});
+      if(pins.length){ feed.append(h('div',{class:'day star'},'★ '+t('pinned'))); pins.forEach(function(d){feed.append(card(d));shown.push(d)}); }
+      var last='';
+      rest.forEach(function(d){
+        var lab=dayLabel(d.createdAt||0);
+        if(lab!==last){feed.append(h('div',{class:'day'},lab));last=lab}
+        feed.append(card(d)); shown.push(d);
+      });
+    } else { list.forEach(function(d){feed.append(card(d));shown.push(d)}); }
+    if(S.live&&S.hitLimit) feed.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},t('moreDeals')));
+    renderFooter(shown);
+  }
+  function renderFooter(shown){
+    $('disc1').textContent=t('discGen').replace('Nesam Deals',appName()); $('disc2').textContent=t('discPrice');
+    $('disc3').hidden=!shown.some(isAmazon);
+  }
+  function toggleSave(id){
+    if(S.saved.has(id)) S.saved.delete(id); else S.saved.add(id);
+    lsSet('nesam-saved',Array.from(S.saved)); render();
+  }
+
+  /* ============ data layer ============ */
+  function demoSeed(){
+    var n=Date.now();
+    return [
+      {id:'s1',title:'மாதிரி டீல்: Cotton Kurti Set',category:'Women',sub:'Kurtis & Ethnic Wear',oldPrice:899,newPrice:349,desc:'இது ஒரு மாதிரி டீல் மட்டும்.',imgs:[],createdAt:n-36e5,sample:true,source:'Meesho'},
+      {id:'s2',title:'மாதிரி டீல்: Bluetooth Earbuds',category:'Electronics',sub:'Earbuds & Audio',oldPrice:1999,newPrice:699,desc:'இது ஒரு மாதிரி டீல் மட்டும்.',imgs:[],createdAt:n-9e5,sample:true,source:'Other'},
+      {id:'s3',title:'மாதிரி டீல்: Kids Building Blocks',category:'Kids',sub:'Toys & Games',oldPrice:799,newPrice:299,desc:'இது ஒரு மாதிரி டீல் மட்டும்.',imgs:[],createdAt:n-18e5,sample:true,source:'Other'}
+    ];
+  }
+  async function cleanupOld(){
+    if(!S.live||!S.admin) return;
+    try{
+      var snap=await S.db.collection('deals').where('createdAt','<',Date.now()-lifeMs()).limit(50).get();
+      var n=0;
+      for(var i=0;i<snap.docs.length;i++){ await S.db.collection('deals').doc(snap.docs[i].id).delete(); n++; }
+      if(n) toast(n+' பழைய டீல்ஸ் ('+lifeDays()+' நாளுக்கு மேல) தானா நீக்கியாச்சு');
+    }catch(e){}
+  }
+  function demoPersist(){ lsSet('nesam-demo-deals',S.deals); }
+  async function addDeal(data){
+    if(S.live){ await S.db.collection('deals').add(data); }
+    else { data.id='d'+Date.now(); S.deals.unshift(data); demoPersist(); render(); }
+  }
+  async function setDeal(id,data){
+    if(S.live){ await S.db.collection('deals').doc(id).set(data); }
+    else { S.deals=S.deals.map(function(d){return d.id===id?Object.assign({id:id},data):d}); demoPersist(); render(); }
+  }
+  async function patchDeal(id,patch){
+    try{
+      if(S.live){ await S.db.collection('deals').doc(id).update(patch); }
+      else { S.deals=S.deals.map(function(d){return d.id===id?Object.assign({},d,patch):d}); demoPersist(); render(); }
+    }catch(e){ toast('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'); }
+  }
+  async function removeDeal(id){
+    try{
+      if(S.live){ await S.db.collection('deals').doc(id).delete(); }
+      else { S.deals=S.deals.filter(function(d){return d.id!==id}); demoPersist(); render(); }
+      toast('நீக்கியாச்சு');
+    }catch(e){ toast('நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.'); }
+  }
+  async function saveSettings(data){
+    if(S.live){ await S.db.doc('settings/app').set(data); }
+    else { lsSet('nesam-settings',data); S.settings=data; render(); }
+  }
+
+  /* ============ images ============ */
+  function readFile(f){return new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(fr.result)};fr.onerror=rej;fr.readAsDataURL(f)})}
+  function loadImg(src){return new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im)};im.onerror=rej;im.src=src})}
+  async function encode(src,dim,q,png){
+    var im=await loadImg(src),s=Math.min(1,dim/Math.max(im.width,im.height)),c=document.createElement('canvas');
+    c.width=Math.max(1,Math.round(im.width*s)); c.height=Math.max(1,Math.round(im.height*s));
+    var x=c.getContext('2d'); if(!png){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}
+    x.drawImage(im,0,0,c.width,c.height);
+    return png?c.toDataURL('image/png'):c.toDataURL('image/jpeg',q);
+  }
+  async function fitPhotos(srcs){
+    function total(a){return a.reduce(function(n,s){return n+s.length},0)}
+    if(total(srcs)<=IMG_BUDGET) return srcs;
+    var lv=[[640,.66],[560,.6],[480,.55],[420,.5],[360,.45],[300,.4],[260,.35]];
+    for(var i=0;i<lv.length;i++){
+      var out=[]; for(var j=0;j<srcs.length;j++) out.push(await encode(srcs[j],lv[i][0],lv[i][1]));
+      if(total(out)<=IMG_BUDGET) return out;
+    }
+    return null;
+  }
+
+  /* ============ seller studio (admin only, Tamil) ============ */
+  var F=null;
+  function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,ended:false,sample:false,video:'',err:'',ok:'',busy:false}}
+  function formFrom(d){
+    var f=blankForm();
+    f.id=d.id;f.createdAt=d.createdAt;f.photos=dealImgs(d);f.title=d.title||'';f.main=normCat(d.category);f.sub=d.sub||'';f.source=d.source||'Amazon';
+    f.oldPrice=d.oldPrice?String(d.oldPrice):'';f.newPrice=hasPrice(d)?String(d.newPrice):'';f.offerText=d.offerText||'';f.link=d.link||'';f.extra=d.extra||'';f.coupon=d.coupon||'';
+    f.expires=d.expiresAt?toLocalInput(d.expiresAt):'';f.desc=d.desc||'';f.video=d.videoUrl||'';f.pinned=!!d.pinned;f.ended=!!d.ended;f.sample=false;
+    return f;
+  }
+  function toLocalInput(ms){var d=new Date(ms),p=function(n){return String(n).padStart(2,'0')};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes())}
+  function fld(label,id,input,hint){return h('div',{class:'fld'},h('label',{for:id},label),input,hint&&h('span',{class:'hint'},hint))}
+  function bind(el,key,isCheck){el.addEventListener('input',function(){F[key]=isCheck?el.checked:el.value});return el}
+
+  function renderSeller(){
+    var root=$('seller'); root.replaceChildren();
+    if(!F) F=blankForm();
+    root.append(h('div',{class:'sbar'},h('b',null,'🛠️ அட்மின் பேனல் (உனக்கு மட்டும்)'),
+      h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},
+        h('button',{type:'button',onclick:function(){location.hash='home';route()}},'வாடிக்கையாளர் பார்வை →'),
+        S.hosted&&h('button',{type:'button',style:'background:#fff',onclick:function(){window.NESAM.signOut()}},'வெளியேறு'))));
+    var tabs=[['dash','📊 முகப்பு'],['new',F.id?'✏️ திருத்து':'➕ புது டீல்'],['list','📋 டீல்ஸ் ('+S.deals.length+')'],['set','⚙️ அமைப்புகள்']];
+    root.append(h('div',{class:'stabs',role:'group'},tabs.map(function(x){return h('button',{type:'button','aria-pressed':S.stab===x[0]?'true':'false',onclick:function(){S.stab=x[0];renderSeller();window.scrollTo(0,0)}},x[1])})));
+    if(S.stab==='dash') root.append(sellerDash());
+    else if(S.stab==='new') root.append(sellerForm());
+    else if(S.stab==='list') root.append(sellerList());
+    else root.append(sellerSettings());
+  }
+
+  /* ---- dashboard ---- */
+  function armBtn(label,armLabel,fn,cls){
+    var b=h('button',{type:'button',class:cls||''},label),tm;
+    b.addEventListener('click',function(){
+      if(b.getAttribute('data-arm')==='1'){fn();return}
+      b.setAttribute('data-arm','1');b.textContent=armLabel;
+      clearTimeout(tm);tm=setTimeout(function(){b.removeAttribute('data-arm');b.textContent=label},3000);
+    });
+    return b;
+  }
+  async function bulkDelete(pred,what){
+    var ids=S.deals.filter(pred).map(function(d){return d.id});
+    if(!ids.length){toast('நீக்க ஒண்ணும் இல்ல');return}
+    try{
+      if(S.live){ for(var i=0;i<ids.length;i++) await S.db.collection('deals').doc(ids[i]).delete(); }
+      else { S.deals=S.deals.filter(function(d){return ids.indexOf(d.id)<0}); demoPersist(); }
+      toast(ids.length+' '+what+' நீக்கியாச்சு');
+    }catch(e){toast('சில டீல்ஸை நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.')}
+    renderSeller();
+  }
+  function sellerDash(){
+    var all=S.deals.filter(function(d){return d.title});
+    var live=all.filter(function(d){return !isEnded(d)&&!isExpired(d)});
+    var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
+    var ended=all.filter(function(d){return isEnded(d)||isExpired(d)}).length;
+    var soon=live.filter(function(d){return (d.createdAt||0)+lifeMs()-Date.now()<864e5}).length;
+    var z99=live.filter(function(d){return zoneMatch(d,ZONES[0])}).length,z1k=live.filter(function(d){return zoneMatch(d,ZONES[4])}).length;
+    function st(n,l,c){return h('div',{class:'stat',style:'--sc:'+c},h('b',null,String(n)),h('span',null,l))}
+    var rows=TAXALL.map(function(m){return {m:m,n:live.filter(function(d){return normCat(d.category)===m.id}).length}}).filter(function(x){return x.n>0}).sort(function(a,b){return b.n-a.n});
+    var mx=rows.length?rows[0].n:1;
+    var samples=all.filter(function(d){return d.sample}).length;
+    return h('div',null,
+      h('div',{class:'stats'},st(live.length,'லைவ் டீல்ஸ்','#0A8A5F'),st(today,'இன்று போட்டது','#1546C6'),st(soon,'இன்னிக்குள்ள மறையும்','#EA580C'),st(ended,'முடிஞ்சது / காலாவதி','#D81E2D'),st(z99,'₹99-க்குள்','#7C3AED'),st(z1k,'₹1000-க்கு மேல்','#0E7490')),
+      h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,'வகை வாரியா லைவ் டீல்ஸ்'),
+        rows.length?rows.map(function(x){return h('div',{class:'bar'},h('span',null,x.m.e+' '+taOf(x.m.id)),h('i',{style:'width:'+Math.max(6,Math.round(x.n/mx*100))+'%;background:'+catColor(x.m.id)}),h('b',null,String(x.n)))}):h('p',{class:'hint'},'இன்னும் லைவ் டீல் இல்ல.')),
+      h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,'விரைவு வேலைகள்'),
+        h('div',{class:'btns',style:'flex-direction:column'},
+          h('button',{type:'button',class:'go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},'➕ புது டீல் போடு'),
+          armBtn('🧹 முடிஞ்ச/காலாவதி டீல்ஸ் நீக்கு','உறுதியா?',function(){bulkDelete(function(d){return isEnded(d)||isExpired(d)},'டீல்ஸ்')}),
+          samples?armBtn('🗑️ மாதிரி டீல்ஸ் நீக்கு ('+samples+')','உறுதியா?',function(){bulkDelete(function(d){return d.sample},'மாதிரி டீல்ஸ்')}):null)),
+      h('p',{class:'hint'},'டீல்ஸ் '+lifeDays()+' நாளுக்கு அப்புறம் தானா மறையும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.'));
+  }
+
+  /* ---- new deal form ---- */
+  function zoneHintText(){
+    var np=F.newPrice===''?null:parseFloat(F.newPrice); if(np==null||!(np>=0)) return '';
+    var z=zoneOf({newPrice:np}); if(!z) return '';
+    return '💰 இது "'+(z.over?'₹'+z.n+'-க்கு மேல்':'₹'+z.n+'-க்குள்')+'" பிரிவுல வரும்';
+  }
+  function catPicker(){
+    var wrap=h('div',{class:'fld'},h('span',{class:'lbl'},'1️⃣ இது எந்த வகை டீல்?'));
+    wrap.append(h('div',{class:'pick'},TAXALL.map(function(m){
+      return h('button',{type:'button',class:'pk',style:'--cc:'+catColor(m.id),'aria-pressed':F.main===m.id?'true':'false',onclick:function(){F.main=m.id;F.sub='';renderSeller()}},m.e+' '+taOf(m.id));
+    })));
+    if(F.main){
+      var subs=(TAXALL.filter(function(m){return m.id===F.main})[0]||{subs:[]}).subs;
+      wrap.append(h('span',{class:'lbl',style:'margin-top:8px'},'2️⃣ உள் வகை'),h('div',{class:'pick'},subs.map(function(x){
+        return h('button',{type:'button',class:'pk sub',style:'--cc:'+catColor(F.main),'aria-pressed':F.sub===x?'true':'false',onclick:function(){F.sub=x;renderSeller()}},x==='Other'?'மற்றவை':taSub(x));
+      })));
+      if(F.sub) wrap.append(h('div',{class:'prev'},'👀 வாடிக்கையாளருக்கு இப்படி காட்டும்: ',h('span',{class:'cbadge',style:'--cc:'+catColor(F.main)},catEmoji(F.main)+' '+taOf(F.main)+(F.sub!=='Other'?' › '+taSub(F.sub):''))));
+    }
+    return wrap;
+  }
+  function sellerForm(){
+    var errP=h('p',{class:'err',role:'alert',hidden:F.err?null:true},F.err);
+    var okP=h('p',{class:'ok',hidden:F.ok?null:true},F.ok);
+    var file=h('input',{type:'file',id:'f-img',accept:'image/*',multiple:true});
+    file.addEventListener('change',async function(){
+      var files=Array.prototype.slice.call(file.files||[]).slice(0,MAX_PHOTOS-F.photos.length);
+      if(!files.length) return;
+      F.err='';
+      for(var i=0;i<files.length;i++){
+        try{ F.photos.push(await encode(await readFile(files[i]),900,.85)); }
+        catch(e){ F.err='ஒரு போட்டோவை படிக்க முடியல. வேற போட்டோ தேர்ந்தெடுங்க.'; }
+      }
+      renderSeller();
+    });
+    var grid=h('div',{class:'photos'});
+    F.photos.forEach(function(src,i){
+      grid.append(h('div',{class:'ph'},h('img',{src:src,alt:'Photo '+(i+1)}),
+        h('button',{class:'x',type:'button','aria-label':'போட்டோவை நீக்கு',onclick:function(){F.photos.splice(i,1);renderSeller()}},'×'),
+        i===0?h('span',{class:'cov'},'முகப்பு'):h('button',{class:'first',type:'button',onclick:function(){var p=F.photos.splice(i,1)[0];F.photos.unshift(p);renderSeller()}},'முகப்பாக்கு')));
+    });
+    if(F.photos.length<MAX_PHOTOS) grid.append(h('label',{class:'addph',for:'f-img'},'+ போட்டோ',file));
+    var title=bind(h('input',{id:'f-title',type:'text',maxlength:140,value:F.title,placeholder:'எ.கா. Cotton Kurti Set (3 colours)'}),'title');
+    var src=h('select',{id:'f-src'},SOURCES.map(function(k){return h('option',{value:k,selected:F.source===k?true:null},k)}));
+    src.addEventListener('input',function(){F.source=src.value});
+    var oldP=bind(h('input',{id:'f-old',type:'number',inputmode:'decimal',min:0,step:'any',value:F.oldPrice}),'oldPrice');
+    var newP=bind(h('input',{id:'f-new',type:'number',inputmode:'decimal',min:0,step:'any',value:F.newPrice}),'newPrice');
+    var zh=h('span',{class:'hint zh'},zoneHintText());
+    newP.addEventListener('input',function(){zh.textContent=zoneHintText()});
+    var offer=bind(h('input',{id:'f-offer',type:'text',maxlength:60,value:F.offerText,placeholder:'எ.கா. Flat 50% OFF (விலை இல்லன்னா மட்டும்)'}),'offerText');
+    var link=bind(h('input',{id:'f-link',type:'url',inputmode:'url',value:F.link,placeholder:'https://…'}),'link');
+    var extra=bind(h('input',{id:'f-extra',type:'text',maxlength:80,value:F.extra,placeholder:'எ.கா. HDFC card-ல கூடுதலா 10% OFF'}),'extra');
+    var coupon=bind(h('input',{id:'f-coupon',type:'text',maxlength:30,value:F.coupon,placeholder:'எ.கா. NESAM50'}),'coupon');
+    var vid=bind(h('input',{id:'f-vid',type:'url',inputmode:'url',value:F.video,placeholder:'https://…'}),'video');
+    var exp=bind(h('input',{id:'f-exp',type:'datetime-local',value:F.expires}),'expires');
+    var desc=h('textarea',{id:'f-desc',maxlength:1200,placeholder:'WhatsApp, Instagram-ல போடற மாதிரியே விளக்கத்தை எழுதுங்க.'}); desc.value=F.desc; bind(desc,'desc');
+    var pin=bind(h('input',{id:'f-pin',type:'checkbox',checked:F.pinned?true:null}),'pinned',true);
+    var go=h('button',{class:'go',type:'button',disabled:F.busy?true:null},F.busy?'சேமிக்கிறேன்…':(F.id?'மாற்றங்களை சேமி':'டீலை போடு'));
+    var clear=h('button',{type:'button',onclick:function(){F=blankForm();renderSeller()}},F.id?'ரத்து':'அழி');
+    go.addEventListener('click',submitDeal);
+    return h('div',{class:'panel'},
+      h('h2',null,F.id?'டீலை திருத்து':'புது டீல் சேர்'),h('p',{class:'hint'},'டீல் '+lifeDays()+' நாள் தான் ஆப்ல இருக்கும். அப்புறம் தானா மறைஞ்சு நீங்கிடும்.'),errP,okP,
+      h('div',{class:'fld'},h('span',{class:'lbl'},'போட்டோஸ் (அதிகபட்சம் '+MAX_PHOTOS+')'),grid,h('span',{class:'hint'},'முதல் போட்டோ தான் முகப்பு. வாடிக்கையாளர் ஸ்வைப் பண்ணி மத்ததை பாப்பாங்க. போட்டோ தானா சின்னதாகி சேமிக்கப்படும்.')),
+      fld('டீல் தலைப்பு','f-title',title),
+      catPicker(),
+      fld('கடை (உனக்கு மட்டும் தெரியும்)','f-src',src),
+      h('div',{class:'row2'},fld('பழைய விலை (₹)','f-old',oldP),fld('இப்போதைய விலை (₹)','f-new',newP,'இலவசம்னா 0 போடு')),zh,
+      fld('விலை இல்லாத சலுகை வாசகம்','f-offer',offer),
+      fld('உன் affiliate லிங்க்','f-link',link,'அப்படியே ஒட்டு. வாடிக்கையாளருக்கு எந்த கடைனு காட்டாது.'),
+      fld('கூடுதல் சலுகை (optional)','f-extra',extra),
+      fld('கூப்பன் கோட் (optional)','f-coupon',coupon),
+      fld('டீல் முடியும் நேரம் (optional)','f-exp',exp,'நேரம் முடிஞ்சதும் டீல் தானா "முடிஞ்சது"னு ஆகிடும்.'),
+      fld('🎬 பொருளோட வீடியோ லிங்க் (optional)','f-vid',vid,'உன் YouTube / Instagram / Facebook வீடியோ லிங்கை ஒட்டு. வாடிக்கையாளருக்கு "பொருளோட வீடியோ பாரு" பட்டன் மட்டும் தெரியும். YouTube வீடியோ ஆப்குள்ளயே ஓடும்.'),
+      fld('விளக்கம்','f-desc',desc),
+      h('label',{class:'chk',for:'f-pin'},pin,'இன்றைய சிறப்பு டீலா மேல காட்டு ★'),
+      h('div',{class:'btns'},clear,go));
+  }
+  async function submitDeal(){
+    var np=F.newPrice===''?null:parseFloat(F.newPrice),op=F.oldPrice===''?0:parseFloat(F.oldPrice),lk=F.link.trim(),msg='';
+    if(!F.title.trim()) msg='தலைப்பை எழுதுங்க.';
+    else if(!F.main) msg='வகையை தேர்ந்தெடுங்க.';
+    else if(!F.sub) msg='உள் வகையை தேர்ந்தெடுங்க.';
+    else if(np==null&&!F.offerText.trim()) msg='இப்போதைய விலை அல்லது சலுகை வாசகம் ஒண்ணாவது எழுதுங்க.';
+    else if(np!=null&&!(np>=0)) msg='விலை சரியா இல்ல.';
+    else if(np!=null&&op&&op<=np) msg='பழைய விலை இப்போதைய விலையை விட அதிகமா இருக்கணும்.';
+    else if(!lk) msg='உன் affiliate லிங்கை ஒட்டுங்க.';
+    else if(!safeUrl(lk)) msg='லிங்க் https:// ஓட தொடங்கணும்.';
+    else if(F.video.trim()&&!safeUrl(F.video)) msg='வீடியோ லிங்க் https:// ஓட தொடங்கணும்.';
+    if(msg){F.err=msg;F.ok='';renderSeller();window.scrollTo(0,0);return}
+    F.busy=true;F.err='';renderSeller();
+    var photos=await fitPhotos(F.photos.slice(0,MAX_PHOTOS));
+    if(!photos){F.busy=false;F.err='போட்டோஸ் ரொம்ப பெருசா இருக்கு. ஒண்ணு ரெண்டை நீக்கிட்டு மறுபடி போடுங்க.';renderSeller();window.scrollTo(0,0);return}
+    var expMs=F.expires?new Date(F.expires).getTime():0;
+    var now=Date.now();
+    var data={title:F.title.trim(),category:F.main,sub:F.sub,source:F.source,oldPrice:op||0,link:safeUrl(lk),desc:F.desc.trim(),imgs:photos,
+      createdAt:F.createdAt||now,checkedAt:now,expiresAt:isFinite(expMs)?expMs:0,coupon:F.coupon.trim(),extra:F.extra.trim(),offerText:F.offerText.trim(),videoUrl:safeUrl(F.video),
+      pinned:!!F.pinned,ended:!!F.ended,sample:false};
+    if(np!=null) data.newPrice=np;
+    try{
+      if(F.id) await setDeal(F.id,data); else await addDeal(data);
+      var wasEdit=!!F.id; F=blankForm(); F.ok=wasEdit?'மாற்றம் சேமிச்சாச்சு ✔':'டீல் போட்டாச்சு ✔ வாடிக்கையாளர் பார்வையில பாரு.'; S.stab='new'; renderSeller(); window.scrollTo(0,0);
+    }catch(e){
+      F.busy=false;F.err='சேமிக்க முடியல. இணைப்பை சரிபார்த்து மறுபடி முயற்சி பண்ணுங்க.';renderSeller();window.scrollTo(0,0);
+    }
+  }
+
+  /* ---- deals list ---- */
+  function sellerList(){
+    var list=S.deals.slice().sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
+    var box=h('div',{class:'lst'});
+    if(!list.length) box.append(h('div',{class:'empty'},h('b',null,'இன்னும் டீல் எதுவும் இல்ல'),'"புது டீல்" டேபில் முதல் டீலை போடுங்க.'));
+    list.forEach(function(d){
+      var imgs=dealImgs(d),ended=isEnded(d),p=pct(d),z=zoneOf(d);
+      var del=h('button',{class:'del',type:'button'},'நீக்கு'),armT;
+      del.addEventListener('click',function(){
+        if(del.getAttribute('data-arm')==='1'){removeDeal(d.id);return}
+        del.setAttribute('data-arm','1');del.textContent='உறுதியா?';
+        clearTimeout(armT);armT=setTimeout(function(){del.removeAttribute('data-arm');del.textContent='நீக்கு'},3000);
+      });
+      var open=safeUrl(d.link);
+      box.append(h('div',{class:'row'},
+        h('img',{src:imgs[0]||PLACEHOLDER,alt:''}),
+        h('div',{class:'info'},
+          h('div',{class:'t'},d.title),
+          h('div',{class:'tags'},
+            d.sample&&h('span',{class:'tg y'},'மாதிரி'),
+            ended?h('span',{class:'tg r'},'முடிஞ்சது'):h('span',{class:'tg g'},'லைவ்'),
+            d.pinned&&h('span',{class:'tg y'},'★ சிறப்பு'),
+            safeUrl(d.videoUrl)&&h('span',{class:'tg'},'🎬 வீடியோ'),
+            h('span',{class:'cbadge',style:'--cc:'+catColor(d.category)},catEmoji(d.category)+' '+taOf(d.category)+(d.sub&&d.sub!=='Other'?' › '+taSub(d.sub):'')),h('span',{class:'tg'},d.source||'-'),isExpired(d)?h('span',{class:'tg r'},'காலாவதி'):h('span',{class:'tg'},Math.max(0,Math.ceil(((d.createdAt||0)+lifeMs()-Date.now())/864e5))+' நாள் மீதம்'),
+            h('span',{class:'tg'},imgs.length+' படம்'),
+            hasPrice(d)&&h('span',{class:'tg'},inr(d.newPrice)+(p?' · '+p+'%':'')),
+            z&&h('span',{class:'tg'},z.over?'₹'+z.n+'+':'≤₹'+z.n)),
+          h('div',{class:'hint'},'போட்டது '+ago(d.createdAt||Date.now())+' · விலை சரிபார்த்தது '+ago(d.checkedAt||d.createdAt||Date.now())),
+          h('div',{class:'racts'},
+            h('button',{type:'button',onclick:function(){F=formFrom(d);S.stab='new';renderSeller();window.scrollTo(0,0)}},'திருத்து'),
+            h('button',{type:'button',onclick:function(){patchDeal(d.id,{checkedAt:Date.now()});toast('விலை சரிபார்த்ததா குறிச்சாச்சு')}},'விலை சரிபார்த்தேன்'),
+            h('button',{type:'button',onclick:function(){patchDeal(d.id,{ended:!d.ended})}},d.ended?'மறுபடி லைவ்':'முடிஞ்சது'),
+            h('button',{type:'button',onclick:function(){patchDeal(d.id,{pinned:!d.pinned})}},d.pinned?'★ எடு':'★ சிறப்பு'),
+            h('button',{type:'button',onclick:function(){patchDeal(d.id,{createdAt:Date.now(),ended:false});toast('இன்னும் '+lifeDays()+' நாள் நீட்டிச்சாச்சு')}},lifeDays()+' நாள் நீட்டு'),
+            open&&h('a',{class:'tg',href:open,target:'_blank',rel:'noopener noreferrer',style:'min-height:36px;display:inline-flex;align-items:center;text-decoration:none;padding:0 10px'},'லிங்க் சோதி'),
+            del))));
+    });
+    if(S.live&&S.hitLimit) box.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},'பழைய டீல்ஸும் காட்டு'));
+    return box;
+  }
+
+  /* ---- settings (everything the owner can change) ---- */
+  var SET={sec:'look',init:false,msg:'',err:'',socials:[],share:'',logo:'',appName:'',tagline:'',theme:'blue',defLang:'ta',hidden:[],custom:[],about:'',life:'7',annOn:false,annText:'',annUrl:''};
+  function setLoad(){
+    var st=S.settings||{};
+    SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
+    SET.share=st.shareUrl||'';SET.logo=st.logo||'';SET.appName=st.appName||'';SET.tagline=st.tagline||'';SET.theme=st.theme||'blue';SET.defLang=st.defLang||'ta';
+    SET.hidden=Array.isArray(st.hiddenCats)?st.hiddenCats.slice():[];
+    SET.custom=Array.isArray(st.customCats)?st.customCats.map(function(c){return {id:c.id,name:c.name,emoji:c.emoji}}):[];
+    SET.about=st.about||'';SET.life=String(lifeDays());
+    var an=st.ann||{};SET.annOn=!!an.on;SET.annText=an.text||'';SET.annUrl=an.url||'';
+    SET.init=true;
+  }
+  function tin(key,ph,max,type){var i=h('input',{type:type||'text',maxlength:max||80,value:SET[key],placeholder:ph||''});i.addEventListener('input',function(){SET[key]=i.value});return i}
+  async function saveAll(){
+    var out=[],bad='';
+    SET.socials.forEach(function(x){
+      var u=(x.url||'').trim(); if(!u) return;
+      if(!safeUrl(u)) bad=(SOC[x.type]?SOC[x.type][0]:'')+' லிங்க் https:// ஓட தொடங்கணும்.';
+      else if(x.type==='other'&&!(x.label||'').trim()) bad='"Other" பக்கத்துக்கு ஒரு பெயர் எழுதுங்க.';
+      else out.push({type:x.type,label:(x.label||'').trim(),url:safeUrl(u)});
+    });
+    if(!bad&&SET.share.trim()&&!safeUrl(SET.share)) bad='ஆப் லிங்க் https:// ஓட தொடங்கணும்.';
+    if(!bad&&SET.annUrl.trim()&&!safeUrl(SET.annUrl)) bad='அறிவிப்பு லிங்க் https:// ஓட தொடங்கணும்.';
+    if(!bad&&SET.annOn&&!SET.annText.trim()) bad='அறிவிப்பை ஆன் பண்ணா, வாசகம் எழுதணும்.';
+    var life=parseInt(SET.life,10); if(!bad&&!(life>=1&&life<=30)) bad='டீல் நாட்கள் 1 முதல் 30-க்குள்ள இருக்கணும்.';
+    var cust=SET.custom.filter(function(c){return (c.name||'').trim()}).map(function(c){return {id:c.id,name:c.name.trim(),emoji:(c.emoji||'').trim()||'🏷️'}});
+    if(bad){SET.err=bad;SET.msg='';renderSeller();window.scrollTo(0,0);return}
+    var data={socials:out,shareUrl:safeUrl(SET.share),logo:SET.logo||'',appName:SET.appName.trim(),tagline:SET.tagline.trim(),theme:SET.theme,defLang:SET.defLang,
+      hiddenCats:SET.hidden.filter(function(x){return x!=='Others'}),customCats:cust,about:SET.about.trim(),lifeDays:life,
+      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)}};
+    try{ await saveSettings(data); SET.err='';SET.msg='அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.'; if(!S.live) SET.init=false; }
+    catch(e){SET.err='சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.';SET.msg=''}
+    renderSeller();window.scrollTo(0,0);
+  }
+  function sellerSettings(){
+    if(!SET.init) setLoad();
+    var errP=h('p',{class:'err',role:'alert',hidden:SET.err?null:true},SET.err),okP=h('p',{class:'ok',hidden:SET.msg?null:true},SET.msg);
+    var secs=[['look','🎨 தோற்றம்'],['cats','🗂️ வகைகள்'],['soc','🔗 பின்தொடர'],['rules','📣 அறிவிப்பு & விதி']];
+    var tabs=h('div',{class:'stabs'},secs.map(function(x){return h('button',{type:'button','aria-pressed':SET.sec===x[0]?'true':'false',onclick:function(){SET.sec=x[0];renderSeller()}},x[1])}));
+    var body=h('div',null);
+    if(SET.sec==='look'){
+      var lf=h('input',{id:'s-logo',type:'file',accept:'image/*'});
+      lf.addEventListener('change',async function(){
+        if(!lf.files[0]) return;
+        try{SET.logo=await encode(await readFile(lf.files[0]),192,.9,true);SET.err='';}catch(e){SET.err='இந்த படத்தை படிக்க முடியல.'}
+        renderSeller();
+      });
+      var dl=h('select',{id:'s-dl'},LANGS.map(function(l){return h('option',{value:l[0],selected:SET.defLang===l[0]?true:null},l[1])}));
+      dl.addEventListener('change',function(){SET.defLang=dl.value});
+      body.append(
+        fld('ஆப் பெயர்','s-name',tin('appName','Nesam Deals',30),'மேல தெரியும் பெயர். காலியா விட்டா "Nesam Deals".'),
+        fld('டேக்லைன் (optional)','s-tag',tin('tagline','எ.கா. தினமும் புது டீல்ஸ்',60),'காலியா விட்டா, வாடிக்கையாளர் மொழிக்கேத்த டேக்லைன் வரும். எழுதினா எல்லா மொழிலயும் இதே வரும்.'),
+        h('div',{class:'fld'},h('span',{class:'lbl'},'ஆப் லோகோ'),h('div',{style:'display:flex;gap:12px;align-items:center'},SET.logo?h('img',{class:'logoprev',src:SET.logo,alt:'Logo'}):h('div',{class:'logoprev'}),lf,SET.logo?h('button',{type:'button',class:'chip',onclick:function(){SET.logo='';renderSeller()}},'நீக்கு'):null),h('span',{class:'hint'},'சதுர படம் நல்லது. கடை லோகோக்கள் இல்லாத சுத்தமான லோகோ போடு.')),
+        h('div',{class:'fld'},h('span',{class:'lbl'},'ஆப் நிறம்'),h('div',{class:'sws'},THEMES.map(function(th){return h('button',{type:'button',class:'sw','aria-pressed':SET.theme===th.id?'true':'false','aria-label':th.n,style:'background:linear-gradient(135deg,'+th.hdr+' 55%,'+th.acc+' 55%)',onclick:function(){SET.theme=th.id;renderSeller()}},h('small',null,th.n))}))),
+        fld('புது வாடிக்கையாளருக்கு முதல் மொழி','s-dl',dl,'வாடிக்கையாளர் மேல உள்ள மொழி பட்டனால எப்ப வேணா மாத்திக்கலாம்.'));
+    } else if(SET.sec==='cats'){
+      var hid=h('div',{class:'hidl'},TAXALL.filter(function(m){return m.id!=='Others'}).map(function(m){
+        var cb=h('input',{type:'checkbox',checked:SET.hidden.indexOf(m.id)<0?true:null});
+        cb.addEventListener('change',function(){var i=SET.hidden.indexOf(m.id);if(cb.checked){if(i>-1)SET.hidden.splice(i,1)}else if(i<0)SET.hidden.push(m.id)});
+        return h('label',{class:'chk'},cb,m.e+' '+taOf(m.id));
+      }));
+      var cr=SET.custom.map(function(c,i){
+        var em=h('input',{type:'text',maxlength:4,value:c.emoji||'',placeholder:'🏷️','aria-label':'எமோஜி',style:'max-width:70px'});em.addEventListener('input',function(){c.emoji=em.value});
+        var nm=h('input',{type:'text',maxlength:30,value:c.name||'',placeholder:'வகை பெயர்','aria-label':'பெயர்'});nm.addEventListener('input',function(){c.name=nm.value});
+        return h('div',{class:'srow',style:'flex-direction:row;align-items:center'},em,nm,h('button',{type:'button',onclick:function(){SET.custom.splice(i,1);renderSeller()}},'நீக்கு'));
+      });
+      body.append(
+        h('div',{class:'fld'},h('span',{class:'lbl'},'வாடிக்கையாளருக்கு காட்ட வேண்டிய வகைகள்'),h('span',{class:'hint'},'டிக் எடுத்தா அந்த வகையும் அதுல இருக்கற டீல்ஸும் வாடிக்கையாளருக்கு மறையும்.'),hid),
+        h('div',{class:'fld'},h('span',{class:'lbl'},'உன் சொந்த வகை சேர்'),h('span',{class:'hint'},'புது வகை (எ.கா. "Diwali Specials") எல்லா மொழிலயும் நீ எழுதின பெயரிலேயே தெரியும்.'),cr,h('button',{type:'button',class:'chip',onclick:function(){SET.custom.push({id:'c_'+Date.now().toString(36),name:'',emoji:''});renderSeller()}},'+ புது வகை')));
+    } else if(SET.sec==='soc'){
+      var rows=SET.socials.map(function(x,i){
+        var sel=h('select',{'aria-label':'தளம்'},Object.keys(SOC).map(function(k){return h('option',{value:k,selected:x.type===k?true:null},SOC[k][0])}));
+        sel.addEventListener('change',function(){x.type=sel.value;renderSeller()});
+        var lab=h('input',{type:'text',maxlength:30,value:x.label,'aria-label':'பெயர்',placeholder:x.type==='other'?'பக்கத்தின் பெயர் (எ.கா. Moj)':'விருப்பம்: எ.கா. @nesamdeals'});
+        lab.addEventListener('input',function(){x.label=lab.value});
+        var url=h('input',{type:'url',inputmode:'url',value:x.url,'aria-label':'லிங்க்',placeholder:'https://…'});
+        url.addEventListener('input',function(){x.url=url.value});
+        return h('div',{class:'srow'},sel,lab,url,h('button',{type:'button',onclick:function(){SET.socials.splice(i,1);renderSeller()}},'நீக்கு'));
+      });
+      var ab=h('textarea',{maxlength:400,placeholder:'எ.கா. நேசம் டீல்ஸ் – தினமும் நல்ல டீல்ஸ், நேர்மையா.'});ab.value=SET.about;ab.addEventListener('input',function(){SET.about=ab.value});
+      body.append(
+        h('div',{class:'fld'},h('span',{class:'lbl'},'எங்களை பின்தொடர பக்கங்கள்'),h('span',{class:'hint'},'WhatsApp, Telegram, Instagram, Facebook, YouTube… எத்தனை வேணும்னாலும் சேர்க்கலாம். வாடிக்கையாளருக்கு "பின்தொடர" டேபில் தெரியும்.'),rows,h('button',{type:'button',class:'chip',onclick:function(){SET.socials.push({type:'whatsapp',label:'',url:''});renderSeller()}},'+ இன்னொரு பக்கம் சேர்')),
+        fld('பின்தொடர பக்கத்துல ஒரு சிறு அறிமுகம் (optional)','s-about',ab),
+        fld('ஆப் பொது லிங்க்','s-share',tin('share','ஆப்போட பொது லிங்க் (லைவ் ஆனப்புறம்)',200,'url'),'WhatsApp பகிர்வுல உன் ஆப் லிங்க் சேரும். அசல் கடை லிங்க் பகிர்வுல வராது.'));
+    } else {
+      var an=h('input',{type:'checkbox',id:'s-annon',checked:SET.annOn?true:null});an.addEventListener('change',function(){SET.annOn=an.checked});
+      body.append(
+        h('div',{class:'fld'},h('span',{class:'lbl'},'📢 முகப்புல மேல காட்டும் அறிவிப்பு'),h('label',{class:'chk',for:'s-annon'},an,'அறிவிப்பை காட்டு'),tin('annText','எ.கா. தீபாவளி ஸ்பெஷல் டீல்ஸ் வந்தாச்சு!',100),h('span',{class:'hint'},'வாடிக்கையாளர் மொழி எதுவானாலும் இதே வாசகம் தெரியும்.')),
+        fld('அறிவிப்பை தொட்டா போற லிங்க் (optional)','s-annu',tin('annUrl','https://…',200,'url')),
+        fld('டீல் எத்தனை நாள் ஆப்ல இருக்கணும்?','s-life',tin('life','7',2,'number'),'1 முதல் 30 நாள். அதுக்கப்புறம் தானா மறைஞ்சு நீங்கிடும்.'));
+    }
+    var save=h('button',{class:'go',type:'button'},'💾 சேமி');
+    save.addEventListener('click',saveAll);
+    return h('div',null,tabs,h('div',{class:'panel'},h('h2',null,'அமைப்புகள்'),errP,okP,body,h('div',{class:'btns'},save)));
+  }
+
+  /* ============ chrome, routing ============ */
+  function appName(){return String((S.settings&&S.settings.appName)||'').trim()||'Nesam Deals'}
+  function applyTheme(){
+    var th=THEMES.filter(function(x){return x.id===((S.settings&&S.settings.theme)||'blue')})[0]||THEMES[0],r=document.documentElement.style;
+    var forced=document.documentElement.getAttribute('data-theme');
+    var dark=forced?forced==='dark':(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
+    r.setProperty('--hdr',dark?'color-mix(in srgb,'+th.hdr+' 55%,#000)':th.hdr);
+    r.setProperty('--brand',dark?th.bd:th.brand);
+    r.setProperty('--accent',th.acc);
+  }
+  function renderChrome(){
+    rebuildTax(); applyTheme();
+    document.documentElement.lang=S.lang; document.documentElement.dir=S.lang==='ur'?'rtl':'ltr';
+    var nm=appName(),parts=nm.split(/\s+/),first=parts.shift(),rest=parts.join(' ');
+    var w=$('word'); w.replaceChildren(first+(rest?' ':''),rest?h('b',null,rest):null);
+    document.title=nm; $('brand').setAttribute('aria-label',nm);
+    $('tagline').textContent=String((S.settings&&S.settings.tagline)||'').trim()||t('tagline');
+    $('q').placeholder=t('search');
+    $('nav-home').textContent=t('navDeals'); $('nav-saved').textContent=t('navSaved'); $('nav-cats').textContent=t('navCats'); $('nav-follow').textContent=t('navFollow');
+    var mk=$('mark'); mk.replaceChildren();
+    var lg=S.settings.logo&&/^data:image\//.test(S.settings.logo)?S.settings.logo:'';
+    if(!lg&&S.hosted) lg='logo.png';
+    if(lg) mk.append(h('img',{src:lg,alt:''}));
+    else { var c=svgIcon(P.cart,24,2.3); c.style.color='#D81E2D'; mk.append(c); }
+    $('sellerBtn').hidden=!S.admin||S.view==='seller';
+    var sel=$('lang');
+    if(!sel.options.length){
+      LANGS.forEach(function(l){sel.append(h('option',{value:l[0]},l[1]))});
+      sel.addEventListener('change',function(){S.lang=sel.value;lsSet('nesam-lang',S.lang);render()});
+    }
+    sel.value=S.lang;
+  }
+  function render(){
+    renderChrome();
+    var seller=S.view==='seller'&&S.admin;
+    $('shop').hidden=seller; $('seller').hidden=!seller; $('nav').hidden=seller||!!S.focus;
+    if(seller) renderSeller(); else renderShop();
+  }
+  function route(){
+    var hsh=(location.hash||'').replace(/^#/,'');
+    S.focus=''; S.view='shop';
+    if(hsh==='seller'&&S.admin) S.view='seller';
+    else if(/^deal-[A-Za-z0-9_-]+$/.test(hsh)) S.focus=hsh.slice(5);
+    render(); window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',route);
+
+  $('q').addEventListener('input',function(e){S.q=e.target.value;renderShop()});
+  $('tab-home').addEventListener('click',function(){S.tab='home';S.zone='';render();window.scrollTo(0,0)});
+  $('tab-saved').addEventListener('click',function(){S.tab='saved';render();window.scrollTo(0,0)});
+  $('tab-cats').addEventListener('click',function(){S.tab='cats';S.main='';S.sub='';S.zone='';render();window.scrollTo(0,0)});
+  $('tab-follow').addEventListener('click',function(){S.tab='follow';render();window.scrollTo(0,0)});
+  $('sellerBtn').addEventListener('click',function(){location.hash='seller';route()});
+  var taps=0,tapT;
+  $('brand').addEventListener('click',function(){
+    if(S.live){
+      if(S.hosted&&!S.admin){taps++;clearTimeout(tapT);tapT=setTimeout(function(){taps=0},1500);if(taps>=5){taps=0;hostedLogin();return}}
+      if(S.view!=='shop'||S.focus){location.hash='home';route()} else window.scrollTo(0,0);
+      return;
+    }
+    taps++;clearTimeout(tapT);tapT=setTimeout(function(){taps=0},1500);
+    if(taps>=5){taps=0;S.admin=!S.admin;if(!S.admin&&S.view==='seller'){location.hash='home'}toast(S.admin?'Demo seller ON':'Demo seller OFF');route()}
+  });
+
+  async function hostedLogin(){
+    try{
+      var r=await window.NESAM.signIn();
+      if(r&&r.signedIn&&!r.admin){ toast('இந்த கணக்குக்கு அட்மின் அனுமதி இல்ல'); try{await window.NESAM.signOut()}catch(e){} }
+    }catch(e){ toast('லாகின் ஆகல. மறுபடி முயற்சி பண்ணுங்க.'); }
+  }
+
+  /* ============ boot ============ */
+  var hasLang=lsGet('nesam-lang',null);
+  var savedLang=hasLang||'ta'; S.lang=T[savedLang]?savedLang:'ta';
+  S.saved=new Set(lsGet('nesam-saved',[]));
+  function applyDefLang(){
+    if(hasLang) return;
+    var dl=S.settings&&S.settings.defLang;
+    if(dl&&T[dl]&&S.lang!==dl) S.lang=dl;
+  }
+  render();
+
+  function startDemo(){
+    S.live=false;S.loading=false;
+    var stored=lsGet('nesam-demo-deals',null);
+    S.deals=Array.isArray(stored)?stored:demoSeed();
+    S.deals=S.deals.filter(function(d){return !isExpired(d)}); demoPersist();
+    S.settings=lsGet('nesam-settings',{})||{};
+    applyDefLang();
+    route();
+  }
+  function subscribeDeals(){
+    if(S.unsub){try{S.unsub()}catch(e){}}
+    var slowT=setTimeout(function(){S.slow=true;render()},10000);
+    S.unsub=S.db.collection('deals').orderBy('createdAt','desc').limit(S.limit).onSnapshot(function(snap){
+      clearTimeout(slowT);
+      S.deals=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x});
+      S.hitLimit=snap.size>=S.limit; S.loading=false;S.slow=false;
+      if(S.admin&&!S.cleaned){S.cleaned=true;cleanupOld();}
+      if(S.view==='seller'&&S.stab==='new') { renderChrome(); return; }
+      render();
+    },function(){
+      clearTimeout(slowT); S.loading=false;S.slow=false;S.deals=[];render();toast(t('failed'));
+    });
+  }
+  (async function init(){
+    var db=null,user=null;
+    try{
+      if(window.claude&&window.claude.use){ db=await window.claude.use('db'); user=await window.claude.use('user'); }
+    }catch(e){}
+    if(!db&&!window.claude&&location.protocol!=='file:'){
+      /* hosted site / installed app: Firebase adapter is loaded by a module script */
+      await new Promise(function(res){ if(window.NESAM) return res(); window.addEventListener('nesam-ready',res,{once:true}); setTimeout(res,8000); });
+      if(window.NESAM){ db=window.NESAM.db; S.hosted=true; }
+      else { S.loading=false; S.deals=[]; render(); toast(t('failed')); return; }
+    }
+    if(!db){startDemo();return}
+    S.live=true;S.db=db;
+    try{S.admin=!!(user&&user.canEdit&&user.canEdit())}catch(e){S.admin=false}
+    if(S.hosted){
+      window.NESAM.onAuth(function(isAdmin,info){
+        var was=S.admin; S.admin=!!isAdmin;
+        if(S.admin&&!was){ toast('வணக்கம்! 🛠️ அட்மின் பட்டன் மேல இருக்கு'); if(!S.cleaned&&!S.loading){S.cleaned=true;cleanupOld();} }
+        if(!S.admin&&S.view==='seller'){ location.hash='home'; }
+        route();
+      });
+    }
+    db.doc('settings/app').onSnapshot(function(snap){
+      S.settings=(snap.exists&&snap.data())||{}; SET.init=false; applyDefLang();
+      if(!(S.view==='seller'&&S.stab!=='list'&&S.stab!=='dash')) render(); else renderChrome();
+    },function(){});
+    subscribeDeals();
+    route();
+  })();
+})();
+</script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {initializeFirestore,getFirestore,persistentLocalCache,persistentMultipleTabManager,collection as fcol,doc as fdoc,addDoc,setDoc,updateDoc,deleteDoc,getDoc,getDocs,onSnapshot,query,where as fwhere,orderBy as forder,limit as flimit} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,onAuthStateChanged,signOut as fsignOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyBRGSq_RwBD2YEGtL9_Nds3L50J6OFsBTM",
+  authDomain:"nesamdeal.firebaseapp.com",
+  projectId:"nesamdeal",
+  storageBucket:"nesamdeal.firebasestorage.app",
+  messagingSenderId:"633779911443",
+  appId:"1:633779911443:web:75e803e921f3499e5e38e6"
+};
+const app=initializeApp(firebaseConfig);
+let fs;
+try{fs=initializeFirestore(app,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})})}catch(e){fs=getFirestore(app)}
+const auth=getAuth(app);
+const wrap=s=>({docs:s.docs.map(d=>({id:d.id,data:()=>d.data()})),size:s.size});
+
+class Q{
+  constructor(name,cs){this.name=name;this.cs=cs||[]}
+  where(f,o,v){return new Q(this.name,this.cs.concat([fwhere(f,o,v)]))}
+  orderBy(f,d){return new Q(this.name,this.cs.concat([forder(f,d||'asc')]))}
+  limit(n){return new Q(this.name,this.cs.concat([flimit(n)]))}
+  _q(){return query(fcol(fs,this.name),...this.cs)}
+  get(){return getDocs(this._q()).then(wrap)}
+  onSnapshot(ok,err){return onSnapshot(this._q(),s=>ok(wrap(s)),err)}
+}
+const db={
+  collection(name){
+    const q=new Q(name);
+    return {
+      add:d=>addDoc(fcol(fs,name),d),
+      doc:id=>({set:d=>setDoc(fdoc(fs,name,id),d),update:p=>updateDoc(fdoc(fs,name,id),p),delete:()=>deleteDoc(fdoc(fs,name,id))}),
+      where:(f,o,v)=>q.where(f,o,v),orderBy:(f,d)=>q.orderBy(f,d),limit:n=>q.limit(n),get:()=>q.get(),onSnapshot:(a,b)=>q.onSnapshot(a,b)
+    };
+  },
+  doc(path){
+    const [c,i]=path.split('/'),ref=fdoc(fs,c,i);
+    return {set:d=>setDoc(ref,d),onSnapshot:(ok,err)=>onSnapshot(ref,s=>ok({exists:s.exists(),data:()=>s.data()}),err)};
+  }
+};
+/* Admin test: the Firestore rules only let the owner's Google account read admin/ping. Nobody else can. */
+async function checkAdmin(u){
+  if(!u) return false;
+  const key='nesam-adm-'+u.uid;
+  try{ await getDoc(fdoc(fs,'admin','ping')); try{localStorage.setItem(key,'1')}catch(e){} return true; }
+  catch(e){
+    if(e&&e.code==='permission-denied'){ try{localStorage.removeItem(key)}catch(x){} return false; }
+    try{return localStorage.getItem(key)==='1'}catch(x){return false}
+  }
+}
+const provider=new GoogleAuthProvider();
+window.NESAM={
+  db,
+  onAuth(cb){ onAuthStateChanged(auth,async u=>{ cb(await checkAdmin(u),u); }); },
+  async signIn(){
+    try{ const r=await signInWithPopup(auth,provider); return {signedIn:true,admin:await checkAdmin(r.user)}; }
+    catch(e){
+      if(e&&(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment')){ await signInWithRedirect(auth,provider); return {signedIn:false}; }
+      throw e;
+    }
+  },
+  signOut(){ return fsignOut(auth); }
+};
+window.dispatchEvent(new Event('nesam-ready'));
+if('serviceWorker' in navigator&&location.protocol==='https:'){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>
