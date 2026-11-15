@@ -80,6 +80,29 @@ a{color:inherit}
 .join a{background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none;border-radius:999px;padding:7px 14px;font-size:14px;margin-left:6px}
 
 /* feed + cards */
+/* view modes: big / grid / list */
+.vmb{flex:none;width:38px;height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.vmb[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.filters .vsp{flex:1;min-width:4px}
+.feed.vm-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.feed.vm-grid .media{aspect-ratio:1/1}
+.feed.vm-list{grid-template-columns:1fr;gap:10px}
+.feed.vm-list .card{flex-direction:row;align-items:stretch}
+.feed.vm-list .media{width:132px;flex:none;aspect-ratio:1/1;align-self:flex-start}
+.feed.vm-grid .body,.feed.vm-list .body{padding:8px 10px 10px;gap:4px;min-width:0}
+.feed.vm-grid .title,.feed.vm-list .title{font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.feed.vm-grid .now,.feed.vm-list .now{font-size:19px}
+.feed.vm-grid .was,.feed.vm-list .was{font-size:12.5px}
+.feed.vm-grid .saving,.feed.vm-grid .desc,.feed.vm-grid .more,.feed.vm-grid .checked,.feed.vm-grid .vidbtn,.feed.vm-grid .coupon,.feed.vm-grid .extra,.feed.vm-grid .timer,.feed.vm-grid .actions .wa,
+.feed.vm-list .desc,.feed.vm-list .more,.feed.vm-list .checked,.feed.vm-list .vidbtn,.feed.vm-list .coupon,.feed.vm-list .extra,.feed.vm-list .timer,.feed.vm-list .actions .wa{display:none}
+.feed.vm-grid .meta span:last-child,.feed.vm-list .meta span:last-child{display:none}
+.feed.vm-grid .actions,.feed.vm-list .actions{gap:6px;padding-top:2px}
+.feed.vm-grid .buy,.feed.vm-list .buy{height:36px;font-size:13.5px;border-radius:10px;padding:0 6px}
+.feed.vm-grid .ico,.feed.vm-list .ico{width:36px;height:36px;border-radius:10px}
+.feed.vm-grid .off,.feed.vm-list .off{font-size:11.5px;padding:2px 7px;left:6px;top:6px}
+.feed.vm-grid .flags,.feed.vm-list .flags{display:none}
+.feed.vm-grid .ended,.feed.vm-list .ended{font-size:15px}
+
 .feed{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
 .day{grid-column:1/-1;font-family:var(--display);font-weight:700;font-size:18px;margin:8px 0 -2px;display:flex;align-items:center;gap:10px}
 .day::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -457,7 +480,7 @@ span.cbadge{cursor:default}
   var SOURCES=['Amazon','Meesho','Flipkart','Myntra','Wishlink','Digital product','Other'];
   var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=5;
 
-  var S={deals:[],settings:{},cat:'all',main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',zone:'',view:'shop',stab:'dash',focus:'',
+  var S={deals:[],settings:{},cat:'all',main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',zone:'',view:'shop',stab:'dash',focus:'',
     admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null};
 
   /* ============ helpers ============ */
@@ -837,9 +860,13 @@ span.cbadge{cursor:default}
     var sel=h('select',{'aria-label':t('sortNew')},[['new','sortNew'],['off','sortOff'],['low','sortLow']].map(function(o){return h('option',{value:o[0],selected:S.sort===o[0]?true:null},t(o[1]))}));
     sel.addEventListener('change',function(){S.sort=sel.value;render()});
     fl.append(sel);
+    fl.append(h('span',{class:'vsp'}));
+    [['big','▢','1'],['grid','▦','2'],['list','☰','3']].forEach(function(o){
+      fl.append(h('button',{class:'vmb',type:'button','aria-label':'view '+o[2],'aria-pressed':S.vm===o[0]?'true':'false',onclick:function(){S.vm=o[0];lsSet('nesam-vm',o[0]);render()}},o[1]));
+    });
     if(S.zone) fl.append(h('button',{class:'chip',type:'button','aria-pressed':'true',onclick:function(){S.zone='';render()}},'✕ '+zoneLabel(ZONES.filter(function(k){return k.k===S.zone})[0])));
 
-    var feed=$('feed'); feed.replaceChildren();
+    var feed=$('feed'); feed.replaceChildren(); feed.className='feed'+(S.vm==='grid'?' vm-grid':S.vm==='list'?' vm-list':'');
     if(S.loading){ feed.append(h('div',{class:'empty'},h('b',null,t('loading')),t('loadingS'))); renderFooter([]); return; }
     var list=sortList(customerList());
     if(!list.length){
@@ -864,7 +891,7 @@ span.cbadge{cursor:default}
     renderFooter(shown);
   }
   function renderFooter(shown){
-    $('disc1').textContent=t('discGen').replace('Nesam Deals',appName()); $('disc2').textContent=t('discPrice');
+    $('disc1').textContent=''; $('disc1').hidden=true; $('disc2').textContent=t('discPrice');
     $('disc3').hidden=!shown.some(isAmazon);
   }
   function toggleSave(id){
@@ -1326,7 +1353,7 @@ span.cbadge{cursor:default}
   /* ============ boot ============ */
   var hasLang=lsGet('nesam-lang',null);
   var savedLang=hasLang||'ta'; S.lang=T[savedLang]?savedLang:'ta';
-  S.saved=new Set(lsGet('nesam-saved',[]));
+  S.saved=new Set(lsGet('nesam-saved',[]));{var _vm=lsGet('nesam-vm','grid');S.vm=(_vm==='big'||_vm==='list')?_vm:'grid';}
   function applyDefLang(){
     if(hasLang) return;
     var dl=S.settings&&S.settings.defLang;
