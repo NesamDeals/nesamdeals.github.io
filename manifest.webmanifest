@@ -1,17 +1,32 @@
 {
-  "name": "Nesam Deals",
-  "short_name": "Nesam Deals",
-  "description": "Daily best deals, hand-picked.",
+  "name": "TruePick",
+  "short_name": "TruePick",
+  "description": "TruePick - honest deals, hand-picked. A NesamShopping brand.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#002C9D",
+  "background_color": "#00235E",
   "theme_color": "#002C9D",
   "lang": "ta",
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
-    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
