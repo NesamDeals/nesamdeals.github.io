@@ -502,7 +502,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
 @keyframes gspin{to{transform:rotate(360deg)}}@keyframes gblink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}@keyframes gbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}@keyframes gbr{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}@keyframes gyawn{0%,60%,100%{transform:scale(.6)}75%{transform:scale(1.25)}}@keyframes gst{0%{opacity:0;transform:translateY(3px)}50%{opacity:.9}100%{opacity:0;transform:translateY(-4px)}}@keyframes gzz{0%{opacity:0;transform:translate(0,6px)}25%{opacity:1}100%{opacity:0;transform:translate(4px,-8px)}}
 .pbtns .pcall,.pbtns .pwa{display:block;text-align:center;margin-top:6px}.pbtns .pwa{background:#16a34a;color:#fff}
 .dcn{display:flex;flex-direction:column;gap:2px;margin:6px 0 2px;font-size:13px}.dcn[hidden]{display:none}.dck{color:#c2410c;font-weight:800}.dcv{color:var(--muted);font-size:12px}
-.hot{margin:4px 0 14px}.hot h3{margin:0 0 8px;font-size:16px}.hotg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hotc{position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--ink)}.hotc img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#eee}.hott{font-weight:700;font-size:13px;line-height:1.25;padding:7px 9px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.hotp{padding:2px 9px 0;font-weight:800;font-size:14px}.hotc .dck{padding:3px 9px 8px;font-size:12px}.hotb{position:absolute;top:6px;left:6px;z-index:2;background:rgba(0,0,0,.55);border-radius:999px;padding:2px 8px;font-size:15px;line-height:1.3}
+.feed #hot{grid-column:1/-1}.shq .shqt{white-space:pre-line}.hot{margin:4px 0 14px}.hot h3{margin:0 0 8px;font-size:16px}.hotg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hotc{position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--ink)}.hotc img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#eee}.hott{font-weight:700;font-size:13px;line-height:1.25;padding:7px 9px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.hotp{padding:2px 9px 0;font-weight:800;font-size:14px}.hotc .dck{padding:3px 9px 8px;font-size:12px}.hotb{position:absolute;top:6px;left:6px;z-index:2;background:rgba(0,0,0,.55);border-radius:999px;padding:2px 8px;font-size:15px;line-height:1.3}
 </style>
 </head>
 <body>
@@ -656,11 +656,11 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
 (function(){
   /* ============ translations (customer side) ============ */
   var T={
-    en:{tagline:"What's the deal today?",search:'Search deals (e.g. earbuds, kurti)',all:'All',isNew:'NEW',loot:'LOOT',off:'{n}% OFF',saveAmt:'Save {x}',buy:'Get this deal →',share:'Share on WhatsApp',save:'Save',unsave:'Remove from saved',more:'Read more',less:'Show less',ended:'Deal ended',today:"Today's deals",yesterday:"Yesterday's deals",dealsOf:'{d} deals',now:'just now',min:'{n} min ago',hr:'{n} hr ago',day:'{n} d ago',checked:'Price checked {t}',stripNew:'new deals today',stripLast:'last added {t}',emptyNoneT:'No deals yet today',emptyNoneS:'Check back in a little while.',emptySearchT:'No deals match this search',emptySearchS:'Try another word or category.',emptySavedT:'Nothing saved yet',emptySavedS:'Tap the heart on a deal you like.',loading:'Loading deals…',loadingS:'One moment',slow:'Deals are taking a while. Check your connection.',failed:"Couldn't load deals. Reopen the page.",pinned:'Deal of the day',coupon:'Coupon code',copy:'Copy',copied:'Code copied',endsIn:'{t} left',under:'Under ₹{n}',sortNew:'Newest first',sortOff:'Biggest discount',sortLow:'Lowest price',free:'FREE',joinT:'Get deals first on your phone',joinWA:'WhatsApp channel',joinTG:'Telegram',navDeals:'Deals',navSaved:'Saved',backAll:'See all deals',sample:'Sample deal',noLink:'Link not added',moreDeals:'Show more deals',notFound:'This deal is not available.',discGen:'TruePick is an affiliate deals app. If you buy through links here, we may earn a small commission at no extra cost to you.',discAll:'All products shown here link to major online stores such as Amazon, Meesho and others. As an Amazon Associate I earn from qualifying purchases. We may earn a commission when you buy through our links, at no extra cost to you. Keep supporting us. – Team Nesam',discPrice:'Prices and stock can change anytime. Please check the price on the next page before you buy.',hh:'h',mm:'m',
+    en:{tagline:"What's the deal today?",search:'Search deals (e.g. earbuds, kurti)',all:'All',isNew:'NEW',loot:'LOOT',off:'{n}% OFF',saveAmt:'Save {x}',buy:'Get this deal →',share:'Share on WhatsApp',save:'Save',unsave:'Remove from saved',more:'Read more',less:'Show less',ended:'Deal ended',today:"Today's deals",yesterday:"Yesterday's deals",dealsOf:'{d} deals',now:'just now',min:'{n} min ago',hr:'{n} hr ago',day:'{n} d ago',checked:'Price checked {t}',stripNew:'new deals today',stripLast:'last added {t}',emptyNoneT:'No deals yet today',emptyNoneS:'Check back in a little while.',emptySearchT:'No deals match this search',emptySearchS:'Try another word or category.',emptySavedT:'Nothing saved yet',emptySavedS:'Tap the heart on a deal you like.',loading:'Loading deals…',loadingS:'One moment',slow:'Deals are taking a while. Check your connection.',failed:"Couldn't load deals. Reopen the page.",pinned:'Deal of the day',coupon:'Coupon code',copy:'Copy',copied:'Code copied',endsIn:'{t} left',under:'Under ₹{n}',sortNew:'Newest first',sortOff:'Biggest discount',sortLow:'Lowest price',sortOld:'Oldest first',sortPick:'⭐ TruePick picks',free:'FREE',joinT:'Get deals first on your phone',joinWA:'WhatsApp channel',joinTG:'Telegram',navDeals:'Deals',navSaved:'Saved',backAll:'See all deals',sample:'Sample deal',noLink:'Link not added',moreDeals:'Show more deals',notFound:'This deal is not available.',discGen:'TruePick is an affiliate deals app. If you buy through links here, we may earn a small commission at no extra cost to you.',discAll:'All products shown here link to major online stores such as Amazon, Meesho and others. As an Amazon Associate I earn from qualifying purchases. We may earn a commission when you buy through our links, at no extra cost to you. Keep supporting us. – Team Nesam',discPrice:'Prices and stock can change anytime. Please check the price on the next page before you buy.',hh:'h',mm:'m',
       navCats:'Categories',navFollow:'Follow',catsTitle:'Shop by category',dealsN:'{n} deals',allSub:'All',followT:'Follow us for daily deals',followS:'Join a page below and never miss a deal.',noSocial:'Our pages will be added soon.',openSoc:'Open',cat:{Women:'Women',Men:'Men',Kids:'Kids',Electronics:'Electronics',Home:'Home & Kitchen',Beauty:'Beauty & Health',Accessories:'Accessories',Grocery:'Grocery',Gifts:'Gifts',Digital:'Digital & Services',Others:'Others'}},
-    ta:{tagline:'இன்னைக்கு என்ன டீல்?',search:'டீல் தேடுங்க… (எ.கா. earbuds, kurti)',all:'எல்லாம்',isNew:'புதுசு',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} மிச்சம்',buy:'இந்த டீலை வாங்க →',share:'WhatsApp-ல பகிர்',save:'சேமி',unsave:'சேமிச்சதை நீக்கு',more:'முழுசா படிக்க',less:'குறைவா காட்டு',ended:'டீல் முடிஞ்சது',today:'இன்றைய டீல்ஸ்',yesterday:'நேற்றைய டீல்ஸ்',dealsOf:'{d} டீல்ஸ்',now:'இப்போ',min:'{n} நிமிடம் முன்',hr:'{n} மணி நேரம் முன்',day:'{n} நாள் முன்',checked:'{t} விலை சரிபார்த்தது',stripNew:'இன்னைக்கு புதிய டீல்ஸ்',stripLast:'கடைசியா {t}',emptyNoneT:'இன்னைக்கான டீல்ஸ் இன்னும் வரல',emptyNoneS:'கொஞ்ச நேரத்துல மறுபடி பாருங்க.',emptySearchT:'இந்த தேடலுக்கு டீல் இல்ல',emptySearchS:'வேற வார்த்தை அல்லது வகையை பாருங்க.',emptySavedT:'சேமிச்ச டீல் எதுவும் இல்ல',emptySavedS:'பிடிச்ச டீலோட இதய பட்டனை அழுத்துங்க.',loading:'டீல்ஸ் வருது…',loadingS:'ஒரு நிமிஷம்',slow:'டீல்ஸ் வர கொஞ்சம் நேரம் ஆகுது. இணைப்பை சரிபாருங்க.',failed:'டீல்ஸ் லோட் ஆகல. பக்கத்தை மறுபடி திறங்க.',pinned:'இன்றைய சிறப்பு டீல்',coupon:'கூப்பன் கோட்',copy:'காப்பி',copied:'கோட் காப்பி ஆச்சு',endsIn:'{t} மீதம்',under:'₹{n}-க்குள்',sortNew:'புதுசு முதல்ல',sortOff:'அதிக தள்ளுபடி',sortLow:'குறைந்த விலை',free:'இலவசம்',joinT:'டீல்ஸ் முதல்ல உங்க போன்ல',joinWA:'WhatsApp சேனல்',joinTG:'Telegram',navDeals:'டீல்ஸ்',navSaved:'சேமித்தவை',backAll:'எல்லா டீல்ஸும் பாரு',sample:'மாதிரி டீல்',noLink:'லிங்க் இல்ல',moreDeals:'இன்னும் டீல்ஸ் காட்டு',notFound:'இந்த டீல் இப்போ இல்ல.',discGen:'TruePick ஒரு affiliate டீல்ஸ் ஆப். இங்க இருக்கற லிங்க்ஸ்ல இருந்து வாங்கினா, உங்க விலை கூடாம எங்களுக்கு சின்ன கமிஷன் கிடைக்கும்.',discAll:'இங்கே காட்டப்படும் எல்லா பொருட்களும் Amazon, Meesho உள்ளிட்ட முக்கிய ஆன்லைன் கடைகளுக்கு லிங்க் செய்யப்பட்டவை. As an Amazon Associate I earn from qualifying purchases. எங்கள் லிங்க் மூலம் வாங்கினால் உங்களுக்கு கூடுதல் செலவு இல்லாமல் எங்களுக்கு கமிஷன் கிடைக்கலாம். தொடர்ந்து ஆதரவு கொடுங்கள். – Team நேசம்',discPrice:'விலையும் ஸ்டாக்கும் எப்ப வேணா மாறலாம். வாங்கறதுக்கு முன்னாடி அடுத்த பக்கத்துல விலையை ஒரு தடவை பாருங்க.',hh:'மணி',mm:'நிமி',
+    ta:{tagline:'இன்னைக்கு என்ன டீல்?',search:'டீல் தேடுங்க… (எ.கா. earbuds, kurti)',all:'எல்லாம்',isNew:'புதுசு',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} மிச்சம்',buy:'இந்த டீலை வாங்க →',share:'WhatsApp-ல பகிர்',save:'சேமி',unsave:'சேமிச்சதை நீக்கு',more:'முழுசா படிக்க',less:'குறைவா காட்டு',ended:'டீல் முடிஞ்சது',today:'இன்றைய டீல்ஸ்',yesterday:'நேற்றைய டீல்ஸ்',dealsOf:'{d} டீல்ஸ்',now:'இப்போ',min:'{n} நிமிடம் முன்',hr:'{n} மணி நேரம் முன்',day:'{n} நாள் முன்',checked:'{t} விலை சரிபார்த்தது',stripNew:'இன்னைக்கு புதிய டீல்ஸ்',stripLast:'கடைசியா {t}',emptyNoneT:'இன்னைக்கான டீல்ஸ் இன்னும் வரல',emptyNoneS:'கொஞ்ச நேரத்துல மறுபடி பாருங்க.',emptySearchT:'இந்த தேடலுக்கு டீல் இல்ல',emptySearchS:'வேற வார்த்தை அல்லது வகையை பாருங்க.',emptySavedT:'சேமிச்ச டீல் எதுவும் இல்ல',emptySavedS:'பிடிச்ச டீலோட இதய பட்டனை அழுத்துங்க.',loading:'டீல்ஸ் வருது…',loadingS:'ஒரு நிமிஷம்',slow:'டீல்ஸ் வர கொஞ்சம் நேரம் ஆகுது. இணைப்பை சரிபாருங்க.',failed:'டீல்ஸ் லோட் ஆகல. பக்கத்தை மறுபடி திறங்க.',pinned:'இன்றைய சிறப்பு டீல்',coupon:'கூப்பன் கோட்',copy:'காப்பி',copied:'கோட் காப்பி ஆச்சு',endsIn:'{t} மீதம்',under:'₹{n}-க்குள்',sortNew:'புதுசு முதல்ல',sortOff:'அதிக தள்ளுபடி',sortLow:'குறைந்த விலை',sortOld:'பழசு முதல்',sortPick:'⭐ TruePick தேர்வு',free:'இலவசம்',joinT:'டீல்ஸ் முதல்ல உங்க போன்ல',joinWA:'WhatsApp சேனல்',joinTG:'Telegram',navDeals:'டீல்ஸ்',navSaved:'சேமித்தவை',backAll:'எல்லா டீல்ஸும் பாரு',sample:'மாதிரி டீல்',noLink:'லிங்க் இல்ல',moreDeals:'இன்னும் டீல்ஸ் காட்டு',notFound:'இந்த டீல் இப்போ இல்ல.',discGen:'TruePick ஒரு affiliate டீல்ஸ் ஆப். இங்க இருக்கற லிங்க்ஸ்ல இருந்து வாங்கினா, உங்க விலை கூடாம எங்களுக்கு சின்ன கமிஷன் கிடைக்கும்.',discAll:'இங்கே காட்டப்படும் எல்லா பொருட்களும் Amazon, Meesho உள்ளிட்ட முக்கிய ஆன்லைன் கடைகளுக்கு லிங்க் செய்யப்பட்டவை. As an Amazon Associate I earn from qualifying purchases. எங்கள் லிங்க் மூலம் வாங்கினால் உங்களுக்கு கூடுதல் செலவு இல்லாமல் எங்களுக்கு கமிஷன் கிடைக்கலாம். தொடர்ந்து ஆதரவு கொடுங்கள். – Team நேசம்',discPrice:'விலையும் ஸ்டாக்கும் எப்ப வேணா மாறலாம். வாங்கறதுக்கு முன்னாடி அடுத்த பக்கத்துல விலையை ஒரு தடவை பாருங்க.',hh:'மணி',mm:'நிமி',
       navCats:'வகைகள்',navFollow:'பின்தொடர',catsTitle:'வகை வாரியா பாருங்க',dealsN:'{n} டீல்ஸ்',allSub:'எல்லாம்',followT:'தினமும் டீல்ஸ் வேணுமா? எங்களை பின்தொடருங்க',followS:'கீழ ஒரு பக்கத்துல சேருங்க, எந்த டீலும் மிஸ் ஆகாது.',noSocial:'எங்க பக்கங்கள் சீக்கிரம் வரும்.',openSoc:'திற',cat:{Women:'பெண்கள்',Men:'ஆண்கள்',Kids:'குழந்தைகள்',Electronics:'எலக்ட்ரானிக்ஸ்',Home:'வீடு & சமையலறை',Beauty:'அழகு & ஆரோக்கியம்',Accessories:'ஆக்சஸரீஸ்',Grocery:'மளிகை',Gifts:'பரிசுகள்',Digital:'டிஜிட்டல் & சேவைகள்',Others:'மற்றவை'}},
-    hi:{tagline:'आज का डील क्या है?',search:'डील खोजें (जैसे earbuds, kurti)',all:'सभी',isNew:'नया',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} की बचत',buy:'यह डील पाएं →',share:'WhatsApp पर शेयर करें',save:'सेव करें',unsave:'सेव से हटाएं',more:'पूरा पढ़ें',less:'कम दिखाएं',ended:'डील खत्म',today:'आज के डील',yesterday:'कल के डील',dealsOf:'{d} के डील',now:'अभी',min:'{n} मिनट पहले',hr:'{n} घंटे पहले',day:'{n} दिन पहले',checked:'कीमत {t} जांची गई',stripNew:'आज के नए डील',stripLast:'आखिरी {t}',emptyNoneT:'आज के डील अभी नहीं आए',emptyNoneS:'थोड़ी देर बाद फिर देखें।',emptySearchT:'इस खोज के लिए कोई डील नहीं',emptySearchS:'दूसरा शब्द या श्रेणी आज़माएं।',emptySavedT:'अभी कुछ सेव नहीं है',emptySavedS:'पसंद के डील पर दिल का बटन दबाएं।',loading:'डील आ रहे हैं…',loadingS:'एक पल',slow:'डील आने में समय लग रहा है। इंटरनेट जांचें।',failed:'डील लोड नहीं हुए। पेज दोबारा खोलें।',pinned:'आज का खास डील',coupon:'कूपन कोड',copy:'कॉपी',copied:'कोड कॉपी हो गया',endsIn:'{t} बाकी',under:'₹{n} से कम',sortNew:'सबसे नया',sortOff:'सबसे ज़्यादा छूट',sortLow:'सबसे कम कीमत',free:'मुफ़्त',joinT:'डील सबसे पहले अपने फोन पर पाएं',joinWA:'WhatsApp चैनल',joinTG:'Telegram',navDeals:'डील',navSaved:'सेव किए',backAll:'सभी डील देखें',sample:'नमूना डील',noLink:'लिंक नहीं है',moreDeals:'और डील दिखाएं',notFound:'यह डील अभी उपलब्ध नहीं है।',discGen:'TruePick एक एफिलिएट डील ऐप है। यहां के लिंक से खरीदने पर हमें छोटा कमीशन मिल सकता है, आपकी कीमत नहीं बढ़ती।',discAll:'यहाँ दिखाए गए सभी प्रोडक्ट Amazon, Meesho जैसे प्रमुख ऑनलाइन स्टोर्स से लिंक हैं। As an Amazon Associate I earn from qualifying purchases. हमारे लिंक से खरीदने पर आपको कोई अतिरिक्त शुल्क नहीं लगता, और हमें कमीशन मिल सकता है। हमारा साथ देते रहें। – टीम नेसम',discPrice:'कीमत और स्टॉक कभी भी बदल सकते हैं। खरीदने से पहले अगले पेज पर कीमत जांच लें।',hh:'घं',mm:'मि',
+    hi:{tagline:'आज का डील क्या है?',search:'डील खोजें (जैसे earbuds, kurti)',all:'सभी',isNew:'नया',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} की बचत',buy:'यह डील पाएं →',share:'WhatsApp पर शेयर करें',save:'सेव करें',unsave:'सेव से हटाएं',more:'पूरा पढ़ें',less:'कम दिखाएं',ended:'डील खत्म',today:'आज के डील',yesterday:'कल के डील',dealsOf:'{d} के डील',now:'अभी',min:'{n} मिनट पहले',hr:'{n} घंटे पहले',day:'{n} दिन पहले',checked:'कीमत {t} जांची गई',stripNew:'आज के नए डील',stripLast:'आखिरी {t}',emptyNoneT:'आज के डील अभी नहीं आए',emptyNoneS:'थोड़ी देर बाद फिर देखें।',emptySearchT:'इस खोज के लिए कोई डील नहीं',emptySearchS:'दूसरा शब्द या श्रेणी आज़माएं।',emptySavedT:'अभी कुछ सेव नहीं है',emptySavedS:'पसंद के डील पर दिल का बटन दबाएं।',loading:'डील आ रहे हैं…',loadingS:'एक पल',slow:'डील आने में समय लग रहा है। इंटरनेट जांचें।',failed:'डील लोड नहीं हुए। पेज दोबारा खोलें।',pinned:'आज का खास डील',coupon:'कूपन कोड',copy:'कॉपी',copied:'कोड कॉपी हो गया',endsIn:'{t} बाकी',under:'₹{n} से कम',sortNew:'सबसे नया',sortOff:'सबसे ज़्यादा छूट',sortLow:'सबसे कम कीमत',sortOld:'पुराने पहले',sortPick:'⭐ TruePick पसंद',free:'मुफ़्त',joinT:'डील सबसे पहले अपने फोन पर पाएं',joinWA:'WhatsApp चैनल',joinTG:'Telegram',navDeals:'डील',navSaved:'सेव किए',backAll:'सभी डील देखें',sample:'नमूना डील',noLink:'लिंक नहीं है',moreDeals:'और डील दिखाएं',notFound:'यह डील अभी उपलब्ध नहीं है।',discGen:'TruePick एक एफिलिएट डील ऐप है। यहां के लिंक से खरीदने पर हमें छोटा कमीशन मिल सकता है, आपकी कीमत नहीं बढ़ती।',discAll:'यहाँ दिखाए गए सभी प्रोडक्ट Amazon, Meesho जैसे प्रमुख ऑनलाइन स्टोर्स से लिंक हैं। As an Amazon Associate I earn from qualifying purchases. हमारे लिंक से खरीदने पर आपको कोई अतिरिक्त शुल्क नहीं लगता, और हमें कमीशन मिल सकता है। हमारा साथ देते रहें। – टीम नेसम',discPrice:'कीमत और स्टॉक कभी भी बदल सकते हैं। खरीदने से पहले अगले पेज पर कीमत जांच लें।',hh:'घं',mm:'मि',
       navCats:'श्रेणियां',navFollow:'फॉलो',catsTitle:'श्रेणी के अनुसार देखें',dealsN:'{n} डील',allSub:'सभी',followT:'रोज़ के डील के लिए हमें फॉलो करें',followS:'नीचे किसी पेज से जुड़ें, कोई डील मिस नहीं होगा।',noSocial:'हमारे पेज जल्द जोड़े जाएंगे।',openSoc:'खोलें',cat:{Women:'महिलाएं',Men:'पुरुष',Kids:'बच्चे',Electronics:'इलेक्ट्रॉनिक्स',Home:'घर और किचन',Beauty:'ब्यूटी और हेल्थ',Accessories:'एक्सेसरीज़',Grocery:'किराना',Gifts:'गिफ्ट',Digital:'डिजिटल और सेवाएं',Others:'अन्य'}},
     te:{tagline:'ఈ రోజు డీల్ ఏంటి?',search:'డీల్స్ వెతకండి (ఉదా. earbuds, kurti)',all:'అన్నీ',isNew:'కొత్త',loot:'LOOT',off:'{n}% OFF',saveAmt:'{x} ఆదా',buy:'ఈ డీల్ పొందండి →',share:'WhatsApp లో షేర్ చేయండి',save:'సేవ్',unsave:'సేవ్ నుండి తీసివేయి',more:'పూర్తిగా చదవండి',less:'తక్కువ చూపించు',ended:'డీల్ ముగిసింది',today:'ఈ రోజు డీల్స్',yesterday:'నిన్నటి డీల్స్',dealsOf:'{d} డీల్స్',now:'ఇప్పుడే',min:'{n} నిమిషాల క్రితం',hr:'{n} గంటల క్రితం',day:'{n} రోజుల క్రితం',checked:'ధర {t} తనిఖీ చేశాం',stripNew:'ఈ రోజు కొత్త డీల్స్',stripLast:'చివరిది {t}',emptyNoneT:'ఈ రోజు డీల్స్ ఇంకా రాలేదు',emptyNoneS:'కొంచెం సేపటి తర్వాత మళ్లీ చూడండి.',emptySearchT:'ఈ శోధనకు డీల్స్ లేవు',emptySearchS:'మరొక పదం లేదా వర్గం ప్రయత్నించండి.',emptySavedT:'ఇంకా ఏమీ సేవ్ చేయలేదు',emptySavedS:'నచ్చిన డీల్‌పై గుండె బటన్ నొక్కండి.',loading:'డీల్స్ వస్తున్నాయి…',loadingS:'ఒక్క క్షణం',slow:'డీల్స్ రావడానికి సమయం పడుతోంది. ఇంటర్నెట్ చెక్ చేయండి.',failed:'డీల్స్ లోడ్ కాలేదు. పేజీని మళ్లీ తెరవండి.',pinned:'ఈ రోజు ప్రత్యేక డీల్',coupon:'కూపన్ కోడ్',copy:'కాపీ',copied:'కోడ్ కాపీ అయింది',endsIn:'{t} మిగిలింది',under:'₹{n} లోపు',sortNew:'కొత్తవి ముందు',sortOff:'ఎక్కువ తగ్గింపు',sortLow:'తక్కువ ధర',free:'ఉచితం',joinT:'డీల్స్ ముందుగా మీ ఫోన్‌లో',joinWA:'WhatsApp ఛానల్',joinTG:'Telegram',navDeals:'డీల్స్',navSaved:'సేవ్ చేసినవి',backAll:'అన్ని డీల్స్ చూడండి',sample:'నమూనా డీల్',noLink:'లింక్ లేదు',moreDeals:'మరిన్ని డీల్స్ చూపించు',notFound:'ఈ డీల్ ఇప్పుడు అందుబాటులో లేదు.',discGen:'TruePick ఒక అఫిలియేట్ డీల్స్ యాప్. ఇక్కడి లింక్‌ల ద్వారా కొంటే మాకు చిన్న కమిషన్ రావచ్చు, మీ ధర పెరగదు.',discAll:'ఇక్కడ చూపిన అన్ని ఉత్పత్తులు Amazon, Meesho వంటి ప్రధాన ఆన్‌లైన్ స్టోర్‌లకు లింక్ అవుతాయి. As an Amazon Associate I earn from qualifying purchases. మా లింక్‌ల ద్వారా కొంటే మీకు అదనపు ఖర్చు లేకుండా మాకు కమిషన్ రావచ్చు. మద్దతు ఇస్తూ ఉండండి. – టీమ్ నేసం',discPrice:'ధర, స్టాక్ ఎప్పుడైనా మారవచ్చు. కొనే ముందు తదుపరి పేజీలో ధర చూసుకోండి.',hh:'గం',mm:'ని',
       navCats:'వర్గాలు',navFollow:'ఫాలో',catsTitle:'వర్గాల వారీగా చూడండి',dealsN:'{n} డీల్స్',allSub:'అన్నీ',followT:'రోజూ డీల్స్ కోసం మమ్మల్ని ఫాలో అవ్వండి',followS:'కింద ఒక పేజీలో చేరండి, ఏ డీల్ మిస్ కాదు.',noSocial:'మా పేజీలు త్వరలో వస్తాయి.',openSoc:'తెరువు',cat:{Women:'మహిళలు',Men:'పురుషులు',Kids:'పిల్లలు',Electronics:'ఎలక్ట్రానిక్స్',Home:'ఇల్లు & వంటగది',Beauty:'బ్యూటీ & ఆరోగ్యం',Accessories:'యాక్సెసరీలు',Grocery:'కిరాణా',Gifts:'బహుమతులు',Digital:'డిజిటల్ & సేవలు',Others:'ఇతరాలు'}},
@@ -1109,6 +1109,8 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     var a=list.slice();
     if(S.sort==='off') a.sort(function(x,y){return pct(y)-pct(x)||(y.createdAt||0)-(x.createdAt||0)});
     else if(S.sort==='low') a.sort(function(x,y){return (hasPrice(x)?x.newPrice:1e12)-(hasPrice(y)?y.newPrice:1e12)});
+    else if(S.sort==='old') a.sort(function(x,y){return (x.createdAt||0)-(y.createdAt||0)});
+    else if(S.sort==='pick'){ a=a.filter(function(d){return d.pinned||(+d.pk||0)>0}); a.sort(function(x,y){return (+y.pk||0)-(+x.pk||0)||(y.createdAt||0)-(x.createdAt||0)}) }
     else a.sort(function(x,y){return (y.createdAt||0)-(x.createdAt||0)});
     return a;
   }
@@ -1231,7 +1233,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     }
 
     var fl=$('filters'); fl.replaceChildren();
-    var sel=h('select',{'aria-label':t('sortNew')},[['new','sortNew'],['off','sortOff'],['low','sortLow']].map(function(o){return h('option',{value:o[0],selected:S.sort===o[0]?true:null},t(o[1]))}));
+    var sel=h('select',{'aria-label':t('sortNew')},[['new','sortNew'],['old','sortOld'],['pick','sortPick'],['off','sortOff'],['low','sortLow']].map(function(o){return h('option',{value:o[0],selected:S.sort===o[0]?true:null},t(o[1]))}));
     sel.addEventListener('change',function(){S.sort=sel.value;render()});
     fl.append(sel);
     fl.append(h('span',{class:'vsp'}));
@@ -1253,14 +1255,12 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     }
     var shown=[];
     if(isHome&&!S.q&&!S.last){ var rem=S.deals.filter(function(d){return S.saved.has(d.id)&&!isExpired(d)&&!isEnded(d)&&endingSoon(d)}).length; if(rem) feed.append(h('button',{class:'remb',type:'button',onclick:function(){S.tab='saved';S.last=false;render();window.scrollTo(0,0)}},t('remindSaved',{n:rem}))); }
-    if(isHome&&!S.q&&S.sort==='new'&&!S.zone){
+    if(isHome&&!S.q&&!S.zone){
       var pins=list.filter(function(d){return d.pinned}),rest=list.filter(function(d){return !d.pinned});
       if(pins.length){ feed.append(h('div',{class:'day star'},'📌 '+t('pinned'))); pins.forEach(function(d){feed.append(card(d));shown.push(d)}); }
-      var last='';
+      if(HOTEL) feed.append(HOTEL);
       var shc=false;
       rest.forEach(function(d){
-        var lab=dayLabel(d.createdAt||0);
-        if(lab!==last){feed.append(h('div',{class:'day'},lab));last=lab}
         feed.append(card(d)); shown.push(d);
         if(!shc&&shown.length>=4){shc=true;feed.append(shareCard())}
       });
@@ -1413,7 +1413,33 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
       ["ஷேர் பண்ணுங்க, அவ்ளோ தான் 👍","Just share it, that is all 👍"]
     ]
   };
-  function shLineTxt(i,lg){ var k=lg==='ta'?0:1; return SHP.o[i%25][k]+' '+SHP.m[Math.floor(i/25)%20][k]+' '+SHP.c[Math.floor(i/500)%20][k] }
+  var SHR=[
+    ["தோழிக்கு ஷேர் பண்ணுங்க, அவளும் சேமிக்கட்டும் 😉","Share it with your girl friend, let her save too 😉"],
+    ["தோழிக்கு ஷேர் பண்ணுங்க, அவ ஷாப்பிங் ஆசை தீரட்டும் 🛍️","Share it with your girl friend, her shopping wish list will love it 🛍️"],
+    ["தோழனுக்கு ஷேர் பண்ணுங்க, அவனும் சேமிக்கட்டும் 😎","Share it with your buddy, let him save too 😎"],
+    ["தோழனுக்கு ஷேர் பண்ணுங்க, அவனுக்கு தெரியாம இருக்கக்கூடாது 😄","Share it with your buddy, he should not miss out 😄"],
+    ["அம்மாக்கு ஷேர் பண்ணுங்க, பாராட்டு கிடைக்கும் 😄","Share it with mom, you will earn a smile 😄"],
+    ["அம்மாக்கு ஷேர் பண்ணுங்க, அவங்க நல்ல டீல் தேடுவாங்க 🙂","Share it with mom, she loves a good deal 🙂"],
+    ["அப்பாக்கு ஷேர் பண்ணுங்க, அவரும் சேமிக்கட்டும் 😉","Share it with dad, let him save too 😉"],
+    ["அப்பாக்கு ஷேர் பண்ணுங்க, பட்ஜெட் மிச்சம் ஆகும் 😅","Share it with dad, his budget will thank you 😅"],
+    ["அக்காவுக்கு ஷேர் பண்ணுங்க, ஷாப்பிங் பிரியராச்சே 🛍️","Share it with your sister, she is a shopping fan 🛍️"],
+    ["அண்ணனுக்கு ஷேர் பண்ணுங்க, அவருக்கும் நல்ல டீல் வேணும் 😄","Share it with your brother, he wants good deals too 😄"],
+    ["தங்கைக்கு ஷேர் பண்ணுங்க, அவ சந்தோஷப்படுவா 😊","Share it with your younger sister, she will be happy 😊"],
+    ["தம்பிக்கு ஷேர் பண்ணுங்க, பாக்கெட் மணி மிச்சம் ஆகும் 😁","Share it with your younger brother, his pocket money will last 😁"],
+    ["மனைவிக்கு ஷேர் பண்ணுங்க, அப்புறம் பாருங்க 😜","Share it with your wife, then see what happens 😜"],
+    ["மனைவிக்கு ஷேர் பண்ணுங்க, அவங்க சந்தோஷமே தனி 💖","Share it with your wife, her smile is worth it 💖"],
+    ["கணவருக்கு ஷேர் பண்ணுங்க, அவர் பட்ஜெட் தப்பிக்கும் 😅","Share it with your husband, his budget will survive 😅"],
+    ["கணவருக்கு ஷேர் பண்ணுங்க, அவரும் தெரிஞ்சுக்கட்டும் 😉","Share it with your husband, let him know too 😉"],
+    ["ஆபீஸ் நண்பர்களுக்கு ஷேர் பண்ணுங்க, லன்ச் பேச்சு டீல்ஸ் தான் 😄","Share it with office friends, lunch talk will be about deals 😄"],
+    ["ஆபீஸ் நண்பர்களுக்கு ஷேர் பண்ணுங்க, நீங்க தான் ஸ்மார்ட் 😎","Share it with office friends, you will be the smart one 😎"],
+    ["பக்கத்து வீட்டுக்காரங்களுக்கு ஷேர் பண்ணுங்க 🏠","Share it with your neighbours 🏠"],
+    ["பக்கத்து வீட்டுக்காரங்களுக்கு ஷேர் பண்ணுங்க, நல்ல பேரு கிடைக்கும் 😊","Share it with your neighbours, you will earn good will 😊"],
+    ["கல்லூரி நண்பர்களுக்கு ஷேர் பண்ணுங்க, மாணவர் பட்ஜெட்டுக்கு நல்லது 🎓","Share it with college friends, great for a student budget 🎓"],
+    ["சொந்தக்காரங்களுக்கு ஷேர் பண்ணுங்க, அடுத்த விசேஷத்துக்கு உதவும் 🎉","Share it with relatives, it will help for the next function 🎉"],
+    ["மாமாவுக்கு ஷேர் பண்ணுங்க, அவரும் சேமிக்கட்டும் 😄","Share it with your uncle, let him save too 😄"],
+    ["குடும்ப குரூப்புக்கு ஷேர் பண்ணுங்க, எல்லாரும் பயன்பெறட்டும் 👨‍👩‍👧","Share it with the family group, let everyone benefit 👨‍👩‍👧"]
+  ];
+  function shLineTxt(i,lg){ var k=lg==='ta'?0:1,b=SHP.o[i%25][k]+' '+SHP.m[Math.floor(i/25)%20][k]+' '+SHP.c[Math.floor(i/500)%20][k]; if(!/[.!?\u2600-\u27BF\uD83C-\uDFFF]$/.test(b)) b+='.'; return b+'\n'+SHR[(i*7+3)%SHR.length][k] }
   function shLinePick(){
     var rec=lsGet('nesam-shrec',[]); if(!Array.isArray(rec)) rec=[];
     var i=0,n=0; do{ i=Math.floor(Math.random()*10000); n++ }while(rec.indexOf(i)>=0&&n<30);
@@ -1589,12 +1615,12 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var F=null;
   Object.assign(AD,{'🔗 லிங்க்ல இருந்து எடு':{"en":'🔗 Take from link',"hi":'🔗 लिंक से भरें'},'லிங்கை ஒட்டிட்டு இந்த பட்டனை அழுத்து. படம், தலைப்பு, விலை தானா வரும். வரலன்னா நீயே போடு.':{"en":'Paste the link and press this button. Image, title and price are filled in automatically. If they do not come, add them yourself.',"hi":'लिंक चिपकाकर यह बटन दबाएं। फोटो, टाइटल और कीमत अपने आप आएंगे। न आए तो खुद डालें।'},'எடுக்கிறேன்… கொஞ்சம் பொறு ⏳':{"en":'Fetching… please wait ⏳',"hi":'ला रहा हूँ… थोड़ा रुकें ⏳'},'முதல்ல affiliate லிங்கை (https://) ஒட்டு.':{"en":'First paste the affiliate link (https://).',"hi":'पहले एफिलिएट लिंक (https://) चिपकाएं।'},'எடுத்தாச்சு ✔':{"en":'Fetched ✔',"hi":'मिल गया ✔'},'வராததை நீயே போடு.':{"en":'Add the missing ones yourself.',"hi":'जो नहीं आया वह खुद डालें।'},'இந்த லிங்கல இருந்து எடுக்க முடியல 😕 படத்தை "+ போட்டோ"ல போடு, விலையை நீயே எழுது.':{"en":'Could not fetch from this link 😕 Add the photo with "+ Photo" and type the price yourself.',"hi":'इस लिंक से नहीं मिल पाया 😕 "+ फोटो" से फोटो डालें और कीमत खुद लिखें।'},'எடுக்க முடியல 😕 நீயே போடு':{"en":'Could not fetch 😕 add it yourself',"hi":'नहीं मिला 😕 खुद डालें'},'கடை':{"en":'Store',"hi":'स्टोर'},'படம்':{"en":'Image',"hi":'फोटो'},'விலை':{"en":'Price',"hi":'कीमत'},'பழைய விலை':{"en":'Old price',"hi":'पुरानी कीमत'},'சந்தை விலை (MRP ₹, optional)':{"en":'Market price (MRP ₹, optional)',"hi":'बाज़ार भाव (MRP ₹, वैकल्पिक)'},'ஆஃபர் விலை (₹, optional)':{"en":'Offer price (₹, optional)',"hi":'ऑफर कीमत (₹, वैकल्पिक)'},'சந்தை விலை கோடிட்டு காட்டும், ஆஃபர் விலை பெருசா தெரியும். ஆஃபர் மட்டும் போட்டாலும் ஓகே.':{"en":'Market price is shown struck through, offer price shown big. Offer price alone is fine too.',"hi":'बाज़ार भाव कटा हुआ दिखेगा, ऑफर कीमत बड़ी। सिर्फ ऑफर कीमत भी चलेगा।'},'🎟 கூப்பன் கோடு (எ.கா. DIWALI50)':{"en":'🎟 Coupon code (e.g. DIWALI50)',"hi":'🎟 कूपन कोड (जैसे DIWALI50)'},'கூப்பன் விவரம் (எ.கா. ₹200 OFF)':{"en":'Coupon details (e.g. ₹200 OFF)',"hi":'कूपन विवरण (जैसे ₹200 OFF)'},'கூப்பன் முடியும் நேரம் (optional)':{"en":'Coupon valid until (optional)',"hi":'कूपन कब तक मान्य (वैकल्पिक)'},'நேரம் முடிஞ்சதும் கூப்பன் தானா மறைஞ்சிடும்.':{"en":'The coupon hides automatically when time is over.',"hi":'समय खत्म होते ही कूपन अपने आप छिप जाएगा।'},'ஆஃபர் விலை சரியா இல்ல.':{"en":'Offer price is not valid.',"hi":'ऑफर कीमत सही नहीं है।'},'சந்தை விலை சரியா இல்ல.':{"en":'Market price is not valid.',"hi":'बाज़ार भाव सही नहीं है।'},'சந்தை விலை, ஆஃபர் விலையை விட அதிகமா இருக்கணும்.':{"en":'Market price must be higher than the offer price.',"hi":'बाज़ार भाव, ऑफर कीमत से ज़्यादा होना चाहिए।'}});
   Object.assign(AD,{'வகை':{'en':'Category','hi':'श्रेणी'},'விவரம்':{'en':'Description','hi':'विवरण'}});
-  function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,comm:'',ended:false,sample:false,video:'',err:'',ok:'',busy:false,offers:[],noGame:false,inGame:false,allowCmt:false}}
+  function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,pick:false,comm:'',ended:false,sample:false,video:'',err:'',ok:'',busy:false,offers:[],noGame:false,inGame:false,allowCmt:false}}
   function formFrom(d){
     var f=blankForm();
     f.id=d.id;f.createdAt=d.createdAt;f.photos=dealImgs(d);f.title=d.title||'';f.main=normCat(d.category);f.sub=d.sub||'';f.source=d.source||'Amazon';
     f.oldPrice=d.oldPrice?String(d.oldPrice):'';f.newPrice=hasPrice(d)?String(d.newPrice):'';f.offerText=d.offerText||'';f.link=d.link||'';f.extra=d.extra||'';f.coupon=d.coupon||'';
-    f.expires=d.expiresAt?toLocalInput(d.expiresAt):'';f.desc=d.desc||'';f.video=d.videoUrl||'';f.pinned=!!d.pinned;f.comm=(PRIV.map[d.id]!=null?String(PRIV.map[d.id]):'');f.ended=!!d.ended;f.sample=false;
+    f.expires=d.expiresAt?toLocalInput(d.expiresAt):'';f.desc=d.desc||'';f.video=d.videoUrl||'';f.pinned=!!d.pinned;f.pick=!!d.pick;f.comm=(PRIV.map[d.id]!=null?String(PRIV.map[d.id]):'');f.ended=!!d.ended;f.sample=false;
     f.offers=(Array.isArray(d.offers)?d.offers:[]).map(function(o){return {p:o.p||'Other',price:(typeof o.price==='number')?String(o.price):'',link:o.link||'',at:o.at||null}});f.noGame=!!d.noGame;f.allowCmt=!!d.allowCmt;f.inGame=!!d.inGame;
     return f;
   }
@@ -1969,6 +1995,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     var vid=bind(h('input',{id:'f-vid',type:'url',inputmode:'url',value:F.video,placeholder:'https://…'}),'video');
     var exp=bind(h('input',{id:'f-exp',type:'datetime-local',value:F.expires}),'expires');
     var desc=h('textarea',{id:'f-desc',maxlength:1200,placeholder:A('WhatsApp, Instagram-ல போடற மாதிரியே விளக்கத்தை எழுதுங்க.')}); desc.value=F.desc; bind(desc,'desc');
+    var pk=bind(h('input',{id:'f-pk',type:'checkbox',checked:F.pick?true:null}),'pick',true);
     var pin=bind(h('input',{id:'f-pin',type:'checkbox',checked:F.pinned?true:null}),'pinned',true);
     var ng=bind(h('input',{id:'f-ng',type:'checkbox',checked:F.inGame?true:null}),'inGame',true);
     var ac=bind(h('input',{id:'f-ac',type:'checkbox',checked:F.allowCmt?true:null}),'allowCmt',true);
@@ -1995,6 +2022,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
       fld(A('விளக்கம்'),'f-desc',desc),
       offersBlock(),
       h('label',{class:'chk',for:'f-pin'},pin,A('📌 இதை எப்பவும் மேல வை (pin)')),
+      h('label',{class:'chk',for:'f-pk'},pk,A('⭐ TruePick தேர்வுல காட்டு (கமிஷன் தெரியலன்னா மட்டும் டிக்)')),
       h('label',{class:'chk',for:'f-ng'},ng,A('🎯 இந்த டீலை விலையை ஊகி விளையாட்டுல சேர்')),
       h('label',{class:'chk',for:'f-ac'},ac,A('💬 இந்த டீலுக்கு கருத்து அனுமதி')),
       h('span',{class:'hint'},A('இதை டிக் பண்ணா மட்டும் இந்த டீல்ல வாடிக்கையாளர் கருத்து எழுதலாம். டிக் இல்லன்னா கருத்து பட்டனே வராது.')),
@@ -2054,7 +2082,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     var now=Date.now();
     var data={title:F.title.trim(),category:F.main,sub:F.sub,source:F.source,oldPrice:op||0,link:safeUrl(lk),desc:F.desc.trim(),imgs:photos,
       createdAt:F.createdAt||now,checkedAt:now,expiresAt:isFinite(expMs)?expMs:0,coupon:F.coupon.trim(),extra:F.extra.trim(),offerText:F.offerText.trim(),videoUrl:safeUrl(F.video),
-      pinned:!!F.pinned,ended:!!F.ended,sample:false,offers:offs,noGame:!!F.noGame,inGame:!!F.inGame,allowCmt:!!F.allowCmt};
+      pinned:!!F.pinned,pick:!!F.pick,pk:pkRank(F.comm,F.pick),ended:!!F.ended,sample:false,offers:offs,noGame:!!F.noGame,inGame:!!F.inGame,allowCmt:!!F.allowCmt};
     if(np!=null) data.newPrice=np;
     try{
       var rid=F.id; if(F.id) await setDeal(F.id,data); else rid=await addDeal(data);
@@ -2071,6 +2099,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     if(PRIV.un||!S.live) return;
     try{ PRIV.un=S.db.collection('dealpriv').onSnapshot(function(sn){ PRIV.err=false; var m={}; sn.docs.forEach(function(x){ var o=x.data()||{}; if(typeof o.comm==='number') m[x.id]=o.comm }); PRIV.map=m; if(S.stab==='list'||S.stab==='deals') { try{renderSeller()}catch(e){} } },function(){ PRIV.err=true }) }catch(e){ PRIV.err=true }
   }
+  function pkRank(comm,pick){ var c=parseFloat(comm); if(isFinite(c)&&c>0) return c>=15?5:c>=10?4:c>=6?3:2; return pick?1:0 }
   function privSave(id,val){
     if(!S.live||!id) return;
     var v=String(val==null?'':val).trim(),n=v===''?null:parseFloat(v);
@@ -2101,7 +2130,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
           h('div',{class:'tags'},
             d.sample&&h('span',{class:'tg y'},A('மாதிரி')),
             ended?h('span',{class:'tg r'},A('முடிஞ்சது')):h('span',{class:'tg g'},A('லைவ்')),
-            d.pinned&&h('span',{class:'tg y'},A('📌 மேல')),(PRIV.map[d.id]!=null)&&h('span',{class:'tg y'},'💰 '+PRIV.map[d.id]+'%'),
+            d.pinned&&h('span',{class:'tg y'},A('📌 மேல')),(PRIV.map[d.id]!=null)&&h('span',{class:'tg y'},'💰 '+PRIV.map[d.id]+'%'),(+d.pk>0)&&h('span',{class:'tg y'},'⭐'),
             d.allowCmt&&h('span',{class:'tg'},'💬'),
             safeUrl(d.videoUrl)&&h('span',{class:'tg'},A('🎬 வீடியோ')),
             h('span',{class:'cbadge',style:'--cc:'+catColor(d.category)},catEmoji(d.category)+' '+acat(d.category)+(d.sub&&d.sub!=='Other'?' › '+asub(d.sub):'')),h('span',{class:'tg'},d.source||'-'),
@@ -2290,38 +2319,28 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var TRK={b:{},seen:{},io:null};
   function tk(x){ return String(x==null?'':x).replace(/[.\/\[\]*`~]/g,'_').slice(0,40)||'_' }
   function dayKey(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2) }
-  var DCT={ta:{c:'{n} முறை தொடப்பட்டது',v:'{n} முறை பார்க்கப்பட்டது'},en:{c:'Tapped {n} times',v:'Viewed {n} times'},hi:{c:'{n} बार टैप किया गया',v:'{n} बार देखा गया'}},DC_K=5,DC_V=20;
+  var DCT={ta:{c:'{n} முறை தொடப்பட்டது',v:'{n} முறை பார்க்கப்பட்டது'},en:{c:'Tapped {n} times',v:'Viewed {n} times'},hi:{c:'{n} बार टैप किया गया',v:'{n} बार देखा गया'}},DC_K=1,DC_V=1;
   function fmtN(n){ return n>=1000?(Math.floor(n/100)/10)+'K':String(n) }
   function dcFill(el,id){
     var c=(S.dc||{})[id]||{},v=+c.v||0,k=+c.c||0,L=DCT[S.lang]||DCT.en; el.replaceChildren();
     if(!featOn('cnt')){ el.hidden=true; return }
-    if(k>=DC_K) el.append(h('b',{class:'dck'},'🔥 '+L.c.split('{n}').join(fmtN(k))));
-    if(v>=DC_V) el.append(h('span',{class:'dcv'},'👁 '+L.v.split('{n}').join(fmtN(v))));
+    var one=function(x,n){ return (S.lang==='en'&&n===1)?x.replace('times','time'):x };
+    if(k>=DC_K) el.append(h('b',{class:'dck'},'🔥 '+one(L.c.split('{n}').join(fmtN(k)),k)));
+    if(v>=DC_V) el.append(h('span',{class:'dcv'},'👁 '+one(L.v.split('{n}').join(fmtN(v)),v)));
     el.hidden=!el.firstChild;
   }
   function dcPaint(){ Array.prototype.forEach.call(document.querySelectorAll('#feed .dcn[data-dc]'),function(el){ dcFill(el,el.getAttribute('data-dc')) }); paintHot() }
-  var HOTL={ta:['அதிகம் தொட்ட டீல்ஸ்','இன்றைய தேர்வு'],en:['Most tapped deals',"Today's picks"],hi:['सबसे ज़्यादा देखे गए डील','आज की पसंद']},HOT_ON=false;
+  var HOTL={ta:['அதிகம் தொட்ட டீல்ஸ்'],en:['Most tapped deals'],hi:['सबसे ज़्यादा देखे गए डील']},HOT_ON=false,HOTEL=document.getElementById('hot');
   function paintHot(on){
     if(typeof on==='boolean') HOT_ON=on;
-    var el=$('hot'); if(!el) return; el.replaceChildren(); el.hidden=true;
+    var el=HOTEL; if(!el) return; el.replaceChildren(); el.hidden=true;
     if(!HOT_ON||!S.live||!featOn('cnt')) return;
     var L=DCT[S.lang]||DCT.en,LH=HOTL[S.lang]||HOTL.en,cnt=function(d){ return (S.dc[d.id]&&+S.dc[d.id].c)||0 };
-    var pool=S.deals.filter(function(d){return !d.sample&&nLive(d)});
-    if(pool.length<2) return;
-    var slot=Math.floor(Date.now()/(3*36e5));
-    var real=pool.filter(function(d){return cnt(d)>=DC_K}).sort(function(a,b){return cnt(b)-cnt(a)}).slice(0,6),pick=[],i;
-    if(real.length>=2){ var pr=Math.ceil(real.length/2),st=(slot%pr)*2; pick=[real[st%real.length],real[(st+1)%real.length]] }
-    else {
-      if(real.length===1) pick.push(real[0]);
-      var rest=pool.filter(function(d){return pick.indexOf(d)<0}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)}).slice(0,12),st2=(slot*2)%Math.max(1,rest.length);
-      for(i=0;pick.length<2&&i<rest.length;i++) pick.push(rest[(st2+i)%rest.length]);
-      if(pick.length<2) return;
-    }
-    var allReal=pick.every(function(d){return cnt(d)>=DC_K});
-    el.append(h('h3',null,(allReal?'🔥 ':'✨ ')+(allReal?LH[0]:LH[1])),h('div',{class:'hotg'},pick.map(function(d){
-      var isReal=cnt(d)>=DC_K;
-      return h('a',{class:'hotc',href:'#deal-'+d.id},h('span',{class:'hotb'},isReal?'🔥':'✨'),h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),
-        h('div',{class:'hott'},d.title),(hasPrice(d)?h('div',{class:'hotp'},inr(d.newPrice)):null),isReal?h('div',{class:'dck'},'🔥 '+L.c.split('{n}').join(fmtN(cnt(d)))):null);
+    var pick=S.deals.filter(function(d){return !d.sample&&!d.pinned&&nLive(d)&&cnt(d)>=DC_K}).sort(function(a,b){return cnt(b)-cnt(a)||(b.createdAt||0)-(a.createdAt||0)}).slice(0,2);
+    if(!pick.length) return;
+    el.append(h('h3',null,'🔥 '+LH[0]),h('div',{class:'hotg'},pick.map(function(d){
+      return h('a',{class:'hotc',href:'#deal-'+d.id},h('span',{class:'hotb'},'🔥'),h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),
+        h('div',{class:'hott'},d.title),(hasPrice(d)?h('div',{class:'hotp'},inr(d.newPrice)):null),h('div',{class:'dck'},'🔥 '+L.c.split('{n}').join(fmtN(cnt(d)))));
     })));
     el.hidden=false;
   }
@@ -2330,12 +2349,13 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function trkAdd(path,by){ if(!trkOn()) return; var o=TRK.b,i; for(i=0;i<path.length-1;i++){ o=o[path[i]]=o[path[i]]||{} } o[path[i]]=(o[path[i]]||0)+(by||1) }
   function trkFlush(){ var b=TRK.b; if(!Object.keys(b).length||!trkOn()) return; TRK.b={}; try{ window.NESAM.track(dayKey(),b) }catch(e){} }
   var DCLAST={};
-  function dcInc(id,f){ if(!trkOn()||!window.NESAM.inc) return; if(f==='c'){ var now=Date.now(); if(DCLAST[id]&&now-DCLAST[id]<3000) return; DCLAST[id]=now } try{ var o={}; o[f]=1; window.NESAM.inc('dcount',id,o).catch(function(){}) }catch(e){} }
+  function dcOn(){ return !!(S.hosted&&S.live&&window.NESAM&&window.NESAM.inc) }
+  function dcInc(id,f){ if(!dcOn()) return; if(f==='c'){ var now=Date.now(); if(DCLAST[id]&&now-DCLAST[id]<3000) return; DCLAST[id]=now } try{ var o={}; o[f]=1; window.NESAM.inc('dcount',id,o).catch(function(){}) }catch(e){} }
   function engOnce(){ if(lsGet('nesam-eng','')!==dayKey()){ lsSet('nesam-eng',dayKey()); trkAdd(['eng']) } }
   function clk2(id){ dcInc(id,'c'); engOnce() }
   function trkClick(d){ trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
   function trkObserve(){
-    if(!trkOn()||!('IntersectionObserver' in window)) return;
+    if(!dcOn()||!('IntersectionObserver' in window)) return;
     if(!TRK.io) TRK.io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ var id=e.target.getAttribute('data-id'); TRK.io.unobserve(e.target); if(id&&!TRK.seen[id]){TRK.seen[id]=1;trkAdd(['v',tk(id)]);dcInc(id,'v')} } }) },{threshold:.5});
     document.querySelectorAll('#feed .card[data-id]').forEach(function(el){ if(!TRK.seen[el.getAttribute('data-id')]) TRK.io.observe(el) });
   }
