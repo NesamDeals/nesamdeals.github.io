@@ -153,7 +153,7 @@ a{color:inherit}
 .feed.vm-grid .title,.feed.vm-list .title{font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .feed.vm-grid .now,.feed.vm-list .now{font-size:19px}
 .feed.vm-grid .was,.feed.vm-list .was{font-size:12.5px}
-.feed.vm-grid .saving,.feed.vm-grid .more,.feed.vm-grid .checked,.feed.vm-grid .vidbtn,.feed.vm-grid .coupon,.feed.vm-grid .extra,.feed.vm-grid .timer,
+.feed.vm-grid .more,.feed.vm-grid .checked,.feed.vm-grid .vidbtn,.feed.vm-grid .coupon,.feed.vm-grid .extra,.feed.vm-grid .timer,
 .feed.vm-list .more,.feed.vm-list .checked,.feed.vm-list .vidbtn,.feed.vm-list .coupon,.feed.vm-list .extra,.feed.vm-list .timer,.feed.vm-list .x__{display:none}
 .feed.vm-grid .meta span:last-child,.feed.vm-list .meta span:last-child{display:none}
 .feed.vm-grid .actions,.feed.vm-list .actions{gap:6px;padding-top:2px}
@@ -196,7 +196,9 @@ a{color:inherit}
 .now{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
 .now.offer{font-size:20px;color:var(--hot)}
 .was{color:var(--muted);text-decoration:line-through;font-variant-numeric:tabular-nums}
-.saving{color:var(--save);font-weight:700;font-size:14px}
+.saving{color:var(--save);font-weight:800;font-size:16px;background:color-mix(in srgb,var(--save) 15%,transparent);border:1.5px solid color-mix(in srgb,var(--save) 45%,transparent);padding:3px 12px;border-radius:999px;display:inline-block}
+.price .saving{flex:0 0 auto}
+.feed.vm-grid .saving,.feed.vm-list .saving{font-size:13.5px;padding:2px 9px}
 .extra{background:color-mix(in srgb,var(--save) 14%,transparent);color:var(--save);font-weight:700;font-size:14px;border-radius:10px;padding:5px 10px}
 .coupon{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px dashed var(--brand);border-radius:12px;padding:6px 6px 6px 12px}
 .coupon small{display:block;color:var(--muted);font-size:12px;line-height:1.1}
@@ -1000,7 +1002,7 @@ span.cbadge{cursor:default}
       priceNode=h('div',{class:'price'},
         h('span',{class:'now'},d.newPrice===0?t('free'):inr(d.newPrice)),
         p>0&&h('span',{class:'was'},inr(d.oldPrice)),
-        p>0&&h('span',{class:'saving'},t('saveAmt',{x:inr(d.oldPrice-d.newPrice)})));
+        p>0&&h('span',{class:'saving'},'🎉 '+t('saveAmt',{x:inr(d.oldPrice-d.newPrice)})));
     } else if(d.offerText){
       priceNode=h('div',{class:'price'},h('span',{class:'now offer'},d.offerText));
     }
