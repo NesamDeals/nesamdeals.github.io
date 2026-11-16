@@ -2550,7 +2550,7 @@ span.cbadge{cursor:default}
     var g=gGet(),today=dayKey();
     if(g.day===today&&g.ids&&g.i>=g.ids.length) return false;
     if(g.day===today&&g.ids&&g.ids.length) return true;
-    return gameEligible().length>=3;
+    return gameEligible().length>=1;
   }
   function gInit(){
     var g=gGet(),today=dayKey();
@@ -2574,7 +2574,7 @@ span.cbadge{cursor:default}
   function updateGame(){
     var b=$('gameBtn'); if(!b) return;
     var any=gPending()||(gGet().day===dayKey()&&gGet().ids&&gGet().ids.length);
-    b.hidden=!featOn('game')||(!any&&!(gameEligible().length>=3));
+    b.hidden=!featOn('game')||(!any&&!(gameEligible().length>=1));
     $('gameDot').hidden=!gPending();
     b.setAttribute('aria-label',t('gameT'));
   }
@@ -2593,7 +2593,7 @@ span.cbadge{cursor:default}
       }
       var d=S.deals.filter(function(x){return x.id===g.ids[g.i]})[0];
       if(!d){ g.i++; lsSet('nesam-game',g); draw(); return }
-      sh.append(h('div',{class:'hint',style:'margin:6px 0'},t('gameRound',{i:g.i+1})),h('img',{class:'gimg',src:dealImgs(d)[0],alt:''}),h('h3',{style:'margin:10px 0 2px'},dTitle(d)),h('div',{class:'hint'},t('gameQ')));
+      sh.append(h('div',{class:'hint',style:'margin:6px 0'},t('gameRound',{i:g.i+1}).replace(/\/\s?3\b/,'/'+R)),h('img',{class:'gimg',src:dealImgs(d)[0],alt:''}),h('h3',{style:'margin:10px 0 2px'},dTitle(d)),h('div',{class:'hint'},t('gameQ')));
       var opts=gOptions(d);
       opts.forEach(function(v){
         var cls='gopt',done=g.a!=null;
