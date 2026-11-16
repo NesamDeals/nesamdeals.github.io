@@ -140,7 +140,7 @@ a{color:inherit}
 .feed.vm-grid .desc,.feed.vm-list .desc{display:-webkit-box;-webkit-line-clamp:2;font-size:12.5px;line-height:1.3}
 .dbtn{display:none;align-self:flex-start;background:none;border:1.5px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--brand);font-weight:700;font-size:12.5px;cursor:pointer}
 .feed.vm-grid .dbtn,.feed.vm-list .dbtn{display:inline-block}
-.dsheet{position:fixed;inset:0;z-index:60;background:rgba(5,8,20,.6);display:flex;align-items:flex-end;justify-content:center}
+.sharecard{grid-column:1/-1;background:linear-gradient(135deg,#0a8a5f,#1546c6);color:#fff;border-radius:18px;padding:16px;margin:6px 0;display:flex;align-items:center;gap:12px}.sharecard b{font-size:16px;display:block}.sharecard span{font-size:13px;opacity:.92}.sharecard button{flex:none;background:#fff;color:#0b2a6b;border:0;border-radius:12px;padding:11px 16px;font-weight:800;font-size:15px;cursor:pointer}.shl{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}.shl button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 12px;font-weight:700;cursor:pointer}.shl button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:transparent}.shb{display:flex;flex-direction:column;gap:8px}.shb a,.shb button{display:block;text-align:center;border:0;border-radius:12px;padding:13px;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none}.shb .wa{background:#25d366;color:#fff}.shb .ot{background:var(--accent);color:var(--accent-ink)}.shb .cp{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}.dsheet{position:fixed;inset:0;z-index:60;background:rgba(5,8,20,.6);display:flex;align-items:flex-end;justify-content:center}
 .dsheet>div{background:var(--card);color:var(--ink);width:100%;max-width:560px;max-height:82vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px 22px}
 .dsheet h3{margin:0 28px 8px 0;font-size:17px}.dsheet p{white-space:pre-line;overflow-wrap:anywhere;margin:0 0 14px;font-size:15px;line-height:1.5}
 .dsheet .dx{position:absolute;right:14px;top:10px;background:none;border:0;font-size:26px;color:var(--ink);cursor:pointer}
@@ -251,7 +251,7 @@ a{color:inherit}
 .lb .slide img{width:100%;height:100%;object-fit:contain;cursor:default}
 .lb-top{display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 14px 8px;color:#fff}
 .lb-top button{width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:22px;cursor:pointer}
-.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--hdr);color:#fff;padding:10px 16px;border-radius:12px;z-index:60;font-size:14px;max-width:90%}
+.toast .tundo{margin-left:12px;background:#fff;color:#111;border:0;border-radius:9px;padding:5px 12px;font-weight:800;font-size:14px;cursor:pointer}.toast{display:flex;align-items:center;justify-content:center;position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--hdr);color:#fff;padding:10px 16px;border-radius:12px;z-index:60;font-size:14px;max-width:90%}
 
 /* seller studio (admin only) */
 .sbar{background:var(--hdr);color:#fff;border-radius:16px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -495,6 +495,8 @@ span.cbadge{cursor:default}
 .pprice s{opacity:.6}.pprice b{font-size:18px}
 .pprice i{font-style:normal;background:#16a34a;color:#fff;border-radius:6px;padding:1px 6px;font-size:12px;font-weight:800}
 .pcoup{margin:6px 0;flex-direction:column;align-items:stretch;gap:6px;padding:8px 10px}.pcoup small{display:block;opacity:.8}.pcoup code{white-space:nowrap;font-size:15px}.pcoup button{align-self:flex-start;padding:6px 14px;min-height:0}
+.strip{flex-wrap:nowrap;align-items:center;gap:10px}.strip .stl{flex:1;min-width:0}.strip .stt{display:flex;gap:7px;align-items:baseline}.strip .stt span{font-size:13px;line-height:1.2}.strip .stx{display:block;font-size:12px;margin-top:2px}.shbtn{position:relative;flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;border:1.5px solid color-mix(in srgb,var(--brand) 35%,var(--line));background:var(--card);color:var(--ink);border-radius:14px;padding:6px 9px 5px;font-weight:800;cursor:pointer;width:96px}.shbtn img{width:28px;height:28px;border-radius:8px;object-fit:cover;flex:none}.shbtn span{color:var(--ink);font-size:11.5px;line-height:1.2;text-align:center}.rdot{position:absolute;top:-4px;right:-3px;width:12px;height:12px;border-radius:50%;background:#e5192b;border:2px solid var(--card);animation:rdp 1.6s infinite}@keyframes rdp{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}.shq{background:color-mix(in srgb,var(--brand) 10%,var(--card));border-left:4px solid var(--brand);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-weight:700;font-size:16px;line-height:1.5}
+html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-index:60;transform:translate(-50%,-70px);background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:800;font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.18);pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s}#ptr.on{opacity:1}#ptr.anim{transition:transform .2s,opacity .15s}
 </style>
 </head>
 <body>
@@ -890,17 +892,22 @@ span.cbadge{cursor:default}
     var m=Math.max(0,Math.round((ms-Date.now())/6e4)),hh=Math.floor(m/60),mm=m%60;
     return hh>0?(hh+' '+t('hh')+' '+mm+' '+t('mm')):(mm+' '+t('mm'));
   }
-  function isExpired(d){return (d.createdAt||0)>0&&Date.now()-d.createdAt>lifeMs()}
+  function isExpired(d){return false}
   function isEnded(d){return !!d.ended||(typeof d.expiresAt==='number'&&d.expiresAt>0&&d.expiresAt<Date.now())}
   function isAmazon(d){
     if(d.source==='Amazon') return true;
     try{return /(^|\.)(amazon\.|amzn\.)/.test(new URL(d.link||'').hostname)}catch(e){return false}
   }
   var toastT;
-  function toast(msg){
+  function toast(msg,undo){
     var old=document.querySelector('.toast'); if(old) old.remove();
     var el=h('div',{class:'toast',role:'status'},msg); document.body.append(el);
-    clearTimeout(toastT); toastT=setTimeout(function(){el.remove()},2600);
+    if(typeof undo==='function'){
+      var ub=h('button',{type:'button',class:'tundo'},A('↩ அன்டூ'));
+      ub.addEventListener('click',function(){clearTimeout(toastT);el.remove();undo()});
+      el.append(ub);
+    }
+    clearTimeout(toastT); toastT=setTimeout(function(){el.remove()},undo?8000:2600);
   }
   function lsGet(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}}
   function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -1140,7 +1147,7 @@ span.cbadge{cursor:default}
     if(isHome){
       var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
       var latest=live.filter(function(d){return !d.sample}).reduce(function(m,d){return Math.max(m,d.createdAt||0)},0);
-      $('strip').replaceChildren(h('strong',null,String(today)),h('span',null,t('stripNew')),latest?h('span',null,'· '+t('stripLast',{t:ago(latest)})):'');
+      $('strip').replaceChildren(h('div',{class:'stl'},h('div',{class:'stt'},h('strong',null,String(today)),h('span',null,t('stripNew'))),latest?h('span',{class:'stx'},t('stripLast',{t:ago(latest)})):''),shareBtn());
       var jh=$('joinhost'); jh.replaceChildren();
       var jl=socialsList().filter(function(x){return x.type==='whatsapp'||x.type==='telegram'}).slice(0,2);
       if(jl.length) jh.append(h('div',{class:'join'},h('b',null,t('joinT')),h('span',null,jl.map(function(x){return h('a',{href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},SOC[x.type][0])}))));
@@ -1240,15 +1247,289 @@ span.cbadge{cursor:default}
       var pins=list.filter(function(d){return d.pinned}),rest=list.filter(function(d){return !d.pinned});
       if(pins.length){ feed.append(h('div',{class:'day star'},'📌 '+t('pinned'))); pins.forEach(function(d){feed.append(card(d));shown.push(d)}); }
       var last='';
+      var shc=false;
       rest.forEach(function(d){
         var lab=dayLabel(d.createdAt||0);
         if(lab!==last){feed.append(h('div',{class:'day'},lab));last=lab}
         feed.append(card(d)); shown.push(d);
+        if(!shc&&shown.length>=4){shc=true;feed.append(shareCard())}
       });
-    } else { list.forEach(function(d){feed.append(card(d));shown.push(d)}); }
-    if(S.live&&S.hitLimit) feed.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},t('moreDeals')));
+      if(!shc&&shown.length>0) feed.append(shareCard());
+    } else { list.forEach(function(d,i){feed.append(card(d));shown.push(d);if(i===3)feed.append(shareCard())}); if(list.length&&list.length<4) feed.append(shareCard()); }
+    if(S.live&&S.hitLimit){
+      var mb=h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},t('moreDeals'));
+      feed.append(mb);
+      if('IntersectionObserver' in window){ var mio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ mio.disconnect(); mb.click() } },{rootMargin:'200px'}); mio.observe(mb); }
+    }
     renderFooter(shown);
   }
+
+  /* ============ share the app ============ */
+  var SHMSG={
+    ta:"🛍️ {n} ஆப் பாருங்க!\nதினமும் புது ஆஃபர்ஸ், விலை குறைஞ்ச டீல்ஸ், கூப்பன்கள் எல்லாம் ஒரே இடத்துல, முழுசா இலவசம்! 🎉\nஒவ்வொரு டீலுலயும் எவ்வளவு மிச்சம்னு தெளிவா தெரியும். நம்பகமான கடைகளோட நேரடி லிங்க்.\n👉 இப்பவே பாருங்க: {u}",
+    en:"🛍️ Check out the {n} app!\nNew offers and price-drop deals every day, all in one place, completely free! 🎉\nEvery deal clearly shows how much you save, with direct links to trusted stores.\n👉 Open now: {u}",
+    hi:"🛍️ {n} ऐप देखिए!\nरोज़ नए ऑफर और कम दाम की डील्स, सब एक ही जगह, बिल्कुल मुफ़्त! 🎉\nहर डील में साफ़ दिखता है कि आप कितना बचाते हैं। भरोसेमंद स्टोर्स के सीधे लिंक।\n👉 अभी खोलिए: {u}",
+    te:"🛍️ {n} యాప్ చూడండి!\nప్రతిరోజూ కొత్త ఆఫర్లు, తక్కువ ధర డీల్స్ అన్నీ ఒకేచోట, పూర్తిగా ఉచితం! 🎉\nప్రతి డీల్‌లో ఎంత ఆదా అవుతుందో స్పష్టంగా కనిపిస్తుంది. నమ్మకమైన స్టోర్లకు నేరుగా లింకులు.\n👉 ఇప్పుడే చూడండి: {u}",
+    kn:"🛍️ {n} ಆ್ಯಪ್ ನೋಡಿ!\nಪ್ರತಿದಿನ ಹೊಸ ಆಫರ್‌ಗಳು, ಕಡಿಮೆ ಬೆಲೆಯ ಡೀಲ್‌ಗಳು ಎಲ್ಲವೂ ಒಂದೇ ಕಡೆ, ಸಂಪೂರ್ಣ ಉಚಿತ! 🎉\nಪ್ರತಿ ಡೀಲ್‌ನಲ್ಲಿ ಎಷ್ಟು ಉಳಿತಾಯ ಎಂದು ಸ್ಪಷ್ಟವಾಗಿ ಕಾಣುತ್ತದೆ. ನಂಬಿಕಸ್ಥ ಅಂಗಡಿಗಳಿಗೆ ನೇರ ಲಿಂಕ್.\n👉 ಈಗಲೇ ನೋಡಿ: {u}",
+    ml:"🛍️ {n} ആപ്പ് കാണൂ!\nദിവസവും പുതിയ ഓഫറുകളും വില കുറഞ്ഞ ഡീലുകളും എല്ലാം ഒരിടത്ത്, തികച്ചും സൗജന്യം! 🎉\nഓരോ ഡീലിലും എത്ര ലാഭമെന്ന് വ്യക്തമായി കാണാം. വിശ്വസനീയ സ്റ്റോറുകളിലേക്ക് നേരിട്ടുള്ള ലിങ്ക്.\n👉 ഇപ്പോൾ തുറക്കൂ: {u}",
+    tl:"🛍️ {n} app paarunga!\nDhinam pudhu offers, vilai kuraintha deals ellaam oru idathula, mulusaa ilavasam! 🎉\nOvvoru dealulayum evlo micham-nu thelivaa theriyum. Nambagamaana kadaigalukku nerada link.\n👉 Ippave paarunga: {u}"
+  };
+  var SHAPK={ta:'📲 Android ஆப்',en:'📲 Android app',hi:'📲 Android ऐप',te:'📲 Android యాప్',kn:'📲 Android ಆ್ಯಪ್',ml:'📲 Android ആപ്പ്',tl:'📲 Android app'};
+  var SHUI={
+    ta:{h:'📤 ஆப்பை நண்பருக்கு ஷேர் பண்ணுங்க',pick:'எந்த மொழியில் அனுப்பணும்?',wa:'WhatsApp-ல அனுப்பு',ot:'மற்ற ஆப்ஸ்ல அனுப்பு',cp:'செய்தியை நகல் எடு',ok:'நகல் ஆச்சு ✔',card:'💌 இந்த ஆப் பிடிச்சிருக்கா?',cardS:'நண்பர்களுக்கும் குடும்பத்துக்கும் ஷேர் பண்ணுங்க. அவங்களும் மிச்சம் பிடிக்கட்டும்!',cardB:'📤 ஷேர்'},
+    en:{h:'📤 Share the app with a friend',pick:'Which language to send in?',wa:'Send on WhatsApp',ot:'Share with other apps',cp:'Copy the message',ok:'Copied ✔',card:'💌 Enjoying the app?',cardS:'Share it with friends and family so they can save too!',cardB:'📤 Share'},
+    hi:{h:'📤 ऐप दोस्त को शेयर करें',pick:'किस भाषा में भेजें?',wa:'WhatsApp पर भेजें',ot:'दूसरे ऐप्स में भेजें',cp:'मैसेज कॉपी करें',ok:'कॉपी हो गया ✔',card:'💌 ऐप पसंद आया?',cardS:'दोस्तों और परिवार को शेयर करें, वे भी बचत करें!',cardB:'📤 शेयर'}
+  };
+  function shUI(){ return SHUI[S.lang]||SHUI.en }
+  function appShareUrl(){
+    var base=safeUrl(S.settings&&S.settings.shareUrl)||(S.hosted?safeUrl(location.origin+location.pathname):'');
+    return base?base.replace(/[#?].*$/,''):'';
+  }
+  function appApkUrl(){ return S.hosted?safeUrl(location.origin+'/download'):'' }
+  function shareMsg(lg){
+    var u=appShareUrl(),a=appApkUrl(),m=(SHMSG[lg]||SHMSG.ta).split('{n}').join(appName()).split('{u}').join(u||'');
+    if(!u) m=m.split('\n').filter(function(l){return l.indexOf('👉')!==0}).join('\n');
+    if(a) m+='\n'+(SHAPK[lg]||SHAPK.ta)+': '+a;
+    return m;
+  }
+  function openShare(){
+    var old=document.querySelector('.dsheet.shs'); if(old) old.remove();
+    var lg=lsGet('nesam-sharelang','ta'); if(!SHMSG[lg]) lg='ta';
+    var sh=h('div',{class:'dsheet shs',role:'dialog','aria-modal':'true',onclick:function(e){if(e.target===sh)sh.remove()}});
+    var prev=h('p',null),wa=h('a',{class:'wa',target:'_blank',rel:'noopener noreferrer'},'WhatsApp'),box=h('div',{class:'shl'});
+    function upd(){
+      var m=shareMsg(lg); prev.textContent=m; wa.href='https://wa.me/?text='+encodeURIComponent(m);
+      Array.prototype.forEach.call(box.children,function(b){b.setAttribute('aria-pressed',b.getAttribute('data-l')===lg?'true':'false')});
+    }
+    ['ta','en','hi','te','kn','ml','tl'].forEach(function(l){
+      var nm=(LANGS.filter(function(x){return x[0]===l})[0]||[l,l])[1];
+      box.append(h('button',{type:'button','data-l':l,onclick:function(){lg=l;lsSet('nesam-sharelang',l);upd()}},nm));
+    });
+    var U=shUI(); wa.textContent=U.wa;
+    var other=h('button',{type:'button',class:'ot',onclick:function(){
+      var m=shareMsg(lg);
+      if(navigator.share){ navigator.share({text:m}).catch(function(){}); }
+      else { navigator.clipboard&&navigator.clipboard.writeText(m).then(function(){toast(U.ok)}); }
+    }},U.ot);
+    var cp=h('button',{type:'button',class:'cp',onclick:function(){
+      var m=shareMsg(lg);
+      try{ navigator.clipboard.writeText(m).then(function(){toast(U.ok)},function(){toast(m)}); }catch(e){ toast(m) }
+    }},U.cp);
+    sh.append(h('div',{style:'position:relative'},h('button',{class:'dx',type:'button','aria-label':'Close',onclick:function(){sh.remove()}},'×'),
+      h('h3',null,U.h),h('div',{class:'shq'},shareLine()),h('p',{style:'font-weight:700;margin-bottom:8px'},U.pick),box,prev,h('div',{class:'shb'},wa,other,cp)));
+    document.body.append(sh); upd();
+  }
+  function shareCard(){
+    var U=shUI();
+    return h('div',{class:'sharecard'},h('div',{style:'flex:1;min-width:0'},h('b',null,U.card),h('span',null,U.cardS)),h('button',{type:'button',onclick:openShare},U.cardB));
+  }
+
+  /* ---- daily share lines: A (setup) x B (call to action), rotated per day ---- */
+  var SHQ={
+    ta:{a:[
+      "நீங்க ஆஃபர்ல வாங்கற மாதிரி உங்க நண்பர்களும் வாங்கணும்னு நினைக்கிறீங்களா?",
+      "ஒரு நல்ல டீல் உங்களுக்கு சேமிப்பு தருது.",
+      "நல்ல விஷயத்தை தனியா வச்சுக்காம பகிர்ந்தா சந்தோஷம் இரட்டிப்பாகும்.",
+      "தெரியாம அதிக விலை கொடுத்து யாரும் ஏமாறக்கூடாது.",
+      "சின்ன சேமிப்பு தான் பெரிய வெற்றியோட ஆரம்பம்.",
+      "குடும்பத்துல எல்லாரும் சேமிக்க ஆரம்பிச்சா மாசக் கடைசில நிம்மதி கிடைக்கும்.",
+      "இன்னிக்கு ஒருத்தருக்கு நல்ல டீல் காட்டினா அவங்க நாளே நல்லா போகும்.",
+      "ஒவ்வொரு ரூபாயும் உழைச்சு வந்தது, அதை புத்திசாலித்தனமா செலவு பண்ணலாம்.",
+      "நல்ல விலைல வாங்கறது புத்திசாலித்தனம், அதை நண்பருக்கும் சொல்றது நல்ல குணம்.",
+      "உங்களுக்கு கிடைச்ச ஆஃபர் உங்க நண்பருக்கும் கிடைக்கணும்னு தோணுதா?",
+      "பண்டிகை, விசேஷம்னு செலவு வந்துட்டே இருக்கும், மிச்சம் பண்ண வழி தெரிஞ்சா எல்லாருக்கும் நல்லது.",
+      "உங்க ஒரு ஷேர் யாரோ ஒருத்தரோட மாச பட்ஜெட்டை காப்பாத்தலாம்.",
+      "நல்ல டீல் தேடி அலைய வேண்டாம், இங்க எல்லாம் ஒரே இடத்துல இருக்கு.",
+      "நண்பர்களோட சேர்ந்து சேமிச்சா சேமிப்பு இன்னும் சந்தோஷமா இருக்கும்.",
+      "பிடிச்ச பொருள் குறைஞ்ச விலைல கிடைச்சா அந்த சந்தோஷமே தனி.",
+      "இன்னிக்கு சேமிக்கற பழக்கம் நாளைக்கு பெரிய நிம்மதி.",
+      "அம்மா, அப்பா, அக்கா, தம்பி எல்லாருக்கும் மிச்சம் பண்ண நீங்க உதவலாம்.",
+      "அதிக விலைல வாங்கிட்டு வருத்தப்படறதை விட, முன்னாடியே தெரிஞ்சு வாங்கறது நல்லது.",
+      "ஆன்லைன்ல வாங்கும்போது சரியான டீல் தெரிஞ்சா பணம் மிச்சம்.",
+      "நம்பகமான டீல்ஸ் ஒரே இடத்துல கிடைக்கறது இப்போ அரிது.",
+      "சேமிக்க சொல்லிக் கொடுக்கறதும் ஒரு நல்ல சேவை தான்.",
+      "உங்க நண்பர் இன்னும் முழு விலை கொடுத்து வாங்கிட்டு இருக்காரா?",
+      "ஒரு லிங்க் அனுப்பறது ஒரு நிமிஷ வேலை, ஆனா அவங்களுக்கு பல நூறு ரூபாய் மிச்சம்.",
+      "நல்லது நடக்கணும்னா யாராவது முதல்ல ஆரம்பிக்கணும்.",
+      "தினமும் வர்ற புது டீல்ஸ் உங்களுக்கு மட்டும் இல்ல, உங்களை சுத்தி இருக்கறவங்களுக்கும் தான்.",
+      "கஷ்டப்பட்டு சம்பாதிச்ச பணத்தை கவனமா செலவு பண்ணணும்.",
+      "சேமிப்பு ஒரு பழக்கம், அது நண்பர்கள் மூலமா வேகமா பரவும்.",
+      "ஒரு நல்ல ஆப்பை பரிந்துரைக்கறது உங்க மேல இருக்கற நம்பிக்கையை கூட்டும்.",
+      "நாம எல்லாரும் சேர்ந்து புத்திசாலியா வாங்கினா எல்லாருக்கும் லாபம்.",
+      "உங்க நண்பர்களும் உங்களை மாதிரி டீல் வேட்டைக்காரங்களா மாறணுமா?",
+      "நல்ல ஆஃபர் பார்த்ததும் முதல்ல யார் நினைவுக்கு வராங்க?",
+      "வீட்டு செலவுல ஒரு சின்ன மிச்சம் கூட மாசத்துக்கு பெரிய உதவி.",
+      "சின்ன சின்ன டீல்ஸ் சேர்ந்தா பெரிய சேமிப்பு ஆகும்.",
+      "தள்ளுபடி எப்போ வரும்னு காத்திருக்காம இங்க தினமும் பாருங்க.",
+      "இந்த ஆப்பு யாருக்காவது சரியான நேரத்துல உதவலாம்.",
+      "சேமிக்கறதுல கவனமா இருக்கறவங்கதான் வாழ்க்கைல முன்னேறுவாங்க.",
+      "சேமிக்கற உரிமை எல்லாருக்கும் இருக்கு, அது தெரியாதவங்களுக்கு சொல்லுங்க.",
+      "உங்க சின்ன உதவி ஒருத்தரோட பெரிய மிச்சமா மாறலாம்.",
+      "இன்னிக்கு நீங்க வாங்கின டீல் மாதிரி நாளைக்கு அவங்களும் வாங்கலாம்.",
+      "நல்ல ஆஃபரை பார்த்துட்டு நண்பருக்கு சொல்லாம இருக்க முடியுமா?"
+    ],b:[
+      "இந்த ஆப்பை அவங்களுக்கும் ஷேர் பண்ணுங்க.",
+      "இப்போவே ஒரு நண்பருக்கு இந்த ஆப்பை அனுப்புங்க.",
+      "இந்த ஆப் லிங்கை உங்க குடும்ப குரூப்ல போடுங்க.",
+      "இன்னிக்கு ஒருத்தருக்காவது இந்த ஆப்பை பரிந்துரைங்க.",
+      "கீழ இருக்கற பட்டனை தொட்டு WhatsApp-ல அனுப்புங்க.",
+      "ஒரே ஒரு ஷேர், அவங்களுக்கு நிறைய மிச்சம்.",
+      "உங்க ஸ்டேட்டஸ்ல இந்த ஆப்பை போடுங்க.",
+      "நண்பர்கள் குரூப்ல இந்த ஆப்பை அறிமுகம் பண்ணுங்க.",
+      "இந்த ஆப்பை ஒருத்தருக்கு சொல்லுங்க, அது போதும்.",
+      "இன்னிக்கு ஒரு ஷேர் பண்ணி நல்லதை ஆரம்பிங்க.",
+      "உங்களுக்கு பிடிச்சவங்களுக்கு இந்த ஆப்பை காட்டுங்க.",
+      "இதை பகிருங்க, நன்றி!",
+      "உங்க ஷேருக்கு மனசார நன்றி.",
+      "ஆபீஸ் குரூப்லயும் இதை பகிரலாம்.",
+      "கல்லூரி நண்பர்களுக்கும் இந்த ஆப்பை அனுப்புங்க.",
+      "அக்கா, அண்ணன், தம்பி, தங்கை எல்லாருக்கும் அனுப்புங்க.",
+      "இந்த ஆப் இலவசம், தயங்காம பகிருங்க.",
+      "அவங்களும் இப்போவே சேமிக்க ஆரம்பிக்கட்டும், பகிருங்க.",
+      "உங்க ஒரு தொடுதல் ஒருத்தருக்கு உதவும், ஷேர் பண்ணுங்க.",
+      "அக்கம் பக்கத்தாருக்கும் சொல்லுங்க.",
+      "WhatsApp-ல ஒரே நிமிஷத்துல அனுப்பலாம்.",
+      "இந்த ஆப்பை பகிர்ந்து நல்ல நண்பரா இருங்க.",
+      "ஷேர் பண்ணுங்க, எல்லாரும் சேர்ந்து சேமிப்போம்.",
+      "இப்போ பகிர்ந்தா அவங்களுக்கு இன்னிக்கே பயன்படும்.",
+      "மறக்காம ஒரு நண்பருக்கு அனுப்புங்க."
+    ]},
+    en:{a:[
+      "Do you want your friends to get great offers just like you do?",
+      "A good deal saves you money.",
+      "A good thing shared is a double joy.",
+      "Nobody should overpay just because they didn't know about a deal.",
+      "Small savings are the start of big wins.",
+      "When the whole family saves, month-end feels much lighter.",
+      "Showing someone a great deal today can brighten their whole day.",
+      "Every rupee was earned with effort, so spend it wisely.",
+      "Buying at a good price is smart, and telling a friend is kind.",
+      "Wouldn't you like your friend to get the same offer you found?",
+      "Festivals and functions keep the spending coming, so a way to save helps everyone.",
+      "One share from you could save someone's monthly budget.",
+      "No need to hunt for deals, they are all in one place here.",
+      "Saving together with friends is more fun.",
+      "Getting a loved product at a low price is a special feeling.",
+      "A saving habit today is peace of mind tomorrow.",
+      "You can help parents, siblings and cousins save too.",
+      "Knowing the price before buying beats regretting it afterwards.",
+      "A little deal knowledge can save real money when you shop online.",
+      "Trusted deals in one place are rare these days.",
+      "Teaching someone to save is a quiet kind of service.",
+      "Is your friend still paying full price?",
+      "Sending one link takes a minute but can save someone hundreds of rupees.",
+      "Good things happen when someone starts them first.",
+      "New deals every day are not just for you, but for the people around you.",
+      "Hard-earned money deserves careful spending.",
+      "Saving is a habit, and habits spread fast through friends.",
+      "Recommending a good app builds trust in you.",
+      "When we all buy smart together, everyone gains.",
+      "Who was the first person you thought of when you saw a great offer?"
+    ],b:[
+      "Share this app with them.",
+      "Send this app to one friend right now.",
+      "Drop the app link in your family group.",
+      "Recommend this app to at least one person today.",
+      "Tap the button below and send it on WhatsApp.",
+      "One share, a lot of savings for them.",
+      "Put this app on your status.",
+      "Introduce this app in your friends group.",
+      "Tell just one person about it, that is enough.",
+      "Start something good with one share today.",
+      "Show this app to someone you care about.",
+      "Please pass it on, thank you!",
+      "Thank you for sharing from the heart.",
+      "You can share it in your office group too.",
+      "Send it to your college friends as well.",
+      "Send it to your brothers and sisters too.",
+      "The app is free, so share without hesitation.",
+      "Let them start saving today, share it.",
+      "One tap from you can help someone, share it.",
+      "Tell your neighbours too.",
+      "It takes under a minute on WhatsApp.",
+      "Be a good friend and pass it on.",
+      "Share it and let's all save together.",
+      "Share now and it can help them today.",
+      "Don't forget to send it to one friend."
+    ]},
+    hi:{a:[
+      "क्या आप चाहते हैं कि आपके दोस्तों को भी आपके जैसे अच्छे ऑफर मिलें?",
+      "एक अच्छी डील आपके पैसे बचाती है।",
+      "अच्छी चीज़ बांटने से खुशी दोगुनी हो जाती है।",
+      "डील न पता होने की वजह से कोई ज़्यादा दाम न दे।",
+      "छोटी बचत ही बड़ी कामयाबी की शुरुआत है।",
+      "जब पूरा परिवार बचाता है तो महीने के आखिर में सुकून रहता है।",
+      "आज किसी को अच्छी डील दिखाएंगे तो उनका पूरा दिन अच्छा जाएगा।",
+      "हर रुपया मेहनत से आता है, उसे समझदारी से खर्च करें।",
+      "सही दाम पर खरीदना समझदारी है और दोस्त को बताना अच्छाई।",
+      "क्या आपको नहीं लगता कि आपके दोस्त को भी वही ऑफर मिलना चाहिए?",
+      "त्योहारों में खर्च बढ़ता है, बचत का तरीका पता हो तो सबका भला होता है।",
+      "आपका एक शेयर किसी का महीने का बजट बचा सकता है।",
+      "डील ढूंढने की ज़रूरत नहीं, यहाँ सब एक ही जगह है।",
+      "दोस्तों के साथ मिलकर बचत करने में ज़्यादा मज़ा आता है।",
+      "पसंद की चीज़ कम दाम में मिले तो खुशी अलग ही होती है।",
+      "आज की बचत की आदत कल का बड़ा सुकून है।",
+      "आप माता-पिता और भाई-बहनों की भी बचत में मदद कर सकते हैं।",
+      "खरीदने के बाद पछताने से अच्छा है पहले से दाम जान लेना।",
+      "ऑनलाइन खरीदारी में सही डील पता हो तो पैसे बचते हैं।",
+      "भरोसेमंद डील एक ही जगह मिलना आजकल कम होता है।",
+      "किसी को बचत करना सिखाना भी एक अच्छी सेवा है।",
+      "क्या आपका दोस्त अब भी पूरा दाम देकर खरीद रहा है?",
+      "एक लिंक भेजने में एक मिनट लगता है, पर उन्हें सैकड़ों रुपये बच सकते हैं।",
+      "अच्छे काम की शुरुआत कोई न कोई पहले करता है।",
+      "रोज़ आने वाली नई डील सिर्फ आपके लिए नहीं, आपके आसपास के लोगों के लिए भी हैं।",
+      "मेहनत की कमाई को सोच-समझकर खर्च करना चाहिए।",
+      "बचत एक आदत है और आदतें दोस्तों से तेज़ी से फैलती हैं।",
+      "एक अच्छे ऐप की सलाह देने से आप पर भरोसा बढ़ता है।",
+      "हम सब मिलकर समझदारी से खरीदें तो सबका फायदा है।",
+      "अच्छा ऑफर देखकर सबसे पहले किसकी याद आई?"
+    ],b:[
+      "यह ऐप उन्हें भी शेयर करें।",
+      "अभी एक दोस्त को यह ऐप भेजें।",
+      "यह ऐप लिंक अपने फैमिली ग्रुप में डालें।",
+      "आज कम से कम एक व्यक्ति को यह ऐप बताएं।",
+      "नीचे के बटन से WhatsApp पर भेजें।",
+      "एक शेयर, उनके लिए ढेर सारी बचत।",
+      "इस ऐप को अपने स्टेटस पर लगाएं।",
+      "दोस्तों के ग्रुप में इस ऐप का परिचय कराएं।",
+      "बस एक व्यक्ति को बताएं, वही काफी है।",
+      "आज एक शेयर करके अच्छी शुरुआत करें।",
+      "जिन्हें आप चाहते हैं उन्हें यह ऐप दिखाएं।",
+      "कृपया आगे भेजें, धन्यवाद!",
+      "दिल से शेयर करने के लिए धन्यवाद।",
+      "ऑफिस ग्रुप में भी शेयर कर सकते हैं।",
+      "कॉलेज के दोस्तों को भी भेजें।",
+      "भाई-बहनों को भी भेजें।",
+      "ऐप मुफ़्त है, बिना झिझक शेयर करें।",
+      "उन्हें भी आज से बचत शुरू करने दें, शेयर करें।",
+      "आपका एक टैप किसी की मदद कर सकता है।",
+      "पड़ोसियों को भी बताएं।",
+      "WhatsApp पर एक मिनट से कम लगता है।",
+      "अच्छे दोस्त बनें, आगे भेजें।",
+      "शेयर करें, मिलकर बचत करें।",
+      "अभी शेयर करेंगे तो उन्हें आज ही फायदा होगा।",
+      "एक दोस्त को भेजना न भूलें।"
+    ]}
+  };
+  var SHEMO=['🛍️','💰','🎉','😊','🤝','🌟','💌','🙏','✨','📲','🏷️','💡'];
+  function dayNo(){ var d=new Date(); return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000) }
+  function shareLine(){
+    var q=SHQ[S.lang]||SHQ.en, N=q.a.length*q.b.length;
+    var off=lsGet('nesam-shoff',-1); if(off<0){ off=Math.floor(Math.random()*N); lsSet('nesam-shoff',off) }
+    var i=(dayNo()*397+off)%N, a=q.a[i%q.a.length], b=q.b[Math.floor(i/q.a.length)%q.b.length];
+    return a+' '+b+' '+SHEMO[i%SHEMO.length];
+  }
+  var SHBTN={ta:'இந்த ஆப்பை பகிர',en:'Share this app',hi:'ऐप शेयर करें',te:'ఈ యాప్ షేర్ చేయండి',kn:'ಈ ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',ml:'ഈ ആപ്പ് പങ്കിടുക'};
+  function shareDot(){ return lsGet('nesam-shdot','')!==String(dayNo()) }
+  function shareBtn(){
+    var lg=(S.settings.logo&&/^data:image\//.test(S.settings.logo))?S.settings.logo:(S.hosted?'logo.png':'icon-192.png');
+    var b=h('button',{type:'button',class:'shbtn','aria-label':SHBTN[S.lang]||SHBTN.en,onclick:function(){
+      lsSet('nesam-shdot',String(dayNo())); var d=b.querySelector('.rdot'); if(d) d.remove(); openShare();
+    }},h('img',{src:lg,alt:''}),h('span',null,SHBTN[S.lang]||SHBTN.en));
+    if(shareDot()) b.append(h('i',{class:'rdot'}));
+    return b;
+  }
+
   function renderFooter(shown){
     $('disc1').textContent=''; $('disc1').hidden=true; var cd=((S.settings&&S.settings.disc)||'').trim(); $('disc2').textContent=cd||t('discAll');
     $('disc3').hidden=!cd;
@@ -1268,6 +1549,7 @@ span.cbadge{cursor:default}
     ];
   }
   async function cleanupOld(){
+    return; /* deals never auto-delete: the owner removes them */
     if(!S.live||!S.admin) return;
     try{
       var snap=await S.db.collection('deals').where('createdAt','<',Date.now()-lifeMs()).limit(50).get();
@@ -1291,12 +1573,29 @@ span.cbadge{cursor:default}
       else { S.deals=S.deals.map(function(d){return d.id===id?Object.assign({},d,patch):d}); demoPersist(); render(); }
     }catch(e){ toast('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'); }
   }
+  async function restoreDeals(list){
+    try{
+      for(var i=0;i<list.length;i++){
+        var x=Object.assign({},list[i]),id=x.id; delete x.id;
+        if(S.live){ await S.db.collection('deals').doc(id).set(x); }
+        else { x.id=id; if(!S.deals.some(function(d){return d.id===id})) S.deals.unshift(x); }
+      }
+      if(!S.live){ demoPersist(); render(); }
+      toast(A('திரும்ப கொண்டு வந்தாச்சு ✔'));
+    }catch(e){ toast(A('திரும்ப கொண்டு வர முடியல.')); }
+  }
   async function removeDeal(id){
+    var snap=S.deals.filter(function(d){return d.id===id});
     try{
       if(S.live){ await S.db.collection('deals').doc(id).delete(); }
       else { S.deals=S.deals.filter(function(d){return d.id!==id}); demoPersist(); render(); }
-      toast('நீக்கியாச்சு');
+      toast('நீக்கியாச்சு',snap.length?function(){restoreDeals(snap)}:null);
     }catch(e){ toast('நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.'); }
+  }
+  function patchUndo(d,patch,msg){
+    var inv={}; Object.keys(patch).forEach(function(k){inv[k]=d[k]===undefined?null:d[k]});
+    patchDeal(d.id,patch);
+    toast(msg,function(){patchDeal(d.id,inv);toast(A('பழைய நிலைக்கு மாத்தியாச்சு ✔'))});
   }
   async function saveSettings(data){
     if(S.live){ await S.db.doc('settings/app').set(data); }
@@ -1370,7 +1669,7 @@ span.cbadge{cursor:default}
   }
 
   /* ============ admin translations (English + Hindi; other languages fall back to English) ============ */
-  var AD={"🛠️ அட்மின் பேனல் (உனக்கு மட்டும்)":{"en":"🛠️ Admin panel (only for you)","hi":"🛠️ एडमिन पैनल (सिर्फ आपके लिए)"},"வாடிக்கையாளர் பார்வை →":{"en":"Customer view →","hi":"ग्राहक व्यू →"},"வெளியேறு":{"en":"Log out","hi":"लॉग आउट"},"📊 முகப்பு":{"en":"📊 Home","hi":"📊 होम"},"✏️ திருத்து":{"en":"✏️ Edit","hi":"✏️ बदलें"},"➕ புது டீல்":{"en":"➕ New deal","hi":"➕ नई डील"},"📋 டீல்ஸ் ({n})":{"en":"📋 Deals ({n})","hi":"📋 डील्स ({n})"},"⚙️ அமைப்புகள்":{"en":"⚙️ Settings","hi":"⚙️ सेटिंग्स"},"நீக்க ஒண்ணும் இல்ல":{"en":"Nothing to remove","hi":"हटाने के लिए कुछ नहीं"},"{n} {what} நீக்கியாச்சு":{"en":"{n} {what} removed","hi":"{n} {what} हटा दिए"},"சில டீல்ஸை நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.":{"en":"Couldn't remove some deals. Please try again.","hi":"कुछ डील्स नहीं हटा सके। फिर कोशिश करें।"},"லைவ் டீல்ஸ்":{"en":"Live deals","hi":"लाइव डील्स"},"இன்று போட்டது":{"en":"Posted today","hi":"आज पोस्ट किए"},"இன்னிக்குள்ள மறையும்":{"en":"Ending today","hi":"आज खत्म होंगी"},"முடிஞ்சது / காலாவதி":{"en":"Ended / expired","hi":"खत्म / एक्सपायर"},"₹99-க்குள்":{"en":"Under ₹99","hi":"₹99 से कम"},"₹1000-க்கு மேல்":{"en":"Above ₹1000","hi":"₹1000 से ऊपर"},"வகை வாரியா லைவ் டீல்ஸ்":{"en":"Live deals by category","hi":"कैटेगरी के अनुसार लाइव डील्स"},"இன்னும் லைவ் டீல் இல்ல.":{"en":"No live deals yet.","hi":"अभी कोई लाइव डील नहीं।"},"விரைவு வேலைகள்":{"en":"Quick actions","hi":"क्विक एक्शन"},"➕ புது டீல் போடு":{"en":"➕ Post a new deal","hi":"➕ नई डील डालें"},"🧹 முடிஞ்ச/காலாவதி டீல்ஸ் நீக்கு":{"en":"🧹 Remove ended/expired deals","hi":"🧹 खत्म/एक्सपायर डील्स हटाएं"},"உறுதியா?":{"en":"Sure? Tap again","hi":"पक्का? फिर दबाएं"},"டீல்ஸ்":{"en":"deals","hi":"डील्स"},"🗑️ மாதிரி டீல்ஸ் நீக்கு ({n})":{"en":"🗑️ Remove sample deals ({n})","hi":"🗑️ सैंपल डील्स हटाएं ({n})"},"மாதிரி டீல்ஸ்":{"en":"sample deals","hi":"सैंपल डील्स"},"டீல்ஸ் {n} நாளுக்கு அப்புறம் தானா மறையும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.":{"en":"Deals disappear automatically after {n} days. Only you can see this panel.","hi":"डील्स {n} दिन बाद अपने आप हट जाएंगी। यह पैनल सिर्फ आपको दिखता है।"},"💰 இது \"{z}\" பிரிவுல வரும்":{"en":"💰 This will fall under \"{z}\"","hi":"💰 यह \"{z}\" में आएगी"},"1️⃣ இது எந்த வகை டீல்?":{"en":"1️⃣ Which category is this deal?","hi":"1️⃣ यह डील किस कैटेगरी की है?"},"2️⃣ உள் வகை":{"en":"2️⃣ Sub-category","hi":"2️⃣ सब-कैटेगरी"},"மற்றவை":{"en":"Others","hi":"अन्य"},"👀 வாடிக்கையாளருக்கு இப்படி காட்டும்: ":{"en":"👀 Customers will see: ","hi":"👀 ग्राहक को ऐसे दिखेगा: "},"ஒரு போட்டோவை படிக்க முடியல. வேற போட்டோ தேர்ந்தெடுங்க.":{"en":"Couldn't read a photo. Please choose another.","hi":"एक फोटो पढ़ नहीं सके। दूसरी चुनें।"},"போட்டோவை நீக்கு":{"en":"Remove photo","hi":"फोटो हटाएं"},"முகப்பு":{"en":"Cover","hi":"कवर"},"முகப்பாக்கு":{"en":"Make cover","hi":"कवर बनाएं"},"+ போட்டோ":{"en":"+ Photo","hi":"+ फोटो"},"எ.கா. Cotton Kurti Set (3 colours)":{"en":"e.g. Cotton Kurti Set (3 colours)","hi":"जैसे Cotton Kurti Set (3 colours)"},"எ.கா. Flat 50% OFF (விலை இல்லன்னா மட்டும்)":{"en":"e.g. Flat 50% OFF (only if there is no price)","hi":"जैसे Flat 50% OFF (सिर्फ अगर कीमत न हो)"},"எ.கா. HDFC card-ல கூடுதலா 10% OFF":{"en":"e.g. Extra 10% OFF with HDFC card","hi":"जैसे HDFC कार्ड पर एक्स्ट्रा 10% OFF"},"எ.கா. NESAM50":{"en":"e.g. NESAM50","hi":"जैसे NESAM50"},"WhatsApp, Instagram-ல போடற மாதிரியே விளக்கத்தை எழுதுங்க.":{"en":"Write the description the way you would post on WhatsApp or Instagram.","hi":"विवरण वैसे ही लिखें जैसे WhatsApp या Instagram पर डालते हैं।"},"சேமிக்கிறேன்…":{"en":"Saving…","hi":"सेव हो रहा है…"},"மாற்றங்களை சேமி":{"en":"Save changes","hi":"बदलाव सेव करें"},"டீலை போடு":{"en":"Post deal","hi":"डील डालें"},"ரத்து":{"en":"Cancel","hi":"रद्द करें"},"அழி":{"en":"Clear","hi":"साफ करें"},"டீலை திருத்து":{"en":"Edit deal","hi":"डील बदलें"},"புது டீல் சேர்":{"en":"Add new deal","hi":"नई डील जोड़ें"},"டீல் {n} நாள் தான் ஆப்ல இருக்கும். அப்புறம் தானா மறைஞ்சு நீங்கிடும்.":{"en":"A deal stays in the app for {n} days, then disappears automatically.","hi":"डील ऐप में {n} दिन रहती है, फिर अपने आप हट जाती है।"},"போட்டோஸ் (அதிகபட்சம் {n})":{"en":"Photos (up to {n})","hi":"फोटो (अधिकतम {n})"},"முதல் போட்டோ தான் முகப்பு. வாடிக்கையாளர் ஸ்வைப் பண்ணி மத்ததை பாப்பாங்க. போட்டோ தானா சின்னதாகி சேமிக்கப்படும்.":{"en":"The first photo is the cover. Customers swipe to see the rest. Photos are resized automatically.","hi":"पहली फोटो कवर होती है। ग्राहक स्वाइप करके बाकी देखते हैं। फोटो अपने आप छोटी होकर सेव होती है।"},"டீல் தலைப்பு":{"en":"Deal title","hi":"डील का शीर्षक"},"கடை (உனக்கு மட்டும் தெரியும்)":{"en":"Store (only you see this)","hi":"स्टोर (सिर्फ आपको दिखेगा)"},"MRP (₹)":{"en":"MRP (₹)","hi":"MRP (₹)"},"ஆஃபர் விலை (₹)":{"en":"Offer price (₹)","hi":"ऑफर कीमत (₹)"},"இலவசம்னா 0 போடு":{"en":"Enter 0 if free","hi":"फ्री हो तो 0 डालें"},"விலை இல்லாத சலுகை வாசகம்":{"en":"Offer text (when there is no price)","hi":"ऑफर टेक्स्ट (कीमत न होने पर)"},"உன் affiliate லிங்க்":{"en":"Your affiliate link","hi":"आपका एफिलिएट लिंक"},"அப்படியே ஒட்டு. வாடிக்கையாளருக்கு எந்த கடைனு காட்டாது.":{"en":"Paste it as it is. Customers will not see which store it is.","hi":"जैसा है वैसा पेस्ट करें। ग्राहक को स्टोर का नाम नहीं दिखेगा।"},"கூடுதல் சலுகை (optional)":{"en":"Extra offer (optional)","hi":"एक्स्ट्रा ऑफर (वैकल्पिक)"},"கூப்பன் கோட் (optional)":{"en":"Coupon code (optional)","hi":"कूपन कोड (वैकल्पिक)"},"டீல் முடியும் நேரம் (optional)":{"en":"Deal end time (optional)","hi":"डील खत्म होने का समय (वैकल्पिक)"},"நேரம் முடிஞ்சதும் டீல் தானா \"முடிஞ்சது\"னு ஆகிடும்.":{"en":"When the time is over, the deal automatically shows as \"Ended\".","hi":"समय खत्म होते ही डील अपने आप \"खत्म\" हो जाएगी।"},"🎬 பொருளோட வீடியோ லிங்க் (optional)":{"en":"🎬 Product video link (optional)","hi":"🎬 प्रोडक्ट वीडियो लिंक (वैकल्पिक)"},"உன் YouTube / Instagram / Facebook வீடியோ லிங்கை ஒட்டு. வாடிக்கையாளருக்கு \"பொருளோட வீடியோ பாரு\" பட்டன் மட்டும் தெரியும். YouTube வீடியோ ஆப்குள்ளயே ஓடும்.":{"en":"Paste your YouTube / Instagram / Facebook video link. Customers only see a \"Watch product video\" button. YouTube videos play inside the app.","hi":"अपना YouTube / Instagram / Facebook वीडियो लिंक पेस्ट करें। ग्राहक को सिर्फ \"प्रोडक्ट वीडियो देखें\" बटन दिखेगा। YouTube वीडियो ऐप के अंदर चलेंगे।"},"விளக்கம்":{"en":"Description","hi":"विवरण"},"இன்றைய சிறப்பு டீலா மேல காட்டு ★":{"en":"Show on top as today's special deal ★","hi":"आज की खास डील बनाकर ऊपर दिखाएं ★"},"தலைப்பை எழுதுங்க.":{"en":"Please write a title.","hi":"शीर्षक लिखें।"},"வகையை தேர்ந்தெடுங்க.":{"en":"Please choose a category.","hi":"कैटेगरी चुनें।"},"உள் வகையை தேர்ந்தெடுங்க.":{"en":"Please choose a sub-category.","hi":"सब-कैटेगरी चुनें।"},"இப்போதைய விலை அல்லது சலுகை வாசகம் ஒண்ணாவது எழுதுங்க.":{"en":"Enter the current price or an offer text.","hi":"मौजूदा कीमत या ऑफर टेक्स्ट में से कम से कम एक लिखें।"},"விலை சரியா இல்ல.":{"en":"The price is not valid.","hi":"कीमत सही नहीं है।"},"பழைய விலை இப்போதைய விலையை விட அதிகமா இருக்கணும்.":{"en":"The old price must be higher than the current price.","hi":"पुरानी कीमत मौजूदा कीमत से ज्यादा होनी चाहिए।"},"உன் affiliate லிங்கை ஒட்டுங்க.":{"en":"Paste your affiliate link.","hi":"अपना एफिलिएट लिंक पेस्ट करें।"},"லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The link must start with https://","hi":"लिंक https:// से शुरू होना चाहिए।"},"வீடியோ லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The video link must start with https://","hi":"वीडियो लिंक https:// से शुरू होना चाहिए।"},"போட்டோஸ் ரொம்ப பெருசா இருக்கு. ஒண்ணு ரெண்டை நீக்கிட்டு மறுபடி போடுங்க.":{"en":"The photos are too large. Remove one or two and try again.","hi":"फोटो बहुत बड़ी हैं। एक-दो हटाकर फिर कोशिश करें।"},"மாற்றம் சேமிச்சாச்சு ✔":{"en":"Changes saved ✔","hi":"बदलाव सेव हो गए ✔"},"டீல் போட்டாச்சு ✔ வாடிக்கையாளர் பார்வையில பாரு.":{"en":"Deal posted ✔ Check it in the customer view.","hi":"डील पोस्ट हो गई ✔ ग्राहक व्यू में देखें।"},"சேமிக்க முடியல. இணைப்பை சரிபார்த்து மறுபடி முயற்சி பண்ணுங்க.":{"en":"Couldn't save. Check your connection and try again.","hi":"सेव नहीं हो सका। कनेक्शन जांचकर फिर कोशिश करें।"},"இன்னும் டீல் எதுவும் இல்ல":{"en":"No deals yet","hi":"अभी कोई डील नहीं"},"\"புது டீல்\" டேபில் முதல் டீலை போடுங்க.":{"en":"Post your first deal in the \"New deal\" tab.","hi":"\"नई डील\" टैब में पहली डील डालें।"},"நீக்கு":{"en":"Delete","hi":"हटाएं"},"மாதிரி":{"en":"Sample","hi":"सैंपल"},"முடிஞ்சது":{"en":"Ended","hi":"खत्म"},"லைவ்":{"en":"Live","hi":"लाइव"},"★ சிறப்பு":{"en":"★ Special","hi":"★ खास"},"🎬 வீடியோ":{"en":"🎬 Video","hi":"🎬 वीडियो"},"காலாவதி":{"en":"Expired","hi":"एक्सपायर"},"{n} நாள் மீதம்":{"en":"{n} days left","hi":"{n} दिन बाकी"},"{n} படம்":{"en":"{n} photos","hi":"{n} फोटो"},"போட்டது {a} · விலை சரிபார்த்தது {b}":{"en":"Posted {a} · Price checked {b}","hi":"पोस्ट किया {a} · कीमत जांची {b}"},"திருத்து":{"en":"Edit","hi":"बदलें"},"விலை சரிபார்த்ததா குறிச்சாச்சு":{"en":"Marked as price checked","hi":"कीमत जांची हुई मार्क की"},"விலை சரிபார்த்தேன்":{"en":"Price checked","hi":"कीमत जांच ली"},"மறுபடி லைவ்":{"en":"Make live again","hi":"फिर से लाइव करें"},"★ எடு":{"en":"★ Remove star","hi":"★ हटाएं"},"இன்னும் {n} நாள் நீட்டிச்சாச்சு":{"en":"Extended by {n} more days","hi":"{n} दिन और बढ़ा दिए"},"{n} நாள் நீட்டு":{"en":"Extend {n} days","hi":"{n} दिन बढ़ाएं"},"லிங்க் சோதி":{"en":"Test link","hi":"लिंक जांचें"},"பழைய டீல்ஸும் காட்டு":{"en":"Show older deals too","hi":"पुरानी डील्स भी दिखाएं"},"{n} லிங்க் https:// ஓட தொடங்கணும்.":{"en":"{n} link must start with https://","hi":"{n} लिंक https:// से शुरू होना चाहिए।"},"\"Other\" பக்கத்துக்கு ஒரு பெயர் எழுதுங்க.":{"en":"Write a name for the \"Other\" page.","hi":"\"Other\" पेज के लिए एक नाम लिखें।"},"ஆப் லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The app link must start with https://","hi":"ऐप लिंक https:// से शुरू होना चाहिए।"},"அறிவிப்பு லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The announcement link must start with https://","hi":"सूचना लिंक https:// से शुरू होना चाहिए।"},"அறிவிப்பை ஆன் பண்ணா, வாசகம் எழுதணும்.":{"en":"If you turn on the announcement, write its text.","hi":"सूचना ऑन करें तो उसका टेक्स्ट लिखें।"},"டீல் நாட்கள் 1 முதல் 30-க்குள்ள இருக்கணும்.":{"en":"Deal days must be between 1 and 30.","hi":"डील के दिन 1 से 30 के बीच होने चाहिए।"},"அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.":{"en":"Settings saved ✔ The customer app updates right away.","hi":"सेटिंग्स सेव हो गईं ✔ ग्राहक ऐप में अभी बदल जाएंगी।"},"சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.":{"en":"Couldn't save. Please try again.","hi":"सेव नहीं हो सका। फिर कोशिश करें।"},"🎨 தோற்றம்":{"en":"🎨 Look","hi":"🎨 लुक"},"🗂️ வகைகள்":{"en":"🗂️ Categories","hi":"🗂️ कैटेगरी"},"🔗 பின்தொடர":{"en":"🔗 Follow","hi":"🔗 फॉलो"},"📣 அறிவிப்பு & விதி":{"en":"📣 Notice & rules","hi":"📣 सूचना और नियम"},"இந்த படத்தை படிக்க முடியல.":{"en":"Couldn't read this image.","hi":"यह इमेज पढ़ नहीं सके।"},"ஆப் பெயர்":{"en":"App name","hi":"ऐप का नाम"},"மேல தெரியும் பெயர். காலியா விட்டா \"TruePick\".":{"en":"The name shown at the top. Leave blank for \"TruePick\".","hi":"ऊपर दिखने वाला नाम। खाली छोड़ें तो \"TruePick\"।"},"டேக்லைன் (optional)":{"en":"Tagline (optional)","hi":"टैगलाइन (वैकल्पिक)"},"எ.கா. தினமும் புது டீல்ஸ்":{"en":"e.g. New deals every day","hi":"जैसे रोज नई डील्स"},"காலியா விட்டா, வாடிக்கையாளர் மொழிக்கேத்த டேக்லைன் வரும். எழுதினா எல்லா மொழிலயும் இதே வரும்.":{"en":"If left blank, a tagline in the customer's language is shown. If you write one, it shows in every language.","hi":"खाली छोड़ें तो ग्राहक की भाषा में टैगलाइन दिखेगी। लिखेंगे तो हर भाषा में यही दिखेगी।"},"ஆப் லோகோ":{"en":"App logo","hi":"ऐप लोगो"},"சதுர படம் நல்லது. கடை லோகோக்கள் இல்லாத சுத்தமான லோகோ போடு.":{"en":"A square image is best. Use a clean logo without store logos.","hi":"चौकोर इमेज बेहतर है। स्टोर लोगो के बिना साफ लोगो रखें।"},"ஆப் நிறம்":{"en":"App colour","hi":"ऐप का रंग"},"ஆப் பின்னணி (வெளிச்சம்/இருட்டு)":{"en":"App background (light/dark)","hi":"ऐप बैकग्राउंड (लाइट/डार्क)"},"☀️ வெளிச்சம்":{"en":"☀️ Light","hi":"☀️ लाइट"},"🌙 இருட்டு":{"en":"🌙 Dark","hi":"🌙 डार्क"},"📱 போன் படி":{"en":"📱 Follow phone","hi":"📱 फोन के अनुसार"},"\"வெளிச்சம்\" தான் பரிந்துரை. வாடிக்கையாளர் தன் விருப்பப்படி மேல உள்ள 🎨 பட்டனில் தீம் மாத்திக்கலாம். இது அவர் தேர்ந்தெடுக்கும் முன் வரும் முதல் தோற்றம்.":{"en":"\"Light\" is recommended. Customers can change the theme with the 🎨 button at the top. This is the look they see first.","hi":"\"लाइट\" की सलाह है। ग्राहक ऊपर 🎨 बटन से थीम बदल सकते हैं। यह उनका पहला लुक है।"},"புது வாடிக்கையாளருக்கு முதல் மொழி":{"en":"Default language for new customers","hi":"नए ग्राहकों के लिए डिफ़ॉल्ट भाषा"},"வாடிக்கையாளர் மேல உள்ள மொழி பட்டனால எப்ப வேணா மாத்திக்கலாம்.":{"en":"Customers can change it anytime with the language button at the top.","hi":"ग्राहक ऊपर भाषा बटन से कभी भी बदल सकते हैं।"},"எமோஜி":{"en":"Emoji","hi":"इमोजी"},"வகை பெயர்":{"en":"Category name","hi":"कैटेगरी का नाम"},"பெயர்":{"en":"Name","hi":"नाम"},"வாடிக்கையாளருக்கு காட்ட வேண்டிய வகைகள்":{"en":"Categories to show customers","hi":"ग्राहकों को दिखाने वाली कैटेगरी"},"டிக் எடுத்தா அந்த வகையும் அதுல இருக்கற டீல்ஸும் வாடிக்கையாளருக்கு மறையும்.":{"en":"Untick a category to hide it and its deals from customers.","hi":"टिक हटाने पर वह कैटेगरी और उसकी डील्स ग्राहकों से छिप जाएंगी।"},"உன் சொந்த வகை சேர்":{"en":"Add your own category","hi":"अपनी कैटेगरी जोड़ें"},"புது வகை (எ.கா. \"Diwali Specials\") எல்லா மொழிலயும் நீ எழுதின பெயரிலேயே தெரியும்.":{"en":"A new category (e.g. \"Diwali Specials\") shows with the name you write, in every language.","hi":"नई कैटेगरी (जैसे \"Diwali Specials\") हर भाषा में आपके लिखे नाम से ही दिखेगी।"},"+ புது வகை":{"en":"+ New category","hi":"+ नई कैटेगरी"},"தளம்":{"en":"Platform","hi":"प्लेटफॉर्म"},"பக்கத்தின் பெயர் (எ.கா. Moj)":{"en":"Page name (e.g. Moj)","hi":"पेज का नाम (जैसे Moj)"},"விருப்பம்: எ.கா. @truepickindia":{"en":"Optional: e.g. @truepickindia","hi":"वैकल्पिक: जैसे @truepickindia"},"லிங்க்":{"en":"Link","hi":"लिंक"},"எ.கா. TruePick – தினமும் நல்ல டீல்ஸ், நேர்மையா.":{"en":"e.g. TruePick – good deals every day, honestly.","hi":"जैसे नेसम डील्स – रोज अच्छी डील्स, ईमानदारी से।"},"எங்களை பின்தொடர பக்கங்கள்":{"en":"Pages to follow us","hi":"हमें फॉलो करने के पेज"},"WhatsApp, Telegram, Instagram, Facebook, YouTube… எத்தனை வேணும்னாலும் சேர்க்கலாம். வாடிக்கையாளருக்கு \"பின்தொடர\" டேபில் தெரியும்.":{"en":"Add as many as you like: WhatsApp, Telegram, Instagram, Facebook, YouTube… Customers see them in the \"Follow\" tab.","hi":"जितने चाहें जोड़ें: WhatsApp, Telegram, Instagram, Facebook, YouTube… ग्राहक को \"फॉलो\" टैब में दिखेंगे।"},"+ இன்னொரு பக்கம் சேர்":{"en":"+ Add another page","hi":"+ एक और पेज जोड़ें"},"பின்தொடர பக்கத்துல ஒரு சிறு அறிமுகம் (optional)":{"en":"A short intro on the Follow page (optional)","hi":"फॉलो पेज पर छोटा परिचय (वैकल्पिक)"},"ஆப் பொது லிங்க்":{"en":"Public app link","hi":"ऐप का पब्लिक लिंक"},"ஆப்போட பொது லிங்க் (லைவ் ஆனப்புறம்)":{"en":"Public link of the app (after going live)","hi":"ऐप का पब्लिक लिंक (लाइव होने के बाद)"},"WhatsApp பகிர்வுல உன் ஆப் லிங்க் சேரும். அசல் கடை லிங்க் பகிர்வுல வராது.":{"en":"Your app link is added when sharing on WhatsApp. The original store link is not shared.","hi":"WhatsApp शेयर में आपका ऐप लिंक जुड़ेगा। असली स्टोर लिंक शेयर में नहीं जाएगा।"},"📢 முகப்புல மேல காட்டும் அறிவிப்பு":{"en":"📢 Announcement shown at the top of Home","hi":"📢 होम पर ऊपर दिखने वाली सूचना"},"அறிவிப்பை காட்டு":{"en":"Show announcement","hi":"सूचना दिखाएं"},"எ.கா. தீபாவளி ஸ்பெஷல் டீல்ஸ் வந்தாச்சு!":{"en":"e.g. Diwali special deals are here!","hi":"जैसे दिवाली स्पेशल डील्स आ गईं!"},"வாடிக்கையாளர் மொழி எதுவானாலும் இதே வாசகம் தெரியும்.":{"en":"The same text shows in every customer language.","hi":"ग्राहक की भाषा कोई भी हो, यही टेक्स्ट दिखेगा।"},"அறிவிப்பை தொட்டா போற லிங்க் (optional)":{"en":"Link opened when the announcement is tapped (optional)","hi":"सूचना दबाने पर खुलने वाला लिंक (वैकल्पिक)"},"டீல் எத்தனை நாள் ஆப்ல இருக்கணும்?":{"en":"How many days should a deal stay in the app?","hi":"डील कितने दिन ऐप में रहे?"},"1 முதல் 30 நாள். அதுக்கப்புறம் தானா மறைஞ்சு நீங்கிடும்.":{"en":"1 to 30 days. After that it disappears automatically.","hi":"1 से 30 दिन। उसके बाद अपने आप हट जाती है।"},"💾 சேமி":{"en":"💾 Save","hi":"💾 सेव करें"},"அமைப்புகள்":{"en":"Settings","hi":"सेटिंग्स"},"ராயல் நீலம்":{"en":"Royal blue","hi":"रॉयल ब्लू"},"பச்சை":{"en":"Green","hi":"हरा"},"ஊதா":{"en":"Purple","hi":"बैंगनी"},"சிவப்பு":{"en":"Red","hi":"लाल"},"ஆரஞ்சு":{"en":"Orange","hi":"नारंगी"},"டீல் பச்சை":{"en":"Teal","hi":"टील"},"ரோஸ்":{"en":"Rose","hi":"गुलाबी"},"கருப்பு":{"en":"Black","hi":"काला"}};
+  var AD={"↩ அன்டூ":{"en":"↩ Undo","hi":"↩ अनडू"},"திரும்ப கொண்டு வந்தாச்சு ✔":{"en":"Restored ✔","hi":"वापस ला दिया ✔"},"திரும்ப கொண்டு வர முடியல.":{"en":"Couldn't restore.","hi":"वापस नहीं ला सके।"},"பழைய நிலைக்கு மாத்தியாச்சு ✔":{"en":"Reverted ✔","hi":"पहले जैसा कर दिया ✔"},"மறுபடி லைவ் ஆக்கியாச்சு":{"en":"Made live again","hi":"फिर लाइव किया"},"முடிஞ்சதுனு குறிச்சாச்சு":{"en":"Marked as ended","hi":"खत्म मार्क किया"},"📌 எடுத்தாச்சு":{"en":"📌 Unpinned","hi":"📌 हटाया"},"📌 மேல வச்சாச்சு":{"en":"📌 Pinned on top","hi":"📌 ऊपर लगाया"},"💬 கருத்து ஆஃப் ஆச்சு":{"en":"💬 Comments off","hi":"💬 कमेंट बंद"},"💬 கருத்து ஆன் ஆச்சு":{"en":"💬 Comments on","hi":"💬 कमेंट चालू"},"டீல்ஸ் நீ நீக்கற வரை ஆப்புல இருக்கும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.":{"en":"Deals stay in the app until you remove them. Only you can see this panel.","hi":"डील्स आपके हटाने तक ऐप में रहेंगी। यह पैनल सिर्फ आपको दिखता है।"},"டீல் நீ நீக்கற வரை ஆப்ல இருக்கும்.":{"en":"The deal stays in the app until you remove it.","hi":"डील आपके हटाने तक ऐप में रहेगी।"},"🛠️ அட்மின் பேனல் (உனக்கு மட்டும்)":{"en":"🛠️ Admin panel (only for you)","hi":"🛠️ एडमिन पैनल (सिर्फ आपके लिए)"},"வாடிக்கையாளர் பார்வை →":{"en":"Customer view →","hi":"ग्राहक व्यू →"},"வெளியேறு":{"en":"Log out","hi":"लॉग आउट"},"📊 முகப்பு":{"en":"📊 Home","hi":"📊 होम"},"✏️ திருத்து":{"en":"✏️ Edit","hi":"✏️ बदलें"},"➕ புது டீல்":{"en":"➕ New deal","hi":"➕ नई डील"},"📋 டீல்ஸ் ({n})":{"en":"📋 Deals ({n})","hi":"📋 डील्स ({n})"},"⚙️ அமைப்புகள்":{"en":"⚙️ Settings","hi":"⚙️ सेटिंग्स"},"நீக்க ஒண்ணும் இல்ல":{"en":"Nothing to remove","hi":"हटाने के लिए कुछ नहीं"},"{n} {what} நீக்கியாச்சு":{"en":"{n} {what} removed","hi":"{n} {what} हटा दिए"},"சில டீல்ஸை நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.":{"en":"Couldn't remove some deals. Please try again.","hi":"कुछ डील्स नहीं हटा सके। फिर कोशिश करें।"},"லைவ் டீல்ஸ்":{"en":"Live deals","hi":"लाइव डील्स"},"இன்று போட்டது":{"en":"Posted today","hi":"आज पोस्ट किए"},"இன்னிக்குள்ள மறையும்":{"en":"Ending today","hi":"आज खत्म होंगी"},"முடிஞ்சது / காலாவதி":{"en":"Ended / expired","hi":"खत्म / एक्सपायर"},"₹99-க்குள்":{"en":"Under ₹99","hi":"₹99 से कम"},"₹1000-க்கு மேல்":{"en":"Above ₹1000","hi":"₹1000 से ऊपर"},"வகை வாரியா லைவ் டீல்ஸ்":{"en":"Live deals by category","hi":"कैटेगरी के अनुसार लाइव डील्स"},"இன்னும் லைவ் டீல் இல்ல.":{"en":"No live deals yet.","hi":"अभी कोई लाइव डील नहीं।"},"விரைவு வேலைகள்":{"en":"Quick actions","hi":"क्विक एक्शन"},"➕ புது டீல் போடு":{"en":"➕ Post a new deal","hi":"➕ नई डील डालें"},"🧹 முடிஞ்ச/காலாவதி டீல்ஸ் நீக்கு":{"en":"🧹 Remove ended/expired deals","hi":"🧹 खत्म/एक्सपायर डील्स हटाएं"},"உறுதியா?":{"en":"Sure? Tap again","hi":"पक्का? फिर दबाएं"},"டீல்ஸ்":{"en":"deals","hi":"डील्स"},"🗑️ மாதிரி டீல்ஸ் நீக்கு ({n})":{"en":"🗑️ Remove sample deals ({n})","hi":"🗑️ सैंपल डील्स हटाएं ({n})"},"மாதிரி டீல்ஸ்":{"en":"sample deals","hi":"सैंपल डील्स"},"டீல்ஸ் {n} நாளுக்கு அப்புறம் தானா மறையும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.":{"en":"Deals disappear automatically after {n} days. Only you can see this panel.","hi":"डील्स {n} दिन बाद अपने आप हट जाएंगी। यह पैनल सिर्फ आपको दिखता है।"},"💰 இது \"{z}\" பிரிவுல வரும்":{"en":"💰 This will fall under \"{z}\"","hi":"💰 यह \"{z}\" में आएगी"},"1️⃣ இது எந்த வகை டீல்?":{"en":"1️⃣ Which category is this deal?","hi":"1️⃣ यह डील किस कैटेगरी की है?"},"2️⃣ உள் வகை":{"en":"2️⃣ Sub-category","hi":"2️⃣ सब-कैटेगरी"},"மற்றவை":{"en":"Others","hi":"अन्य"},"👀 வாடிக்கையாளருக்கு இப்படி காட்டும்: ":{"en":"👀 Customers will see: ","hi":"👀 ग्राहक को ऐसे दिखेगा: "},"ஒரு போட்டோவை படிக்க முடியல. வேற போட்டோ தேர்ந்தெடுங்க.":{"en":"Couldn't read a photo. Please choose another.","hi":"एक फोटो पढ़ नहीं सके। दूसरी चुनें।"},"போட்டோவை நீக்கு":{"en":"Remove photo","hi":"फोटो हटाएं"},"முகப்பு":{"en":"Cover","hi":"कवर"},"முகப்பாக்கு":{"en":"Make cover","hi":"कवर बनाएं"},"+ போட்டோ":{"en":"+ Photo","hi":"+ फोटो"},"எ.கா. Cotton Kurti Set (3 colours)":{"en":"e.g. Cotton Kurti Set (3 colours)","hi":"जैसे Cotton Kurti Set (3 colours)"},"எ.கா. Flat 50% OFF (விலை இல்லன்னா மட்டும்)":{"en":"e.g. Flat 50% OFF (only if there is no price)","hi":"जैसे Flat 50% OFF (सिर्फ अगर कीमत न हो)"},"எ.கா. HDFC card-ல கூடுதலா 10% OFF":{"en":"e.g. Extra 10% OFF with HDFC card","hi":"जैसे HDFC कार्ड पर एक्स्ट्रा 10% OFF"},"எ.கா. NESAM50":{"en":"e.g. NESAM50","hi":"जैसे NESAM50"},"WhatsApp, Instagram-ல போடற மாதிரியே விளக்கத்தை எழுதுங்க.":{"en":"Write the description the way you would post on WhatsApp or Instagram.","hi":"विवरण वैसे ही लिखें जैसे WhatsApp या Instagram पर डालते हैं।"},"சேமிக்கிறேன்…":{"en":"Saving…","hi":"सेव हो रहा है…"},"மாற்றங்களை சேமி":{"en":"Save changes","hi":"बदलाव सेव करें"},"டீலை போடு":{"en":"Post deal","hi":"डील डालें"},"ரத்து":{"en":"Cancel","hi":"रद्द करें"},"அழி":{"en":"Clear","hi":"साफ करें"},"டீலை திருத்து":{"en":"Edit deal","hi":"डील बदलें"},"புது டீல் சேர்":{"en":"Add new deal","hi":"नई डील जोड़ें"},"டீல் {n} நாள் தான் ஆப்ல இருக்கும். அப்புறம் தானா மறைஞ்சு நீங்கிடும்.":{"en":"A deal stays in the app for {n} days, then disappears automatically.","hi":"डील ऐप में {n} दिन रहती है, फिर अपने आप हट जाती है।"},"போட்டோஸ் (அதிகபட்சம் {n})":{"en":"Photos (up to {n})","hi":"फोटो (अधिकतम {n})"},"முதல் போட்டோ தான் முகப்பு. வாடிக்கையாளர் ஸ்வைப் பண்ணி மத்ததை பாப்பாங்க. போட்டோ தானா சின்னதாகி சேமிக்கப்படும்.":{"en":"The first photo is the cover. Customers swipe to see the rest. Photos are resized automatically.","hi":"पहली फोटो कवर होती है। ग्राहक स्वाइप करके बाकी देखते हैं। फोटो अपने आप छोटी होकर सेव होती है।"},"டீல் தலைப்பு":{"en":"Deal title","hi":"डील का शीर्षक"},"கடை (உனக்கு மட்டும் தெரியும்)":{"en":"Store (only you see this)","hi":"स्टोर (सिर्फ आपको दिखेगा)"},"MRP (₹)":{"en":"MRP (₹)","hi":"MRP (₹)"},"ஆஃபர் விலை (₹)":{"en":"Offer price (₹)","hi":"ऑफर कीमत (₹)"},"இலவசம்னா 0 போடு":{"en":"Enter 0 if free","hi":"फ्री हो तो 0 डालें"},"விலை இல்லாத சலுகை வாசகம்":{"en":"Offer text (when there is no price)","hi":"ऑफर टेक्स्ट (कीमत न होने पर)"},"உன் affiliate லிங்க்":{"en":"Your affiliate link","hi":"आपका एफिलिएट लिंक"},"அப்படியே ஒட்டு. வாடிக்கையாளருக்கு எந்த கடைனு காட்டாது.":{"en":"Paste it as it is. Customers will not see which store it is.","hi":"जैसा है वैसा पेस्ट करें। ग्राहक को स्टोर का नाम नहीं दिखेगा।"},"கூடுதல் சலுகை (optional)":{"en":"Extra offer (optional)","hi":"एक्स्ट्रा ऑफर (वैकल्पिक)"},"கூப்பன் கோட் (optional)":{"en":"Coupon code (optional)","hi":"कूपन कोड (वैकल्पिक)"},"டீல் முடியும் நேரம் (optional)":{"en":"Deal end time (optional)","hi":"डील खत्म होने का समय (वैकल्पिक)"},"நேரம் முடிஞ்சதும் டீல் தானா \"முடிஞ்சது\"னு ஆகிடும்.":{"en":"When the time is over, the deal automatically shows as \"Ended\".","hi":"समय खत्म होते ही डील अपने आप \"खत्म\" हो जाएगी।"},"🎬 பொருளோட வீடியோ லிங்க் (optional)":{"en":"🎬 Product video link (optional)","hi":"🎬 प्रोडक्ट वीडियो लिंक (वैकल्पिक)"},"உன் YouTube / Instagram / Facebook வீடியோ லிங்கை ஒட்டு. வாடிக்கையாளருக்கு \"பொருளோட வீடியோ பாரு\" பட்டன் மட்டும் தெரியும். YouTube வீடியோ ஆப்குள்ளயே ஓடும்.":{"en":"Paste your YouTube / Instagram / Facebook video link. Customers only see a \"Watch product video\" button. YouTube videos play inside the app.","hi":"अपना YouTube / Instagram / Facebook वीडियो लिंक पेस्ट करें। ग्राहक को सिर्फ \"प्रोडक्ट वीडियो देखें\" बटन दिखेगा। YouTube वीडियो ऐप के अंदर चलेंगे।"},"விளக்கம்":{"en":"Description","hi":"विवरण"},"இன்றைய சிறப்பு டீலா மேல காட்டு ★":{"en":"Show on top as today's special deal ★","hi":"आज की खास डील बनाकर ऊपर दिखाएं ★"},"தலைப்பை எழுதுங்க.":{"en":"Please write a title.","hi":"शीर्षक लिखें।"},"வகையை தேர்ந்தெடுங்க.":{"en":"Please choose a category.","hi":"कैटेगरी चुनें।"},"உள் வகையை தேர்ந்தெடுங்க.":{"en":"Please choose a sub-category.","hi":"सब-कैटेगरी चुनें।"},"இப்போதைய விலை அல்லது சலுகை வாசகம் ஒண்ணாவது எழுதுங்க.":{"en":"Enter the current price or an offer text.","hi":"मौजूदा कीमत या ऑफर टेक्स्ट में से कम से कम एक लिखें।"},"விலை சரியா இல்ல.":{"en":"The price is not valid.","hi":"कीमत सही नहीं है।"},"பழைய விலை இப்போதைய விலையை விட அதிகமா இருக்கணும்.":{"en":"The old price must be higher than the current price.","hi":"पुरानी कीमत मौजूदा कीमत से ज्यादा होनी चाहिए।"},"உன் affiliate லிங்கை ஒட்டுங்க.":{"en":"Paste your affiliate link.","hi":"अपना एफिलिएट लिंक पेस्ट करें।"},"லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The link must start with https://","hi":"लिंक https:// से शुरू होना चाहिए।"},"வீடியோ லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The video link must start with https://","hi":"वीडियो लिंक https:// से शुरू होना चाहिए।"},"போட்டோஸ் ரொம்ப பெருசா இருக்கு. ஒண்ணு ரெண்டை நீக்கிட்டு மறுபடி போடுங்க.":{"en":"The photos are too large. Remove one or two and try again.","hi":"फोटो बहुत बड़ी हैं। एक-दो हटाकर फिर कोशिश करें।"},"மாற்றம் சேமிச்சாச்சு ✔":{"en":"Changes saved ✔","hi":"बदलाव सेव हो गए ✔"},"டீல் போட்டாச்சு ✔ வாடிக்கையாளர் பார்வையில பாரு.":{"en":"Deal posted ✔ Check it in the customer view.","hi":"डील पोस्ट हो गई ✔ ग्राहक व्यू में देखें।"},"சேமிக்க முடியல. இணைப்பை சரிபார்த்து மறுபடி முயற்சி பண்ணுங்க.":{"en":"Couldn't save. Check your connection and try again.","hi":"सेव नहीं हो सका। कनेक्शन जांचकर फिर कोशिश करें।"},"இன்னும் டீல் எதுவும் இல்ல":{"en":"No deals yet","hi":"अभी कोई डील नहीं"},"\"புது டீல்\" டேபில் முதல் டீலை போடுங்க.":{"en":"Post your first deal in the \"New deal\" tab.","hi":"\"नई डील\" टैब में पहली डील डालें।"},"நீக்கு":{"en":"Delete","hi":"हटाएं"},"மாதிரி":{"en":"Sample","hi":"सैंपल"},"முடிஞ்சது":{"en":"Ended","hi":"खत्म"},"லைவ்":{"en":"Live","hi":"लाइव"},"★ சிறப்பு":{"en":"★ Special","hi":"★ खास"},"🎬 வீடியோ":{"en":"🎬 Video","hi":"🎬 वीडियो"},"காலாவதி":{"en":"Expired","hi":"एक्सपायर"},"{n} நாள் மீதம்":{"en":"{n} days left","hi":"{n} दिन बाकी"},"{n} படம்":{"en":"{n} photos","hi":"{n} फोटो"},"போட்டது {a} · விலை சரிபார்த்தது {b}":{"en":"Posted {a} · Price checked {b}","hi":"पोस्ट किया {a} · कीमत जांची {b}"},"திருத்து":{"en":"Edit","hi":"बदलें"},"விலை சரிபார்த்ததா குறிச்சாச்சு":{"en":"Marked as price checked","hi":"कीमत जांची हुई मार्क की"},"விலை சரிபார்த்தேன்":{"en":"Price checked","hi":"कीमत जांच ली"},"மறுபடி லைவ்":{"en":"Make live again","hi":"फिर से लाइव करें"},"★ எடு":{"en":"★ Remove star","hi":"★ हटाएं"},"இன்னும் {n} நாள் நீட்டிச்சாச்சு":{"en":"Extended by {n} more days","hi":"{n} दिन और बढ़ा दिए"},"{n} நாள் நீட்டு":{"en":"Extend {n} days","hi":"{n} दिन बढ़ाएं"},"லிங்க் சோதி":{"en":"Test link","hi":"लिंक जांचें"},"பழைய டீல்ஸும் காட்டு":{"en":"Show older deals too","hi":"पुरानी डील्स भी दिखाएं"},"{n} லிங்க் https:// ஓட தொடங்கணும்.":{"en":"{n} link must start with https://","hi":"{n} लिंक https:// से शुरू होना चाहिए।"},"\"Other\" பக்கத்துக்கு ஒரு பெயர் எழுதுங்க.":{"en":"Write a name for the \"Other\" page.","hi":"\"Other\" पेज के लिए एक नाम लिखें।"},"ஆப் லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The app link must start with https://","hi":"ऐप लिंक https:// से शुरू होना चाहिए।"},"அறிவிப்பு லிங்க் https:// ஓட தொடங்கணும்.":{"en":"The announcement link must start with https://","hi":"सूचना लिंक https:// से शुरू होना चाहिए।"},"அறிவிப்பை ஆன் பண்ணா, வாசகம் எழுதணும்.":{"en":"If you turn on the announcement, write its text.","hi":"सूचना ऑन करें तो उसका टेक्स्ट लिखें।"},"டீல் நாட்கள் 1 முதல் 30-க்குள்ள இருக்கணும்.":{"en":"Deal days must be between 1 and 30.","hi":"डील के दिन 1 से 30 के बीच होने चाहिए।"},"அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.":{"en":"Settings saved ✔ The customer app updates right away.","hi":"सेटिंग्स सेव हो गईं ✔ ग्राहक ऐप में अभी बदल जाएंगी।"},"சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.":{"en":"Couldn't save. Please try again.","hi":"सेव नहीं हो सका। फिर कोशिश करें।"},"🎨 தோற்றம்":{"en":"🎨 Look","hi":"🎨 लुक"},"🗂️ வகைகள்":{"en":"🗂️ Categories","hi":"🗂️ कैटेगरी"},"🔗 பின்தொடர":{"en":"🔗 Follow","hi":"🔗 फॉलो"},"📣 அறிவிப்பு & விதி":{"en":"📣 Notice & rules","hi":"📣 सूचना और नियम"},"இந்த படத்தை படிக்க முடியல.":{"en":"Couldn't read this image.","hi":"यह इमेज पढ़ नहीं सके।"},"ஆப் பெயர்":{"en":"App name","hi":"ऐप का नाम"},"மேல தெரியும் பெயர். காலியா விட்டா \"TruePick\".":{"en":"The name shown at the top. Leave blank for \"TruePick\".","hi":"ऊपर दिखने वाला नाम। खाली छोड़ें तो \"TruePick\"।"},"டேக்லைன் (optional)":{"en":"Tagline (optional)","hi":"टैगलाइन (वैकल्पिक)"},"எ.கா. தினமும் புது டீல்ஸ்":{"en":"e.g. New deals every day","hi":"जैसे रोज नई डील्स"},"காலியா விட்டா, வாடிக்கையாளர் மொழிக்கேத்த டேக்லைன் வரும். எழுதினா எல்லா மொழிலயும் இதே வரும்.":{"en":"If left blank, a tagline in the customer's language is shown. If you write one, it shows in every language.","hi":"खाली छोड़ें तो ग्राहक की भाषा में टैगलाइन दिखेगी। लिखेंगे तो हर भाषा में यही दिखेगी।"},"ஆப் லோகோ":{"en":"App logo","hi":"ऐप लोगो"},"சதுர படம் நல்லது. கடை லோகோக்கள் இல்லாத சுத்தமான லோகோ போடு.":{"en":"A square image is best. Use a clean logo without store logos.","hi":"चौकोर इमेज बेहतर है। स्टोर लोगो के बिना साफ लोगो रखें।"},"ஆப் நிறம்":{"en":"App colour","hi":"ऐप का रंग"},"ஆப் பின்னணி (வெளிச்சம்/இருட்டு)":{"en":"App background (light/dark)","hi":"ऐप बैकग्राउंड (लाइट/डार्क)"},"☀️ வெளிச்சம்":{"en":"☀️ Light","hi":"☀️ लाइट"},"🌙 இருட்டு":{"en":"🌙 Dark","hi":"🌙 डार्क"},"📱 போன் படி":{"en":"📱 Follow phone","hi":"📱 फोन के अनुसार"},"\"வெளிச்சம்\" தான் பரிந்துரை. வாடிக்கையாளர் தன் விருப்பப்படி மேல உள்ள 🎨 பட்டனில் தீம் மாத்திக்கலாம். இது அவர் தேர்ந்தெடுக்கும் முன் வரும் முதல் தோற்றம்.":{"en":"\"Light\" is recommended. Customers can change the theme with the 🎨 button at the top. This is the look they see first.","hi":"\"लाइट\" की सलाह है। ग्राहक ऊपर 🎨 बटन से थीम बदल सकते हैं। यह उनका पहला लुक है।"},"புது வாடிக்கையாளருக்கு முதல் மொழி":{"en":"Default language for new customers","hi":"नए ग्राहकों के लिए डिफ़ॉल्ट भाषा"},"வாடிக்கையாளர் மேல உள்ள மொழி பட்டனால எப்ப வேணா மாத்திக்கலாம்.":{"en":"Customers can change it anytime with the language button at the top.","hi":"ग्राहक ऊपर भाषा बटन से कभी भी बदल सकते हैं।"},"எமோஜி":{"en":"Emoji","hi":"इमोजी"},"வகை பெயர்":{"en":"Category name","hi":"कैटेगरी का नाम"},"பெயர்":{"en":"Name","hi":"नाम"},"வாடிக்கையாளருக்கு காட்ட வேண்டிய வகைகள்":{"en":"Categories to show customers","hi":"ग्राहकों को दिखाने वाली कैटेगरी"},"டிக் எடுத்தா அந்த வகையும் அதுல இருக்கற டீல்ஸும் வாடிக்கையாளருக்கு மறையும்.":{"en":"Untick a category to hide it and its deals from customers.","hi":"टिक हटाने पर वह कैटेगरी और उसकी डील्स ग्राहकों से छिप जाएंगी।"},"உன் சொந்த வகை சேர்":{"en":"Add your own category","hi":"अपनी कैटेगरी जोड़ें"},"புது வகை (எ.கா. \"Diwali Specials\") எல்லா மொழிலயும் நீ எழுதின பெயரிலேயே தெரியும்.":{"en":"A new category (e.g. \"Diwali Specials\") shows with the name you write, in every language.","hi":"नई कैटेगरी (जैसे \"Diwali Specials\") हर भाषा में आपके लिखे नाम से ही दिखेगी।"},"+ புது வகை":{"en":"+ New category","hi":"+ नई कैटेगरी"},"தளம்":{"en":"Platform","hi":"प्लेटफॉर्म"},"பக்கத்தின் பெயர் (எ.கா. Moj)":{"en":"Page name (e.g. Moj)","hi":"पेज का नाम (जैसे Moj)"},"விருப்பம்: எ.கா. @truepickindia":{"en":"Optional: e.g. @truepickindia","hi":"वैकल्पिक: जैसे @truepickindia"},"லிங்க்":{"en":"Link","hi":"लिंक"},"எ.கா. TruePick – தினமும் நல்ல டீல்ஸ், நேர்மையா.":{"en":"e.g. TruePick – good deals every day, honestly.","hi":"जैसे नेसम डील्स – रोज अच्छी डील्स, ईमानदारी से।"},"எங்களை பின்தொடர பக்கங்கள்":{"en":"Pages to follow us","hi":"हमें फॉलो करने के पेज"},"WhatsApp, Telegram, Instagram, Facebook, YouTube… எத்தனை வேணும்னாலும் சேர்க்கலாம். வாடிக்கையாளருக்கு \"பின்தொடர\" டேபில் தெரியும்.":{"en":"Add as many as you like: WhatsApp, Telegram, Instagram, Facebook, YouTube… Customers see them in the \"Follow\" tab.","hi":"जितने चाहें जोड़ें: WhatsApp, Telegram, Instagram, Facebook, YouTube… ग्राहक को \"फॉलो\" टैब में दिखेंगे।"},"+ இன்னொரு பக்கம் சேர்":{"en":"+ Add another page","hi":"+ एक और पेज जोड़ें"},"பின்தொடர பக்கத்துல ஒரு சிறு அறிமுகம் (optional)":{"en":"A short intro on the Follow page (optional)","hi":"फॉलो पेज पर छोटा परिचय (वैकल्पिक)"},"ஆப் பொது லிங்க்":{"en":"Public app link","hi":"ऐप का पब्लिक लिंक"},"ஆப்போட பொது லிங்க் (லைவ் ஆனப்புறம்)":{"en":"Public link of the app (after going live)","hi":"ऐप का पब्लिक लिंक (लाइव होने के बाद)"},"WhatsApp பகிர்வுல உன் ஆப் லிங்க் சேரும். அசல் கடை லிங்க் பகிர்வுல வராது.":{"en":"Your app link is added when sharing on WhatsApp. The original store link is not shared.","hi":"WhatsApp शेयर में आपका ऐप लिंक जुड़ेगा। असली स्टोर लिंक शेयर में नहीं जाएगा।"},"📢 முகப்புல மேல காட்டும் அறிவிப்பு":{"en":"📢 Announcement shown at the top of Home","hi":"📢 होम पर ऊपर दिखने वाली सूचना"},"அறிவிப்பை காட்டு":{"en":"Show announcement","hi":"सूचना दिखाएं"},"எ.கா. தீபாவளி ஸ்பெஷல் டீல்ஸ் வந்தாச்சு!":{"en":"e.g. Diwali special deals are here!","hi":"जैसे दिवाली स्पेशल डील्स आ गईं!"},"வாடிக்கையாளர் மொழி எதுவானாலும் இதே வாசகம் தெரியும்.":{"en":"The same text shows in every customer language.","hi":"ग्राहक की भाषा कोई भी हो, यही टेक्स्ट दिखेगा।"},"அறிவிப்பை தொட்டா போற லிங்க் (optional)":{"en":"Link opened when the announcement is tapped (optional)","hi":"सूचना दबाने पर खुलने वाला लिंक (वैकल्पिक)"},"டீல் எத்தனை நாள் ஆப்ல இருக்கணும்?":{"en":"How many days should a deal stay in the app?","hi":"डील कितने दिन ऐप में रहे?"},"1 முதல் 30 நாள். அதுக்கப்புறம் தானா மறைஞ்சு நீங்கிடும்.":{"en":"1 to 30 days. After that it disappears automatically.","hi":"1 से 30 दिन। उसके बाद अपने आप हट जाती है।"},"💾 சேமி":{"en":"💾 Save","hi":"💾 सेव करें"},"அமைப்புகள்":{"en":"Settings","hi":"सेटिंग्स"},"ராயல் நீலம்":{"en":"Royal blue","hi":"रॉयल ब्लू"},"பச்சை":{"en":"Green","hi":"हरा"},"ஊதா":{"en":"Purple","hi":"बैंगनी"},"சிவப்பு":{"en":"Red","hi":"लाल"},"ஆரஞ்சு":{"en":"Orange","hi":"नारंगी"},"டீல் பச்சை":{"en":"Teal","hi":"टील"},"ரோஸ்":{"en":"Rose","hi":"गुलाबी"},"கருப்பு":{"en":"Black","hi":"काला"}};
   Object.assign(AD,{"முதல் தடவை காட்டும் முறை (இயல்பு)": {"en": "Default view (first time)", "hi": "पहली बार दिखने का तरीका (डिफ़ॉल्ट)"}, "வாடிக்கையாளர் தங்களுக்கு பிடிச்ச முறையை ▢ ▦ ☰ பட்டன்ல மாத்திக்கலாம். இது முதல் தடவைக்கு மட்டும்.": {"en": "Customers can switch the view with the ▢ ▦ ☰ buttons. This is only for the first visit.", "hi": "ग्राहक ▢ ▦ ☰ बटन से व्यू बदल सकते हैं। यह सिर्फ पहली बार के लिए है।"}});
   Object.assign(AD,{"👤 உரிமையாளர் கார்டு (பின்தொடர டேப் மேல)": {"en": "👤 Owner card (top of Follow tab)", "hi": "👤 मालिक कार्ड (फॉलो टैब के ऊपर)"}, "கார்டு": {"en": "Card", "hi": "कार्ड"}, "காட்டு": {"en": "Show", "hi": "दिखाएं"}, "மறை": {"en": "Hide", "hi": "छुपाएं"}, "பெயர்": {"en": "Name", "hi": "नाम"}, "பதவி": {"en": "Position", "hi": "पद"}, "இணையதள லிங்க் (optional)": {"en": "Website link (optional)", "hi": "वेबसाइट लिंक (वैकल्पिक)"}, "நம்பிக்கை வாசகம்": {"en": "Trust line", "hi": "भरोसे की पंक्ति"}, "காலியா விட்டா, வாடிக்கையாளர் மொழிக்கு ஏத்த தானா வாசகம் வரும்": {"en": "Leave blank to show the built-in line in the customer's language", "hi": "खाली छोड़ें तो ग्राहक की भाषा में अपने आप पंक्ति दिखेगी"}, "நீ இங்க எழுதினா, எல்லா மொழிக்கும் அதே வாசகம் தெரியும். காலியா விட்டா 14 மொழில தானா வரும்.": {"en": "If you write here, the same text shows in every language. If blank, it appears automatically in 14 languages.", "hi": "आप यहां लिखेंगे तो हर भाषा में वही पंक्ति दिखेगी। खाली छोड़ने पर 14 भाषाओं में अपने आप आएगी।"}});
   Object.assign(AD,{"🎨 Promo பக்க அமைப்பு": {"en": "🎨 Promo page layout", "hi": "🎨 प्रोमो पेज लेआउट"}, "காட்டும் முறை": {"en": "Display style", "hi": "दिखाने का तरीका"}, "லிஸ்ட் (சின்ன வரிசை)": {"en": "List (small rows)", "hi": "लिस्ट (छोटी पंक्तियां)"}, "கிரிட் (2 வரிசை)": {"en": "Grid (2 columns)", "hi": "ग्रिड (2 कॉलम)"}, "பெரிய கார்டு": {"en": "Big cards", "hi": "बड़े कार्ड"}, "கலவை (முதல் பெரிசு)": {"en": "Mix (first one big)", "hi": "मिक्स (पहला बड़ा)"}, "ஒவ்வொரு விளம்பரத்துக்கும் தனி அளவும் கீழ வைக்கலாம். அது இதை விட முன்னுரிமை.": {"en": "You can also set a size for each ad below. That takes priority over this.", "hi": "हर विज्ञापन का अलग साइज़ नीचे सेट कर सकते हैं। वही प्राथमिक होगा।"}, "பக்க பின்னணி நிறம்": {"en": "Page background colour", "hi": "पेज बैकग्राउंड रंग"}, "கார்டு நிறம்": {"en": "Card colour", "hi": "कार्ड रंग"}, "எழுத்து நிறம்": {"en": "Text colour", "hi": "टेक्स्ट रंग"}, "பட்டன் நிறம்": {"en": "Button colour", "hi": "बटन रंग"}, "தானா (ஆப் நிறம்)": {"en": "Auto (app colour)", "hi": "ऑटो (ऐप रंग)"}, "தானாவே விடு": {"en": "Leave auto", "hi": "ऑटो छोड़ें"}, "மூலை வடிவம்": {"en": "Corner shape", "hi": "कोने का आकार"}, "வட்டம்": {"en": "Round", "hi": "गोल"}, "லேசா வளைவு": {"en": "Slightly curved", "hi": "हल्का घुमाव"}, "சதுரம்": {"en": "Square", "hi": "चौकोर"}, "\"எங்க கடை\" கார்டு": {"en": "\"Our store\" card", "hi": "\"हमारी दुकान\" कार्ड"}, "விளம்பரம் இல்லாதப்ப மட்டும்": {"en": "Only when no ads", "hi": "सिर्फ जब विज्ञापन न हो"}, "எப்பவும் கடைசில": {"en": "Always, at the end", "hi": "हमेशा, अंत में"}, "காட்டாதே": {"en": "Never show", "hi": "न दिखाएं"}, "பக்க அமைப்பை சேமி": {"en": "Save page layout", "hi": "पेज लेआउट सेव करें"}, "பக்க அமைப்பு சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.": {"en": "Page layout saved ✔ Customers see it right away.", "hi": "पेज लेआउट सेव हो गया ✔ ग्राहक ऐप में अभी दिखेगा।"}, "இந்த விளம்பரத்தோட அளவு": {"en": "Size of this ad", "hi": "इस विज्ञापन का साइज़"}, "பக்க அமைப்பு படி": {"en": "Follow page layout", "hi": "पेज लेआउट के अनुसार"}, "சின்னது (வரிசை)": {"en": "Small (row)", "hi": "छोटा (पंक्ति)"}, "நடுத்தரம் (பாதி)": {"en": "Medium (half)", "hi": "मध्यम (आधा)"}, "பெரிசு (முழுசு)": {"en": "Large (full width)", "hi": "बड़ा (पूरी चौड़ाई)"}, "இந்த கார்டு நிறம் (optional)": {"en": "This card's colour (optional)", "hi": "इस कार्ड का रंग (वैकल्पिक)"}, "பட்டன் எழுத்து (எ.கா. வாங்க, பாருங்க)": {"en": "Button text (e.g. Buy, View)", "hi": "बटन टेक्स्ट (जैसे खरीदें, देखें)"}, "வீடியோ எங்க ஓடணும்": {"en": "Where should the video play", "hi": "वीडियो कहां चले"}, "ஆப்குள்ளயே (YouTube / .mp4)": {"en": "Inside the app (YouTube / .mp4)", "hi": "ऐप के अंदर (YouTube / .mp4)"}, "வெளிய திற": {"en": "Open outside", "hi": "बाहर खोलें"}, "வீடியோ லிங்க் (YouTube அல்லது .mp4, optional)": {"en": "Video link (YouTube or .mp4, optional)", "hi": "वीडियो लिंक (YouTube या .mp4, वैकल्पिक)"}});
@@ -1488,12 +1787,13 @@ span.cbadge{cursor:default}
     return b;
   }
   async function bulkDelete(pred,what){
-    var ids=S.deals.filter(pred).map(function(d){return d.id});
+    var snaps=S.deals.filter(pred).map(function(d){return Object.assign({},d)});
+    var ids=snaps.map(function(d){return d.id});
     if(!ids.length){toast(A('நீக்க ஒண்ணும் இல்ல'));return}
     try{
       if(S.live){ for(var i=0;i<ids.length;i++) await S.db.collection('deals').doc(ids[i]).delete(); }
       else { S.deals=S.deals.filter(function(d){return ids.indexOf(d.id)<0}); demoPersist(); }
-      toast(A('{n} {what} நீக்கியாச்சு').replace('{n}',ids.length).replace('{what}',what));
+      toast(A('{n} {what} நீக்கியாச்சு').replace('{n}',ids.length).replace('{what}',what),function(){restoreDeals(snaps)});
     }catch(e){toast(A('சில டீல்ஸை நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.'))}
     renderSeller();
   }
@@ -1502,7 +1802,7 @@ span.cbadge{cursor:default}
     var live=all.filter(function(d){return !isEnded(d)&&!isExpired(d)});
     var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
     var ended=all.filter(function(d){return isEnded(d)||isExpired(d)}).length;
-    var soon=live.filter(function(d){return (d.createdAt||0)+lifeMs()-Date.now()<864e5}).length;
+    var soon=live.filter(function(d){return endingSoon(d)}).length;
     var z99=live.filter(function(d){return zoneMatch(d,ZONES[0])}).length,z1k=live.filter(function(d){return zoneMatch(d,ZONES[4])}).length;
     function st(n,l,c){return h('div',{class:'stat',style:'--sc:'+c},h('b',null,String(n)),h('span',null,l))}
     var rows=TAXALL.map(function(m){return {m:m,n:live.filter(function(d){return normCat(d.category)===m.id}).length}}).filter(function(x){return x.n>0}).sort(function(a,b){return b.n-a.n});
@@ -1517,7 +1817,7 @@ span.cbadge{cursor:default}
           h('button',{type:'button',class:'go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},A('➕ புது டீல் போடு')),
           armBtn(A('🧹 முடிஞ்ச/காலாவதி டீல்ஸ் நீக்கு'),A('உறுதியா?'),function(){bulkDelete(function(d){return isEnded(d)||isExpired(d)},A('டீல்ஸ்'))}),
           samples?armBtn(A('🗑️ மாதிரி டீல்ஸ் நீக்கு ({n})').replace('{n}',samples),A('உறுதியா?'),function(){bulkDelete(function(d){return d.sample},A('மாதிரி டீல்ஸ்'))}):null)),
-      h('p',{class:'hint'},A('டீல்ஸ் {n} நாளுக்கு அப்புறம் தானா மறையும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.').replace('{n}',lifeDays())));
+      h('p',{class:'hint'},A('டீல்ஸ் நீ நீக்கற வரை ஆப்புல இருக்கும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.')));
   }
 
   /* ---- new deal form ---- */
@@ -1774,7 +2074,7 @@ span.cbadge{cursor:default}
     var clear=h('button',{type:'button',onclick:function(){F=blankForm();renderSeller()}},F.id?A('ரத்து'):A('அழி'));
     go.addEventListener('click',submitDeal);
     var dpanel=h('div',{class:'panel'},
-      h('h2',null,F.id?A('டீலை திருத்து'):A('புது டீல் சேர்')),h('p',{class:'hint'},A('டீல் {n} நாள் தான் ஆப்ல இருக்கும். அப்புறம் தானா மறைஞ்சு நீங்கிடும்.').replace('{n}',lifeDays())),errP,okP,
+      h('h2',null,F.id?A('டீலை திருத்து'):A('புது டீல் சேர்')),h('p',{class:'hint'},A('டீல் நீ நீக்கற வரை ஆப்ல இருக்கும்.')),errP,okP,
       h('div',{class:'fld'},h('span',{class:'lbl'},A('போட்டோஸ் (அதிகபட்சம் {n})').replace('{n}',MAX_PHOTOS)),grid,h('span',{class:'hint'},A('முதல் போட்டோ தான் முகப்பு. வாடிக்கையாளர் ஸ்வைப் பண்ணி மத்ததை பாப்பாங்க. போட்டோ தானா சின்னதாகி சேமிக்கப்படும்.'))),
       h('div',{class:'fld'},h('span',{class:'lbl'},A('👀 ஆப்ல இப்படி தெரியும்')),h('div',{id:'dprev',class:'pprev'}),h('span',{class:'hint'},A('படம் தானா முழுசா பொருந்தும், வெட்டு இல்ல. வேற மாதிரி வேணும்னா படத்துல ✂ அழுத்தி நீயே வெட்டு.'))),
       fld(A('டீல் தலைப்பு'),'f-title',title),
@@ -1902,19 +2202,18 @@ span.cbadge{cursor:default}
             d.pinned&&h('span',{class:'tg y'},A('📌 மேல')),(PRIV.map[d.id]!=null)&&h('span',{class:'tg y'},'💰 '+PRIV.map[d.id]+'%'),
             d.allowCmt&&h('span',{class:'tg'},'💬'),
             safeUrl(d.videoUrl)&&h('span',{class:'tg'},A('🎬 வீடியோ')),
-            h('span',{class:'cbadge',style:'--cc:'+catColor(d.category)},catEmoji(d.category)+' '+acat(d.category)+(d.sub&&d.sub!=='Other'?' › '+asub(d.sub):'')),h('span',{class:'tg'},d.source||'-'),isExpired(d)?h('span',{class:'tg r'},A('காலாவதி')):h('span',{class:'tg'},A('{n} நாள் மீதம்').replace('{n}',Math.max(0,Math.ceil(((d.createdAt||0)+lifeMs()-Date.now())/864e5)))),
+            h('span',{class:'cbadge',style:'--cc:'+catColor(d.category)},catEmoji(d.category)+' '+acat(d.category)+(d.sub&&d.sub!=='Other'?' › '+asub(d.sub):'')),h('span',{class:'tg'},d.source||'-'),
             h('span',{class:'tg'},A('{n} படம்').replace('{n}',imgs.length)),
             hasPrice(d)&&h('span',{class:'tg'},inr(d.newPrice)+(p?' · '+p+'%':'')),
             z&&h('span',{class:'tg'},z.over?'₹'+z.n+'+':'≤₹'+z.n)),
           h('div',{class:'hint'},A('போட்டது {a} · விலை சரிபார்த்தது {b}').replace('{a}',ago(d.createdAt||Date.now())).replace('{b}',ago(d.checkedAt||d.createdAt||Date.now()))),
           h('div',{class:'racts'},
             h('button',{type:'button',onclick:function(){F=formFrom(d);S.stab='new';renderSeller();window.scrollTo(0,0)}},A('திருத்து')),
-            h('button',{type:'button',onclick:function(){patchDeal(d.id,{checkedAt:Date.now()});toast(A('விலை சரிபார்த்ததா குறிச்சாச்சு'))}},A('விலை சரிபார்த்தேன்')),
-            h('button',{type:'button',onclick:function(){patchDeal(d.id,{ended:!d.ended})}},d.ended?A('மறுபடி லைவ்'):A('முடிஞ்சது')),
-            h('button',{type:'button',onclick:function(){patchDeal(d.id,{pinned:!d.pinned})}},d.pinned?A('📌 எடு'):A('📌 மேல வை')),
-            h('button',{type:'button',onclick:function(){patchDeal(d.id,{allowCmt:!d.allowCmt})}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
-            armBtn(A('ரியாக்ஷன் ரீசெட்'),A('உறுதியா?'),function(){S.db.collection('reacts').doc(d.id).set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)}).then(function(){toast('✔')}).catch(function(){toast(A('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'))})}),
-            h('button',{type:'button',onclick:function(){patchDeal(d.id,{createdAt:Date.now(),ended:false});toast(A('இன்னும் {n} நாள் நீட்டிச்சாச்சு').replace('{n}',lifeDays()))}},A('{n} நாள் நீட்டு').replace('{n}',lifeDays())),
+            h('button',{type:'button',onclick:function(){patchUndo(d,{checkedAt:Date.now()},A('விலை சரிபார்த்ததா குறிச்சாச்சு'))}},A('விலை சரிபார்த்தேன்')),
+            h('button',{type:'button',onclick:function(){patchUndo(d,{ended:!d.ended},d.ended?A('மறுபடி லைவ் ஆக்கியாச்சு'):A('முடிஞ்சதுனு குறிச்சாச்சு'))}},d.ended?A('மறுபடி லைவ்'):A('முடிஞ்சது')),
+            h('button',{type:'button',onclick:function(){patchUndo(d,{pinned:!d.pinned},d.pinned?A('📌 எடுத்தாச்சு'):A('📌 மேல வச்சாச்சு'))}},d.pinned?A('📌 எடு'):A('📌 மேல வை')),
+            h('button',{type:'button',onclick:function(){patchUndo(d,{allowCmt:!d.allowCmt},d.allowCmt?A('💬 கருத்து ஆஃப் ஆச்சு'):A('💬 கருத்து ஆன் ஆச்சு'))}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
+            armBtn(A('ரியாக்ஷன் ரீசெட்'),A('உறுதியா?'),function(){var rf=S.db.collection('reacts').doc(d.id);rf.get().then(function(sn){var old=(sn&&sn.exists&&sn.data&&sn.data())||null;return rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)}).then(function(){toast('✔',function(){(old?rf.set(old):rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)})).then(function(){toast(A('பழைய நிலைக்கு மாத்தியாச்சு ✔'))})})})}).catch(function(){toast(A('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'))})}),
             open&&h('a',{class:'tg',href:open,target:'_blank',rel:'noopener noreferrer',style:'min-height:36px;display:inline-flex;align-items:center;text-decoration:none;padding:0 10px'},A('லிங்க் சோதி')),
             del))));
     });
@@ -1958,12 +2257,12 @@ span.cbadge{cursor:default}
     if(!bad&&SET.share.trim()&&!safeUrl(SET.share)) bad=A('ஆப் லிங்க் https:// ஓட தொடங்கணும்.');
     if(!bad&&SET.annUrl.trim()&&!safeUrl(SET.annUrl)) bad=A('அறிவிப்பு லிங்க் https:// ஓட தொடங்கணும்.');
     if(!bad&&SET.annOn&&!SET.annText.trim()) bad=A('அறிவிப்பை ஆன் பண்ணா, வாசகம் எழுதணும்.');
-    var life=parseInt(SET.life,10); if(!bad&&!(life>=1&&life<=30)) bad=A('டீல் நாட்கள் 1 முதல் 30-க்குள்ள இருக்கணும்.');
+    
     var zn=SET.zn.map(function(v){return parseInt(v,10)}); if(!bad&&!zn.every(function(n,i){return n>0&&(i===0||n>zn[i-1])})) bad=A('விலை பட்டன் எண்கள் 4, சின்னதுல இருந்து பெருசா இருக்கணும்.');
     var cust=SET.custom.filter(function(c){return (c.name||'').trim()}).map(function(c){return {id:c.id,name:c.name.trim(),emoji:(c.emoji||'').trim()||'🏷️'}});
     if(bad){SET.err=bad;SET.msg='';renderSeller();window.scrollTo(0,0);return}
     var data={socials:out,shareUrl:safeUrl(SET.share),logo:SET.logo||'',appName:SET.appName.trim(),tagline:SET.tagline.trim(),theme:SET.theme,mode:SET.mode,defLang:SET.defLang,
-      hiddenCats:SET.hidden.filter(function(x){return x!=='Others'}),customCats:cust,cmpNames:!!SET.cmpNames,about:SET.about.trim(),lifeDays:life,
+      hiddenCats:SET.hidden.filter(function(x){return x!=='Others'}),customCats:cust,cmpNames:!!SET.cmpNames,about:SET.about.trim(),
       ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn};
     try{ await saveSettings(data); SET.err='';SET.msg=A('அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.'); if(!S.live) SET.init=false; }
     catch(e){SET.err=A('சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.');SET.msg=''}
@@ -2061,8 +2360,7 @@ span.cbadge{cursor:default}
       var an=h('input',{type:'checkbox',id:'s-annon',checked:SET.annOn?true:null});an.addEventListener('change',function(){SET.annOn=an.checked});
       body.append(
         h('div',{class:'fld'},h('span',{class:'lbl'},A('📢 முகப்புல மேல காட்டும் அறிவிப்பு')),h('label',{class:'chk',for:'s-annon'},an,A('அறிவிப்பை காட்டு')),tin('annText',A('எ.கா. தீபாவளி ஸ்பெஷல் டீல்ஸ் வந்தாச்சு!'),100),h('span',{class:'hint'},A('வாடிக்கையாளர் மொழி எதுவானாலும் இதே வாசகம் தெரியும்.'))),
-        fld(A('அறிவிப்பை தொட்டா போற லிங்க் (optional)'),'s-annu',tin('annUrl','https://…',200,'url')),
-        fld(A('டீல் எத்தனை நாள் ஆப்ல இருக்கணும்?'),'s-life',tin('life','7',2,'number'),A('1 முதல் 30 நாள். அதுக்கப்புறம் தானா மறைஞ்சு நீங்கிடும்.')));
+        fld(A('அறிவிப்பை தொட்டா போற லிங்க் (optional)'),'s-annu',tin('annUrl','https://…',200,'url')));
     }
     var save=h('button',{class:'go',type:'button'},A('💾 சேமி'));
     save.addEventListener('click',saveAll);
@@ -2742,6 +3040,45 @@ span.cbadge{cursor:default}
     }catch(e){ toast('லாகின் ஆகல. மறுபடி முயற்சி பண்ணுங்க.'); }
   }
 
+
+  /* ============ pull down to refresh (only the deals, never the whole app) ============ */
+  var PTR={ta:{pull:'⬇ கீழே இழுத்து புதுப்பி',rel:'⬆ விடுங்க, புதுப்பிக்கறேன்',ing:'⏳ புதுப்பிக்குது…',n:'🆕 {n} புது டீல்ஸ் வந்திருக்கு',none:'✔ எல்லாம் லேட்டஸ்ட்'},
+    en:{pull:'⬇ Pull to refresh',rel:'⬆ Release to refresh',ing:'⏳ Refreshing…',n:'🆕 {n} new deals',none:'✔ You are up to date'},
+    hi:{pull:'⬇ नीचे खींचकर रिफ्रेश करें',rel:'⬆ छोड़ें, रिफ्रेश हो रहा है',ing:'⏳ रिफ्रेश हो रहा है…',n:'🆕 {n} नए डील आए हैं',none:'✔ सब कुछ ताज़ा है'}};
+  (function(){
+    var el=h('div',{id:'ptr'}); document.body.append(el);
+    var y0=0,x0=0,pull=0,act=false,busy=false,TH=70;
+    function L(){ return PTR[S.lang]||PTR.en }
+    function show(py,txt){ el.textContent=txt; el.className=py>4?'on':''; el.style.transform='translate(-50%,'+(py-60)+'px)' }
+    function hide(){ el.className='anim'; el.style.transform='translate(-50%,-70px)' }
+    function blocked(t){ return !t||!t.closest||t.closest('.dsheet,.pop,.modal,[role=dialog],input,textarea,select') }
+    window.addEventListener('touchstart',function(e){
+      act=false; pull=0; if(busy||e.touches.length!==1||window.scrollY>0||S.view==='seller'||blocked(e.target)) return;
+      y0=e.touches[0].clientY; x0=e.touches[0].clientX; act=true; el.className='';
+    },{passive:true});
+    window.addEventListener('touchmove',function(e){
+      if(!act) return; var dy=e.touches[0].clientY-y0, dx=Math.abs(e.touches[0].clientX-x0);
+      if(window.scrollY>0||dy<=0||dx>dy){ if(dy<=0||window.scrollY>0){ act=false; hide() } return }
+      pull=Math.min(dy*.5,100); show(pull,pull>=TH?L().rel:L().pull);
+    },{passive:true});
+    function end(){
+      if(!act) return; act=false;
+      if(pull<TH){ hide(); return }
+      busy=true; show(TH,L().ing); el.className='on anim';
+      var before={}; S.deals.forEach(function(d){before[d.id]=1});
+      function done(){
+        var n=S.deals.filter(function(d){return !before[d.id]&&!d.sample}).length;
+        el.textContent=n?L().n.split('{n}').join(n):L().none; window.scrollTo(0,0);
+        setTimeout(function(){ hide(); busy=false },1400);
+      }
+      try{
+        if(S.live&&S.db){ var f=false; S.afterSnap=function(){ if(!f){f=true;done()} }; setTimeout(function(){ if(!f){f=true;S.afterSnap=null;done()} },6000); subscribeDeals(); }
+        else { render(); setTimeout(done,400) }
+      }catch(e){ busy=false; hide() }
+    }
+    window.addEventListener('touchend',end,{passive:true}); window.addEventListener('touchcancel',function(){act=false;hide()},{passive:true});
+  })();
+
   /* ============ boot ============ */
   $('themeBtn').addEventListener('click',openThemes);
   $('bellBtn').addEventListener('click',openBell);
@@ -2776,6 +3113,7 @@ span.cbadge{cursor:default}
       if(S.admin&&!S.cleaned){S.cleaned=true;cleanupOld();}
       if(S.view==='seller'&&S.stab==='new') { renderChrome(); return; }
       render();
+      if(S.afterSnap){ var _f=S.afterSnap; S.afterSnap=null; setTimeout(_f,0) }
     },function(){
       clearTimeout(slowT); S.loading=false;S.slow=false;S.deals=[];render();toast(t('failed'));
     });
