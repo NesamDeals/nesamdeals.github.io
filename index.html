@@ -1363,6 +1363,7 @@ span.cbadge{cursor:default}
   /* ============ seller studio (admin only, Tamil) ============ */
   var F=null;
   Object.assign(AD,{'🔗 லிங்க்ல இருந்து எடு':{"en":'🔗 Take from link',"hi":'🔗 लिंक से भरें'},'லிங்கை ஒட்டிட்டு இந்த பட்டனை அழுத்து. படம், தலைப்பு, விலை தானா வரும். வரலன்னா நீயே போடு.':{"en":'Paste the link and press this button. Image, title and price are filled in automatically. If they do not come, add them yourself.',"hi":'लिंक चिपकाकर यह बटन दबाएं। फोटो, टाइटल और कीमत अपने आप आएंगे। न आए तो खुद डालें।'},'எடுக்கிறேன்… கொஞ்சம் பொறு ⏳':{"en":'Fetching… please wait ⏳',"hi":'ला रहा हूँ… थोड़ा रुकें ⏳'},'முதல்ல affiliate லிங்கை (https://) ஒட்டு.':{"en":'First paste the affiliate link (https://).',"hi":'पहले एफिलिएट लिंक (https://) चिपकाएं।'},'எடுத்தாச்சு ✔':{"en":'Fetched ✔',"hi":'मिल गया ✔'},'வராததை நீயே போடு.':{"en":'Add the missing ones yourself.',"hi":'जो नहीं आया वह खुद डालें।'},'இந்த லிங்கல இருந்து எடுக்க முடியல 😕 படத்தை "+ போட்டோ"ல போடு, விலையை நீயே எழுது.':{"en":'Could not fetch from this link 😕 Add the photo with "+ Photo" and type the price yourself.',"hi":'इस लिंक से नहीं मिल पाया 😕 "+ फोटो" से फोटो डालें और कीमत खुद लिखें।'},'எடுக்க முடியல 😕 நீயே போடு':{"en":'Could not fetch 😕 add it yourself',"hi":'नहीं मिला 😕 खुद डालें'},'கடை':{"en":'Store',"hi":'स्टोर'},'படம்':{"en":'Image',"hi":'फोटो'},'விலை':{"en":'Price',"hi":'कीमत'},'பழைய விலை':{"en":'Old price',"hi":'पुरानी कीमत'},'சந்தை விலை (MRP ₹, optional)':{"en":'Market price (MRP ₹, optional)',"hi":'बाज़ार भाव (MRP ₹, वैकल्पिक)'},'ஆஃபர் விலை (₹, optional)':{"en":'Offer price (₹, optional)',"hi":'ऑफर कीमत (₹, वैकल्पिक)'},'சந்தை விலை கோடிட்டு காட்டும், ஆஃபர் விலை பெருசா தெரியும். ஆஃபர் மட்டும் போட்டாலும் ஓகே.':{"en":'Market price is shown struck through, offer price shown big. Offer price alone is fine too.',"hi":'बाज़ार भाव कटा हुआ दिखेगा, ऑफर कीमत बड़ी। सिर्फ ऑफर कीमत भी चलेगा।'},'🎟 கூப்பன் கோடு (எ.கா. DIWALI50)':{"en":'🎟 Coupon code (e.g. DIWALI50)',"hi":'🎟 कूपन कोड (जैसे DIWALI50)'},'கூப்பன் விவரம் (எ.கா. ₹200 OFF)':{"en":'Coupon details (e.g. ₹200 OFF)',"hi":'कूपन विवरण (जैसे ₹200 OFF)'},'கூப்பன் முடியும் நேரம் (optional)':{"en":'Coupon valid until (optional)',"hi":'कूपन कब तक मान्य (वैकल्पिक)'},'நேரம் முடிஞ்சதும் கூப்பன் தானா மறைஞ்சிடும்.':{"en":'The coupon hides automatically when time is over.',"hi":'समय खत्म होते ही कूपन अपने आप छिप जाएगा।'},'ஆஃபர் விலை சரியா இல்ல.':{"en":'Offer price is not valid.',"hi":'ऑफर कीमत सही नहीं है।'},'சந்தை விலை சரியா இல்ல.':{"en":'Market price is not valid.',"hi":'बाज़ार भाव सही नहीं है।'},'சந்தை விலை, ஆஃபர் விலையை விட அதிகமா இருக்கணும்.':{"en":'Market price must be higher than the offer price.',"hi":'बाज़ार भाव, ऑफर कीमत से ज़्यादा होना चाहिए।'}});
+  Object.assign(AD,{'வகை':{'en':'Category','hi':'श्रेणी'},'விவரம்':{'en':'Description','hi':'विवरण'}});
   function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,comm:'',ended:false,sample:false,video:'',err:'',ok:'',busy:false,offers:[],noGame:false,inGame:false,allowCmt:false}}
   function formFrom(d){
     var f=blankForm();
@@ -1506,7 +1507,99 @@ span.cbadge{cursor:default}
   }
 
   /* ---- link auto-fill (paste affiliate link -> store, title, image, price) ---- */
-  function lkFetch(u,ms){ var c=new AbortController(),tm=setTimeout(function(){c.abort()},ms||14000); return fetch(u,{signal:c.signal}).then(function(r){clearTimeout(tm); if(!r.ok) throw new Error('http'); return r},function(e){clearTimeout(tm); throw e}) }
+  function lkFetch(u,ms,hd){ var c=new AbortController(),tm=setTimeout(function(){c.abort()},ms||14000); return fetch(u,{signal:c.signal,headers:hd||{}}).then(function(r){clearTimeout(tm); if(!r.ok) throw new Error('http'); return r},function(e){clearTimeout(tm); throw e}) }
+
+  var CATRULES=[
+    [/smart\s?watch|fitness band|smartband/i,'Electronics','Smart Watches'],
+    [/earbud|earphone|headphone|headset|neckband|\btws\b|airdopes|bluetooth speaker|soundbar|speaker/i,'Electronics','Earbuds & Audio'],
+    [/laptop|notebook pc|macbook|chromebook/i,'Electronics','Laptops & Computers'],
+    [/keyboard|mouse|webcam|pendrive|pen drive|hard disk|ssd\b|monitor|router|usb hub/i,'Electronics','Computer Accessories'],
+    [/\btv\b|television|smart tv|projector/i,'Electronics','TV & Displays'],
+    [/camera|gopro|tripod/i,'Electronics','Cameras'],
+    [/power\s?bank/i,'Mobiles','Power Banks'],
+    [/charger|charging cable|usb cable|type-?c cable|lightning cable/i,'Mobiles','Chargers & Cables'],
+    [/back cover|phone case|mobile cover|flip cover|tempered glass|screen guard|screen protector/i,'Mobiles','Cases & Covers'],
+    [/smartphone|5g phone|mobile phone|\biphone\b|galaxy [asmf]\d|redmi|realme|oneplus|poco|vivo|oppo|iqoo|motorola/i,'Mobiles','Smartphones'],
+    [/\btablet\b|ipad/i,'Mobiles','Tablets'],
+    [/air conditioner|\bac\b|refrigerator|fridge/i,'Appliances','AC & Refrigerators'],
+    [/washing machine/i,'Appliances','Washing Machines'],
+    [/ceiling fan|table fan|air cooler|cooler|exhaust fan|pedestal fan/i,'Appliances','Fans & Coolers'],
+    [/\biron\b|steamer|garment/i,'Appliances','Irons & Garment Care'],
+    [/geyser|water heater|water purifier|\bro\b/i,'Appliances','Water Heaters & Purifiers'],
+    [/vacuum|robot cleaner/i,'Appliances','Vacuum & Cleaning Appliances'],
+    [/mixer|grinder|juicer|blender|air fryer|induction|kettle|toaster|oven|rice cooker|chopper|sandwich maker|gas stove|chimney/i,'Appliances','Kitchen Appliances'],
+    [/trimmer|shaver|epilator|hair dryer|straightener/i,'Beauty','Trimmers & Grooming Tools'],
+    [/serum|moisturi[sz]er|face wash|sunscreen|cream|lotion|face mask|skin/i,'Beauty','Skincare'],
+    [/shampoo|conditioner|hair oil|hair colou?r|hair mask/i,'Beauty','Haircare'],
+    [/lipstick|kajal|eyeliner|mascara|foundation|compact|nail polish|makeup|make-up/i,'Beauty','Makeup'],
+    [/perfume|deodorant|deo\b|body spray|fragrance|eau de/i,'Beauty','Fragrances'],
+    [/protein|whey|vitamin|multivitamin|supplement|omega|biotin|creatine/i,'Health','Vitamins & Supplements'],
+    [/dumbbell|treadmill|exercise bike|resistance band|gym|skipping rope/i,'Health','Fitness Equipment'],
+    [/bp monitor|blood pressure|glucometer|thermometer|oximeter|nebuli[sz]er/i,'Health','Medical Devices'],
+    [/yoga mat|yoga/i,'Sports','Gym & Yoga'],
+    [/cricket|bat\b|football|badminton|racket|tennis|carrom|chess/i,'Sports','Cricket & Outdoor'],
+    [/bicycle|cycle\b|cycling/i,'Sports','Cycling'],
+    [/saree|sari\b/i,'Women','Sarees'],
+    [/kurti|kurta set|salwar|anarkali|lehenga|dupatta|palazzo/i,'Women','Kurtis & Ethnic Wear'],
+    [/nighty|night suit|nightwear|nightdress|lounge/i,'Women','Nightwear & Lounge'],
+    [/bra\b|panty|lingerie|briefs women|camisole/i,'Women','Innerwear'],
+    [/necklace|earrings|jhumka|bangle|bracelet|jewel+ery|mangalsutra|anklet/i,'Women','Jewellery'],
+    [/handbag|sling bag|tote|clutch/i,'Women','Handbags'],
+    [/women'?s? (top|dress|jeans|t-?shirt|kurta|jacket)|\bdress\b|\bgown\b|\btop for women/i,'Women','Western Wear'],
+    [/baby (soap|oil|lotion|wipes|diaper)|diaper|baby care|feeding bottle/i,'Kids','Baby Care'],
+    [/toy|lego|building blocks|puzzle|doll|rc car|board game|play ?set/i,'Kids','Toys & Games'],
+    [/school bag|kids bag|pencil box/i,'Kids','School Bags & Stationery'],
+    [/boys?\b.*(shirt|t-?shirt|shorts|jeans|set)/i,'Kids','Boys Clothing'],
+    [/girls?\b.*(dress|frock|top|set|skirt)|frock/i,'Kids','Girls Clothing'],
+    [/t-?shirt|polo/i,'Men','T-Shirts'],
+    [/men'?s? shirt|formal shirt|casual shirt/i,'Men','Shirts'],
+    [/jeans|trouser|chinos|track ?pant|jogger/i,'Men','Jeans & Trousers'],
+    [/hoodie|sweatshirt|jacket|sweater|pullover/i,'Men','Hoodies & Jackets'],
+    [/dhoti|veshti|sherwani|nehru/i,'Men','Ethnic Wear'],
+    [/shoe|sneaker|sandal|slipper|flip flop|sports shoe|running shoe|loafer|boots/i,'Men','Footwear'],
+    [/wrist ?watch|analog watch|watch for (men|women)/i,'Accessories','Watches'],
+    [/wallet|backpack strap|belt\b/i,'Accessories','Bags & Wallets'],
+    [/sunglass/i,'Accessories','Sunglasses'],
+    [/umbrella/i,'Accessories','Umbrellas'],
+    [/water bottle|lunch box|tiffin|flask|sipper/i,'Accessories','Bottles & Lunch Boxes'],
+    [/backpack|laptop bag/i,'Luggage','Backpacks'],
+    [/trolley|suitcase|luggage/i,'Luggage','Luggage & Trolley'],
+    [/cookware|dinner set|kadai|pressure cooker|tawa|non-?stick|frying pan|casserole/i,'Home','Cookware & Dinnerware'],
+    [/bedsheet|bed sheet|pillow|blanket|comforter|mattress|quilt|towel/i,'Home','Bedding & Furnishing'],
+    [/curtain|door mat|carpet|rug\b/i,'Home','Curtains & Mats'],
+    [/led bulb|lamp|light strip|string light|ceiling light|torch/i,'Home','Lighting'],
+    [/wall clock|alarm clock/i,'Home','Clocks'],
+    [/sofa|chair|table\b|bookshelf|wardrobe|study desk|shoe rack|bed\b/i,'Home','Furniture'],
+    [/mop|broom|cleaning|detergent|dishwash|toilet/i,'Home','Cleaning'],
+    [/container|organi[sz]er|storage box|rack\b|hanger/i,'Home','Storage & Organisers'],
+    [/vase|wall decor|showpiece|photo frame|decor|idol|candle/i,'Home','Home Decor'],
+    [/bottle set|kitchen|knife|spatula|utensil|steel/i,'Home','Kitchenware'],
+    [/book\b|novel|paperback|hardcover/i,'Stationery','Books'],
+    [/notebook|pen\b|pens\b|marker|stapler|diary|calculator|file folder/i,'Stationery','Stationery & Office'],
+    [/colou?ring|paint|craft|sketch/i,'Stationery','Art & Craft'],
+    [/helmet/i,'Auto','Helmets'],
+    [/car (seat|cover|mat|vacuum|charger|perfume|accessor)|dash ?cam/i,'Auto','Car Accessories'],
+    [/bike (cover|accessor)|motorcycle|riding gloves/i,'Auto','Bike Accessories'],
+    [/tool kit|drill|screwdriver|spanner/i,'Auto','Tools'],
+    [/dog food|cat food|pet food/i,'Pets','Pet Food'],
+    [/dog|cat\b|pet\b/i,'Pets','Pet Accessories'],
+    [/snack|biscuit|chips|namkeen|chocolate|cookies/i,'Grocery','Snacks & Food'],
+    [/tea\b|coffee|juice|drink/i,'Grocery','Beverages'],
+    [/atta|rice|dal\b|oil\b|ghee|masala|spice|sugar|honey|dry fruit|almond|cashew/i,'Grocery','Groceries'],
+    [/course|ebook|e-book/i,'Digital','Courses & eBooks'],
+    [/gift (set|hamper|box)|hamper/i,'Gifts','Festival Gifts']
+  ];
+  function lkCat(text){
+    text=String(text||'');
+    for(var i=0;i<CATRULES.length;i++){ if(CATRULES[i][0].test(text)){ var m=CATRULES[i][1],sb=CATRULES[i][2]; var tx=BASE_TAX.filter(function(x){return x.id===m})[0]; if(tx&&tx.subs.indexOf(sb)>-1) return {main:m,sub:sb} } }
+    return null;
+  }
+  function lkJunk(t,url){
+    t=String(t||'').trim(); if(t.length<6) return true;
+    if(/^[A-Za-z0-9]{8,14}$/.test(t)) return true;
+    try{ var seg=new URL(url).pathname.split('/').filter(Boolean).pop()||''; if(seg&&t.toLowerCase()===seg.toLowerCase()) return true }catch(e){}
+    return /robot check|access denied|just a moment|captcha|are you a human|page not found|sorry|amazon\.in$|^amazon$|404|error/i.test(t);
+  }
   function lkNum(v){ if(v==null) return null; var n=parseFloat(String(v).replace(/[^0-9.]/g,'')); return isFinite(n)&&n>0?n:null }
   function lkParse(html,base){
     var doc=new DOMParser().parseFromString(html,'text/html'),o={};
@@ -1530,20 +1623,44 @@ span.cbadge{cursor:default}
     if(o.image){ try{ o.image=new URL(o.image,base).href }catch(e){ o.image='' } }
     return o;
   }
+  var FN_URL='https://asia-south1-nesamdeal.cloudfunctions.net/linkInfo';
+  /* our own server function (Amazon Creators API + page reader). Only the owner account is accepted. */
+  async function fnInfo(url){
+    try{
+      if(!window.NESAM||typeof NESAM.token!=='function') return null;
+      var tk=await NESAM.token(); if(!tk) return null;
+      var c=new AbortController(),tm=setTimeout(function(){c.abort()},30000);
+      var r=await fetch(FN_URL,{method:'POST',signal:c.signal,headers:{'Content-Type':'application/json','Authorization':'Bearer '+tk},body:JSON.stringify({url:url})});
+      clearTimeout(tm); if(!r.ok) return null;
+      var j=await r.json(); if(!j||!j.ok) return null;
+      var image=String(j.image||'').replace(/^http:\/\//i,'https://'); if(!safeImg(image)) image='';
+      var title=String(j.title||'').replace(/\s+/g,' ').trim().slice(0,140); if(lkJunk(title,url)) title='';
+      if(!title&&!image&&!j.price) return null;
+      return {title:title,image:image,price:lkNum(j.price),mrp:lkNum(j.mrp),store:/^(Amazon|Meesho|Flipkart|Myntra)$/.test(j.store)?j.store:'',desc:String(j.desc||'').slice(0,200)};
+    }catch(e){ return null }
+  }
   async function previewFetch(url){
-    var ml=null,pg=null,fin=url;
+    var fr=await fnInfo(url); if(fr) return fr;
+    var ml=null,pg=null,jn=null,fin=url;
     await Promise.all([
       lkFetch('https://api.microlink.io/?url='+encodeURIComponent(url),14000).then(function(r){return r.json()}).then(function(j){ var d=j&&j.data; if(!d) return; if(d.url) fin=d.url; ml={title:d.title||'',image:(d.image&&d.image.url)||'',pub:d.publisher||''} }).catch(function(){}),
-      lkFetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url),14000).then(function(r){return r.text()}).then(function(t){ pg=lkParse(t,url) }).catch(function(){})
+      lkFetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url),14000).then(function(r){return r.text()}).then(function(t){ pg=lkParse(t,url) }).catch(function(){}),
+      lkFetch('https://r.jina.ai/'+url,16000,{'Accept':'application/json','X-Return-Format':'markdown'}).then(function(r){return r.json()}).then(function(j){
+        var d=(j&&j.data)||{},c=String(d.content||''),o={title:d.title||'',desc:d.description||'',url:d.url||''};
+        var m=c.match(/-\s?(\d{1,2})\s?%\s*₹\s?([\d,]+(?:\.\d+)?)/); if(m) o.price=lkNum(m[2]);
+        var mm=c.match(/M\.?R\.?P\.?[^₹\n]{0,20}₹\s?([\d,]+(?:\.\d+)?)/i); if(mm) o.mrp=lkNum(mm[1]);
+        var im=c.match(/https:\/\/m\.media-amazon\.com\/images\/I\/[A-Za-z0-9%+._-]+\.(?:jpg|png|webp)/); if(im) o.image=im[0].replace(/\._[A-Z0-9_,]+_\./,'.');
+        jn=o; if(o.url) fin=o.url;
+      }).catch(function(){})
     ]);
-    var a=pg||{},b=ml||{};
-    var title=String(a.title||b.title||'').replace(/^Amazon\.in\s*:\s*/i,'').replace(/\s+/g,' ').trim().slice(0,140);
-    if(/robot check|access denied|just a moment|captcha|are you a human|page not found|sorry/i.test(title)) title='';
-    var image=String(a.image||b.image||'').replace(/^http:\/\//i,'https://'); if(!safeImg(image)) image='';
+    var a=pg||{},b=ml||{},c=jn||{};
+    var cl=function(x){return String(x||'').replace(/^Amazon\.in\s*:\s*/i,'').replace(/\s*[:|-]\s*Amazon\.in.*$/i,'').replace(/\s+/g,' ').trim().slice(0,140)};
+    var title=[a.title,b.title,c.title].map(cl).filter(function(x){return !lkJunk(x,url)})[0]||'';
+    var image=String(a.image||b.image||c.image||'').replace(/^http:\/\//i,'https://'); if(!safeImg(image)) image='';
     var host=''; try{ host=new URL(fin).hostname }catch(e){}
     host=(host+' '+(b.pub||'')).toLowerCase();
     var store=/amazon|amzn/.test(host)?'Amazon':/meesho/.test(host)?'Meesho':/flipkart|fkrt/.test(host)?'Flipkart':/myntra/.test(host)?'Myntra':'';
-    return {title:title,image:image,price:a.price||null,mrp:a.mrp||null,store:store};
+    return {title:title,image:image,price:a.price||c.price||null,mrp:a.mrp||c.mrp||null,store:store,desc:String(b.desc||c.desc||'').slice(0,200)};
   }
   async function lkTake(){
     if(F.lk&&F.lk.busy) return;
@@ -1556,10 +1673,15 @@ span.cbadge{cursor:default}
       if(res.store&&res.store!==F.source){ F.source=res.store; got.push(A('கடை')) }
       if(res.title&&!F.title.trim()){ F.title=res.title; got.push(A('தலைப்பு')); real++ }
       if(res.image&&F.photos.length<MAX_PHOTOS&&F.photos.indexOf(res.image)<0){ F.photos.push(res.image); got.push(A('படம்')); real++ }
+      if(res.title&&!F.main){ var ct=lkCat(res.title+' '+(res.desc||'')); if(ct){ F.main=ct.main; F.sub=ct.sub; got.push(A('வகை')) } }
       if(res.price&&F.newPrice===''){ F.newPrice=String(res.price); got.push(A('விலை')); real++; if(res.mrp&&res.mrp>res.price&&F.oldPrice===''){ F.oldPrice=String(res.mrp); got.push(A('பழைய விலை')) } }
     }
     if(real){
-      var miss=(!F.photos.length||F.newPrice==='')?(' '+A('வராததை நீயே போடு.')):'';
+      if(!F.desc.trim()&&F.title.trim()){
+        var np2=parseFloat(F.newPrice),op2=parseFloat(F.oldPrice),pc2=(np2>0&&op2>np2)?Math.round((1-np2/op2)*100):0;
+        F.desc='🔥 '+F.title.trim()+(np2>0?'\n💰 Now ₹'+np2.toLocaleString('en-IN')+(pc2?' (was ₹'+op2.toLocaleString('en-IN')+' – '+pc2+'% OFF)':''):'')+'\n🛒 Tap Buy to grab this deal.'; got.push(A('விவரம்'));
+      }
+      var miss=(!F.photos.length||F.newPrice==='')?(' — '+A('வராததை நீயே போடு.')):'';
       F.lk={busy:false,kind:'ok',msg:A('எடுத்தாச்சு ✔')+' '+got.join(', ')+miss};
     } else {
       F.lk={busy:false,kind:'fail',msg:A('இந்த லிங்கல இருந்து எடுக்க முடியல 😕 படத்தை "+ போட்டோ"ல போடு, விலையை நீயே எழுது.')};
@@ -2719,7 +2841,8 @@ window.NESAM={
       throw e;
     }
   },
-  signOut(){ return fsignOut(auth); }
+  signOut(){ return fsignOut(auth); },
+  async token(){ try{ return auth.currentUser?await auth.currentUser.getIdToken():'' }catch(e){ return '' } }
 };
 window.dispatchEvent(new Event('nesam-ready'));
 if('serviceWorker' in navigator&&location.protocol==='https:'){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
