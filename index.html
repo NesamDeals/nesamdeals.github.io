@@ -1171,7 +1171,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     show('catgrid',gridMode); show('catbar',isCats&&!!S.main); show('followview',isFollow);
 
     if(isHome){
-      var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
+      var today=(typeof S.todayN==='number')?S.todayN:live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
       var latest=live.filter(function(d){return !d.sample}).reduce(function(m,d){return Math.max(m,d.createdAt||0)},0);
       $('strip').replaceChildren(h('div',{class:'stl'},h('div',{class:'stt'},h('strong',null,String(today)),h('span',null,t('stripNew'))),(latest&&S.admin)?h('span',{class:'stx'},t('stripLast',{t:ago(latest)})):''),featOn('shr')?shareBtn():'');
       var jh=$('joinhost'); jh.replaceChildren();
@@ -3262,13 +3262,26 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     applyDefLang();
     route();
   }
+  /* real count of deals added since midnight today (the feed itself only loads a page at a time) */
+  function loadTodayCount(){
+    if(!S.live||!S.db) return;
+    var m=new Date(); m.setHours(0,0,0,0);
+    try{
+      S.db.collection('deals').where('createdAt','>=',m.getTime()).limit(500).get().then(function(sn){
+        var n=0; sn.docs.forEach(function(dd){ var x=dd.data()||{}; if(x.sample||!x.title||isEnded(x)||isExpired(x)||isHiddenCat(normCat(x.category))) return; if(x.auto&&!S.admin&&!(dealImgs(x).length>0&&hasPrice(x)&&x.newPrice>0)) return; n++ });
+        if(S.todayN!==n){ S.todayN=n; if(S.tab==='home'&&S.view!=='seller') try{render()}catch(e){} }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  setInterval(function(){ try{loadTodayCount()}catch(e){} },600000);
   function subscribeDeals(){
     if(S.unsub){try{S.unsub()}catch(e){}}
     var slowT=setTimeout(function(){S.slow=true;render()},10000);
     S.unsub=S.db.collection('deals').orderBy('createdAt','desc').limit(S.limit).onSnapshot(function(snap){
       clearTimeout(slowT);
-      S.deals=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return S.admin||!x.auto||(Array.isArray(x.imgs)&&x.imgs.length&&hasPrice(x))});
+      S.deals=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return S.admin||!x.auto||(dealImgs(x).length>0&&hasPrice(x)&&x.newPrice>0)});
       S.hitLimit=snap.size>=S.limit; S.loading=false;S.slow=false;
+      if(typeof S.todayN!=='number') loadTodayCount();
       if(S.admin&&!S.cleaned){S.cleaned=true;cleanupOld();}
       if(S.view==='seller'&&S.stab==='new') { renderChrome(); return; }
       render();
