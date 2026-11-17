@@ -1,0 +1,81 @@
+name: Cuelinks test 3
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Count product deals
+        env:
+          CUELINKS_API_KEY: ${{ secrets.CUELINKS_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, re, json, urllib.request, urllib.parse, collections
+          from concurrent.futures import ThreadPoolExecutor
+          key = os.environ.get("CUELINKS_API_KEY", "")
+          UA = "TruePick-DealsSync/1.0 (+https://nesamdeals.github.io)"
+          UA2 = "Mozilla/5.0 (compatible; TruePickLinkPreview/1.0; +https://nesamdeals.github.io)"
+          H = {"Authorization": "Token " + key, "Accept": "application/json", "User-Agent": UA}
+          def api(path):
+              req = urllib.request.Request("https://developers.cuelinks.com/pub_api/v3/" + path, headers=H)
+              return json.load(urllib.request.urlopen(req, timeout=30))
+          offers = []
+          p = 1
+          while True:
+              b = api("offers?per_page=100&page=%d" % p)
+              offers += b.get("data", [])
+              if not b.get("meta", {}).get("next_page") or p >= 15:
+                  break
+              p += 1
+          print("offers fetched:", len(offers))
+          def dest(u):
+              q = urllib.parse.parse_qs(urllib.parse.urlparse(u).query)
+              for k, vals in q.items():
+                  for v in vals:
+                      v = urllib.parse.unquote(v)
+                      if v.startswith("http"):
+                          return v
+              return None
+          print("offer types:", dict(collections.Counter(o.get("offer_type") for o in offers)))
+          deals = [o for o in offers if o.get("offer_type") == "deal"]
+          nocode = [o for o in deals if not o.get("coupon_code")]
+          print("deals:", len(deals), "| deals without coupon code:", len(nocode))
+          def deep(o):
+              d = dest(o.get("tracking_url") or "")
+              if not d:
+                  return False
+              return len(urllib.parse.urlparse(d).path.strip("/")) > 3
+          prod = [o for o in nocode if deep(o)]
+          print("deals with a deep page link (not homepage):", len(prod))
+          print("of those with a price field:", sum(1 for o in prod if o.get("discount_price") or o.get("original_price")))
+          print("stores:", collections.Counter(o.get("campaign_name") for o in prod).most_common(25))
+          for o in prod[:15]:
+              d = dest(o.get("tracking_url") or "")
+              print("sample:", o.get("campaign_name"), "|", (o.get("title") or "")[:60], "|", urllib.parse.urlparse(d).path[:50])
+          def meta(html, prop):
+              for pat in (r'<meta[^>]+(?:property|name)=["\']%s["\'][^>]+content=["\']([^"\']*)' % prop, r'<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']%s["\']' % prop):
+                  m = re.search(pat, html, re.I)
+                  if m:
+                      return m.group(1)
+              return None
+          def check(o):
+              store = o.get("campaign_name")
+              d = dest(o.get("tracking_url") or "")
+              try:
+                  r = urllib.request.Request(d, headers={"User-Agent": UA2})
+                  html = urllib.request.urlopen(r, timeout=12).read(300000).decode("utf-8", "ignore")
+              except Exception as e:
+                  return (store, "ERR", "")
+              img = meta(html, "og:image")
+              typ = (meta(html, "og:type") or "").lower()
+              if img and "product" in typ:
+                  return (store, "IMG_PRODUCT", typ)
+              if img:
+                  return (store, "IMG_OTHER", typ)
+              return (store, "NO_IMG", typ)
+          sample = prod[:60]
+          with ThreadPoolExecutor(8) as ex:
+              res = list(ex.map(check, sample))
+          c = collections.Counter(r[1] for r in res)
+          print("page test on", len(res), "deals:", dict(c))
+          print("by store:", dict(collections.Counter((r[0], r[1]) for r in res)))
+          PY
