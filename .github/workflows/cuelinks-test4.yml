@@ -1,0 +1,127 @@
+name: Cuelinks test 4
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Full filter test
+        env:
+          CUELINKS_API_KEY: ${{ secrets.CUELINKS_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, re, json, urllib.request, urllib.parse, collections, datetime
+          from concurrent.futures import ThreadPoolExecutor
+          key = os.environ.get("CUELINKS_API_KEY", "")
+          UA = "TruePick-DealsSync/1.0 (+https://nesamdeals.github.io)"
+          UA2 = "Mozilla/5.0 (compatible; TruePickLinkPreview/1.0; +https://nesamdeals.github.io)"
+          H = {"Authorization": "Token " + key, "Accept": "application/json", "User-Agent": UA}
+          def api(path):
+              req = urllib.request.Request("https://developers.cuelinks.com/pub_api/v3/" + path, headers=H)
+              return json.load(urllib.request.urlopen(req, timeout=30))
+          offers = []
+          p = 1
+          while True:
+              b = api("offers?per_page=100&page=%d" % p)
+              offers += b.get("data", [])
+              if not b.get("meta", {}).get("next_page") or p >= 15:
+                  break
+              p += 1
+          now = datetime.datetime.utcnow()
+          def ts(s):
+              s = (s or "").replace("T", " ")
+              for n, f in ((19, "%Y-%m-%d %H:%M:%S"), (10, "%Y-%m-%d")):
+                  try:
+                      return datetime.datetime.strptime(s[:n], f)
+                  except Exception:
+                      pass
+              return None
+          print("offers fetched:", len(offers), "| now (UTC):", now.strftime("%Y-%m-%d %H:%M"))
+          def buckets(field):
+              c = collections.Counter()
+              for o in offers:
+                  t = ts(o.get(field))
+                  if not t:
+                      c["unknown"] += 1
+                      continue
+                  h = (now - t).total_seconds() / 3600.0
+                  c["1h" if h < 1 else "6h" if h < 6 else "24h" if h < 24 else "7d" if h < 168 else "older"] += 1
+              return dict(c)
+          print("CREATED within:", buckets("created_at"))
+          print("UPDATED within:", buckets("updated_at"))
+          newest = sorted(offers, key=lambda o: o.get("created_at") or "", reverse=True)[:5]
+          print("newest created:", [(o.get("campaign_name"), (o.get("created_at") or "")[:16]) for o in newest])
+          def dest(u):
+              q = urllib.parse.parse_qs(urllib.parse.urlparse(u).query)
+              for k, vals in q.items():
+                  for v in vals:
+                      v = urllib.parse.unquote(v)
+                      if v.startswith("http"):
+                          return v
+              return None
+          FOREIGN_NAME = re.compile(r"(\b(US|UK|SG|DE|AU|CA|UAE|AE|EU|FR|ES|IT|NL|JP|MY|ID|TH|PH|VN|HK|NZ|SA|KR)\b)")
+          FOREIGN_TLD = (".co.uk", ".de", ".com.au", ".sg", ".ca", ".fr", ".es", ".it", ".nl", ".jp", ".com.my", ".co.nz", ".ae", ".com.sg", ".co.id", ".hk")
+          PRODUCT = re.compile(r"/(products?|p|dp|goods|item|pd|prd)/|-p-[a-z]*\d+|/[^/]+-\d{6,}/?$", re.I)
+          POP = ["ajio", "tata cliq", "nykaa", "firstcry", "pepperfry", "decathlon", "bewakoof", "pantaloons", "shopsy", "vijay sales", "titan", "boat", "jockey", "uniqlo", "biba", "havells", "oppo", "realme", "acer", "airindia", "bata", "lenskart"]
+          stage = collections.Counter()
+          cand = []
+          for o in offers:
+              if o.get("offer_type") != "deal":
+                  stage["not deal (coupon)"] += 1
+                  continue
+              if o.get("coupon_code"):
+                  stage["has coupon code"] += 1
+                  continue
+              e = ts(o.get("end_date"))
+              if e and e < now:
+                  stage["expired"] += 1
+                  continue
+              d = dest(o.get("tracking_url") or "")
+              if not d:
+                  stage["no destination"] += 1
+                  continue
+              host = urllib.parse.urlparse(d).netloc.lower()
+              if FOREIGN_NAME.search(o.get("campaign_name") or "") or host.endswith(FOREIGN_TLD):
+                  stage["foreign store"] += 1
+                  continue
+              path = urllib.parse.urlparse(d).path
+              if not PRODUCT.search(path):
+                  stage["not a single product page"] += 1
+                  continue
+              cand.append((o, d))
+          print("FILTER DROPS:", dict(stage))
+          print("CANDIDATE product deals:", len(cand))
+          def meta(html, prop):
+              for pat in (r'<meta[^>]+(?:property|name)=["\']%s["\'][^>]+content=["\']([^"\']*)' % prop, r'<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']%s["\']' % prop):
+                  m = re.search(pat, html, re.I)
+                  if m:
+                      return m.group(1)
+              return None
+          def check(item):
+              o, d = item
+              try:
+                  r = urllib.request.Request(d, headers={"User-Agent": UA2})
+                  html = urllib.request.urlopen(r, timeout=10).read(300000).decode("utf-8", "ignore")
+              except Exception:
+                  return "PENDING_blocked"
+              img = meta(html, "og:image")
+              typ = (meta(html, "og:type") or "").lower()
+              if img and "product" in typ:
+                  return "AUTO_APP"
+              return "PENDING_noimage" if not img else "PENDING_notproductimage"
+          sample = cand[:250]
+          with ThreadPoolExecutor(8) as ex:
+              res = list(ex.map(check, sample))
+          cls = collections.Counter(res)
+          print("checked", len(sample), "->", dict(cls))
+          auto = [s[0] for s, r in zip(sample, res) if r == "AUTO_APP"]
+          pend = [s[0] for s, r in zip(sample, res) if r != "AUTO_APP"]
+          print("AUTO to app:", len(auto), "| PENDING for admin:", len(pend))
+          def low(o):
+              return (o.get("campaign_name") or "").lower()
+          print("AUTO by store:", collections.Counter(o.get("campaign_name") for o in auto).most_common(15))
+          print("PENDING by store:", collections.Counter(o.get("campaign_name") for o in pend).most_common(15))
+          pop_pend = [o for o in pend if any(x in low(o) for x in POP)]
+          print("PENDING from popular stores:", len(pop_pend))
+          new24 = [o for o in auto + pend if ts(o.get("created_at")) and (now - ts(o.get("created_at"))).total_seconds() < 86400]
+          print("NEW in last 24h among AUTO+PENDING:", len(new24), "(these are the daily Firestore writes)")
+          PY
