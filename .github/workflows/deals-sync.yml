@@ -2,7 +2,7 @@ name: Deals sync
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: '*/5 * * * *'
 concurrency:
   group: deals-sync
   cancel-in-progress: false
@@ -64,6 +64,47 @@ jobs:
           FOREIGN_TLD = (".co.uk", ".de", ".com.au", ".sg", ".ca", ".fr", ".es", ".it", ".nl", ".jp", ".com.my", ".co.nz", ".ae", ".com.sg", ".co.id", ".hk")
           PRODUCT = re.compile(r"/(products?|p|dp|goods|item|pd|prd)/|-p-[a-z]*\d+|/[^/]+-\d{6,}/?$", re.I)
           POP = ["ajio", "tata cliq", "nykaa", "firstcry", "pepperfry", "decathlon", "bewakoof", "pantaloons", "shopsy", "vijay sales", "titan", "boat", "jockey", "uniqlo", "biba", "havells", "oppo", "realme", "acer", "airindia", "bata", "lenskart"]
+          RULES = [
+              (r"smart ?watch|fitness band", "Electronics", "Smart Watches"),
+              (r"earbud|earphone|headphone|neckband|airdopes|buds|speaker|soundbar", "Electronics", "Earbuds & Audio"),
+              (r"laptop|monitor|keyboard|\bmouse\b", "Electronics", "Laptops & Computers"),
+              (r"\btv\b|television", "Electronics", "TV & Displays"),
+              (r"smartphone|mobile|\bphone\b", "Mobiles", "Smartphones"),
+              (r"charger|cable|power ?bank", "Mobiles", "Chargers & Cables"),
+              (r"purifier|water heater|geyser", "Appliances", "Water Heaters & Purifiers"),
+              (r"refrigerator|\bac\b|air conditioner|cooler|\bfan\b|washing machine", "Appliances", "AC & Refrigerators"),
+              (r"mixer|grinder|kettle|toaster|oven|air fryer|cooker", "Appliances", "Kitchen Appliances"),
+              (r"saree|sari", "Women", "Sarees"),
+              (r"kurti|ethnic|lehenga|salwar", "Women", "Kurtis & Ethnic Wear"),
+              (r"\btoy|toys", "Kids", "Toys & Games"),
+              (r"baby|diaper", "Kids", "Baby Care"),
+              (r"shampoo|hair oil|conditioner", "Beauty", "Haircare"),
+              (r"serum|moisturi|face wash|sunscreen|skincare|cream", "Beauty", "Skincare"),
+              (r"lipstick|makeup|mascara|kajal|foundation", "Beauty", "Makeup"),
+              (r"perfume|deodorant|fragrance", "Beauty", "Fragrances"),
+              (r"trimmer|shaver|epilator", "Beauty", "Trimmers & Grooming Tools"),
+              (r"protein|vitamin|supplement", "Health", "Vitamins & Supplements"),
+              (r"yoga|dumbbell|\bgym\b", "Sports", "Gym & Yoga"),
+              (r"cricket", "Sports", "Cricket & Outdoor"),
+              (r"bag|backpack|wallet", "Accessories", "Bags & Wallets"),
+              (r"sunglass", "Accessories", "Sunglasses"),
+              (r"watch", "Accessories", "Watches"),
+              (r"bottle|lunch box", "Accessories", "Bottles & Lunch Boxes"),
+              (r"mattress|pillow|bedsheet|blanket", "Home", "Bedding & Furnishing"),
+              (r"cookware|dinner set|bakeware", "Home", "Cookware & Dinnerware"),
+              (r"detergent|\bmop\b|cleaner", "Home", "Cleaning"),
+              (r"\blamp\b|led light", "Home", "Lighting"),
+              (r"snack|nuts|\btea\b|coffee|masala", "Grocery", "Snacks & Food"),
+              (r"\bbook|stationery", "Stationery", "Books"),
+              (r"helmet", "Auto", "Helmets"),
+              (r"luggage|trolley", "Luggage", "Luggage & Trolley"),
+          ]
+          def classify(text):
+              t = (text or "").lower()
+              for pat, c, sub in RULES:
+                  if re.search(pat, t):
+                      return c, sub
+              return "Others", "Other"
           cand = {}
           for o in offers:
               if o.get("offer_type") != "deal" or o.get("coupon_code"):
@@ -85,9 +126,12 @@ jobs:
           firebase_admin.initialize_app(credentials.Certificate(json.loads(os.environ["FIREBASE_SERVICE_ACCOUNT"])))
           db = firestore.client()
           col = db.collection("autodeals")
+          dcol = db.collection("deals")
           sref = db.collection("autodeals_meta").document("state")
           snap = sref.get()
-          state = (snap.to_dict() or {}).get("ids", {}) if snap.exists else {}
+          sd = (snap.to_dict() or {}) if snap.exists else {}
+          state = sd.get("ids", {})
+          migrate = sd.get("v") != 2
           def meta(html, prop):
               for pat in (r'<meta[^>]+(?:property|name)=["\']%s["\'][^>]+content=["\']([^"\']*)' % prop, r'<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']%s["\']' % prop):
                   m = re.search(pat, html, re.I)
@@ -118,22 +162,44 @@ jobs:
                   batch.commit()
                   batch = db.batch()
                   n = 0
+          def live_doc(o, d, img, name, cat, sub, e):
+              ms = int(NOW * 1000)
+              return {"title": (o.get("title") or "")[:200], "category": cat, "sub": sub, "source": "Other", "oldPrice": 0, "link": o.get("tracking_url"), "desc": (o.get("description") or "")[:400], "imgs": [img], "createdAt": ms, "checkedAt": ms, "expiresAt": int(e * 1000) if e else 0, "coupon": "", "extra": "", "offerText": name, "videoUrl": "", "pinned": False, "pick": False, "pk": 0, "ended": False, "sample": False, "offers": [], "noGame": False, "inGame": False, "allowCmt": False, "auto": True}
           counts = {"live": 0, "pending": 0, "deleted_gone": 0, "deleted_7d": 0}
+          if migrate:
+              moved = 0
+              for dd in col.where("status", "==", "live").stream():
+                  x = dd.to_dict() or {}
+                  cat, sub = classify((x.get("title") or "") + " " + (x.get("description") or ""))
+                  oo = {"title": x.get("title"), "description": x.get("description"), "tracking_url": x.get("link")}
+                  batch.set(dcol.document(dd.id), live_doc(oo, x.get("viewUrl"), x.get("image"), x.get("store") or "", cat, sub, ts(x.get("endDate"), True)))
+                  batch.delete(col.document(dd.id))
+                  n += 2
+                  moved += 1
+                  if n >= 400:
+                      commit()
+              print("migrated legacy live deals:", moved)
           for i, res in zip(new_ids, results):
               o, d = cand[i]
               status, reason, img = res
               name = o.get("campaign_name") or ""
-              doc = {"source": "cuelinks", "offerId": str(o.get("id")), "title": (o.get("title") or "")[:200], "description": (o.get("description") or "")[:400], "store": name, "popular": any(x in name.lower() for x in POP), "link": o.get("tracking_url"), "viewUrl": d, "image": img if status == "live" else "", "hint": img if status != "live" else "", "status": status, "reason": reason, "endDate": o.get("end_date"), "offerCreated": o.get("created_at"), "firstSeen": firestore.SERVER_TIMESTAMP, "firstSeenMs": int(NOW * 1000)}
-              batch.set(col.document(i), doc)
+              cat, sub = classify((o.get("title") or "") + " " + (o.get("description") or ""))
+              e = ts(o.get("end_date"), True)
+              if status == "live":
+                  batch.set(dcol.document(i), live_doc(o, d, img, name, cat, sub, e))
+              else:
+                  doc = {"source": "cuelinks", "offerId": str(o.get("id")), "title": (o.get("title") or "")[:200], "description": (o.get("description") or "")[:400], "store": name, "popular": any(x in name.lower() for x in POP), "cat": cat, "sub": sub, "link": o.get("tracking_url"), "viewUrl": d, "image": "", "hint": img, "status": status, "reason": reason, "endDate": o.get("end_date"), "offerCreated": o.get("created_at"), "firstSeen": firestore.SERVER_TIMESTAMP, "firstSeenMs": int(NOW * 1000)}
+                  batch.set(col.document(i), doc)
               n += 1
               state[i] = {"s": status, "t": int(NOW)}
               counts[status] += 1
               if n >= 400:
                   commit()
           for i, v in list(state.items()):
-              if v.get("s") in ("live", "pending") and i not in cand:
+              if v.get("s") in ("live", "pending", "done") and i not in cand:
                   batch.delete(col.document(i))
-                  n += 1
+                  batch.delete(dcol.document(i))
+                  n += 2
                   state[i] = {"s": "gone", "t": v.get("t", int(NOW))}
                   counts["deleted_gone"] += 1
                   if n >= 400:
@@ -141,7 +207,9 @@ jobs:
           for i, v in list(state.items()):
               if v.get("s") == "pending" and NOW - v.get("t", NOW) > 7 * 86400 and i in cand:
                   dsnap = col.document(i).get()
-                  if (not dsnap.exists) or (dsnap.to_dict() or {}).get("status") == "pending":
+                  if not dsnap.exists:
+                      state[i] = {"s": "done", "t": v.get("t", int(NOW))}
+                  elif (dsnap.to_dict() or {}).get("status") == "pending":
                       batch.delete(col.document(i))
                       n += 1
                       state[i] = {"s": "gone", "t": v.get("t", int(NOW))}
@@ -150,6 +218,6 @@ jobs:
           for i in list(state.keys()):
               if i not in all_ids:
                   del state[i]
-          sref.set({"ids": state, "updated": firestore.SERVER_TIMESTAMP})
+          sref.set({"ids": state, "v": 2, "updated": firestore.SERVER_TIMESTAMP})
           print("sync done:", counts, "| tracked ids:", len(state))
           PY
