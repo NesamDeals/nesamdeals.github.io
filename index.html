@@ -1049,7 +1049,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
         return m;
       })(),
       h('div',{class:'body'},
-        h('div',{class:'meta'},catBadge(d),h('span',null,ago(d.createdAt||Date.now()))),
+        h('div',{class:'meta'},catBadge(d),S.admin?h('span',null,ago(d.createdAt||Date.now())):null),
         h('h3',{class:'title'},title),
         priceNode,
         (S.live&&!d.sample&&!ended&&featOn('cnt'))?(function(){ var e=h('div',{class:'dcn','data-dc':d.id}); dcFill(e,d.id); return e })():null,
@@ -1058,7 +1058,6 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
         hasCmp(d)&&h('button',{class:'cmpb',type:'button',onclick:function(){openCompare(d)}},'🔍 '+t('cmpBtn')),
         showTimer&&h('div',{class:'timer'},t('endsIn',{t:left(d.expiresAt)})),
         descEl,more,dbtn,vbtn,
-        !ended&&!d.sample&&ref&&h('div',{class:'checked'},'✔ '+t('checked',{t:ago(ref)})),
         (S.live&&!d.sample&&featOn('react'))?rxRow(d):null,
         (S.live&&!d.sample&&d.allowCmt&&featOn('cmt'))?h('button',{class:'cmtb',type:'button','data-cid':d.id,onclick:function(){openComments(d)}},'💬 '+t('cmtT')+' (',h('b',null,String(cmtN(d.id))),')'):null,
         h('div',{class:'actions'},
@@ -1107,7 +1106,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   }
   function sortList(list){
     var a=list.slice();
-    if(S.sort==='off') a.sort(function(x,y){return pct(y)-pct(x)||(y.createdAt||0)-(x.createdAt||0)});
+    if(S.sort==='off'&&false) a.sort(function(x,y){return pct(y)-pct(x)||(y.createdAt||0)-(x.createdAt||0)});
     else if(S.sort==='low') a.sort(function(x,y){return (hasPrice(x)?x.newPrice:1e12)-(hasPrice(y)?y.newPrice:1e12)});
     else if(S.sort==='old') a.sort(function(x,y){return (x.createdAt||0)-(y.createdAt||0)});
     else if(S.sort==='pick'){ a=a.filter(function(d){return d.pinned||(+d.pk||0)>0}); a.sort(function(x,y){return (+y.pk||0)-(+x.pk||0)||(y.createdAt||0)-(x.createdAt||0)}) }
@@ -1159,7 +1158,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     if(isHome){
       var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
       var latest=live.filter(function(d){return !d.sample}).reduce(function(m,d){return Math.max(m,d.createdAt||0)},0);
-      $('strip').replaceChildren(h('div',{class:'stl'},h('div',{class:'stt'},h('strong',null,String(today)),h('span',null,t('stripNew'))),latest?h('span',{class:'stx'},t('stripLast',{t:ago(latest)})):''),featOn('shr')?shareBtn():'');
+      $('strip').replaceChildren(h('div',{class:'stl'},h('div',{class:'stt'},h('strong',null,String(today)),h('span',null,t('stripNew'))),(latest&&S.admin)?h('span',{class:'stx'},t('stripLast',{t:ago(latest)})):''),featOn('shr')?shareBtn():'');
       var jh=$('joinhost'); jh.replaceChildren();
       var jl=socialsList().filter(function(x){return x.type==='whatsapp'||x.type==='telegram'}).slice(0,2);
       if(jl.length) jh.append(h('div',{class:'join'},h('b',null,t('joinT')),h('span',null,jl.map(function(x){return h('a',{href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},SOC[x.type][0])}))));
@@ -1233,7 +1232,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     }
 
     var fl=$('filters'); fl.replaceChildren();
-    var sel=h('select',{'aria-label':t('sortNew')},[['new','sortNew'],['old','sortOld'],['pick','sortPick'],['off','sortOff'],['low','sortLow']].map(function(o){return h('option',{value:o[0],selected:S.sort===o[0]?true:null},t(o[1]))}));
+    var sel=h('select',{'aria-label':t('sortNew')},[['new','sortNew'],['old','sortOld'],['pick','sortPick']].map(function(o){return h('option',{value:o[0],selected:S.sort===o[0]?true:null},t(o[1]))}));
     sel.addEventListener('change',function(){S.sort=sel.value;render()});
     fl.append(sel);
     fl.append(h('span',{class:'vsp'}));
@@ -1462,7 +1461,9 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     $('disc3').hidden=!cd;
   }
   function toggleSave(id){
-    if(S.saved.has(id)) S.saved.delete(id); else { S.saved.add(id); trkAdd(['saves']); trkAdd(['h',tk(id)]); }
+    var sc=lsGet('nesam-sc',[]); if(!Array.isArray(sc)) sc=[];
+    if(S.saved.has(id)){ S.saved.delete(id); var q=sc.indexOf(id); if(q>=0){ sc.splice(q,1); lsSet('nesam-sc',sc); dcInc(id,'s',-1) } }
+    else { S.saved.add(id); trkAdd(['saves']); trkAdd(['h',tk(id)]); if(sc.indexOf(id)<0){ sc.push(id); lsSet('nesam-sc',sc.slice(-300)); dcInc(id,'s',1) } }
     lsSet('nesam-saved',Array.from(S.saved)); render();
   }
 
@@ -1672,14 +1673,25 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     if(STAT.err){ wrap.append(h('p',{class:'hint'},A('புள்ளிவிவரம் படிக்க முடியல. Firestore rules-ல stats சேர்த்தாச்சான்னு பாருங்க.'))); return wrap }
     var now=new Date(),cut=new Date(now.getFullYear(),now.getMonth(),now.getDate()-(STAT.range-1)),cutK=cut.getFullYear()+'-'+('0'+(cut.getMonth()+1)).slice(-2)+'-'+('0'+cut.getDate()).slice(-2);
     var docs=STAT.docs.filter(function(x){return STAT.range>=9999||x._day>=cutK});
-    var tot={opens:0,visitors:0,newv:0,appopen:0,clicks:0,shares:0,saves:0,gopen:0,gdone:0,cmpo:0,eng:0},V={},C={},Sv={},H={},CC={},CS={},LG={};
+    var tot={opens:0,visitors:0,newv:0,appopen:0,clicks:0,shares:0,saves:0,gopen:0,gdone:0,cmpo:0,eng:0,inst:0},V={},C={},Sv={},H={},CC={},CS={},LG={};
     function add(m,o){ if(!o) return; for(var k in o){ m[k]=(m[k]||0)+(+o[k]||0) } }
     docs.forEach(function(x){ for(var k in tot) tot[k]+=(+x[k]||0); add(V,x.v);add(C,x.c);add(Sv,x.s);add(H,x.h);add(CC,x.cc);add(CS,x.cs);add(LG,x.lg) });
     if(!docs.length){ wrap.append(h('p',{class:'hint'},A('இன்னும் தரவு இல்ல. வாடிக்கையாளர் ஆப் பயன்படுத்த ஆரம்பிச்சதும் இங்க தெரியும்.'))); return wrap }
     var rate=tot.opens?Math.round(tot.clicks*1000/tot.opens)/10:0;
     var cards=[['ஆப் திறந்த முறை',tot.opens,'#1D4ED8'],['தனி நபர்கள்',tot.visitors,'#0A8A5F'],['புது நபர்கள்',tot.newv,'#6D28D9'],['இன்ஸ்டால் ஆப்ல திறந்தது',tot.appopen,'#0E7490'],['வாங்கு பட்டன் தொட்டது',tot.clicks,'#EA580C'],['திரும்ப வந்தவங்க',Math.max(0,tot.visitors-tot.newv),'#7C3AED'],['டீல் தொட்ட நபர்கள்',tot.eng,'#EA580C'],['தொடாம போனவங்க',Math.max(0,tot.visitors-tot.eng),'#64748B'],['WhatsApp பகிர்வு',tot.shares,'#16A34A'],['சேமிப்பு ❤️',tot.saves,'#E11D48'],['ஒப்பீடு திறந்தது',tot.cmpo,'#0E7490'],['விளையாட்டு திறந்தவர்',tot.gopen,'#6D28D9'],['விளையாட்டு முடிச்சவர்',tot.gdone,'#16A34A'],['தொடும் விகிதம் (தொட்டது ÷ திறந்தது)',rate+'%','#B45309']];
     wrap.append(h('p',{class:'hint'},A('எண்கள் நாள் வாரியா எண்ணப்படும். ஒரே ஆள் தினமும் வந்தா தினமும் ஒரு தடவை எண்ணப்படுவார்.')));
+    var savedNow=0; Object.keys(S.dc||{}).forEach(function(k){ savedNow+=Math.max(0,+(S.dc[k]||{}).s||0) });
+    cards.push(['📲 புது இன்ஸ்டால் (ஆப்ல முதல் தடவை)',tot.inst,'#0E7490'],['❤️ இப்போ சேமிச்சிருப்பவங்க (மொத்தம்)',savedNow,'#E11D48']);
     wrap.append(h('div',{class:'xsgrid'},cards.map(function(c){return h('div',{class:'xscard',style:'border-inline-start:4px solid '+c[2]},h('b',{style:'color:'+c[2]},String(c[1])),h('span',null,A(c[0])))})));
+    var devp=h('section',{class:'panel'},h('h3',null,A('📱 போன்கள் (இன்னைக்கு முதல் எண்ணிக்கை ஆரம்பம்)')),h('p',{class:'hint',id:'devtxt'},'…'));
+    wrap.append(devp);
+    try{
+      var cutD=Date.now()-14*864e5;
+      Promise.all([S.db.collection('devices').get(),S.db.collection('devices').where('last','<',cutD).get()]).then(function(r){
+        var all=r[0].docs.length,app=r[0].docs.filter(function(x){return (x.data()||{}).app}).length,gone=r[1].docs.length,el=document.getElementById('devtxt');
+        if(el) el.textContent=A('மொத்த போன்கள்')+': '+all+' · '+A('ஆப்ல திறந்தவை')+': '+app+' · '+A('14 நாளா திறக்காதவங்க')+': '+gone+'  ('+A('இது அன்இன்ஸ்டால் இல்ல, அதுக்கு நெருக்கமான அடையாளம்')+')';
+      }).catch(function(){ var el=document.getElementById('devtxt'); if(el) el.textContent=A('படிக்க முடியல. Firebase rules-ல devices சேர்த்தாச்சான்னு பாரு.') });
+    }catch(e){}
     // 14-day trend
     var days=[],i;
     for(i=13;i>=0;i--){ var dd=new Date(now.getFullYear(),now.getMonth(),now.getDate()-i),k=dd.getFullYear()+'-'+('0'+(dd.getMonth()+1)).slice(-2)+'-'+('0'+dd.getDate()).slice(-2),x=STAT.docs.filter(function(y){return y._day===k})[0]||{}; days.push({k:k,v:+x.visitors||0,c:+x.clicks||0}) }
@@ -1736,7 +1748,18 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     var rows=TAXALL.map(function(m){return {m:m,n:live.filter(function(d){return normCat(d.category)===m.id}).length}}).filter(function(x){return x.n>0}).sort(function(a,b){return b.n-a.n});
     var mx=rows.length?rows[0].n:1;
     var samples=all.filter(function(d){return d.sample}).length;
-    return h('div',null,
+    var dn=[],wi,nowD=new Date();
+    for(wi=6;wi>=0;wi--){ var wd=new Date(nowD.getFullYear(),nowD.getMonth(),nowD.getDate()-wi); dn.push({d:wd,n:all.filter(function(x){return !x.sample&&x.createdAt&&sameDay(new Date(x.createdAt),wd)}).length}) }
+    var tN=dn[6].n,yN=dn[5].n,diff=tN-yN,wmx=Math.max(1,Math.max.apply(null,dn.map(function(x){return x.n})));
+    var wmsg=tN===0?(yN>0?A('இன்னும் இன்னைக்கு டீல் போடல. நேத்து {y} போட்ட, இன்னைக்கும் தொடங்கு 💪').replace('{y}',yN):A('ஒரு டீல் போட்டு இன்னைக்கை தொடங்கு 💪')):diff>0?A('நேத்தை விட {n} அதிகம், சூப்பர்! 🎉').replace('{n}',diff):diff===0?A('நேத்து அளவுக்கு சமம். இன்னும் ஒண்ணு போட்டா நேத்தை தாண்டிடுவ 😉'):A('நேத்தை விட {n} கம்மி. இன்னும் {m} போட்டா சமம் 💪').replace('{n}',-diff).replace('{m}',-diff);
+    var wbox=h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,A('💪 என் வேலை')),
+      h('div',{style:'display:flex;gap:18px;align-items:flex-end;margin:6px 0'},
+        h('div',null,h('b',{style:'font-size:34px;color:#1546C6'},String(tN)),h('div',{class:'hint'},A('இன்னைக்கு போட்டது'))),
+        h('div',null,h('b',{style:'font-size:22px'},String(yN)),h('div',{class:'hint'},A('நேத்து'))),
+        h('div',{style:'font-size:22px;font-weight:800;color:'+(diff>0?'#0A8A5F':diff<0?'#DC2626':'#64748B')},(diff>0?'⬆ +':diff<0?'⬇ ':'＝ ')+(diff===0?'0':String(diff)))),
+      h('p',{style:'margin:4px 0 10px;font-weight:700'},wmsg),
+      h('div',{style:'display:flex;gap:6px;align-items:flex-end;height:80px'},dn.map(function(x,i){ return h('div',{style:'flex:1;text-align:center;font-size:11px'},h('div',{style:'font-weight:700'},String(x.n)),h('div',{style:'height:'+Math.max(3,Math.round(x.n*48/wmx))+'px;background:'+(i===6?'#1546C6':'#9DB4F0')+';border-radius:4px;margin:2px 0'}),h('div',null,String(x.d.getDate()))) })));
+    return h('div',null,wbox,
       h('div',{class:'stats'},st(live.length,A('லைவ் டீல்ஸ்'),'#0A8A5F'),st(today,A('இன்று போட்டது'),'#1546C6'),st(soon,A('இன்னிக்குள்ள மறையும்'),'#EA580C'),st(ended,A('முடிஞ்சது / காலாவதி'),'#D81E2D'),st(z99,A('₹99-க்குள்'),'#7C3AED'),st(z1k,A('₹1000-க்கு மேல்'),'#0E7490')),
       h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,A('வகை வாரியா லைவ் டீல்ஸ்')),
         rows.length?rows.map(function(x){return h('div',{class:'bar'},h('span',null,x.m.e+' '+acat(x.m.id)),h('i',{style:'width:'+Math.max(6,Math.round(x.n/mx*100))+'%;background:'+catColor(x.m.id)}),h('b',null,String(x.n)))}):h('p',{class:'hint'},A('இன்னும் லைவ் டீல் இல்ல.'))),
@@ -2130,14 +2153,14 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
           h('div',{class:'tags'},
             d.sample&&h('span',{class:'tg y'},A('மாதிரி')),
             ended?h('span',{class:'tg r'},A('முடிஞ்சது')):h('span',{class:'tg g'},A('லைவ்')),
-            d.pinned&&h('span',{class:'tg y'},A('📌 மேல')),(PRIV.map[d.id]!=null)&&h('span',{class:'tg y'},'💰 '+PRIV.map[d.id]+'%'),(+d.pk>0)&&h('span',{class:'tg y'},'⭐'),
+            d.pinned&&h('span',{class:'tg y'},A('📌 மேல')),(PRIV.map[d.id]!=null)&&h('span',{class:'tg y'},'💰 '+PRIV.map[d.id]+'%'),(+d.pk>0)&&h('span',{class:'tg y'},'⭐'),(S.dc[d.id]&&+S.dc[d.id].s>0)&&h('span',{class:'tg y'},'❤️ '+S.dc[d.id].s),
             d.allowCmt&&h('span',{class:'tg'},'💬'),
             safeUrl(d.videoUrl)&&h('span',{class:'tg'},A('🎬 வீடியோ')),
             h('span',{class:'cbadge',style:'--cc:'+catColor(d.category)},catEmoji(d.category)+' '+acat(d.category)+(d.sub&&d.sub!=='Other'?' › '+asub(d.sub):'')),h('span',{class:'tg'},d.source||'-'),
             h('span',{class:'tg'},A('{n} படம்').replace('{n}',imgs.length)),
             hasPrice(d)&&h('span',{class:'tg'},inr(d.newPrice)+(p?' · '+p+'%':'')),
             z&&h('span',{class:'tg'},z.over?'₹'+z.n+'+':'≤₹'+z.n)),
-          h('div',{class:'hint'},A('போட்டது {a} · விலை சரிபார்த்தது {b}').replace('{a}',ago(d.createdAt||Date.now())).replace('{b}',ago(d.checkedAt||d.createdAt||Date.now()))),
+          h('div',{class:'hint'},A('போட்டது {a}').replace('{a}',ago(d.createdAt||Date.now()))),
           h('div',{class:'racts'},
             h('button',{type:'button',onclick:function(){F=formFrom(d);S.stab='new';renderSeller();window.scrollTo(0,0)}},A('திருத்து')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{checkedAt:Date.now()},A('விலை சரிபார்த்ததா குறிச்சாச்சு'))}},A('விலை சரிபார்த்தேன்')),
@@ -2319,14 +2342,13 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var TRK={b:{},seen:{},io:null};
   function tk(x){ return String(x==null?'':x).replace(/[.\/\[\]*`~]/g,'_').slice(0,40)||'_' }
   function dayKey(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2) }
-  var DCT={ta:{c:'{n} முறை தொடப்பட்டது',v:'{n} முறை பார்க்கப்பட்டது'},en:{c:'Tapped {n} times',v:'Viewed {n} times'},hi:{c:'{n} बार टैप किया गया',v:'{n} बार देखा गया'}},DC_K=1,DC_V=1;
+  var DCT={ta:{c:'தொடப்பட்டது {n}',v:'பார்க்கப்பட்டது {n}'},en:{c:'Tapped {n}',v:'Viewed {n}'},hi:{c:'टैप किया गया {n}',v:'देखा गया {n}'}},DC_K=1,DC_V=1;
   function fmtN(n){ return n>=1000?(Math.floor(n/100)/10)+'K':String(n) }
   function dcFill(el,id){
     var c=(S.dc||{})[id]||{},v=+c.v||0,k=+c.c||0,L=DCT[S.lang]||DCT.en; el.replaceChildren();
     if(!featOn('cnt')){ el.hidden=true; return }
-    var one=function(x,n){ return (S.lang==='en'&&n===1)?x.replace('times','time'):x };
-    if(k>=DC_K) el.append(h('b',{class:'dck'},'🔥 '+one(L.c.split('{n}').join(fmtN(k)),k)));
-    if(v>=DC_V) el.append(h('span',{class:'dcv'},'👁 '+one(L.v.split('{n}').join(fmtN(v)),v)));
+        if(k>=DC_K) el.append(h('b',{class:'dck'},'🔥 '+L.c.split('{n}').join(fmtN(k))));
+    if(v>=DC_V) el.append(h('span',{class:'dcv'},'👁 '+L.v.split('{n}').join(fmtN(v))));
     el.hidden=!el.firstChild;
   }
   function dcPaint(){ Array.prototype.forEach.call(document.querySelectorAll('#feed .dcn[data-dc]'),function(el){ dcFill(el,el.getAttribute('data-dc')) }); paintHot() }
@@ -2350,7 +2372,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function trkFlush(){ var b=TRK.b; if(!Object.keys(b).length||!trkOn()) return; TRK.b={}; try{ window.NESAM.track(dayKey(),b) }catch(e){} }
   var DCLAST={};
   function dcOn(){ return !!(S.hosted&&S.live&&window.NESAM&&window.NESAM.inc) }
-  function dcInc(id,f){ if(!dcOn()) return; if(f==='c'){ var now=Date.now(); if(DCLAST[id]&&now-DCLAST[id]<3000) return; DCLAST[id]=now } try{ var o={}; o[f]=1; window.NESAM.inc('dcount',id,o).catch(function(){}) }catch(e){} }
+  function dcInc(id,f,by){ if(!dcOn()) return; if(f==='c'){ var now=Date.now(); if(DCLAST[id]&&now-DCLAST[id]<3000) return; DCLAST[id]=now } try{ var o={}; o[f]=by||1; window.NESAM.inc('dcount',id,o).catch(function(){}) }catch(e){} }
   function engOnce(){ if(lsGet('nesam-eng','')!==dayKey()){ lsSet('nesam-eng',dayKey()); trkAdd(['eng']) } }
   function clk2(id){ dcInc(id,'c'); engOnce() }
   function trkClick(d){ trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
@@ -2364,10 +2386,12 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     trkAdd(['opens']);
     var st=false; try{ st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||/^android-app:/.test(document.referrer||'') }catch(e){}
     if(st) trkAdd(['appopen']);
+    if(st&&lsGet('nesam-inst','')!=='1'){ lsSet('nesam-inst','1'); trkAdd(['inst']) }
     trkAdd(['lg',tk(S.lang)]);
     var vid=lsGet('nesam-vid',''),today=dayKey();
     if(!vid){ vid=Math.random().toString(36).slice(2); lsSet('nesam-vid',vid); trkAdd(['newv']) }
     if(lsGet('nesam-vday','')!==today){ lsSet('nesam-vday',today); trkAdd(['visitors']) }
+    if(lsGet('nesam-dvday','')!==today){ lsSet('nesam-dvday',today); try{ S.db.collection('devices').doc(vid).set({last:Date.now(),app:st?1:0}).catch(function(){}) }catch(e){} }
     trkFlush();
   }
   setTimeout(trkOpen,3500);
