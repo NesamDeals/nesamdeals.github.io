@@ -547,7 +547,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   /* coin-toss splash view: used by the real splash and by the admin preview */
   window.NSPLV=function(root,cfg,o){
     o=o||{}; cfg=cfg||{};
-    var bg=/^#[0-9a-fA-F]{6}$/.test(cfg.bg||'')?cfg.bg:'#F2F5FC',th=window.NSPL_THEME(bg);
+    var bg=/^#[0-9a-fA-F]{6}$/.test(cfg.bg||'')?cfg.bg:'#00235E',th=window.NSPL_THEME(bg);
     var W=o.W||Math.min(root.clientWidth||window.innerWidth,480),u=W/100,fest=!!o.fest,timers=[],sel=o.sel||'',self={};
     root.style.background=bg; root.style.overflow='hidden';
     root.style.setProperty('--tz',(-30*u)+'px'); root.style.setProperty('--tb',(-2.4*u)+'px');
@@ -2346,7 +2346,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function ownOut(){ var o=SET.own; return {on:o.on!==false,name:String(o.name||'').trim().slice(0,40),title:String(o.title||'').trim().slice(0,60),url:safeUrl(o.url||'')||'',line:String(o.line||'').trim().slice(0,300)} }
   function puiOut(){ var x=SET.pui,c=function(v){return /^#[0-9a-fA-F]{6}$/.test(v||'')?v:''}; return {lay:x.lay,bg:c(x.bg),card:c(x.card),ink:c(x.ink),btn:c(x.btn),rad:x.rad} }
   var SPLP=0,SPLS='nm',SPLV=null;
-  var SPC=['#F2F5FC','#FFFFFF','#F5F5F4','#E7E5E4','#44403C','#111827','#0F172A','#78350F','#E0F2FE','#BFDBFE','#60A5FA','#1546C6','#002C9D','#1E3A8A','#0EA5E9','#0C4A6E','#ECFDF5','#BBF7D0','#4ADE80','#16A34A','#166534','#0F6E56','#14B8A6','#134E4A','#CCFBF1','#D9F99D','#FFF1F2','#FBEAF0','#FEE2E2','#FDA4AF','#F472B6','#E11D48','#B91C1C','#7F1D1D','#BE185D','#831843','#FFFBEB','#FEF3C7','#FDE047','#FFC20E','#F59E0B','#F97316','#C2410C','#7C2D12','#F5F3FF','#DDD6FE','#A78BFA','#7C3AED','#6D28D9','#4C1D95'];
+  var SPC=['#F2F5FC','#FFFFFF','#F5F5F4','#E7E5E4','#44403C','#111827','#00235E','#78350F','#E0F2FE','#BFDBFE','#60A5FA','#1546C6','#002C9D','#1E3A8A','#0EA5E9','#0C4A6E','#ECFDF5','#BBF7D0','#4ADE80','#16A34A','#166534','#0F6E56','#14B8A6','#134E4A','#CCFBF1','#D9F99D','#FFF1F2','#FBEAF0','#FEE2E2','#FDA4AF','#F472B6','#E11D48','#B91C1C','#7F1D1D','#BE185D','#831843','#FFFBEB','#FEF3C7','#FDE047','#FFC20E','#F59E0B','#F97316','#C2410C','#7C2D12','#F5F3FF','#DDD6FE','#A78BFA','#7C3AED','#6D28D9','#4C1D95'];
   function splT(t){ var o={}; ['nm','t1','t2'].forEach(function(k){ var q=(t&&t[k])||{}; o[k]={c:/^#[0-9a-fA-F]{6}$/.test(q.c||'')?q.c:'',f:(typeof q.f==='string'&&Object.prototype.hasOwnProperty.call(window.NSPL_FONTS_NEW,q.f))?q.f:'',s:(isFinite(q.s)&&q.s>=.5&&q.s<=2.6)?Math.round(q.s*100)/100:1,x:isFinite(q.x)?Math.max(-80,Math.min(80,Math.round(q.x*10)/10)):0,y:isFinite(q.y)?Math.max(-80,Math.min(80,Math.round(q.y*10)/10)):0} }); return o }
   function splOut(){
     var x=SET.spl,f=x.from?new Date(x.from+'T00:00:00').getTime():0,t=x.to?new Date(x.to+'T23:59:59').getTime():0;
@@ -2470,7 +2470,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
       }
       body.append(
         h('p',{class:'hint'},A('காயின் ஃபிளிப் எப்பவும் வரும். இங்க எழுத்து, நிறம், வடிவம் மட்டும் மாத்தலாம்.')),
-        h('div',{class:'fld'},h('span',{class:'lbl'},A('திரை பின்னணி நிறம் (எப்பவும் வேலை செய்யும்)')),sqs(X.bg||'#F2F5FC',function(c){X.bg=c;buildPhone();renderSeller()},false)),
+        h('div',{class:'fld'},h('span',{class:'lbl'},A('திரை பின்னணி நிறம் (எப்பவும் வேலை செய்யும்)')),sqs(X.bg||'#00235E',function(c){X.bg=c;buildPhone();renderSeller()},false)),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('பண்டிகை / சிறப்பு வாசகம்')),h('div',{class:'sws'},[[true,A('ஆன்')],[false,A('ஆஃப்')]].map(function(o){return h('button',{type:'button',class:'chip','aria-pressed':X.on===o[0]?'true':'false',onclick:function(){X.on=o[0];SPLP=o[0]?1:0;renderSeller()}},o[1])}))),
         h('p',{class:'hint'},A('ஆஃப்ல இருந்தா "TruePick" + வழக்கமான வரிகள் வரும். ஆன் பண்ணா, நீ எழுதினது மட்டும் வரும்.')),
         fld(A('பெரிய பெயர் (காயினுக்கு கீழ)'),'sp1',sx('l1',A('எ.கா. பொங்கல் வாழ்த்துக்கள்'),30)),
