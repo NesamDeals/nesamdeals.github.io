@@ -1,0 +1,153 @@
+name: Deals sync
+on:
+  workflow_dispatch:
+concurrency:
+  group: deals-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install
+        run: pip install firebase-admin
+      - name: Sync deals
+        env:
+          CUELINKS_API_KEY: ${{ secrets.CUELINKS_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          python3 - <<'PY'
+          import os, re, json, time, datetime, urllib.request, urllib.parse
+          from concurrent.futures import ThreadPoolExecutor
+          import firebase_admin
+          from firebase_admin import credentials, firestore
+          NOW = time.time()
+          UA = "TruePick-DealsSync/1.0 (+https://nesamdeals.github.io)"
+          UA2 = "Mozilla/5.0 (compatible; TruePickLinkPreview/1.0; +https://nesamdeals.github.io)"
+          H = {"Authorization": "Token " + os.environ["CUELINKS_API_KEY"], "Accept": "application/json", "User-Agent": UA}
+          IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
+          def api(path):
+              req = urllib.request.Request("https://developers.cuelinks.com/pub_api/v3/" + path, headers=H)
+              return json.load(urllib.request.urlopen(req, timeout=30))
+          def ts(s, end=False):
+              s = (s or "").replace("T", " ")
+              for n, f in ((19, "%Y-%m-%d %H:%M:%S"), (10, "%Y-%m-%d")):
+                  try:
+                      v = datetime.datetime.strptime(s[:n], f).replace(tzinfo=IST).timestamp()
+                      return v + (86400 if (end and n == 10) else 0)
+                  except Exception:
+                      pass
+              return None
+          offers = []
+          p = 1
+          while True:
+              b = api("offers?per_page=100&page=%d" % p)
+              offers += b.get("data", [])
+              if not b.get("meta", {}).get("next_page") or p >= 30:
+                  break
+              p += 1
+          print("offers fetched:", len(offers))
+          if len(offers) < 300:
+              print("too few offers fetched, stopping without changes")
+              raise SystemExit(0)
+          def dest(u):
+              q = urllib.parse.parse_qs(urllib.parse.urlparse(u).query)
+              for k, vals in q.items():
+                  for v in vals:
+                      v = urllib.parse.unquote(v)
+                      if v.startswith("http"):
+                          return v
+              return None
+          FOREIGN_NAME = re.compile(r"(\b(US|UK|SG|DE|AU|CA|UAE|AE|EU|FR|ES|IT|NL|JP|MY|ID|TH|PH|VN|HK|NZ|SA|KR)\b)")
+          FOREIGN_TLD = (".co.uk", ".de", ".com.au", ".sg", ".ca", ".fr", ".es", ".it", ".nl", ".jp", ".com.my", ".co.nz", ".ae", ".com.sg", ".co.id", ".hk")
+          PRODUCT = re.compile(r"/(products?|p|dp|goods|item|pd|prd)/|-p-[a-z]*\d+|/[^/]+-\d{6,}/?$", re.I)
+          POP = ["ajio", "tata cliq", "nykaa", "firstcry", "pepperfry", "decathlon", "bewakoof", "pantaloons", "shopsy", "vijay sales", "titan", "boat", "jockey", "uniqlo", "biba", "havells", "oppo", "realme", "acer", "airindia", "bata", "lenskart"]
+          cand = {}
+          for o in offers:
+              if o.get("offer_type") != "deal" or o.get("coupon_code"):
+                  continue
+              e = ts(o.get("end_date"), True)
+              if e and e < NOW:
+                  continue
+              d = dest(o.get("tracking_url") or "")
+              if not d:
+                  continue
+              host = urllib.parse.urlparse(d).netloc.lower()
+              if FOREIGN_NAME.search(o.get("campaign_name") or "") or host.endswith(FOREIGN_TLD):
+                  continue
+              if not PRODUCT.search(urllib.parse.urlparse(d).path):
+                  continue
+              cand["cl_" + str(o.get("id"))] = (o, d)
+          all_ids = set("cl_" + str(o.get("id")) for o in offers)
+          print("candidate product deals:", len(cand))
+          firebase_admin.initialize_app(credentials.Certificate(json.loads(os.environ["FIREBASE_SERVICE_ACCOUNT"])))
+          db = firestore.client()
+          col = db.collection("autodeals")
+          sref = db.collection("autodeals_meta").document("state")
+          snap = sref.get()
+          state = (snap.to_dict() or {}).get("ids", {}) if snap.exists else {}
+          def meta(html, prop):
+              for pat in (r'<meta[^>]+(?:property|name)=["\']%s["\'][^>]+content=["\']([^"\']*)' % prop, r'<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']%s["\']' % prop):
+                  m = re.search(pat, html, re.I)
+                  if m:
+                      return m.group(1)
+              return None
+          def check(item):
+              o, d = item
+              try:
+                  r = urllib.request.Request(d, headers={"User-Agent": UA2})
+                  html = urllib.request.urlopen(r, timeout=10).read(300000).decode("utf-8", "ignore")
+              except Exception:
+                  return ("pending", "blocked", "")
+              img = meta(html, "og:image")
+              typ = (meta(html, "og:type") or "").lower()
+              full = urllib.parse.urljoin(d, img) if img else ""
+              if full.startswith("http") and "product" in typ:
+                  return ("live", "", full)
+              return ("pending", "noimage" if not full else "notproduct", full)
+          new_ids = [i for i in cand if i not in state][:300]
+          with ThreadPoolExecutor(8) as ex:
+              results = list(ex.map(check, [cand[i] for i in new_ids]))
+          batch = db.batch()
+          n = 0
+          def commit():
+              global batch, n
+              if n:
+                  batch.commit()
+                  batch = db.batch()
+                  n = 0
+          counts = {"live": 0, "pending": 0, "deleted_gone": 0, "deleted_7d": 0}
+          for i, res in zip(new_ids, results):
+              o, d = cand[i]
+              status, reason, img = res
+              name = o.get("campaign_name") or ""
+              doc = {"source": "cuelinks", "offerId": str(o.get("id")), "title": (o.get("title") or "")[:200], "description": (o.get("description") or "")[:400], "store": name, "popular": any(x in name.lower() for x in POP), "link": o.get("tracking_url"), "viewUrl": d, "image": img if status == "live" else "", "hint": img if status != "live" else "", "status": status, "reason": reason, "endDate": o.get("end_date"), "offerCreated": o.get("created_at"), "firstSeen": firestore.SERVER_TIMESTAMP, "firstSeenMs": int(NOW * 1000)}
+              batch.set(col.document(i), doc)
+              n += 1
+              state[i] = {"s": status, "t": int(NOW)}
+              counts[status] += 1
+              if n >= 400:
+                  commit()
+          for i, v in list(state.items()):
+              if v.get("s") in ("live", "pending") and i not in cand:
+                  batch.delete(col.document(i))
+                  n += 1
+                  state[i] = {"s": "gone", "t": v.get("t", int(NOW))}
+                  counts["deleted_gone"] += 1
+                  if n >= 400:
+                      commit()
+          for i, v in list(state.items()):
+              if v.get("s") == "pending" and NOW - v.get("t", NOW) > 7 * 86400 and i in cand:
+                  dsnap = col.document(i).get()
+                  if (not dsnap.exists) or (dsnap.to_dict() or {}).get("status") == "pending":
+                      batch.delete(col.document(i))
+                      n += 1
+                      state[i] = {"s": "gone", "t": v.get("t", int(NOW))}
+                      counts["deleted_7d"] += 1
+          commit()
+          for i in list(state.keys()):
+              if i not in all_ids:
+                  del state[i]
+          sref.set({"ids": state, "updated": firestore.SERVER_TIMESTAMP})
+          print("sync done:", counts, "| tracked ids:", len(state))
+          PY
