@@ -936,10 +936,30 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
   /* ============ photo gallery (swipe) ============ */
+  var MOVING={};
+  function autoMove(d,src){
+    if(MOVING[d.id]||!S.admin||!S.db||String(d.id).indexOf('cl_')!==0) return; MOVING[d.id]=1;
+    var t=new Image(); t.referrerPolicy='no-referrer';
+    t.onload=function(){ delete MOVING[d.id] };
+    t.onerror=function(){
+      setTimeout(function(){
+        var t2=new Image(); t2.referrerPolicy='no-referrer';
+        t2.onload=function(){ delete MOVING[d.id] };
+        t2.onerror=function(){
+          var nm=d.offerText||'';
+          S.db.collection('autodeals').doc(d.id).set({source:'cuelinks',offerId:String(d.id).replace('cl_',''),title:d.title||'',description:d.desc||'',store:nm,popular:false,cat:d.category||'Others',sub:d.sub||'Other',link:d.link||'',viewUrl:d.viewUrl||'',image:'',hint:'',price:(typeof d.newPrice==='number'?d.newPrice:0),status:'pending',reason:'blocked',firstSeenMs:Date.now()})
+            .then(function(){ return S.db.collection('deals').doc(d.id).delete() })
+            .catch(function(){ delete MOVING[d.id] });
+        };
+        t2.src=src+(src.indexOf('?')>-1?'&':'?')+'_r='+Date.now();
+      },1500);
+    };
+    t.src=src+(src.indexOf('?')>-1?'&':'?')+'_t='+Date.now();
+  }
   function makeTrack(imgs,title,onTap,fit){
     var track=h('div',{class:'track',tabindex:'0','aria-label':title||''});
     imgs.forEach(function(src,i){
-      track.append(h('div',{class:'slide'},fit?h('img',{class:'fitbg',src:src,alt:'','aria-hidden':'true',draggable:'false',referrerpolicy:'no-referrer'}):null,h('img',{class:fit?'fit':'',src:src,alt:(title||'')+' '+(i+1),loading:'lazy',draggable:'false',referrerpolicy:'no-referrer',onerror:function(ev){var im=ev.target;if(!S.admin){var cd=im.closest&&im.closest('.card');if(cd){var did=cd.getAttribute('data-id'),dd=S.deals.filter(function(z){return z.id===did})[0];if(dd&&dd.auto){cd.remove();return}}}if(im.src!==PLACEHOLDER){im.onerror=null;im.src=PLACEHOLDER}},onclick:function(){if(onTap) onTap(i)}})));
+      track.append(h('div',{class:'slide'},fit?h('img',{class:'fitbg',src:src,alt:'','aria-hidden':'true',draggable:'false',referrerpolicy:'no-referrer'}):null,h('img',{class:fit?'fit':'',src:src,alt:(title||'')+' '+(i+1),loading:'lazy',draggable:'false',referrerpolicy:'no-referrer',onerror:function(ev){var im=ev.target;if(S.admin){try{var cd0=im.closest&&im.closest('.card'),did0=cd0&&cd0.getAttribute('data-id'),dd0=S.deals.filter(function(z){return z.id===did0})[0];if(dd0&&dd0.auto&&im.src!==PLACEHOLDER&&/^https:/.test(im.src)) autoMove(dd0,im.src)}catch(e){}}if(!S.admin){var cd=im.closest&&im.closest('.card');if(cd){var did=cd.getAttribute('data-id'),dd=S.deals.filter(function(z){return z.id===did})[0];if(dd&&dd.auto){cd.remove();return}}}if(im.src!==PLACEHOLDER){im.onerror=null;im.src=PLACEHOLDER}},onclick:function(){if(onTap) onTap(i)}})));
     });
     return track;
   }
@@ -1667,6 +1687,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
       PEND.un=S.db.collection('autodeals').where('status','==','pending').limit(300).onSnapshot(function(sn){
         PEND.loaded=true;
         PEND.list=sn.docs.map(function(x){var o=x.data()||{};o.id=x.id;return o}).sort(pendCmp);
+        PEND.list=PEND.list.filter(function(o){ if(o.firstSeenMs&&Date.now()-o.firstSeenMs>7*864e5){ try{S.db.collection('autodeals').doc(o.id).delete()}catch(e){} return false } return true });
         var tb=document.querySelector('.stabs [data-t="pend"]'); if(tb) tb.textContent=pendTabLabel();
         if(S.view==='seller'&&S.stab==='pend') pendPaint();
       },function(){ PEND.un=null; PEND.loaded=true; if(S.view==='seller'&&S.stab==='pend') pendPaint() });
