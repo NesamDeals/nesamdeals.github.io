@@ -131,12 +131,27 @@ jobs:
           snap = sref.get()
           sd = (snap.to_dict() or {}) if snap.exists else {}
           state = sd.get("ids", {})
-          migrate = sd.get("v") != 2
+          migrate = sd.get("v") != 3
           def meta(html, prop):
               for pat in (r'<meta[^>]+(?:property|name)=["\']%s["\'][^>]+content=["\']([^"\']*)' % prop, r'<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']%s["\']' % prop):
                   m = re.search(pat, html, re.I)
                   if m:
                       return m.group(1)
+              return None
+          def money(v):
+              try:
+                  x = float(str(v).replace(",", "").strip())
+                  return x if 0 < x < 10000000 else None
+              except Exception:
+                  return None
+          def text_price(text):
+              for m in re.finditer(r"(?:Rs\.?|INR|\u20b9)\s?([\d,]+(?:\.\d+)?)", text or "", re.I):
+                  before = (text[max(0, m.start() - 14):m.start()]).lower()
+                  if re.search(r"save|off|flat|upto|up to|cashback|worth|extra|get\s*$|min|above|over", before):
+                      continue
+                  v = money(m.group(1))
+                  if v:
+                      return v
               return None
           def check(item):
               o, d = item
@@ -144,13 +159,26 @@ jobs:
                   r = urllib.request.Request(d, headers={"User-Agent": UA2})
                   html = urllib.request.urlopen(r, timeout=10).read(300000).decode("utf-8", "ignore")
               except Exception:
-                  return ("pending", "blocked", "")
+                  return ("pending", "blocked", "", None)
               img = meta(html, "og:image")
               typ = (meta(html, "og:type") or "").lower()
               full = urllib.parse.urljoin(d, img) if img else ""
-              if full.startswith("http") and "product" in typ:
-                  return ("live", "", full)
-              return ("pending", "noimage" if not full else "notproduct", full)
+              price = None
+              for k in ("product:price:amount", "og:price:amount", "product:sale_price:amount"):
+                  price = money(meta(html, k))
+                  if price:
+                      break
+              if not price:
+                  price = text_price((o.get("title") or "") + " . " + (o.get("description") or ""))
+              if full.startswith("http") and "product" in typ and price:
+                  return ("live", "", full, price)
+              if not full:
+                  return ("pending", "noimage", "", price)
+              if "product" not in typ:
+                  return ("pending", "notproduct", full, price)
+              return ("pending", "noprice", full, price)
+          if migrate:
+              state = {}
           new_ids = [i for i in cand if i not in state][:300]
           with ThreadPoolExecutor(8) as ex:
               results = list(ex.map(check, [cand[i] for i in new_ids]))
@@ -162,33 +190,36 @@ jobs:
                   batch.commit()
                   batch = db.batch()
                   n = 0
-          def live_doc(o, d, img, name, cat, sub, e):
+          def live_doc(o, d, img, name, cat, sub, e, price):
               ms = int(NOW * 1000)
-              return {"title": (o.get("title") or "")[:200], "category": cat, "sub": sub, "source": "Other", "oldPrice": 0, "link": o.get("tracking_url"), "desc": (o.get("description") or "")[:400], "imgs": [img], "createdAt": ms, "checkedAt": ms, "expiresAt": int(e * 1000) if e else 0, "coupon": "", "extra": "", "offerText": name, "videoUrl": "", "pinned": False, "pick": False, "pk": 0, "ended": False, "sample": False, "offers": [], "noGame": False, "inGame": False, "allowCmt": False, "auto": True}
+              return {"title": (o.get("title") or "")[:200], "category": cat, "sub": sub, "source": "Other", "oldPrice": 0, "newPrice": price, "viewUrl": d, "link": o.get("tracking_url"), "desc": (o.get("description") or "")[:400], "imgs": [img], "createdAt": ms, "checkedAt": ms, "expiresAt": int(e * 1000) if e else 0, "coupon": "", "extra": "", "offerText": name, "videoUrl": "", "pinned": False, "pick": False, "pk": 0, "ended": False, "sample": False, "offers": [], "noGame": False, "inGame": False, "allowCmt": False, "auto": True}
           counts = {"live": 0, "pending": 0, "deleted_gone": 0, "deleted_7d": 0}
           if migrate:
-              moved = 0
-              for dd in col.where("status", "==", "live").stream():
-                  x = dd.to_dict() or {}
-                  cat, sub = classify((x.get("title") or "") + " " + (x.get("description") or ""))
-                  oo = {"title": x.get("title"), "description": x.get("description"), "tracking_url": x.get("link")}
-                  batch.set(dcol.document(dd.id), live_doc(oo, x.get("viewUrl"), x.get("image"), x.get("store") or "", cat, sub, ts(x.get("endDate"), True)))
+              gone = 0
+              for dd in dcol.where("auto", "==", True).stream():
+                  if not (dd.to_dict() or {}).get("newPrice"):
+                      batch.delete(dcol.document(dd.id))
+                      n += 1
+                      gone += 1
+                      if n >= 400:
+                          commit()
+              for dd in col.stream():
                   batch.delete(col.document(dd.id))
-                  n += 2
-                  moved += 1
+                  n += 1
                   if n >= 400:
                       commit()
-              print("migrated legacy live deals:", moved)
+              commit()
+              print("v3 reset: removed auto deals without price:", gone)
           for i, res in zip(new_ids, results):
               o, d = cand[i]
-              status, reason, img = res
+              status, reason, img, price = res
               name = o.get("campaign_name") or ""
               cat, sub = classify((o.get("title") or "") + " " + (o.get("description") or ""))
               e = ts(o.get("end_date"), True)
               if status == "live":
-                  batch.set(dcol.document(i), live_doc(o, d, img, name, cat, sub, e))
+                  batch.set(dcol.document(i), live_doc(o, d, img, name, cat, sub, e, price))
               else:
-                  doc = {"source": "cuelinks", "offerId": str(o.get("id")), "title": (o.get("title") or "")[:200], "description": (o.get("description") or "")[:400], "store": name, "popular": any(x in name.lower() for x in POP), "cat": cat, "sub": sub, "link": o.get("tracking_url"), "viewUrl": d, "image": "", "hint": img, "status": status, "reason": reason, "endDate": o.get("end_date"), "offerCreated": o.get("created_at"), "firstSeen": firestore.SERVER_TIMESTAMP, "firstSeenMs": int(NOW * 1000)}
+                  doc = {"source": "cuelinks", "offerId": str(o.get("id")), "title": (o.get("title") or "")[:200], "description": (o.get("description") or "")[:400], "store": name, "popular": any(x in name.lower() for x in POP), "cat": cat, "sub": sub, "link": o.get("tracking_url"), "viewUrl": d, "image": "", "hint": img, "price": price or 0, "status": status, "reason": reason, "endDate": o.get("end_date"), "offerCreated": o.get("created_at"), "firstSeen": firestore.SERVER_TIMESTAMP, "firstSeenMs": int(NOW * 1000)}
                   batch.set(col.document(i), doc)
               n += 1
               state[i] = {"s": status, "t": int(NOW)}
@@ -218,6 +249,6 @@ jobs:
           for i in list(state.keys()):
               if i not in all_ids:
                   del state[i]
-          sref.set({"ids": state, "v": 2, "updated": firestore.SERVER_TIMESTAMP})
+          sref.set({"ids": state, "v": 3, "updated": firestore.SERVER_TIMESTAMP})
           print("sync done:", counts, "| tracked ids:", len(state))
           PY
