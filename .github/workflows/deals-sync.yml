@@ -1,6 +1,8 @@
 name: Deals sync
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 concurrency:
   group: deals-sync
   cancel-in-progress: false
