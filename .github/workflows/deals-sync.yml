@@ -131,7 +131,7 @@ jobs:
           snap = sref.get()
           sd = (snap.to_dict() or {}) if snap.exists else {}
           state = sd.get("ids", {})
-          migrate = sd.get("v") != 3
+          migrate = sd.get("v") != 4
           def meta(html, prop):
               for pat in (r'<meta[^>]+(?:property|name)=["\']%s["\'][^>]+content=["\']([^"\']*)' % prop, r'<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']%s["\']' % prop):
                   m = re.search(pat, html, re.I)
@@ -162,7 +162,11 @@ jobs:
                   return ("pending", "blocked", "", None)
               img = meta(html, "og:image")
               typ = (meta(html, "og:type") or "").lower()
-              full = urllib.parse.urljoin(d, img) if img else ""
+              full = urllib.parse.urljoin(d, img.strip()) if img else ""
+              if full.startswith("http://"):
+                  full = "https://" + full[7:]
+              if not re.match(r"^https://[^\s\"'<>]{4,900}$", full):
+                  full = ""
               price = None
               for k in ("product:price:amount", "og:price:amount", "product:sale_price:amount"):
                   price = money(meta(html, k))
@@ -197,7 +201,9 @@ jobs:
           if migrate:
               gone = 0
               for dd in dcol.where("auto", "==", True).stream():
-                  if not (dd.to_dict() or {}).get("newPrice"):
+                  xd = dd.to_dict() or {}
+                  im0 = (xd.get("imgs") or [""])[0]
+                  if not xd.get("newPrice") or not str(im0).startswith("https://"):
                       batch.delete(dcol.document(dd.id))
                       n += 1
                       gone += 1
@@ -209,7 +215,7 @@ jobs:
                   if n >= 400:
                       commit()
               commit()
-              print("v3 reset: removed auto deals without price:", gone)
+              print("v4 reset: removed auto deals without price:", gone)
           for i, res in zip(new_ids, results):
               o, d = cand[i]
               status, reason, img, price = res
@@ -249,6 +255,6 @@ jobs:
           for i in list(state.keys()):
               if i not in all_ids:
                   del state[i]
-          sref.set({"ids": state, "v": 3, "updated": firestore.SERVER_TIMESTAMP})
+          sref.set({"ids": state, "v": 4, "updated": firestore.SERVER_TIMESTAMP})
           print("sync done:", counts, "| tracked ids:", len(state))
           PY
