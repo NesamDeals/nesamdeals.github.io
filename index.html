@@ -218,6 +218,20 @@ a{color:inherit}
 .empty{grid-column:1/-1;text-align:center;padding:42px 18px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:18px}
 .empty b{display:block;font-family:var(--display);font-size:20px;color:var(--ink);margin-bottom:4px}
 .moreb{grid-column:1/-1;justify-self:center;height:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);padding:0 22px;font-weight:700;cursor:pointer}
+.moreb.auto{border:0;background:none;height:44px;display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:default}
+.adel{margin-left:auto;border:0;background:none;font-size:16px;line-height:1;padding:4px 6px;cursor:pointer}
+.pnd{border:1.5px solid var(--line);border-radius:14px;background:var(--card);padding:12px;margin:10px 0}
+.pnd .pnh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.pnd .pnh b{color:var(--ink,inherit);font-size:15px}
+.pnd .pnpop{background:#FEF3C7;color:#92400E;border-radius:999px;padding:2px 8px;font-size:12px;font-weight:700}
+.pnd h4{margin:8px 0 4px;font-size:16px}
+.pnd p{margin:4px 0;font-size:13px;color:var(--muted)}
+.pnd .pnr{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.pnd .pnr a,.pnd .pnr button,.pnd .pnr label{min-height:40px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:700;font-size:14px;display:inline-flex;align-items:center;cursor:pointer;text-decoration:none;color:inherit}
+.pnd .pnr .ok{background:#15803D;border-color:#15803D;color:#fff}
+.pnd .pnr .ok[disabled]{opacity:.4;cursor:not-allowed}
+.pnd img.pnv{width:96px;height:96px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.pnd input[type=file]{display:none}
 .back{display:inline-flex;align-items:center;height:42px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);padding:0 16px;font-weight:700;cursor:pointer;margin-bottom:12px}
 .foot{max-width:1040px;margin:26px auto 0;color:var(--muted);font-size:13px;line-height:1.6}
 .foot p{margin:0 0 6px}
@@ -1050,7 +1064,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
         return m;
       })(),
       h('div',{class:'body'},
-        h('div',{class:'meta'},catBadge(d),S.admin?h('span',null,ago(d.createdAt||Date.now())):null),
+        h('div',{class:'meta'},catBadge(d),S.admin?h('span',null,ago(d.createdAt||Date.now())):null,(S.admin&&!d.sample)?h('button',{class:'adel',type:'button','aria-label':'delete',onclick:function(){ if(window.confirm('இந்த டீலை நீக்கவா?')) removeDeal(d.id) }},'❌'):null),
         h('h3',{class:'title'},title),
         priceNode,
         (S.live&&!d.sample&&!ended&&featOn('cnt'))?(function(){ var e=h('div',{class:'dcn','data-dc':d.id}); dcFill(e,d.id); return e })():null,
@@ -1267,9 +1281,13 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
       if(!shc&&shown.length>0) feed.append(shareCard());
     } else { list.forEach(function(d,i){feed.append(card(d));shown.push(d);if(i===3)feed.append(shareCard())}); if(list.length&&list.length<4) feed.append(shareCard()); }
     if(S.live&&S.hitLimit){
-      var mb=h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},t('moreDeals'));
-      feed.append(mb);
-      if('IntersectionObserver' in window){ var mio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ mio.disconnect(); mb.click() } },{rootMargin:'200px'}); mio.observe(mb); }
+      if('IntersectionObserver' in window){
+        var mb=h('div',{class:'moreb auto','aria-hidden':'true'},'⏳');
+        feed.append(mb);
+        var mio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ mio.disconnect(); S.limit+=PAGE; subscribeDeals() } },{rootMargin:'600px'}); mio.observe(mb);
+      } else {
+        feed.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},t('moreDeals')));
+      }
     }
     renderFooter(shown);
   }
@@ -1640,18 +1658,96 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function fld(label,id,input,hint){return h('div',{class:'fld'},h('label',{for:id},label),input,hint&&h('span',{class:'hint'},hint))}
   function bind(el,key,isCheck){el.addEventListener('input',function(){F[key]=isCheck?el.checked:el.value});return el}
 
+
+  /* ===== auto deals waiting for my approval (no product photo found by itself) ===== */
+  var PEND={list:[],un:null,pick:{},busy:{},loaded:false};
+  function pendTabLabel(){ return A('⏳ அப்ரூவல் ({n})').replace('{n}',PEND.list.length) }
+  function pendCmp(a,b){ return ((b.popular?1:0)-(a.popular?1:0))||((b.firstSeenMs||0)-(a.firstSeenMs||0)) }
+  function pendInit(){
+    if(PEND.un||!S.live||!S.admin||!S.db) return;
+    try{
+      PEND.un=S.db.collection('autodeals').where('status','==','pending').limit(300).onSnapshot(function(sn){
+        PEND.loaded=true;
+        PEND.list=sn.docs.map(function(x){var o=x.data()||{};o.id=x.id;return o}).sort(pendCmp);
+        var tb=document.querySelector('.stabs [data-t="pend"]'); if(tb) tb.textContent=pendTabLabel();
+        if(S.view==='seller'&&S.stab==='pend') pendPaint();
+      },function(){ PEND.un=null; PEND.loaded=true; if(S.view==='seller'&&S.stab==='pend') pendPaint() });
+    }catch(e){ PEND.un=null }
+  }
+  function pendWhy(r){ return r==='blocked'?A('கடை படம் எடுக்க விடல'):r==='noimage'?A('படம் கிடைக்கல'):r==='notproduct'?A('கிடைச்ச படம் பொருள் படமா இல்லாம இருக்கலாம்'):'' }
+  function pendItem(p){
+    var box=h('div',{class:'pnd','data-pid':p.id}),pick=PEND.pick[p.id]||'';
+    function redo(){ var n=pendItem(p); box.replaceWith(n) }
+    box.append(h('div',{class:'pnh'},h('b',null,p.store||'?'),p.popular?h('span',{class:'pnpop'},A('⭐ பிரபல கடை')):null,h('span',null,ago(p.firstSeenMs||Date.now())),p.endDate?h('span',null,'⏳ '+String(p.endDate).slice(0,10)):null));
+    box.append(h('h4',null,p.title||''));
+    if(p.description) box.append(h('p',null,p.description));
+    var why=pendWhy(p.reason); if(why) box.append(h('p',null,'ℹ️ '+why));
+    var prev=pick||'';
+    if(prev) box.append(h('img',{class:'pnv',src:prev,alt:''}));
+    var row=h('div',{class:'pnr'});
+    var vu=safeUrl(p.viewUrl);
+    if(vu) row.append(h('a',{href:vu,target:'_blank',rel:'noopener noreferrer'},A('🔗 லிங்கை திற')));
+    var fi=h('input',{type:'file',accept:'image/*'});
+    fi.addEventListener('change',async function(){
+      var f=fi.files&&fi.files[0]; if(!f) return;
+      try{ var du=await readFile(f); var fit=await fitPhotos([du]); if(!fit||!fit[0]){ toast(A('போட்டோ ரொம்ப பெருசு. சின்னதா போடு.')); return } PEND.pick[p.id]=fit[0]; redo() }catch(e){ toast(A('போட்டோ எடுக்க முடியல.')) }
+    });
+    row.append(h('label',null,A('📷 படம் போடு'),fi));
+    var hint=safeImg(p.hint);
+    if(hint&&hint!==pick) row.append(h('button',{type:'button',onclick:function(){ PEND.pick[p.id]=hint; redo() }},A('இந்த படத்தை எடு')));
+    box.append(row);
+    if(hint&&!pick) box.append(h('img',{class:'pnv',src:hint,alt:'',style:'margin-top:8px'}));
+    var row2=h('div',{class:'pnr'});
+    var ok=h('button',{type:'button',class:'ok',onclick:function(){pendApprove(p)}},A('✅ அப்ரூவ்'));
+    if(!pick) ok.setAttribute('disabled','true');
+    row2.append(ok,armBtn(A('🗑️ நிராகரி'),A('உறுதியா?'),function(){pendReject(p)}));
+    box.append(row2);
+    return box;
+  }
+  function pendPaint(){
+    var box=$('pendlist'); if(!box) return; box.replaceChildren();
+    if(!PEND.loaded){ box.append(h('p',{class:'hint'},'…')); return }
+    if(!PEND.list.length){ box.append(h('p',{class:'hint'},A('இப்போ அப்ரூவலுக்கு எதுவும் இல்ல ✔'))); return }
+    PEND.list.forEach(function(p){ box.append(pendItem(p)) });
+  }
+  function sellerPending(){
+    pendInit(); setTimeout(pendPaint,0);
+    return h('div',{class:'panel'},h('h2',null,A('⏳ அப்ரூவலுக்கு காத்திருக்கு')),
+      h('p',{class:'hint'},A('இந்த டீல்ஸுக்கு பொருள் படம் தானா கிடைக்கல. லிங்கை திறந்து படத்தை டவுன்லோட் பண்ணி இங்க போடு, அப்புறம் அப்ரூவ் அழுத்து. அப்போ தான் ஆப்ல வரும். 7 நாளுக்கு மேல பழசு தானா நீங்கும்.')),
+      h('div',{id:'pendlist'}));
+  }
+  async function pendApprove(p){
+    var img=PEND.pick[p.id]; if(!img){ toast(A('முதல்ல படம் போடு.')); return }
+    if(PEND.busy[p.id]) return; PEND.busy[p.id]=1;
+    try{
+      var now=Date.now(),ex=p.endDate?new Date(String(p.endDate).replace(' ','T')).getTime():0;
+      var data={title:String(p.title||'').slice(0,200),category:normCat(p.cat),sub:p.sub||'Other',source:'Other',oldPrice:0,link:safeUrl(p.link),desc:String(p.description||'').slice(0,400),imgs:[img],
+        createdAt:now,checkedAt:now,expiresAt:isFinite(ex)?ex:0,coupon:'',extra:'',offerText:p.store||'',videoUrl:'',pinned:false,pick:false,pk:0,ended:false,sample:false,offers:[],noGame:false,inGame:false,allowCmt:false,auto:true};
+      await S.db.collection('deals').doc(p.id).set(data);
+      await S.db.collection('autodeals').doc(p.id).delete();
+      delete PEND.pick[p.id];
+      toast(A('அப்ரூவ் ஆச்சு ✔ இப்போ ஆப்ல தெரியும்'));
+    }catch(e){ toast(A('செய்ய முடியல. மறுபடி முயற்சி பண்ணு.')) }
+    delete PEND.busy[p.id];
+  }
+  async function pendReject(p){
+    try{ await S.db.collection('autodeals').doc(p.id).delete(); delete PEND.pick[p.id]; toast(A('நிராகரிச்சாச்சு')) }catch(e){ toast(A('செய்ய முடியல. மறுபடி முயற்சி பண்ணு.')) }
+  }
+
   function renderSeller(){
     var root=$('seller'); root.replaceChildren();
+    pendInit();
     if(!F) F=blankForm();
     root.append(h('div',{class:'sbar'},h('b',null,A('🛠️ அட்மின் பேனல் (உனக்கு மட்டும்)')),
       h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},
         h('button',{type:'button',onclick:function(){location.hash='home';route()}},A('வாடிக்கையாளர் பார்வை →')),
         S.hosted&&h('button',{type:'button',style:'background:#fff',onclick:function(){window.NESAM.signOut()}},A('வெளியேறு')))));
-    var tabs=[['dash',A('📊 முகப்பு')],['new',F.id?A('✏️ திருத்து'):A('➕ புது டீல்')],['list',A('📋 டீல்ஸ் ({n})').replace('{n}',S.deals.length)],['promo',A('📢 விளம்பரம்')],['cmt',A('💬 கருத்துகள்')],['stats',A('📈 புள்ளிவிவரம்')],['set',A('⚙️ அமைப்புகள்')]];
-    root.append(h('div',{class:'stabs',role:'group'},tabs.map(function(x){return h('button',{type:'button','aria-pressed':S.stab===x[0]?'true':'false',onclick:function(){S.stab=x[0];renderSeller();window.scrollTo(0,0)}},x[1])})));
+    var tabs=[['dash',A('📊 முகப்பு')],['new',F.id?A('✏️ திருத்து'):A('➕ புது டீல்')],['list',A('📋 டீல்ஸ் ({n})').replace('{n}',S.deals.length)],['pend',pendTabLabel()],['promo',A('📢 விளம்பரம்')],['cmt',A('💬 கருத்துகள்')],['stats',A('📈 புள்ளிவிவரம்')],['set',A('⚙️ அமைப்புகள்')]];
+    root.append(h('div',{class:'stabs',role:'group'},tabs.map(function(x){return h('button',{type:'button','data-t':x[0],'aria-pressed':S.stab===x[0]?'true':'false',onclick:function(){S.stab=x[0];renderSeller();window.scrollTo(0,0)}},x[1])})));
     if(S.stab==='dash') root.append(sellerDash());
     else if(S.stab==='new') root.append(sellerForm());
     else if(S.stab==='list') root.append(sellerList());
+    else if(S.stab==='pend') root.append(sellerPending());
     else if(S.stab==='promo') root.append(sellerPromo());
     else if(S.stab==='cmt') root.append(sellerComments());
     else if(S.stab==='stats') root.append(sellerStats());
