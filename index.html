@@ -375,6 +375,25 @@ a{color:inherit}
 .tdi.u{background:#FFF1E6;border-color:#FFD2B0;color:#1B2440}.tdi.ok{background:#E8F7EE;border-color:#BFE6CC;color:#0B6B3A;cursor:default}
 .drb{background:#FFF8E6;border:1.5px solid #FFC61A;border-radius:14px;padding:12px;margin:0 0 12px;color:#1B2440}.drb b{display:block;margin-bottom:4px}.drb small{opacity:.75}
 .drb .btns{margin-top:10px}
+.catgrid{grid-template-columns:repeat(3,1fr)!important;gap:8px!important}
+.catgrid .cattile{min-height:0!important;padding:10px 6px!important;border-radius:14px!important;text-align:center!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:2px!important;border-left:1px solid var(--line)!important;border-top:4px solid var(--cc)!important}
+.catgrid .cattile .ce{font-size:26px!important;line-height:1.1}
+.catgrid .cattile b{font-size:12.5px!important;line-height:1.2!important;margin:2px 0 0!important}
+.catgrid .cattile>span:last-child{font-size:11px!important;opacity:.7}
+.catgrid .cattile.zero{opacity:.5}
+.rvr{display:flex;gap:8px;overflow-x:auto;padding:0 2px 4px;scrollbar-width:none}
+.rvc{flex:0 0 64px;text-align:center;text-decoration:none;color:var(--ink)}
+.rvc img{width:64px;height:64px;border-radius:12px;border:1px solid var(--line);object-fit:contain;background:#fff;display:block}
+.rvc b{display:block;font-size:11.5px;color:var(--save);margin-top:3px}
+.alov{position:fixed;inset:0;z-index:94;background:rgba(0,0,0,.35);opacity:0;transition:opacity .35s}
+.alov.on{opacity:1}
+.alsh{position:fixed;left:0;right:0;bottom:0;z-index:95;max-width:560px;margin:0 auto;background:var(--card);color:var(--ink);border-radius:22px 22px 0 0;box-shadow:0 -12px 30px rgba(0,0,0,.22);padding:12px 12px calc(16px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .45s cubic-bezier(.2,.9,.3,1.12);max-height:80vh;overflow:auto}
+.alsh.on{transform:none}
+.alsh .hand{width:40px;height:4px;border-radius:9px;background:var(--line);margin:0 auto 10px}
+.alsh .x{position:absolute;right:12px;top:8px;border:0;background:none;font-size:22px;color:var(--muted);cursor:pointer}
+.alsh h3{margin:0 0 3px;font-size:16px}.alsh .s{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.alsh .alg{grid-template-columns:repeat(3,1fr)}
+.card{cursor:pointer}
 .btns{display:flex;gap:10px;margin-top:8px}
 .btns button{flex:1;height:48px;border-radius:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:var(--card)}
 .btns .go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
@@ -1242,7 +1261,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function gallery(d){
     var imgs=dealImgs(d); if(!imgs.length) imgs=[PLACEHOLDER];
     var media=h('div',{class:'media'});
-    var track=makeTrack(imgs,dTitle(d),imgs[0]===PLACEHOLDER?null:function(i){openLightbox(imgs,i,dTitle(d))},true);
+    var track=makeTrack(imgs,dTitle(d),(S.focus===d.id)?(imgs[0]===PLACEHOLDER?null:function(i){openLightbox(imgs,i,dTitle(d))}):function(){ if(!d.sample||d.id==='__prev') { if(d.id!=='__prev') openDeal(d.id) } },true);
     media.append(track);
     if(imgs.length>1){
       var dots=h('div',{class:'dots'}); imgs.forEach(function(_,i){dots.append(h('i',{class:i===0?'on':''}))});
@@ -1476,6 +1495,43 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       return h('a',{class:'alc',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',null,dTitle(d)),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null);
     })));
   }
+  function alikeList(fd,n){
+    var c=normCat(fd.category),cnt=function(d){ return (S.dc&&S.dc[d.id]&&+S.dc[d.id].c)||0 };
+    return S.deals.filter(function(d){return d.id!==fd.id&&!d.sample&&nLive(d)&&normCat(d.category)===c}).sort(function(a,b){return cnt(b)-cnt(a)||(b.createdAt||0)-(a.createdAt||0)}).slice(0,n);
+  }
+  function openAlike(fd){
+    if(!fd||$('alsh')) return;
+    var pick=alikeList(fd,6); if(!pick.length) return;
+    var ov=h('div',{class:'alov',id:'alov'}),sh=h('div',{class:'alsh',id:'alsh',role:'dialog','aria-modal':'true'});
+    function close(){ ov.classList.remove('on'); sh.classList.remove('on'); setTimeout(function(){ ov.remove(); sh.remove() },400) }
+    ov.addEventListener('click',close);
+    sh.append(h('div',{class:'hand'}),h('button',{type:'button',class:'x','aria-label':'Close',onclick:close},'✕'),
+      h('h3',null,'💡 '+(S.lang==='ta'?'இதுவும் பிடிக்கலாம்':'You may also like')),
+      h('div',{class:'s'},catEmoji(normCat(fd.category))+' '+catLabel(normCat(fd.category))+(S.lang==='ta'?' வகையில் உங்களுக்காக':' picks for you')),
+      h('div',{class:'alg'},pick.map(function(d){
+        return h('a',{class:'alc',href:'#deal-'+d.id,onclick:function(){ close() }},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',null,dTitle(d)),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null);
+      })));
+    document.body.append(ov,sh);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ ov.classList.add('on'); sh.classList.add('on') }) });
+  }
+  /* tap anywhere on a card (except buttons/links) -> also-like sheet; counts in savings once a day */
+  document.addEventListener('click',function(e){
+    try{
+      if(S.view==='seller'||S.focus) return;
+      var cd=e.target.closest&&e.target.closest('#feed article.card'); if(!cd) return;
+      if(e.target.closest('a,button,input,textarea,select,label,summary,.coupon,.rx,code')) return;
+      var id=cd.getAttribute('data-id'),d=S.deals.filter(function(x){return x.id===id})[0]; if(!d||d.sample) return;
+      svAdd(d); rvAdd(d.id); openAlike(d);
+    }catch(err){}
+  });
+  /* back from the store -> also-like sheet (within 30 min) */
+  var OUT=null;
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState!=='visible'||!OUT) return;
+    var o=OUT; OUT=null;
+    if(Date.now()-o.t<1500||Date.now()-o.t>30*60000) return;
+    setTimeout(function(){ try{ if(S.view!=='seller'){ var d=S.deals.filter(function(x){return x.id===o.id})[0]; if(d) openAlike(d) } }catch(e){} },400);
+  });
   /* ===== new-deal draft auto-save (admin) ===== */
   var DRK='nesam-draft',DRF=['photos','title','main','sub','catAuto','source','storeName','oldPrice','newPrice','offerText','link','extra','coupon','expires','desc','pinned','pick','comm','video','offers','inGame','allowCmt'];
   function draftHas(){ var d=lsGet(DRK,null); return (d&&typeof d==='object'&&(d.title||d.link||d.desc||(d.photos&&d.photos.length)||d.newPrice))?d:null }
@@ -1551,7 +1607,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       })(),
       h('div',{class:'body'},
         h('div',{class:'meta'},catBadge(d),storePill(d),S.admin?h('span',null,ago(d.createdAt||Date.now())):null,(S.admin&&!d.sample)?h('button',{class:'adel',type:'button','aria-label':'delete',onclick:function(){ if(window.confirm('இந்த டீலை நீக்கவா?')) removeDeal(d.id) }},'❌'):null),
-        h('h3',{class:'title'},title),
+        h('h3',{class:'title',style:(S.focus===d.id||d.id==='__prev')?null:'cursor:pointer',onclick:(S.focus===d.id||d.id==='__prev')?null:function(){openDeal(d.id)}},title),
         priceNode,
         (S.live&&!d.sample&&!ended&&featOn('cnt'))?(function(){ var e=h('div',{class:'dcn','data-dc':d.id}); dcFill(e,d.id); return e })():null,
         d.extra&&!ended&&h('div',{class:'extra'},d.extra),
@@ -1636,10 +1692,11 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       else if(!fd) focusEl.append(h('div',{class:'empty'},h('b',null,t('notFound'))));
       else {
         focusEl.append(h('div',{class:'feed'},card(fd)));
+        try{ if(!fd.sample) svAdd(fd) }catch(e){}
         try{ var al=alikeEl(fd); if(al) focusEl.append(al) }catch(e){}
         var lk=safeUrl(fd.link);
         /* Outside claude.ai (hosted site or installed app) a shared deal link goes straight to the shop. */
-        if(!window.claude&&lk&&!isEnded(fd)&&!fd.sample&&!S.redirected){S.redirected=true;setTimeout(function(){try{location.replace(lk)}catch(e){}},900)}
+        if(!window.claude&&lk&&!isEnded(fd)&&!fd.sample&&!S.redirected&&fd.id===INIT_DEAL){S.redirected=true;setTimeout(function(){try{location.replace(lk)}catch(e){}},900)}
       }
       renderFooter(fd?[fd]:[]); return;
     }
@@ -1682,7 +1739,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(gridMode){
       var g=$('catgrid'); g.replaceChildren();
       g.append(h('h2',{class:'ptitle',style:'grid-column:1/-1'},t('catsTitle')));
-      TAX.forEach(function(m){
+      TAX.slice().sort(function(x,y){ var nx=live.some(function(d){return normCat(d.category)===x.id})?0:1,ny=live.some(function(d){return normCat(d.category)===y.id})?0:1; return nx-ny }).forEach(function(m){
         var n=live.filter(function(d){return normCat(d.category)===m.id}).length;
         var tile=h('button',{class:'cattile'+(n?'':' zero'),type:'button',style:'--cc:'+catColor(m.id),onclick:function(){S.main=m.id;S.sub='';S.q='';S.zone='';$('q').value='';render();window.scrollTo(0,0)}},
           h('span',{class:'ce'},m.e),h('b',null,catLabel(m.id)),h('span',null,t('dealsN',{n:n})));
@@ -3314,11 +3371,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var el=$('rv'); if(!el) return; el.replaceChildren(); el.hidden=true;
     if(!on||!S.live) return;
     var ids=[]; ids=lsGet('nesam-rv',[]); if(!Array.isArray(ids)) ids=[];
-    var pick=ids.map(function(id){ return S.deals.filter(function(d){return d.id===id&&!d.sample&&nLive(d)})[0] }).filter(Boolean).slice(0,6);
+    var pick=ids.map(function(id){ return S.deals.filter(function(d){return d.id===id&&!d.sample&&nLive(d)})[0] }).filter(Boolean).slice(0,10);
     if(!pick.length) return;
-    el.append(h('h3',null,'👀 '+(S.lang==='ta'?'சமீபத்தில் பார்த்தவை':'Recently viewed')),h('div',{class:'hotg',style:'display:flex;gap:10px;overflow-x:auto'},pick.map(function(d){
-      return h('a',{class:'hotc',style:'flex:0 0 46%',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),
-        h('div',{class:'hott'},d.title),(hasPrice(d)?h('div',{class:'hotp'},inr(d.newPrice)):null));
+    el.append(h('h3',null,'👀 '+(S.lang==='ta'?'சமீபத்தில் பார்த்தவை':'Recently viewed')),h('div',{class:'rvr'},pick.map(function(d){
+      return h('a',{class:'rvc',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:dTitle(d),loading:'lazy'}),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null);
     })));
     el.hidden=false;
   }
@@ -3332,7 +3388,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function engOnce(){ if(lsGet('nesam-eng','')!==dayKey()){ lsSet('nesam-eng',dayKey()); trkAdd(['eng']) } }
   function clk2(id){ dcInc(id,'c'); engOnce() }
   function rvAdd(id){ try{ var a=lsGet('nesam-rv',[]); if(!Array.isArray(a)) a=[]; a=a.filter(function(x){return x!==id}); a.unshift(id); lsSet('nesam-rv',a.slice(0,10)) }catch(e){} }
-  function trkClick(d){ rvAdd(d.id); svAdd(d);  trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
+  function trkClick(d){ rvAdd(d.id); svAdd(d); OUT={id:d.id,t:Date.now()};  trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
   function trkObserve(){
     if(!dcOn()||!('IntersectionObserver' in window)) return;
     if(!TRK.io) TRK.io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ var id=e.target.getAttribute('data-id'); TRK.io.unobserve(e.target); if(id&&!TRK.seen[id]){TRK.seen[id]=1;trkAdd(['v',tk(id)]);dcInc(id,'v')} } }) },{threshold:.5});
@@ -4032,6 +4088,15 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(seller) renderSeller(); else renderShop();
     updateBell(); trkObserve(); updateGame();
     /* new-deal popup removed */
+  }
+  var INIT_DEAL=(function(){ var x=(location.hash||'').replace(/^#/,''); return /^deal-/.test(x)?x.slice(5):'' })();
+  function openDeal(id){ /* tap on a deal's photo/title: count it, show also-like (no jump to the store) */
+    if(!id) return;
+    var d=S.deals.filter(function(x){return x.id===id})[0];
+    if(!d||S.admin&&S.view==='seller'){ location.hash='deal-'+id; return }
+    try{ svAdd(d); rvAdd(d.id) }catch(e){}
+    if(alikeList(d,1).length) openAlike(d);
+    else { var im=dealImgs(d); if(im.length&&im[0]!==PLACEHOLDER) openLightbox(im,0,dTitle(d)) }
   }
   function route(){
     var hsh=(location.hash||'').replace(/^#/,'');
