@@ -536,6 +536,100 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
 @keyframes svpop{0%{transform:translateY(10px);opacity:0}100%{transform:translateY(0);opacity:1}}
 @keyframes svblink{0%,100%{opacity:1}50%{opacity:0}}
 .sqs{display:flex;flex-wrap:wrap;gap:8px}.sq{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);padding:0;cursor:pointer}.sq[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:1px}
+
+/* ===== build14: models, festival band, card look, admin nav ===== */
+.card{border-radius:var(--rad,20px)}
+.buy{border-radius:var(--rad,14px)}
+.was{font-size:.78em;opacity:.72}
+.timer{color:#C2410C}
+.fest{margin:8px 0 10px;border-radius:16px;padding:10px 12px 10px 14px;background:var(--fbg);color:var(--ft);border:1px solid color-mix(in srgb,var(--fa) 25%,transparent);overflow:hidden}
+.fest .fg{font-size:13px;font-weight:700;opacity:.85}
+.fest .fl{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px}
+.fest .ftx{font-family:var(--display);font-weight:800;font-size:19px;line-height:1.25}
+.fest .fsym{flex:none;width:46px;height:46px}
+.fest .fsym svg{width:46px;height:46px;display:block;overflow:visible}
+.zfb{transform-box:fill-box;transform-origin:center}
+@keyframes fzbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes fzsway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes fzpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes fzflick{0%,100%{transform:scale(1,1)}30%{transform:scale(.9,1.12)}60%{transform:scale(1.05,.94)}}
+@keyframes fzfoam{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes fzhop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px) rotate(-4deg)}}
+@keyframes fzrs{0%{transform:translateY(4px);opacity:0}50%{opacity:1}100%{transform:translateY(-6px);opacity:0}}
+@keyframes fzlift{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes fzburst{0%,100%{transform:scale(.8);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+@keyframes fzwave{0%,100%{transform:skewY(-4deg)}50%{transform:skewY(4deg)}}
+@keyframes fzspin{to{transform:rotate(360deg)}}
+@keyframes fztw{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes fzear{0%,100%{transform:rotate(0)}50%{transform:rotate(-9deg)}}
+@keyframes fzear2{0%,100%{transform:rotate(0)}50%{transform:rotate(9deg)}}
+@keyframes fzbl{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes fztk{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+@media (prefers-reduced-motion:no-preference){
+.zbob{animation:fzbob 1.8s ease-in-out infinite}.zsway{animation:fzsway 2.2s ease-in-out infinite}.zpulse{animation:fzpulse 1.8s ease-in-out infinite}
+.zflick{animation:fzflick .9s ease-in-out infinite}.zfoam{animation:fzfoam 1.6s ease-in-out infinite}.zhop{animation:fzhop 1.6s ease-in-out infinite}
+.zrs{animation:fzrs 2s ease-in infinite}.zlift{animation:fzlift 1.8s ease-in-out infinite}.zburst{animation:fzburst 1.4s ease-in-out infinite}
+.zwave{animation:fzwave 1.8s ease-in-out infinite}.zspin{animation:fzspin 9s linear infinite}.ztw{animation:fztw 1.6s ease-in-out infinite}
+.zear{animation:fzear 1.8s ease-in-out infinite}.zear2{animation:fzear2 1.8s ease-in-out infinite}.zbl{animation:fzbl 4s infinite}.ztk{animation:fztk 2s ease-in-out infinite}.zglow{animation:fztw 2s ease-in-out infinite}}
+/* admin bottom nav */
+#seller{padding-bottom:84px}
+.snav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -4px 14px rgba(0,0,0,.08)}
+.snav button{flex:1;border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:700;padding:4px 0;position:relative;cursor:pointer;font-family:inherit}
+.snav button b{font-size:22px;line-height:1.1}
+.snav button[aria-pressed=true]{color:var(--brand)}
+.snav button .dot{position:absolute;top:2px;right:calc(50% - 20px);width:10px;height:10px;border-radius:50%;background:#EA580C}
+.mrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:14px;margin-bottom:8px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.mrow b{font-size:22px}.mrow span{flex:1}.mrow i{font-style:normal;color:var(--muted);font-size:13px;font-weight:600}
+.gring{display:flex;align-items:center;gap:14px}
+.gring svg{flex:none}
+.frow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:11px 12px;margin-bottom:6px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+.frow span{flex:1}
+.frow i{font-style:normal;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--chip);color:var(--muted)}
+.frow.hi{border:2px solid #EA580C;background:#FFF1E6;color:#7C2D12}
+.frow.hi i{background:#EA580C;color:#fff}
+.frow i.on{background:#DCFCE7;color:#166534}
+.fcat{font-size:13px;font-weight:800;color:var(--muted);margin:12px 2px 6px}
+.fban{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:2px solid #EA580C;background:#FFF1E6;color:#7C2D12;border-radius:14px;padding:12px;margin-bottom:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.fban b{font-size:22px}
+.fsh{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:90;display:flex;align-items:flex-end;justify-content:center}
+.fsh>div{background:var(--card);color:var(--ink);width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.fsh label{display:block;font-size:13px;font-weight:700;margin:10px 0 4px;color:var(--muted)}
+.fsh input[type=date]{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--bg);color:var(--ink)}
+.tgl{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:16px;font-weight:700}
+.tgl button{width:56px;height:32px;border-radius:99px;border:0;background:#CBD5E1;position:relative;cursor:pointer;flex:none}
+.tgl button::after{content:'';position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:left .15s}
+.tgl button[aria-pressed=true]{background:#16A34A}
+.tgl button[aria-pressed=true]::after{left:27px}
+.fest{background:var(--fbg);border:0;border-radius:14px;padding:8px 8px 8px 14px;position:relative}
+.fest .fg{font-size:14px;font-weight:800;opacity:1;margin:0 0 2px;color:var(--fa)}
+.fest .fl{margin-top:0;min-height:42px}
+.fest .ftx{font-size:15px;line-height:1.3}
+.fest .fsym{border:0;background:none;padding:0;cursor:pointer;width:42px;height:42px}
+.fest .fsym svg{width:42px;height:42px}
+.fbub{position:absolute;right:8px;top:100%;margin-top:2px;z-index:6;background:#fff;color:#222;font-size:13px;font-weight:700;padding:7px 11px;border-radius:12px;border:1px solid rgba(0,0,0,.18);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.fest{position:relative}
+.fxl{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:3}
+.fxl span{position:absolute;top:-24px;opacity:.38;animation:fxfall linear infinite}
+@keyframes fxfall{to{transform:translateY(105vh) rotate(160deg)}}
+@media (prefers-reduced-motion:reduce){.fxl{display:none}}
+.acc{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:50px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:0 14px;font-size:16px;font-weight:800;cursor:pointer;margin-bottom:8px;font-family:inherit}
+.acc[aria-expanded=true]{border-color:var(--brand);color:var(--brand)}
+.accb{margin:0 0 12px}
+.hbig{display:block;width:100%;min-height:54px;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer;margin-bottom:8px;font-family:inherit;border:1.5px solid var(--line);background:var(--card);color:var(--brand)}
+.hbig.go{background:var(--brand);color:#fff;border-color:var(--brand)}
+details.more>summary{min-height:48px;display:flex;align-items:center;font-weight:800;cursor:pointer;color:var(--muted)}
+.price{color:#0B7A43}
+#bellN,.gdot{display:none!important}
+.clk{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:6px 0 12px}
+.clk button{height:44px;border-radius:12px;border:2px solid transparent;cursor:pointer;display:grid;place-items:center;font-size:20px;background:var(--chip)}
+.clk button[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px var(--card) inset}
+.clk button svg{width:30px;height:30px}
+.fest.nostrip .fl{display:none}
+.fest .fgr{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.slide:not(.ld){background:linear-gradient(100deg,var(--line) 30%,var(--chip) 50%,var(--line) 70%);background-size:200% 100%;animation:shm 1.2s linear infinite}
+@keyframes shm{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.slide:not(.ld){animation:none}}
+.allseen{text-align:center;color:var(--muted);font-weight:700;font-size:15px;padding:18px 12px;margin:8px 0}
 </style>
 </head>
 <body>
@@ -680,6 +774,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var skip=ls('nesam-splash')===0;
   var hs=(location.hash||'').replace('#',''); if(hs&&hs!=='home') skip=true;
   try{ if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches) skip=true }catch(e){}
+  try{ if(!skip){ var _sd=new Date(),_sk=_sd.getFullYear()+'-'+(_sd.getMonth()+1)+'-'+_sd.getDate(); if(localStorage.getItem('nesam-splashday')===_sk) skip=true; else localStorage.setItem('nesam-splashday',_sk) } }catch(e){}
   if(skip) return;
   window.NSPL(ls('nesam-splashcfg')||{});
 })();
@@ -704,6 +799,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
 </header>
 
 <main class="wrap" id="shop">
+  <div id="fest" hidden></div>
   <div id="banners"></div>
   <div id="focus" hidden></div>
   <div id="browse">
@@ -719,6 +815,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     <div class="filters" id="filters"></div>
     <div class="pnote" id="pnote" hidden></div>
     <div id="hot" class="hot" hidden></div>
+    <div id="rv" class="hot" hidden></div>
     <div class="feed" id="feed" aria-live="polite"></div>
     <div class="catgrid" id="catgrid" hidden></div>
     <div id="followview" hidden></div>
@@ -873,7 +970,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var SOURCES=['Amazon','Meesho','Flipkart','Myntra','Wishlink','Digital product','Other'];
   var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=5;
 
-  var S={deals:[],settings:{},cat:'all',main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',ct:'',last:false,zone:'',view:'shop',stab:'dash',focus:'',
+  var S={deals:[],settings:{},cat:(function(){ try{ var c=JSON.parse(localStorage.getItem('nesam-lastcat')||'"all"'); return typeof c==='string'&&c?c:'all' }catch(e){ return 'all' } })(),main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',ct:'',last:false,zone:'',view:'shop',stab:'dash',focus:'',
     admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null,reacts:{},dc:{},promos:[],replies:[],setReady:false};
 
   /* ============ helpers ============ */
@@ -1171,7 +1268,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     return h('article',{class:'card','data-id':d.id},
       (function(){
         var m=gallery(d);
-        if(p>0) m.append(h('span',{class:'off'},t('off',{n:p})));
+        if(p>0&&featOn('offb')) m.append(h('span',{class:'off'},t('off',{n:p})));
         m.append(h('div',{class:'flags'},d.pinned&&!ended&&h('span',{class:'flag star'},'★'),isNew&&h('span',{class:'flag'},t('isNew')),loot&&h('span',{class:'flag loot'},t('loot')),(!ended&&endingSoon(d))&&h('span',{class:'flag loot'},'⏳ '+t('lastDay'))));
         if(ended) m.append(h('div',{class:'ended'},t('ended')));
         return m;
@@ -1280,7 +1377,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     show('strip',isHome&&featOn('strip')); show('joinhost',isHome); show('searchbox',!isFollow&&!isPromo&&!gridMode);
     show('zones',(isHome||(isCats&&!!S.main))&&featOn('zones'));
     show('chips',isHome||(isCats&&!!S.main)); show('filters',!isFollow&&!isPromo&&!gridMode); show('feed',!isFollow&&!isPromo&&!gridMode); show('promoview',isPromo);
-    try{paintHot(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){}
+    try{paintHot(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){} try{paintRV(isHome&&S.cat==='all'&&!S.q)}catch(e){}
     show('catgrid',gridMode); show('catbar',isCats&&!!S.main); show('followview',isFollow);
 
     if(isHome){
@@ -1344,9 +1441,9 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     if(isHome){
       var mains=[]; live.forEach(function(d){var c=normCat(d.category); if(mains.indexOf(c)<0) mains.push(c)});
       mains.sort(function(a,c){return MAIN_IDS.indexOf(a)-MAIN_IDS.indexOf(c)});
-      if(S.cat!=='all'&&mains.indexOf(S.cat)<0) S.cat='all';
+      if(S.cat!=='all'&&!S.loading&&S.deals.length&&mains.indexOf(S.cat)<0){ S.cat='all'; lsSet('nesam-lastcat','all') }
       [['all','🛍️ '+t('all')]].concat(mains.map(function(c){return [c,catEmoji(c)+' '+catLabel(c)]})).forEach(function(c){
-        ch.append(h('button',{class:'chip',type:'button','aria-pressed':S.cat===c[0]?'true':'false',onclick:function(){S.cat=c[0];render()}},c[1]));
+        ch.append(h('button',{class:'chip',type:'button','aria-pressed':S.cat===c[0]?'true':'false',onclick:function(){S.cat=c[0];lsSet('nesam-lastcat',c[0]);render()}},c[1]));
       });
     } else if(isCats){
       var cb=$('catbar'); cb.replaceChildren(h('button',{class:'back',type:'button',onclick:function(){S.main='';S.sub='';S.zone='';render();window.scrollTo(0,0)}},'← '+t('catsTitle')),h('h2',null,catEmoji(S.main)+' '+catLabel(S.main)));
@@ -1405,8 +1502,15 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
         feed.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},t('moreDeals')));
       }
     }
+    if(isHome&&!S.q&&!S.zone&&!S.last&&!S.hitLimit&&shown.length>=4) feed.append(h('div',{class:'allseen'},S.lang==='ta'?'✅ இன்றைய டீல்கள் எல்லாம் பார்த்துவிட்டீர்கள். புதியவை வந்தால் இங்கே தெரியும்.':'✅ You have seen all of today\'s deals. New ones will appear here.'));
+    Array.prototype.forEach.call(feed.querySelectorAll('.slide img'),function(im){ var w=im.parentNode; if(im.complete){ w.classList.add('ld') } else { im.addEventListener('load',function(){w.classList.add('ld')}); im.addEventListener('error',function(){w.classList.add('ld')}) } });
+    if(!RS.done&&!S.loading&&shown.length&&S.tab==='home'&&S.view==='shop'){ RS.done=true; try{ var rs=lsGet('nesam-rs',null); if(rs&&rs.y>300&&Date.now()-rs.t<1800000&&rs.cat===S.cat&&!location.hash.replace('#','').replace('home','')) setTimeout(function(){ window.scrollTo(0,rs.y) },120) }catch(e){} }
     renderFooter(shown);
   }
+  var RS={done:false};
+  function rsSave(){ try{ if(S.view==='shop'&&S.tab==='home'&&!S.focus&&RS.done) lsSet('nesam-rs',{y:Math.round(window.scrollY),t:Date.now(),cat:S.cat}) }catch(e){} }
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') rsSave() });
+  window.addEventListener('pagehide',rsSave);
 
   /* ============ share the app ============ */
   var SHMSG={
@@ -1866,16 +1970,98 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
       h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},
         h('button',{type:'button',onclick:function(){location.hash='home';route()}},A('வாடிக்கையாளர் பார்வை →')),
         S.hosted&&h('button',{type:'button',style:'background:#fff',onclick:function(){window.NESAM.signOut()}},A('வெளியேறு')))));
-    var tabs=[['dash',A('📊 முகப்பு')],['new',F.id?A('✏️ திருத்து'):A('➕ புது டீல்')],['list',A('📋 டீல்ஸ் ({n})').replace('{n}',S.deals.length)],['pend',pendTabLabel()],['promo',A('📢 விளம்பரம்')],['cmt',A('💬 கருத்துகள்')],['stats',A('📈 புள்ளிவிவரம்')],['set',A('⚙️ அமைப்புகள்')]];
-    root.append(h('div',{class:'stabs',role:'group'},tabs.map(function(x){return h('button',{type:'button','data-t':x[0],'aria-pressed':S.stab===x[0]?'true':'false',onclick:function(){S.stab=x[0];renderSeller();window.scrollTo(0,0)}},x[1])})));
+    var SUB=['pend','promo','cmt','fest','set'],isSub=SUB.indexOf(S.stab)>=0;
     if(S.stab==='dash') root.append(sellerDash());
     else if(S.stab==='new') root.append(sellerForm());
     else if(S.stab==='list') root.append(sellerList());
-    else if(S.stab==='pend') root.append(sellerPending());
-    else if(S.stab==='promo') root.append(sellerPromo());
-    else if(S.stab==='cmt') root.append(sellerComments());
     else if(S.stab==='stats') root.append(sellerStats());
-    else root.append(sellerSettings());
+    else if(S.stab==='more') root.append(sellerMore());
+    else if(isSub){
+      root.append(h('button',{type:'button',class:'mrow',style:'width:auto;padding:8px 14px;margin-bottom:10px',onclick:function(){S.stab='more';renderSeller();window.scrollTo(0,0)}},A('← மேலும்')));
+      if(S.stab==='pend') root.append(sellerPending());
+      else if(S.stab==='promo') root.append(sellerPromo());
+      else if(S.stab==='cmt') root.append(sellerComments());
+      else if(S.stab==='fest') root.append(sellerFest());
+      else root.append(sellerSettings());
+    } else { S.stab='dash'; root.append(sellerDash()) }
+    var cur=isSub?'more':S.stab,due=festDue(),navb=[['dash','🏠',A('முகப்பு')],['new',F.id?'✏️':'➕',F.id?A('திருத்து'):A('புது டீல்')],['list','📋',A('டீல்ஸ்')],['stats','📊',A('புள்ளி')],['more','⋯',A('மேலும்')]];
+    root.append(h('nav',{class:'snav'},navb.map(function(x){
+      return h('button',{type:'button','aria-pressed':cur===x[0]?'true':'false',onclick:function(){S.stab=x[0];renderSeller();window.scrollTo(0,0)}},h('b',null,x[1]),x[2],(x[0]==='more'&&(due||PEND.list.length))?h('span',{class:'dot'}):null)
+    })));
+  }
+  function sellerMore(){
+    function row(e,l,tab,sub){ return h('button',{type:'button',class:'mrow',onclick:function(){S.stab=tab;renderSeller();window.scrollTo(0,0)}},h('b',null,e),h('span',null,l),sub?h('i',null,sub):null) }
+    var due=festDue();
+    return h('div',null,
+      row('⏳',A('நிலுவை'),'pend',PEND.list.length?String(PEND.list.length):''),
+      row('📢',A('விளம்பரம்'),'promo'),
+      row('💬',A('கருத்துகள்'),'cmt'),
+      row('🎉',A('பண்டிகை மாடல்'),'fest',due?A('தேதி வை'):(festState().on?A('ஆன்'):A('ஆஃப்'))),
+      row('⚙️',A('அமைப்புகள்'),'set'));
+  }
+  /* ---- festival tab ---- */
+  var FM=['ஜன','பிப்','மார்','ஏப்','மே','ஜூன்','ஜூலை','ஆக','செப்','அக்','நவ','டிச'];
+  function fdShort(x){ var p=String(x).split('-'); return (+p[2])+' '+FM[(+p[1])-1] }
+  function festSave(f){ if(f.custom===undefined){ var o=S.settings&&S.settings.fest; if(o&&o.custom) f.custom=o.custom } return saveSettings(Object.assign({},S.settings||{},{fest:f})).then(function(){ if(S.live){ S.settings=Object.assign({},S.settings||{},{fest:f}); applyTheme(); } renderSeller(); }).catch(function(e){ toast(A('சேமிக்க முடியவில்லை')+': '+(e&&e.message||e)) }) }
+  function festSheet(fs){
+    var st=festState(),it=st.items[fs.id]||{},sI=h('input',{type:'date',value:it.s||''}),eI=h('input',{type:'date',value:it.e||''}),er=h('p',{class:'hint',style:'color:#DC2626;min-height:18px'},'');
+    var fd=festDay(fs.id,new Date());
+    if(!it.s&&fd){ sI.value=fd; var d2=new Date(fd+'T00:00:00'); d2.setDate(d2.getDate()+3); eI.value=ymd(d2); if(['pongal','navaratri','kanda'].indexOf(fs.id)>=0){ var d3=new Date(fd+'T00:00:00'); d3.setDate(d3.getDate()-2); sI.value=ymd(d3) } }
+    var ov=h('div',{class:'fsh'}); function close(){ ov.remove() }
+    function put(v){ var f={on:st.on,items:Object.assign({},st.items)}; if(v) f.items[fs.id]=v; else delete f.items[fs.id]; close(); festSave(f) }
+    var box=h('div',null,h('h2',{style:'margin:0 0 4px'},fs.ta+' '+A('தேதிகள்')),
+      fd?h('p',{class:'hint'},A('பண்டிகை நாள் (தோராயம்): ')+fdShort(fd)):null,
+      h('label',null,A('தொடக்க தேதி')),sI,h('label',null,A('முடிவு தேதி')),eI,er,
+      h('div',{class:'btns'},
+        h('button',{type:'button',class:'go',onclick:function(){ if(!sI.value||!eI.value){ er.textContent=A('இரண்டு தேதியும் வேண்டும்'); return } if(eI.value<sI.value){ er.textContent=A('முடிவு தேதி தொடக்கத்துக்குப் பின் இருக்க வேண்டும்'); return } put({s:sI.value,e:eI.value}) }},A('💾 சேமி')),
+        h('button',{type:'button',onclick:function(){ put(null) }},A('தேதியை நீக்கு')),
+        h('button',{type:'button',onclick:close},A('மூடு'))));
+    ov.append(box); ov.addEventListener('click',function(e){ if(e.target===ov) close() }); document.body.append(ov);
+  }
+  var CUS=null;
+  function customCard(st){
+    var td=new Date(),tm=new Date(); tm.setDate(tm.getDate()+1);
+    if(!CUS) CUS=Object.assign({on:false,name:'',greet:'',strip:true,look:0,sym:'c_star',s:ymd(td),e:ymd(tm)},st.custom||{});
+    var c=CUS,card=h('div',{class:'panel',style:'margin-bottom:12px'});
+    var tg=h('button',{type:'button','aria-pressed':c.on?'true':'false','aria-label':A('புதிய பண்டிகை'),onclick:function(){ c.on=!c.on; festSave({on:st.on,items:st.items,custom:Object.assign({},c)}) }});
+    card.append(h('div',{class:'tgl'},h('span',null,A('➕ புதிய பண்டிகை (நானே எழுதுவேன்)')),tg),
+      h('p',{class:'hint',style:'margin:8px 0 0'},c.on?A('ஆன் — கீழே உள்ள தேதிகளில் மட்டும் இது ஆப்பில் வரும், பிறகு தானாக மறையும்.'):A('ஆஃப் — பட்டியலில் இல்லாத பண்டிகைக்கு இதைப் பயன்படுத்துங்கள்.')));
+    if(!c.on) return card;
+    var nI=h('input',{type:'text',style:'display:block;width:100%',maxlength:'40',value:c.name,placeholder:A('பண்டிகை பெயர் (எ.கா. மீலாது நபி)')}),
+        gI=h('input',{type:'text',style:'display:block;width:100%',maxlength:'60',value:c.greet,placeholder:A('மேலே வரும் வாழ்த்து (எ.கா. மீலாது நபி வாழ்த்துகள்)')}),
+        sI=h('input',{type:'date',value:c.s,style:'display:block;width:100%'}),eI=h('input',{type:'date',value:c.e,style:'display:block;width:100%'}),er=h('p',{class:'hint',style:'color:#DC2626;min-height:18px'},'');
+    nI.addEventListener('input',function(){c.name=nI.value}); gI.addEventListener('input',function(){c.greet=gI.value});
+    sI.addEventListener('change',function(){c.s=sI.value}); eI.addEventListener('change',function(){c.e=eI.value});
+    var sg=h('button',{type:'button','aria-pressed':c.strip!==false?'true':'false',onclick:function(){ c.strip=!(c.strip!==false); renderSeller() }});
+    var looks=h('div',{class:'clk'},CLOOKS.map(function(l,i){ return h('button',{type:'button',title:l.n,'aria-label':l.n,'aria-pressed':+c.look===i?'true':'false',style:'background:'+l.a,onclick:function(){ c.look=i; renderSeller() }}) }));
+    var syms=h('div',{class:'clk'},CSYMS.map(function(y){ var b=h('button',{type:'button','aria-pressed':c.sym===y?'true':'false',onclick:function(){ c.sym=y; renderSeller() }}); if(y==='c_none') b.textContent='∅'; else b.innerHTML=FSYM[y]; return b }));
+    card.append(h('label',null,A('பண்டிகை பெயர்')),nI,h('label',null,A('வாழ்த்து வரி')),gI,
+      h('div',{class:'tgl',style:'margin:8px 0'},h('span',null,A('"… சிறப்பு சலுகைகள்" வரி வேண்டுமா?')),sg),
+      h('label',null,A('நிறம் (12 தேர்வுகள்)')),looks,h('label',null,A('சின்னம்')),syms,
+      h('label',null,A('தொடக்க தேதி')),sI,h('label',null,A('முடிவு தேதி')),eI,er,
+      h('div',{class:'btns'},h('button',{type:'button',class:'go',onclick:function(){
+        if(!c.name.trim()){ er.textContent=A('பண்டிகை பெயர் வேண்டும்'); return }
+        if(!c.s||!c.e){ er.textContent=A('இரண்டு தேதியும் வேண்டும்'); return }
+        if(c.e<c.s){ er.textContent=A('முடிவு தேதி தொடக்கத்துக்குப் பின் இருக்க வேண்டும்'); return }
+        c.name=c.name.trim(); c.greet=c.greet.trim(); festSave({on:st.on,items:st.items,custom:Object.assign({},c)}) }},A('சேமி'))));
+    return card;
+  }
+  function sellerFest(){
+    var st=festState(),hi=S.festHi,k=dayKey(),act=festActive(),due=festDue(),wrap=h('div',null);
+    wrap.append(customCard(st));
+    var tg=h('button',{type:'button','aria-pressed':st.on?'true':'false','aria-label':A('பண்டிகை மாடல்'),onclick:function(){ festSave({on:!st.on,items:st.items}) }});
+    wrap.append(h('div',{class:'panel',style:'margin-bottom:12px'},h('div',{class:'tgl'},h('span',null,A('🎉 பண்டிகை மாடல்')),tg),
+      h('p',{class:'hint',style:'margin:8px 0 0'},st.on?A('ஆன் — அமைத்த தேதிகளில் மட்டும் ஆப் பண்டிகை தோற்றத்தில் இருக்கும், பிறகு தானாகத் திரும்பும்.'):A('ஆஃப் — ஆப் வாடிக்கையாளர் தேர்ந்த மாடலிலேயே இருக்கும்.'))));
+    if(!st.on){ if(due) wrap.append(h('p',{class:'hint',style:'color:#C2410C;font-weight:700'},A('👆 {n} நெருங்குகிறது — மேலே ஆன் செய்து தேதி வை').replace('{n}',due.f.ta))); return wrap }
+    FCATS.forEach(function(c){
+      wrap.append(h('div',{class:'fcat'},A(c[1])));
+      FESTS.filter(function(f){return f.c===c[0]}).forEach(function(fs){
+        var it=st.items[fs.id],chip,on=false;
+        if(it&&it.s&&it.e){ on=(act&&act.id===fs.id); chip=on?A('நடக்கிறது'):fdShort(it.s)+' – '+fdShort(it.e) } else chip=A('தேதி இல்லை');
+        wrap.append(h('button',{type:'button',class:'frow'+(hi===fs.id?' hi':''),onclick:function(){ S.festHi=null; festSheet(fs) }},h('span',null,fs.ta),h('i',{class:on?'on':''},chip)));
+      });
+    });
+    return wrap;
   }
 
   /* ---- stats ---- */
@@ -1980,7 +2166,16 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
         h('div',{style:'font-size:22px;font-weight:800;color:'+(diff>0?'#0A8A5F':diff<0?'#DC2626':'#64748B')},(diff>0?'⬆ +':diff<0?'⬇ ':'＝ ')+(diff===0?'0':String(diff)))),
       h('p',{style:'margin:4px 0 10px;font-weight:700'},wmsg),
       h('div',{style:'display:flex;gap:6px;align-items:flex-end;height:80px'},dn.map(function(x,i){ return h('div',{style:'flex:1;text-align:center;font-size:11px'},h('div',{style:'font-weight:700'},String(x.n)),h('div',{style:'height:'+Math.max(3,Math.round(x.n*48/wmx))+'px;background:'+(i===6?'#1546C6':'#9DB4F0')+';border-radius:4px;margin:2px 0'}),h('div',null,String(x.d.getDate()))) })));
-    return h('div',null,wbox,
+    var goal=Math.max(1,Math.min(500,parseInt(S.settings&&S.settings.goal,10)||30)),pc=Math.min(1,today/goal),R=34,CI=2*Math.PI*R,hr=new Date().getHours(),gm=hr<12?A('காலை வணக்கம்'):hr<17?A('மதிய வணக்கம்'):A('மாலை வணக்கம்'),due=festDue();
+    var ring=h('div',{class:'panel',style:'margin-bottom:12px'},h('div',{class:'hint',style:'margin:0'},gm),h('h2',{style:'margin:0 0 10px;font-size:22px'},A('ராஜா, இன்று நல்ல நாள்')),
+      h('div',{class:'gring'},(function(){ var sv=document.createElementNS('http://www.w3.org/2000/svg','svg'); sv.setAttribute('width','84');sv.setAttribute('height','84');sv.setAttribute('viewBox','0 0 84 84');
+          sv.innerHTML='<circle cx="42" cy="42" r="'+R+'" fill="none" stroke="#E2E8F0" stroke-width="9"/><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="'+(pc>=1?'#16A34A':'#1546C6')+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(CI*pc).toFixed(1)+' '+CI.toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" font-size="16" font-weight="800" fill="currentColor">'+today+'/'+goal+'</text>'; return sv })(),
+        h('div',null,h('b',null,pc>=1?A('இன்றைய இலக்கு முடிந்தது 🎉'):A('இன்றைய இலக்கு')),h('div',{class:'hint'},A('இன்று {n} டீல் போட்டாய்').replace('{n}',today)))));
+    var fban=due?h('button',{type:'button',class:'fban',onclick:function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) }},h('b',null,'🎉'),h('span',null,due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+A(' — தொட்டுத் தேதி வை'))):null;
+    var bigs=h('div',null,
+      h('button',{type:'button',class:'hbig go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},A('➕ புது டீல் போடு')),
+      h('button',{type:'button',class:'hbig',onclick:function(){S.stab='list';renderSeller();window.scrollTo(0,0)}},A('என் டீல்ஸ்')));
+    return h('div',null,fban,ring,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
       h('div',{class:'stats'},st(live.length,A('லைவ் டீல்ஸ்'),'#0A8A5F'),st(today,A('இன்று போட்டது'),'#1546C6'),st(soon,A('இன்னிக்குள்ள மறையும்'),'#EA580C'),st(ended,A('முடிஞ்சது / காலாவதி'),'#D81E2D'),st(z99,A('₹99-க்குள்'),'#7C3AED'),st(z1k,A('₹1000-க்கு மேல்'),'#0E7490')),
       h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,A('வகை வாரியா லைவ் டீல்ஸ்')),
         rows.length?rows.map(function(x){return h('div',{class:'bar'},h('span',null,x.m.e+' '+acat(x.m.id)),h('i',{style:'width:'+Math.max(6,Math.round(x.n/mx*100))+'%;background:'+catColor(x.m.id)}),h('b',null,String(x.n)))}):h('p',{class:'hint'},A('இன்னும் லைவ் டீல் இல்ல.'))),
@@ -1989,7 +2184,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
           h('button',{type:'button',class:'go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},A('➕ புது டீல் போடு')),
           armBtn(A('🧹 முடிஞ்ச/காலாவதி டீல்ஸ் நீக்கு'),A('உறுதியா?'),function(){bulkDelete(function(d){return isEnded(d)||isExpired(d)},A('டீல்ஸ்'))}),
           samples?armBtn(A('🗑️ மாதிரி டீல்ஸ் நீக்கு ({n})').replace('{n}',samples),A('உறுதியா?'),function(){bulkDelete(function(d){return d.sample},A('மாதிரி டீல்ஸ்'))}):null)),
-      h('p',{class:'hint'},A('டீல்ஸ் நீ நீக்கற வரை ஆப்புல இருக்கும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.')));
+      h('p',{class:'hint'},A('டீல்ஸ் நீ நீக்கற வரை ஆப்புல இருக்கும். இந்த பேனலை நீ மட்டும் தான் பாக்க முடியும்.'))));
   }
 
   /* ---- new deal form ---- */
@@ -2398,7 +2593,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
 
   /* ---- settings (everything the owner can change) ---- */
   var SET={sec:'look',apk:'',init:false,msg:'',err:'',socials:[],share:'',logo:'',appName:'',tagline:'',theme:'blue',mode:'light',defLang:'ta',hidden:[],custom:[],about:'',life:'7',annOn:false,annText:'',annUrl:'',feat:{},own:{on:true,name:'',title:'',url:'',line:''},pui:{lay:'grid',bg:'',card:'',ink:'',btn:'',rad:'round',store:'auto'},spl:{on:false,l1:'',l2:'',emo:'',font:'',c1:'',c2:'',bg:'',logo:'',from:'',to:''}};
-  var FEATS=[['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['pop','🆕 புது டீல் பாப்-அப்'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு']];
+  var FEATS=[['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு'],['offb','🏷 படத்தின் மேல் சிவப்பு "% OFF" பேட்ஜ்']];
   function setLoad(){
     var st=S.settings||{};
     SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
@@ -2410,7 +2605,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     var sp0=st.spl||{}; SET.spl={on:!!sp0.on,l1:sp0.l1||'',l2:sp0.l2||'',emo:sp0.emo||'',bg:/^#[0-9a-fA-F]{6}$/.test(sp0.bg||'')?sp0.bg:'',from:dInput(sp0.from),to:dInput(sp0.to),t:splT(sp0.t)}; SPLP=SET.spl.on?1:0;
     var ow0=st.own||{}; SET.own={on:ow0.on!==false,name:ow0.name||'',title:ow0.title||'',url:ow0.url||'',line:ow0.line||''};
     var pu0=st.pui||{}; SET.pui={lay:({list:1,grid:1,big:1})[pu0.lay]?pu0.lay:'grid',bg:pu0.bg||'',card:pu0.card||'',ink:pu0.ink||'',btn:pu0.btn||'',rad:({round:1,soft:1,sharp:1})[pu0.rad]?pu0.rad:'round'};
-    SET.feat={}; FEATS.forEach(function(f){ SET.feat[f[0]]=!(st.feat&&st.feat[f[0]]===false) });
+    SET.feat={}; FEATS.forEach(function(f){ SET.feat[f[0]]=(f[0]==='offb')?!!(st.feat&&st.feat.offb===true):!(st.feat&&st.feat[f[0]]===false) }); SET.goal=String((st.goal>0&&st.goal<=500)?st.goal:30);
     SET.init=true;
   }
   function tin2(obj,key,ph,max,type){var i=h('input',{type:type||'text',maxlength:max||80,value:obj[key],placeholder:ph||''});i.addEventListener('input',function(){obj[key]=i.value});return i}
@@ -2442,7 +2637,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     if(bad){SET.err=bad;SET.msg='';renderSeller();window.scrollTo(0,0);return}
     var data={socials:out,shareUrl:safeUrl(SET.share),apkUrl:safeUrl(SET.apk||''),logo:SET.logo||'',appName:SET.appName.trim(),tagline:SET.tagline.trim(),theme:SET.theme,mode:SET.mode,defLang:SET.defLang,
       hiddenCats:SET.hidden.filter(function(x){return x!=='Others'}),customCats:cust,cmpNames:!!SET.cmpNames,about:SET.about.trim(),
-      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn};
+      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),goal:Math.max(1,Math.min(500,parseInt(SET.goal,10)||30)),fest:(S.settings&&S.settings.fest)||null,pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn};
     try{ await saveSettings(data); SET.err='';SET.msg=A('அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.'); if(!S.live) SET.init=false; }
     catch(e){SET.err=A('சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.');SET.msg=''}
     renderSeller();window.scrollTo(0,0);
@@ -2450,7 +2645,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function sellerSettings(){
     if(!SET.init) setLoad();
     var errP=h('p',{class:'err',role:'alert',hidden:SET.err?null:true},SET.err),okP=h('p',{class:'ok',hidden:SET.msg?null:true},SET.msg);
-    var secs=[['look',A('🎨 தோற்றம்')],['cats',A('🗂️ வகைகள்')],['soc',A('🔗 பின்தொடர')],['rules',A('📣 அறிவிப்பு & விதி')],['feat',A('🧩 வசதிகள்')],['spl',A('✨ ஆரம்ப திரை')]];
+    var secs=[['look',A('🎨 ஆப் தோற்றம்')],['cats',A('🗂️ வகைகள்')],['soc',A('🔗 பின்தொடர & இணைப்புகள்')],['spl',A('✨ திறக்கும் திரை')],['feat',A('🧩 வசதிகள்')],['rules',A('📣 முகப்பு அறிவிப்பு')]];
     var tabs=h('div',{class:'stabs'},secs.map(function(x){return h('button',{type:'button','aria-pressed':SET.sec===x[0]?'true':'false',onclick:function(){SET.sec=x[0];renderSeller()}},x[1])}));
     var body=h('div',null);
     if(SET.sec==='look'){
@@ -2468,8 +2663,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
         fld(A('கீழ உள்ள எச்சரிக்கை வரி (optional)'),'s-disc',tin('disc','',200),A('காலியா விட்டா தானா வர்ற வரி வரும். இங்க எழுதினா எல்லா மொழிலயும் இந்த வரி தான் வரும்.')),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('💰 விலை பட்டன்கள் (₹)')),h('div',{style:'display:flex;gap:8px'},[0,1,2,3].map(function(i){var e=h('input',{type:'number',inputmode:'numeric',min:1,value:SET.zn[i],'aria-label':'Price '+(i+1)});e.addEventListener('input',function(){SET.zn[i]=e.value});return e})),h('span',{class:'hint'},A('4 எண்கள், சின்னதுல இருந்து பெருசா. கடைசியா "Above" பட்டன் தானா வரும்.'))),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('ஆப் லோகோ')),h('div',{style:'display:flex;gap:12px;align-items:center'},SET.logo?h('img',{class:'logoprev',src:SET.logo,alt:'Logo'}):h('div',{class:'logoprev'}),lf,SET.logo?h('button',{type:'button',class:'chip',onclick:function(){SET.logo='';renderSeller()}},A('நீக்கு')):null),h('span',{class:'hint'},A('சதுர படம் நல்லது. கடை லோகோக்கள் இல்லாத சுத்தமான லோகோ போடு.'))),
-        h('div',{class:'fld'},h('span',{class:'lbl'},A('ஆப் நிறம்')),h('div',{class:'sws'},THEMES.map(function(th){return h('button',{type:'button',class:'sw','aria-pressed':SET.theme===th.id?'true':'false','aria-label':A(th.n),style:'background:linear-gradient(135deg,'+th.hdr+' 55%,'+th.acc+' 55%)',onclick:function(){SET.theme=th.id;renderSeller()}},h('small',null,A(th.n)))}))),
-        h('div',{class:'fld'},h('span',{class:'lbl'},A('ஆப் பின்னணி (வெளிச்சம்/இருட்டு)')),h('div',{class:'sws'},[['light',A('☀️ வெளிச்சம்')],['dark',A('🌙 இருட்டு')],['auto',A('📱 போன் படி')]].map(function(o){return h('button',{type:'button',class:'chip','aria-pressed':SET.mode===o[0]?'true':'false',onclick:function(){SET.mode=o[0];renderSeller()}},o[1])})),h('span',{class:'hint'},A('"வெளிச்சம்" தான் பரிந்துரை. வாடிக்கையாளர் தன் விருப்பப்படி மேல உள்ள 🎨 பட்டனில் தீம் மாத்திக்கலாம். இது அவர் தேர்ந்தெடுக்கும் முன் வரும் முதல் தோற்றம்.'))),
+        h('div',{class:'fld'},h('span',{class:'lbl'},A('🎯 ஒரு நாளைக்கான டீல் இலக்கு')),tin('goal','30',3,'number'),h('span',{class:'hint'},A('அட்மின் முகப்பில் வட்டமாகத் தெரியும். இப்போது 30.'))),
         fld(A('புது வாடிக்கையாளருக்கு முதல் மொழி'),'s-dl',dl,A('வாடிக்கையாளர் மேல உள்ள மொழி பட்டனால எப்ப வேணா மாத்திக்கலாம்.')),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('ஒப்பீட்டுல தளம் பெயர் காட்டு')),h('div',{class:'sws'},[[true,A('ஆன்')],[false,A('ஆஃப்')]].map(function(o){return h('button',{type:'button',class:'chip','aria-pressed':SET.cmpNames===o[0]?'true':'false',onclick:function(){SET.cmpNames=o[0];renderSeller()}},o[1])})),h('span',{class:'hint'},A('ஆஃப் பண்ணா வாடிக்கையாளருக்கு "தளம் 1, 2" னு மட்டும் தெரியும்.'))));
     } else if(SET.sec==='cats'){
@@ -2569,23 +2763,120 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     }
     var save=h('button',{class:'go',type:'button'},A('💾 சேமி'));
     save.addEventListener('click',saveAll);
-    return h('div',null,tabs,h('div',{class:'panel'},h('h2',null,A('அமைப்புகள்')),errP,okP,body,h('div',{class:'btns'},save)));
+    var acc=h('div',null,secs.map(function(x){ var op=SET.sec===x[0]; return h('div',null,h('button',{type:'button',class:'acc','aria-expanded':op?'true':'false',onclick:function(){ SET.sec=op?'':x[0]; renderSeller() }},h('span',null,x[1]),h('i',{style:'font-style:normal'},op?'⌃':'⌄')),op?h('div',{class:'accb panel'},body):null) }));
+    return h('div',null,h('h2',{style:'margin:0 0 10px'},A('அமைப்புகள்')),errP,okP,acc,h('div',{class:'btns'},save));
   }
 
   /* ============ chrome, routing ============ */
   function appName(){var v=String((S.settings&&S.settings.appName)||'').trim(); if(v==='Nesam Deals') v=''; return v||'TruePick'}
-  var CTH={light:{m:'light'},dark:{m:'dark'},green:{m:'light',c:'green'},purple:{m:'light',c:'purple'},orange:{m:'light',c:'orange'}};
+  var MODELS=[
+    {id:'light',e:'☀️',ta:'நம்பிக்கை நீலம்',en:'Trust Blue',m:'light',hdr:'#0F3BB5',bg:'#F7F8FC',rad:'12px'},
+    {id:'green',e:'🌿',ta:'சேமிப்புப் பச்சை',en:'Saving Green',m:'light',hdr:'#0B6B3A',bg:'#F4FAF6',rad:'14px'},
+    {id:'orange',e:'🌅',ta:'சூரிய உதயம்',en:'Sunrise',m:'light',hdr:'#C2410C',bg:'#FFF8F0',rad:'16px'},
+    {id:'dark',e:'🌙',ta:'இரவு அமைதி',en:'Calm Night',m:'dark',hdr:'#1A2240',bg:'#10162B',rad:'12px'},
+    {id:'purple',e:'💜',ta:'ஊதா பிரீமியம்',en:'Premium Purple',m:'light',hdr:'#4A2A9A',bg:'#F8F6FD',rad:'8px'},
+    {id:'rose',e:'🌸',ta:'ரோஜா மென்மை',en:'Soft Rose',m:'light',hdr:'#B8336A',bg:'#FFF5F8',rad:'22px'},
+    {id:'mint',e:'🍃',ta:'புதினா நட்பு',en:'Friendly Mint',m:'light',hdr:'#178A72',bg:'#F1FBF7',rad:'16px'}];
+  function modelOf(id){ return MODELS.filter(function(x){return x.id===id})[0] }
+  var FSYM={"pot": "<svg viewBox=\"0 0 56 56\"><circle class=\"zfoam zfb\" cx=\"19\" cy=\"21\" r=\"6\" fill=\"#fff\" stroke=\"#d0d0d0\"/><circle class=\"zfoam zfb\" style=\"animation-delay:.3s\" cx=\"29\" cy=\"17\" r=\"7\" fill=\"#fff\" stroke=\"#d0d0d0\"/><circle class=\"zfoam zfb\" style=\"animation-delay:.6s\" cx=\"39\" cy=\"21\" r=\"6\" fill=\"#fff\" stroke=\"#d0d0d0\"/><path d=\"M12 30h32l-3 17a4 4 0 0 1-4 3H19a4 4 0 0 1-4-3z\" fill=\"#b5651d\"/><rect x=\"9\" y=\"26\" width=\"38\" height=\"7\" rx=\"3.5\" fill=\"#8a4a12\"/><path d=\"M17 39h22\" stroke=\"#e8a85a\" stroke-width=\"2\"/></svg>", "mango": "<svg viewBox=\"0 0 56 56\"><g class=\"zsway zfb\"><path d=\"M28 6c10 4 14 10 12 16-8-1-13-6-12-16z\" fill=\"#2f9e44\"/><path d=\"M28 6c-10 4-14 10-12 16 8-1 13-6 12-16z\" fill=\"#40c057\"/><ellipse cx=\"28\" cy=\"36\" rx=\"13\" ry=\"15\" fill=\"#fcc419\"/><path d=\"M20 30c2-4 6-6 10-5\" stroke=\"#f59f00\" stroke-width=\"2\" fill=\"none\"/></g></svg>", "kavadi": "<svg viewBox=\"0 0 56 56\"><g class=\"zsway zfb\"><path d=\"M10 46V30A18 18 0 0 1 46 30V46\" stroke=\"#b8742a\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g><ellipse cx=\"10\" cy=\"34\" rx=\"3.2\" ry=\"5\" fill=\"#1d7a8c\" stroke=\"#0b4f5c\"/><ellipse cx=\"14\" cy=\"21\" rx=\"3.2\" ry=\"5\" transform=\"rotate(-30 14 21)\" fill=\"#1d7a8c\" stroke=\"#0b4f5c\"/><ellipse cx=\"28\" cy=\"13\" rx=\"3.2\" ry=\"5\" fill=\"#1d7a8c\" stroke=\"#0b4f5c\"/><ellipse cx=\"42\" cy=\"21\" rx=\"3.2\" ry=\"5\" transform=\"rotate(30 42 21)\" fill=\"#1d7a8c\" stroke=\"#0b4f5c\"/><ellipse cx=\"46\" cy=\"34\" rx=\"3.2\" ry=\"5\" fill=\"#1d7a8c\" stroke=\"#0b4f5c\"/></g><g fill=\"#f2b600\"><circle cx=\"10\" cy=\"34\" r=\"1.5\"/><circle cx=\"14\" cy=\"21\" r=\"1.5\"/><circle cx=\"28\" cy=\"13\" r=\"1.5\"/><circle cx=\"42\" cy=\"21\" r=\"1.5\"/><circle cx=\"46\" cy=\"34\" r=\"1.5\"/></g><ellipse cx=\"10\" cy=\"49\" rx=\"5\" ry=\"4\" fill=\"#c2410c\"/><ellipse cx=\"46\" cy=\"49\" rx=\"5\" ry=\"4\" fill=\"#c2410c\"/><path d=\"M10 46h36\" stroke=\"#b8742a\" stroke-width=\"2\"/></g></svg>", "vel": "<svg viewBox=\"0 0 56 56\"><rect x=\"26.5\" y=\"30\" width=\"3\" height=\"24\" rx=\"1.5\" fill=\"#8a5a2b\"/><rect x=\"23\" y=\"29\" width=\"10\" height=\"3.5\" rx=\"1.5\" fill=\"#f2b600\"/><path class=\"zpulse zfb\" d=\"M28 3C37 11 37 23 28 30C19 23 19 11 28 3z\" fill=\"#e6edf5\" stroke=\"#6b7785\" stroke-width=\"1.6\"/><path d=\"M28 7V27\" stroke=\"#9aa5b1\" stroke-width=\"1.2\"/><path class=\"zglow\" d=\"M24 12C25 9 26 8 27 7\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><circle class=\"ztw\" cx=\"9\" cy=\"14\" r=\"2\" fill=\"#f2b600\"/><circle class=\"ztw\" cx=\"47\" cy=\"20\" r=\"2\" fill=\"#f2b600\"/></svg>", "ganesha": "<svg viewBox=\"0 0 56 56\"><g class=\"zear zfb\"><ellipse cx=\"11\" cy=\"27\" rx=\"9\" ry=\"12\" fill=\"#a3adb8\" stroke=\"#6b7785\" stroke-width=\"1.4\"/><ellipse cx=\"12\" cy=\"28\" rx=\"4.5\" ry=\"8\" fill=\"#f0b4b4\"/></g><g class=\"zear2 zfb\"><ellipse cx=\"45\" cy=\"27\" rx=\"9\" ry=\"12\" fill=\"#a3adb8\" stroke=\"#6b7785\" stroke-width=\"1.4\"/><ellipse cx=\"44\" cy=\"28\" rx=\"4.5\" ry=\"8\" fill=\"#f0b4b4\"/></g><ellipse cx=\"28\" cy=\"26\" rx=\"13\" ry=\"14\" fill=\"#b6bfc9\" stroke=\"#6b7785\" stroke-width=\"1.4\"/><path d=\"M19 15L21 6L25 11L28 3L31 11L35 6L37 15z\" fill=\"#f2b600\" stroke=\"#b8860b\" stroke-width=\"1.2\"/><path d=\"M28 14v6\" stroke=\"#e03131\" stroke-width=\"2.6\" stroke-linecap=\"round\"/><circle cx=\"22.5\" cy=\"24\" r=\"1.8\" fill=\"#222\"/><circle cx=\"33.5\" cy=\"24\" r=\"1.8\" fill=\"#222\"/><g class=\"ztk zfb\"><path d=\"M28 27C28 36 24 40 24 47C24 51 30 51 30.5 47\" stroke=\"#6b7785\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M28 27C28 36 24 40 24 47C24 51 30 51 30.5 47\" stroke=\"#b6bfc9\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/></g><path d=\"M34 33C39 35 41 40 38 44\" stroke=\"#6b7785\" stroke-width=\"4.6\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M34 33C39 35 41 40 38 44\" stroke=\"#fff\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></svg>", "golu": "<svg viewBox=\"0 0 56 56\"><rect x=\"5\" y=\"41\" width=\"46\" height=\"9\" rx=\"1.5\" fill=\"#b8742a\"/><rect x=\"11\" y=\"31\" width=\"34\" height=\"9\" rx=\"1.5\" fill=\"#cf8a3a\"/><rect x=\"18\" y=\"21\" width=\"20\" height=\"9\" rx=\"1.5\" fill=\"#e3a24d\"/><g class=\"zbob zfb\"><circle cx=\"12\" cy=\"33\" r=\"2.4\" fill=\"#f1c9a0\"/><path d=\"M8.5 41L12 35l3.5 6z\" fill=\"#e03131\"/></g><g class=\"zbob zfb\" style=\"animation-delay:.3s\"><circle cx=\"22\" cy=\"33\" r=\"2.4\" fill=\"#f1c9a0\"/><path d=\"M18.5 41L22 35l3.5 6z\" fill=\"#1c7ed6\"/></g><g class=\"zbob zfb\" style=\"animation-delay:.6s\"><circle cx=\"34\" cy=\"33\" r=\"2.4\" fill=\"#f1c9a0\"/><path d=\"M30.5 41L34 35l3.5 6z\" fill=\"#2f9e44\"/></g><g class=\"zbob zfb\" style=\"animation-delay:.9s\"><circle cx=\"44\" cy=\"33\" r=\"2.4\" fill=\"#f1c9a0\"/><path d=\"M40.5 41L44 35l3.5 6z\" fill=\"#be4bdb\"/></g><g class=\"zbob zfb\" style=\"animation-delay:.2s\"><circle cx=\"23\" cy=\"23\" r=\"2.4\" fill=\"#f1c9a0\"/><path d=\"M19.5 31L23 25l3.5 6z\" fill=\"#f08c00\"/></g><g class=\"zbob zfb\" style=\"animation-delay:.5s\"><circle cx=\"33\" cy=\"23\" r=\"2.4\" fill=\"#f1c9a0\"/><path d=\"M29.5 31L33 25l3.5 6z\" fill=\"#e03131\"/></g><g class=\"zbob zfb\" style=\"animation-delay:.1s\"><path d=\"M25 12l1.5-3 1.5 2 1.5-2 1.5 3z\" fill=\"#ffd43b\"/><circle cx=\"28\" cy=\"14\" r=\"2.6\" fill=\"#f1c9a0\"/><path d=\"M23.5 21L28 16l4.5 5z\" fill=\"#1c7ed6\"/></g></svg>", "diya": "<svg viewBox=\"0 0 56 56\"><ellipse class=\"zflick zfb\" cx=\"28\" cy=\"18\" rx=\"5\" ry=\"9\" fill=\"#ff922b\"/><ellipse class=\"zflick zfb\" cx=\"28\" cy=\"20\" rx=\"2.5\" ry=\"5\" fill=\"#ffe066\"/><path d=\"M8 30h40c0 10-8 16-20 16S8 40 8 30z\" fill=\"#c2410c\"/><path d=\"M12 32h32\" stroke=\"#fdba74\" stroke-width=\"2\"/></svg>", "dua": "<svg viewBox=\"0 0 56 56\"><path class=\"ztw\" d=\"M17 4a8 8 0 1 0 7 12a6.5 6.5 0 1 1-7-12z\" fill=\"#e0a800\"/><circle class=\"ztw\" cx=\"33\" cy=\"9\" r=\"1.8\" fill=\"#e0a800\"/><circle class=\"zrs zfb\" cx=\"22\" cy=\"32\" r=\"2\" fill=\"#f2b600\"/><circle class=\"zrs zfb\" style=\"animation-delay:.7s\" cx=\"34\" cy=\"31\" r=\"2\" fill=\"#f2b600\"/><circle class=\"zrs zfb\" style=\"animation-delay:1.3s\" cx=\"28\" cy=\"30\" r=\"1.8\" fill=\"#f2b600\"/><g class=\"zlift zfb\"><path d=\"M28 51C16 51 7 44 5 31C4.5 28 8 27 9.5 29.5C13 35 19 40 28 42z\" fill=\"#f1c9a0\" stroke=\"#c9976a\" stroke-width=\"1.2\"/><path d=\"M28 51C40 51 49 44 51 31C51.5 28 48 27 46.5 29.5C43 35 37 40 28 42z\" fill=\"#f1c9a0\" stroke=\"#c9976a\" stroke-width=\"1.2\"/><path d=\"M9 33l6 4M12 29l6 5M47 33l-6 4M44 29l-6 5\" stroke=\"#c9976a\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></g></svg>", "goat": "<svg viewBox=\"0 0 56 56\"><path d=\"M19 17C11 12 11 3 18 2M37 17C45 12 45 3 38 2\" stroke=\"#6b5a47\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g class=\"zear zfb\"><ellipse cx=\"9\" cy=\"27\" rx=\"8\" ry=\"4\" transform=\"rotate(-18 9 27)\" fill=\"#e9ecef\" stroke=\"#adb5bd\"/></g><g class=\"zear2 zfb\"><ellipse cx=\"47\" cy=\"27\" rx=\"8\" ry=\"4\" transform=\"rotate(18 47 27)\" fill=\"#e9ecef\" stroke=\"#adb5bd\"/></g><path d=\"M16 19C16 12 40 12 40 19L38 38C36 47 20 47 18 38z\" fill=\"#f4f5f7\" stroke=\"#adb5bd\" stroke-width=\"1.4\"/><g class=\"zbl zfb\"><ellipse cx=\"22\" cy=\"26\" rx=\"3.2\" ry=\"2.6\" fill=\"#f2b600\"/><rect x=\"21.6\" y=\"24.5\" width=\"1\" height=\"3\" fill=\"#222\"/></g><g class=\"zbl zfb\"><ellipse cx=\"34\" cy=\"26\" rx=\"3.2\" ry=\"2.6\" fill=\"#f2b600\"/><rect x=\"33.6\" y=\"24.5\" width=\"1\" height=\"3\" fill=\"#222\"/></g><ellipse cx=\"28\" cy=\"40\" rx=\"7.5\" ry=\"5\" fill=\"#dee2e6\"/><circle cx=\"25.5\" cy=\"39\" r=\"1\" fill=\"#6b5a47\"/><circle cx=\"30.5\" cy=\"39\" r=\"1\" fill=\"#6b5a47\"/><path d=\"M26 46q2 7 4 0\" fill=\"#adb5bd\"/></svg>", "cake": "<svg viewBox=\"0 0 56 56\"><ellipse class=\"zflick zfb\" cx=\"28\" cy=\"9\" rx=\"3.5\" ry=\"6\" fill=\"#ff922b\"/><rect x=\"26.5\" y=\"13\" width=\"3\" height=\"9\" fill=\"#fff\" stroke=\"#ddd\" stroke-width=\".6\"/><rect x=\"12\" y=\"22\" width=\"32\" height=\"12\" rx=\"3\" fill=\"#fff3e0\" stroke=\"#e0b98a\"/><path d=\"M12 25q4 5 8 0t8 0t8 0t8 0\" fill=\"#f06595\"/><rect x=\"8\" y=\"34\" width=\"40\" height=\"14\" rx=\"3\" fill=\"#a0522d\"/><path d=\"M8 38q5 5 10 0t10 0t10 0t10 0\" fill=\"#fff\"/><circle cx=\"28\" cy=\"21\" r=\"3\" fill=\"#e03131\"/></svg>", "egg": "<svg viewBox=\"0 0 56 56\"><g class=\"zhop zfb\"><path d=\"M28 6c10 0 17 16 17 28a17 17 0 0 1-34 0C11 22 18 6 28 6z\" fill=\"#b197fc\"/><path d=\"M12 26l5 5 5-5 5 5 5-5 5 5 5-5 3 3\" stroke=\"#ffd43b\" stroke-width=\"3\" fill=\"none\"/><path d=\"M12 38l5 5 5-5 5 5 5-5 5 5 5-5\" stroke=\"#fff\" stroke-width=\"2.5\" fill=\"none\"/><circle cx=\"22\" cy=\"18\" r=\"2\" fill=\"#fff\"/></g></svg>", "fire": "<svg viewBox=\"0 0 56 56\"><g class=\"zburst zfb\"><g stroke=\"#f2b600\" stroke-width=\"3\" stroke-linecap=\"round\"><path d=\"M28 4v12M28 40v12M4 28h12M40 28h12M11 11l8 8M37 37l8 8M45 11l-8 8M19 37l-8 8\"/></g></g><circle class=\"ztw\" cx=\"28\" cy=\"28\" r=\"5\" fill=\"#ff6b6b\"/><circle class=\"ztw\" cx=\"10\" cy=\"46\" r=\"2.5\" fill=\"#74c0fc\"/><circle class=\"ztw\" cx=\"47\" cy=\"45\" r=\"2.5\" fill=\"#f2b600\"/></svg>", "chakra": "<svg viewBox=\"0 0 56 56\"><g class=\"zspin zfb\"><circle cx=\"28\" cy=\"28\" r=\"19\" fill=\"#fff\" stroke=\"#000080\" stroke-width=\"3\"/><g stroke=\"#000080\" stroke-width=\"1.3\"><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(0 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(15 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(30 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(45 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(60 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(75 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(90 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(105 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(120 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(135 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(150 28 28)\"/><line x1=\"28\" y1=\"11\" x2=\"28\" y2=\"45\" transform=\"rotate(165 28 28)\"/></g><circle cx=\"28\" cy=\"28\" r=\"3.5\" fill=\"#000080\"/></g></svg>", "flag": "<svg viewBox=\"0 0 56 56\"><rect x=\"8\" y=\"6\" width=\"3\" height=\"46\" rx=\"1.5\" fill=\"#868e96\"/><g class=\"zwave zfb\"><rect x=\"11\" y=\"8\" width=\"36\" height=\"9\" fill=\"#ff9933\"/><rect x=\"11\" y=\"17\" width=\"36\" height=\"9\" fill=\"#fff\" stroke=\"#ddd\" stroke-width=\".5\"/><rect x=\"11\" y=\"26\" width=\"36\" height=\"9\" fill=\"#138808\"/><circle cx=\"29\" cy=\"21.5\" r=\"3.5\" fill=\"none\" stroke=\"#000080\" stroke-width=\"1\"/></g></svg>"};
+  /* festivals: id, symbol, category, palette (a=header colour, b/c=band gradient, t=text) */
+  var FESTS=[
+    {id:'pongal',c:'h',sy:'pot',ta:'பொங்கல்',en:'Pongal',gta:'பொங்கலோ பொங்கல்',gen:'Happy Pongal',a:'#A85D00',bg:'#FFFAF0',b:'#FFF0C2',t:'#5C3400',g:'✿'},
+    {id:'tamilny',c:'h',sy:'mango',ta:'தமிழ்ப் புத்தாண்டு',en:'Tamil New Year',gta:'இனிய புத்தாண்டு வாழ்த்துகள்',gen:'Happy Tamil New Year',a:'#17724B',bg:'#F5FCF8',b:'#D8F3E3',t:'#0B3D28',g:'❀'},
+    {id:'thaipoosam',c:'h',sy:'kavadi',ta:'தைப்பூசம்',en:'Thaipoosam',gta:'தைப்பூச நல்வாழ்த்துகள்',gen:'Happy Thaipoosam',a:'#1D4ED8',bg:'#F6F9FF',b:'#DBE7FD',t:'#12307A',g:'✦'},
+    {id:'kanda',c:'h',sy:'vel',ta:'கந்த சஷ்டி',en:'Kanda Sashti',gta:'வெற்றிவேல் வீரவேல்',gen:'Vetrivel Veeravel',a:'#7A2E12',bg:'#FDF7F3',b:'#F9DFCF',t:'#471A08',g:'✦'},
+    {id:'vinayagar',c:'h',sy:'ganesha',ta:'விநாயகர் சதுர்த்தி',en:'Vinayagar Chaturthi',gta:'சதுர்த்தி வாழ்த்துகள்',gen:'Chaturthi Wishes',a:'#C2410C',bg:'#FFF8F3',b:'#FFE3D0',t:'#6B2200',g:'✦'},
+    {id:'navaratri',c:'h',sy:'golu',ta:'நவராத்திரி',en:'Navaratri',gta:'நவராத்திரி வாழ்த்துகள்',gen:'Happy Navaratri',a:'#8E2A73',bg:'#FDF6FB',b:'#F5DCEE',t:'#54123F',g:'✿'},
+    {id:'deepavali',c:'h',sy:'diya',ta:'தீபாவளி',en:'Deepavali',gta:'தீபாவளி நல்வாழ்த்துகள்',gen:'Happy Deepavali',a:'#3F1D7A',bg:'#FAF7FF',b:'#ECE0FB',t:'#260F4D',g:'✺'},
+    {id:'ramzan',c:'m',sy:'dua',ta:'ரமலான்',en:'Ramzan',gta:'ஈத் முபாரக்',gen:'Eid Mubarak',a:'#0B5D4A',bg:'#F4FBF8',b:'#D5EFE6',t:'#06372C',g:'✦'},
+    {id:'bakrid',c:'m',sy:'goat',ta:'பக்ரீத்',en:'Bakrid',gta:'ஈத் முபாரக்',gen:'Eid Mubarak',a:'#1E5B45',bg:'#F5FAF7',b:'#DCEFE3',t:'#0A3626',g:'✦'},
+    {id:'christmas',c:'x',sy:'cake',ta:'கிறிஸ்துமஸ்',en:'Christmas',gta:'கிறிஸ்துமஸ் வாழ்த்துகள்',gen:'Merry Christmas',a:'#9B1C27',bg:'#FBF8F5',b:'#FBDFE0',t:'#5E0D15',g:'❄'},
+    {id:'easter',c:'x',sy:'egg',ta:'ஈஸ்டர்',en:'Easter',gta:'ஈஸ்டர் வாழ்த்துகள்',gen:'Happy Easter',a:'#6B4FA0',bg:'#FAF8FD',b:'#E9E1F6',t:'#35235E',g:'❀'},
+    {id:'newyear',c:'g',sy:'fire',ta:'புத்தாண்டு',en:'New Year',gta:'இனிய புத்தாண்டு!',gen:'Happy New Year!',a:'#123FB0',bg:'#F7F9FE',b:'#DDE6FB',t:'#0B2A7A',g:'✦'},
+    {id:'republic',c:'g',sy:'chakra',ta:'குடியரசு தினம்',en:'Republic Day',gta:'குடியரசு தின வாழ்த்துகள்',gen:'Happy Republic Day',a:'#C2610F',bg:'#F8FBF5',b:'#FDE6CF',t:'#5A2C00',g:'✦'},
+    {id:'independence',c:'g',sy:'flag',ta:'சுதந்திர தினம்',en:'Independence Day',gta:'சுதந்திர தின வாழ்த்துகள்',gen:'Happy Independence Day',a:'#1C7A3A',bg:'#FFFAF3',b:'#DCF0E2',t:'#0D4A24',g:'✦'}];
+  var FCATS=[['h','🛕 இந்து'],['m','🌙 முஸ்லிம்'],['x','✝️ கிறிஸ்தவம்'],['g','🇮🇳 பொது']];
+  /* festival day, used only for the admin reminder. Moon/lunar dates can shift by a day. */
+  var FCAL={thaipoosam:['2027-01-22'],kanda:['2027-11-04'],vinayagar:['2027-09-04'],navaratri:['2027-09-30'],deepavali:['2027-10-28'],ramzan:['2027-03-10'],bakrid:['2027-05-17'],easter:['2027-03-28']};
+  var FFIX={pongal:'01-15',tamilny:'04-14',christmas:'12-25',newyear:'01-01',republic:'01-26',independence:'08-15'};
+  function festOf(id){ return FESTS.filter(function(x){return x.id===id})[0] }
+  function ymd(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2) }
+  function festDay(id,from){ /* next festival date on/after `from` (a Date), or '' */
+    var fx=FFIX[id],ys=[from.getFullYear(),from.getFullYear()+1],i,c,fk=ymd(from);
+    if(fx){ for(i=0;i<2;i++){ c=ys[i]+'-'+fx; if(c>=fk) return c } return '' }
+    var l=FCAL[id]||[]; for(i=0;i<l.length;i++) if(l[i]>=fk) return l[i]; return '';
+  }
+  var CLOOKS=[
+    {n:'தங்கம்',a:'#A85D00',bg:'#FFFAF0',b:'#FFF0C2',t:'#5C3400',g:'✿'},
+    {n:'பச்சை',a:'#17724B',bg:'#F5FCF8',b:'#D8F3E3',t:'#0B3D28',g:'❀'},
+    {n:'நீலம்',a:'#1D4ED8',bg:'#F6F9FF',b:'#DBE7FD',t:'#12307A',g:'✦'},
+    {n:'செம்பழுப்பு',a:'#7A2E12',bg:'#FDF7F3',b:'#F9DFCF',t:'#471A08',g:'✦'},
+    {n:'ஆரஞ்சு',a:'#C2410C',bg:'#FFF8F3',b:'#FFE3D0',t:'#6B2200',g:'✦'},
+    {n:'மெஜந்தா',a:'#8E2A73',bg:'#FDF6FB',b:'#F5DCEE',t:'#54123F',g:'✿'},
+    {n:'ஊதா',a:'#3F1D7A',bg:'#FAF7FF',b:'#ECE0FB',t:'#260F4D',g:'✺'},
+    {n:'மரகதம்',a:'#0B5D4A',bg:'#F4FBF8',b:'#D5EFE6',t:'#06372C',g:'✦'},
+    {n:'சிவப்பு',a:'#9B1C27',bg:'#FBF8F5',b:'#FBDFE0',t:'#5E0D15',g:'❄'},
+    {n:'இளநீலம்',a:'#6B4FA0',bg:'#FAF8FD',b:'#E9E1F6',t:'#35235E',g:'❀'},
+    {n:'காவி',a:'#C2610F',bg:'#F8FBF5',b:'#FDE6CF',t:'#5A2C00',g:'✦'},
+    {n:'ரோஜா',a:'#B8336A',bg:'#FFF5F8',b:'#FCE0EC',t:'#5C1738',g:'❀'}];
+  var CSYMS=['c_star','c_moon','c_flower','c_heart','c_gift','c_none'];
+  FSYM.c_star='<svg viewBox="0 0 56 56"><g class="zpulse zfb"><path d="M28 5l6.5 14 15 1.8-11 10.4 2.9 15L28 38.6 14.6 46.2l2.9-15-11-10.4 15-1.8z" fill="#FFC61A" stroke="#E0A200" stroke-width="1.5"/></g><circle class="ztw" cx="10" cy="12" r="2" fill="#FFC61A"/><circle class="ztw" cx="48" cy="46" r="2" fill="#FFC61A"/></svg>';
+  FSYM.c_moon='<svg viewBox="0 0 56 56"><g class="zbob zfb"><path d="M34 6a20 20 0 1 0 10 34A16 16 0 0 1 34 6z" fill="#FFD43B" stroke="#E0A200" stroke-width="1.5"/></g><path class="ztw" d="M44 12l1.6 3.4 3.4.4-2.5 2.3.7 3.5-3.2-1.8-3.2 1.8.7-3.5-2.5-2.3 3.4-.4z" fill="#FFD43B"/></svg>';
+  FSYM.c_flower='<svg viewBox="0 0 56 56"><g class="zsway zfb"><g fill="#F783AC"><circle cx="28" cy="14" r="9"/><circle cx="42" cy="28" r="9"/><circle cx="28" cy="42" r="9"/><circle cx="14" cy="28" r="9"/></g><circle cx="28" cy="28" r="8" fill="#FFD43B"/></g></svg>';
+  FSYM.c_heart='<svg viewBox="0 0 56 56"><g class="zpulse zfb"><path d="M28 48C8 34 6 20 14 14c6-4 12-1 14 5 2-6 8-9 14-5 8 6 6 20-14 34z" fill="#E03131"/></g></svg>';
+  FSYM.c_gift='<svg viewBox="0 0 56 56"><g class="zbob zfb"><rect x="8" y="22" width="40" height="26" rx="3" fill="#E03131"/><rect x="5" y="16" width="46" height="10" rx="3" fill="#FA5252"/><rect x="25" y="16" width="6" height="32" fill="#FFD43B"/><path d="M28 16c-8-10-16-2-8 0zM28 16c8-10 16-2 8 0z" fill="none" stroke="#FFD43B" stroke-width="3"/></g></svg>';
+  FSYM.c_none='';
+  function festState(){ var f=S.settings&&S.settings.fest; return {on:!!(f&&f.on),items:(f&&f.items)||{},custom:(f&&f.custom)||null} }
+  function festActive(){
+    var st=festState(),k=dayKey(),i,it,c=st.custom;
+    if(c&&c.on&&c.name&&c.s&&c.e&&c.s<=k&&k<=c.e){ var lk=CLOOKS[+c.look]||CLOOKS[0]; return {id:'custom',custom:true,sy:c.sym||'c_star',ta:c.name,en:c.name,gta:c.greet||(c.name+' வாழ்த்துகள்'),gen:c.greet||(c.name+' வாழ்த்துகள்'),a:lk.a,bg:lk.bg,b:lk.b,t:lk.t,g:lk.g,strip:c.strip!==false} }
+    if(!st.on) return null;
+    for(i=0;i<FESTS.length;i++){ it=st.items[FESTS[i].id]; if(it&&it.s&&it.e&&it.s<=k&&k<=it.e) return FESTS[i] }
+    return null;
+  }
+  function festDue(){ /* festival 0-2 days away whose dates are not set yet */
+    var st=festState(),now=new Date(),k=ymd(now),i,fd,dd,it,best=null,bd=9;
+    for(i=0;i<FESTS.length;i++){
+      fd=festDay(FESTS[i].id,now); if(!fd) continue;
+      dd=Math.round((new Date(fd+'T00:00:00')-new Date(k+'T00:00:00'))/864e5);
+      it=st.items[FESTS[i].id]; if(it&&it.s&&it.e&&it.e>=k) continue;
+      if(dd>=0&&dd<=2&&dd<bd){ best=FESTS[i]; bd=dd }
+    }
+    return best?{f:best,days:bd}:null;
+  }
   function applyTheme(){
-    var adminColor=(S.settings&&S.settings.theme)||'blue',md=(S.settings&&S.settings.mode)||'light',pick=CTH[S.ct];
-    if(pick){ md=pick.m; if(pick.c) adminColor=pick.c; }
-    var th=THEMES.filter(function(x){return x.id===adminColor})[0]||THEMES[0],r=document.documentElement.style;
-    if(md==='auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme',md==='dark'?'dark':'light');
-    var forced=document.documentElement.getAttribute('data-theme');
-    var dark=forced?forced==='dark':(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
-    var hv=dark?'color-mix(in srgb,'+th.hdr+' 55%,#000)':th.hdr; r.setProperty('--hdr',hv); lsSet('nesam-hdr',hv);
-    r.setProperty('--brand',dark?th.bd:th.brand);
-    r.setProperty('--accent',th.acc);
-    try{ var mt=document.querySelector('meta[name=theme-color]'); if(mt) mt.setAttribute('content',th.hdr) }catch(e){}
+    var md=(S.settings&&S.settings.mode)==='dark'?'dark':'light',mo=modelOf(S.ct),r=document.documentElement.style,fa=festActive(),bgv='',radv='';
+    var th=THEMES.filter(function(x){return x.id==='blue'})[0];
+    var hdr=th.hdr,brand=th.brand,bd=th.bd;
+    if(mo){ md=mo.m; hdr=mo.hdr; brand=mo.hdr; bd=mo.m==='dark'?'#8CB3FF':mo.hdr; bgv=mo.bg||''; radv=mo.rad||'' }
+    if(fa){ md='light'; hdr=fa.a; brand=fa.a; bd=fa.a; bgv=fa.bg }
+    document.documentElement.setAttribute('data-theme',md==='dark'?'dark':'light');
+    var dark=md==='dark';
+    var hv=dark?'color-mix(in srgb,'+hdr+' 80%,#000)':hdr; r.setProperty('--hdr',hv); lsSet('nesam-hdr',hv);
+    r.setProperty('--brand',dark?bd:brand);
+    r.setProperty('--accent','#FFC61A'); r.setProperty('--accent-ink','#1B2440');
+    if(bgv) r.setProperty('--bg',bgv); else r.removeProperty('--bg');
+    if(radv) r.setProperty('--rad',radv); else r.removeProperty('--rad');
+    try{ var mt=document.querySelector('meta[name=theme-color]'); if(mt) mt.setAttribute('content',hv) }catch(e){}
+  }
+  function renderFest(){
+    var el=$('fest'); if(!el) return; var fa=festActive();
+    Array.prototype.forEach.call(document.querySelectorAll('.fxl,.fbub'),function(x){x.remove()});
+    if(!fa||(S.view==='seller'&&S.admin)){ el.hidden=true; el.replaceChildren(); return }
+    var ta=S.lang==='ta',nm=ta?fa.ta:fa.en,tx=ta?(nm+' சிறப்பு சலுகைகள்'):(nm+' Special Offers'),gr=ta?fa.gta:fa.gen;
+    el.hidden=false; el.replaceChildren();
+    var box=h('div',{class:'fest'+(fa.custom&&!fa.strip?' nostrip':''),style:'--fa:'+fa.a+';--ft:'+fa.t+';--fbg:'+fa.b});
+    var sym=h('button',{type:'button',class:'fsym','aria-label':gr}); sym.innerHTML=FSYM[fa.sy]||'';
+    sym.addEventListener('click',function(){
+      var old=document.querySelector('.fbub'); if(old) old.remove();
+      var b=h('div',{class:'fbub',role:'status'},gr); sym.parentNode.append(b); setTimeout(function(){ b.remove() },2400);
+    });
+    if(fa.custom&&!fa.strip) box.append(h('div',{class:'fgr'},h('div',{class:'fg'},gr),sym));
+    else box.append(h('div',{class:'fg'},gr),h('div',{class:'fl'},h('span',{class:'ftx'},tx),sym));
+    el.append(box);
+    var fx=h('div',{class:'fxl','aria-hidden':'true'}),i,sp;
+    for(i=0;i<8;i++){ sp=h('span',null,fa.g); sp.style.left=(6+i*12+(i%3)*2)+'%'; sp.style.fontSize=(11+(i%4)*3)+'px'; sp.style.color=fa.a; sp.style.animationDuration=(9+(i%5)*2)+'s'; sp.style.animationDelay=(-i*1.7)+'s'; fx.append(sp) }
+    document.body.append(fx);
   }
   /* ===== anonymous usage stats (counts only, no personal data) ===== */
   var TRK={b:{},seen:{},io:null};
@@ -2615,6 +2906,18 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     })));
     el.hidden=false;
   }
+  function paintRV(on){
+    var el=$('rv'); if(!el) return; el.replaceChildren(); el.hidden=true;
+    if(!on||!S.live) return;
+    var ids=[]; ids=lsGet('nesam-rv',[]); if(!Array.isArray(ids)) ids=[];
+    var pick=ids.map(function(id){ return S.deals.filter(function(d){return d.id===id&&!d.sample&&nLive(d)})[0] }).filter(Boolean).slice(0,6);
+    if(!pick.length) return;
+    el.append(h('h3',null,'👀 '+(S.lang==='ta'?'சமீபத்தில் பார்த்தவை':'Recently viewed')),h('div',{class:'hotg',style:'display:flex;gap:10px;overflow-x:auto'},pick.map(function(d){
+      return h('a',{class:'hotc',style:'flex:0 0 46%',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),
+        h('div',{class:'hott'},d.title),(hasPrice(d)?h('div',{class:'hotp'},inr(d.newPrice)):null));
+    })));
+    el.hidden=false;
+  }
   setInterval(function(){ try{paintHot()}catch(e){} },600000);
   function trkOn(){ return !!(S.hosted&&S.live&&!S.admin&&window.NESAM&&window.NESAM.track) }
   function trkAdd(path,by){ if(!trkOn()) return; var o=TRK.b,i; for(i=0;i<path.length-1;i++){ o=o[path[i]]=o[path[i]]||{} } o[path[i]]=(o[path[i]]||0)+(by||1) }
@@ -2624,7 +2927,8 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   function dcInc(id,f,by){ if(!dcOn()) return; if(f==='c'){ var now=Date.now(); if(DCLAST[id]&&now-DCLAST[id]<3000) return; DCLAST[id]=now } try{ var o={}; o[f]=by||1; window.NESAM.inc('dcount',id,o).catch(function(){}) }catch(e){} }
   function engOnce(){ if(lsGet('nesam-eng','')!==dayKey()){ lsSet('nesam-eng',dayKey()); trkAdd(['eng']) } }
   function clk2(id){ dcInc(id,'c'); engOnce() }
-  function trkClick(d){ trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
+  function rvAdd(id){ try{ var a=lsGet('nesam-rv',[]); if(!Array.isArray(a)) a=[]; a=a.filter(function(x){return x!==id}); a.unshift(id); lsSet('nesam-rv',a.slice(0,10)) }catch(e){} }
+  function trkClick(d){ rvAdd(d.id);  trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
   function trkObserve(){
     if(!dcOn()||!('IntersectionObserver' in window)) return;
     if(!TRK.io) TRK.io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ var id=e.target.getAttribute('data-id'); TRK.io.unobserve(e.target); if(id&&!TRK.seen[id]){TRK.seen[id]=1;trkAdd(['v',tk(id)]);dcInc(id,'v')} } }) },{threshold:.5});
@@ -2719,7 +3023,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     document.body.append(ov);
   }
   /* ===== v3: feature switches, reactions, comments, promos ===== */
-  function featOn(k){ var f=S.settings&&S.settings.feat; return !(f&&f[k]===false) }
+  function featOn(k){ var f=S.settings&&S.settings.feat; if(k==='offb') return !!(f&&f.offb===true); return !(f&&f[k]===false) }
   function myVid(){ var v=lsGet('nesam-vid',''); if(!v||typeof v!=='string'){ v='v'+Math.random().toString(36).slice(2,12)+Date.now().toString(36); lsSet('nesam-vid',v) } return v }
   var RX=[['ok','✅','rOk'],['no','❌','rNo'],['exp','⌛','rExp'],['bad','👎','rBad']];
   function rxCount(id,k){ var r=S.reacts[id]; return Math.max(0,(r&&+r[k])||0) }
@@ -3206,13 +3510,12 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   }
   function openThemes(){
     var old=$('tov'); if(old){old.remove();return}
-    var opts=[['light','☀️','thLight','#FFFFFF'],['dark','🌙','thDark','#141B3A'],['green','🌿','thGreen','#0A8A5F'],['purple','💜','thPurple','#6D28D9'],['orange','🌅','thOrange','#EA580C']];
-    var cur=S.ct||((S.settings&&S.settings.mode)==='dark'?'dark':'light');
+    var cur=S.ct||'light';
     var ov=h('div',{class:'tov',id:'tov'}),box=h('div',{class:'tbox',role:'dialog','aria-label':t('themeT')});
     box.append(h('div',{class:'ttl'},'🎨 '+t('themeT')));
-    opts.forEach(function(o){
-      box.append(h('button',{type:'button',class:'topt','aria-pressed':cur===o[0]?'true':'false',onclick:function(){S.ct=o[0];lsSet('nesam-ct',o[0]);ov.remove();render()}},
-        h('span',{class:'tsw',style:'background:'+o[3]}),h('span',null,o[1]+' '+t(o[2]))));
+    MODELS.forEach(function(o){
+      box.append(h('button',{type:'button',class:'topt','aria-pressed':cur===o.id?'true':'false',onclick:function(){S.ct=o.id;lsSet('nesam-ct',o.id);ov.remove();render()}},
+        h('span',{class:'tsw',style:'background:'+o.hdr}),h('span',null,o.e+' '+(S.lang==='ta'?o.ta:o.en))));
     });
     ov.append(box); ov.addEventListener('click',function(e){if(e.target===ov) ov.remove()});
     document.body.append(ov);
@@ -3305,12 +3608,12 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     sel.value=S.lang;
   }
   function render(){
-    renderChrome(); try{paintBand()}catch(e){}
+    renderChrome(); try{paintBand()}catch(e){} try{applyTheme();renderFest()}catch(e){}
     var seller=S.view==='seller'&&S.admin;
     $('shop').hidden=seller; $('seller').hidden=!seller; $('nav').hidden=seller||!!S.focus;
     if(seller) renderSeller(); else renderShop();
     updateBell(); trkObserve(); updateGame();
-    if(!POP.t&&!S.loading){ POP.t=setTimeout(maybePopup,2800) }
+    /* new-deal popup removed */
   }
   function route(){
     var hsh=(location.hash||'').replace(/^#/,'');
@@ -3392,7 +3695,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var _tw=0; (function tw(){ if(lsGet('nesam-welcomed',0)||/seller/.test(location.hash||'')) return; if(S.live&&!S.setReady&&_tw++<10){ setTimeout(tw,500); return } if(featOn('tour')) showWelcome() })();
   var hasLang=lsGet('nesam-lang',null);
   var savedLang=hasLang||'ta'; S.lang=T[savedLang]?savedLang:'ta';
-  S.saved=new Set(lsGet('nesam-saved',[]));{S.gc=(lsGet('nesam-gc',2)===3)?3:2;var _ct=lsGet('nesam-ct','');S.ct=(['light','dark','green','purple','orange'].indexOf(_ct)>=0)?_ct:'';var _vm=lsGet('nesam-vm','grid');S.vm=(_vm==='big'||_vm==='list')?_vm:'grid';}
+  S.saved=new Set(lsGet('nesam-saved',[]));{S.gc=(lsGet('nesam-gc',2)===3)?3:2;var _ct=lsGet('nesam-ct','');S.ct=(MODELS.some(function(m){return m.id===_ct}))?_ct:'';var _vm=lsGet('nesam-vm','grid');S.vm=(_vm==='big'||_vm==='list')?_vm:'grid';}
   function applyDefLang(){
     if(hasLang) return;
     var dl=S.settings&&S.settings.defLang;
