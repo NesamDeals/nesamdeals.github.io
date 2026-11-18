@@ -3579,6 +3579,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   /* ===== new-deal popup (only for a deal not yet seen) ===== */
   var POP={t:0,done:false};
   function maybePopup(){
+    return; /* new-deal popup permanently off (agreed) */
     if(POP.done) return;
     if(S.live&&!S.setReady&&((POP.n=(POP.n||0)+1)<8)){ setTimeout(maybePopup,700); return }
     POP.done=true;
