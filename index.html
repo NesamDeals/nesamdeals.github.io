@@ -131,6 +131,17 @@ a{color:inherit}
 .vmb{flex:none;width:38px;height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
 .vmb[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
 .filters .vsp{flex:1;min-width:4px}
+.pnote{font-size:11.5px;line-height:1.45;color:var(--muted);text-align:center;margin:-4px 0 10px;padding:0 6px}
+.vmb.cn{width:28px;height:36px;font-size:14px;font-weight:700;border-radius:8px}
+.filters.hascn{gap:5px}.filters.hascn select{flex:1 1 0;min-width:0;max-width:150px;padding:0 8px;font-size:13px}.filters.hascn .vsp{display:none}.filters.hascn .vmb:not(.cn){width:34px}
+.feed.vm-grid.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.feed.vm-grid.g3 .body{padding:6px 6px 8px;gap:3px}
+.feed.vm-grid.g3 .title{font-size:11.5px;line-height:1.25}
+.feed.vm-grid.g3 .now{font-size:14.5px}
+.feed.vm-grid.g3 .was,.feed.vm-grid.g3 .meta,.feed.vm-grid.g3 .desc,.feed.vm-grid.g3 .rx,.feed.vm-grid.g3 .cmtb,.feed.vm-grid.g3 .actions .ico,.feed.vm-grid.g3 .dbtn{display:none}
+.feed.vm-grid.g3 .saving{font-size:11px;padding:1px 6px}
+.feed.vm-grid.g3 .buy{height:30px;font-size:11.5px;border-radius:8px;padding:0 4px}
+.feed.vm-grid.g3 .off{font-size:10px;padding:1px 5px;left:4px;top:4px}
 .media{overflow:hidden}.media .track{position:absolute;inset:0}
 .feed.vm-grid .cmpb,.feed.vm-list .cmpb{display:none}
 .feed.vm-grid .rx,.feed.vm-list .rx{gap:4px;margin:2px 0}
@@ -706,6 +717,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     </div>
     <div class="chips" id="chips" role="group"></div>
     <div class="filters" id="filters"></div>
+    <div class="pnote" id="pnote" hidden></div>
     <div id="hot" class="hot" hidden></div>
     <div class="feed" id="feed" aria-live="polite"></div>
     <div class="catgrid" id="catgrid" hidden></div>
@@ -931,6 +943,10 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   T.tl=tlitObj(T.ta);
   T.tl.themeT='Theme';T.tl.thLight='Light';T.tl.thDark='Dark';T.tl.thGreen='Green';T.tl.thPurple='Purple';T.tl.thOrange='Orange';
   T.tl.tagline='NesamShopping-oda oru brand';
+  T.en.pnote='Prices shown are as of when we posted. They may have changed in the store, or may be the same.';
+  T.ta.pnote='நாங்கள் பார்த்த நேரத்தின் விலை இது. கடையில் மாறியிருக்கலாம், அதே விலையிலும் இருக்கலாம்.';
+  T.tl.pnote='Naanga paartha neratha vilai ithu. Kadaiyila maariyirukkalam, athe vilaiyilum irukkalam.';
+  T.hi.pnote='कीमत हमारे पोस्ट करने के समय की है। स्टोर में बदली हो सकती है, या वही भी हो सकती है।';
   CATN.tl=tlitObj(CATN.ta); SUBT.tl=tlitObj(SUBT.ta);
   function t(k,v){
     var s=T_()[k]; if(s==null) s=T.en[k]; if(s==null) s=k;
@@ -1348,13 +1364,18 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
     sel.addEventListener('change',function(){S.sort=sel.value;render()});
     fl.append(sel);
     fl.append(h('span',{class:'vsp'}));
+    fl.classList.toggle('hascn',S.vm==='grid'&&featOn('col3'));
     [['big','▢','1'],['grid','▦','2'],['list','☰','3']].forEach(function(o){
       fl.append(h('button',{class:'vmb',type:'button','aria-label':'view '+o[2],'aria-pressed':S.vm===o[0]?'true':'false',onclick:function(){S.vm=o[0];lsSet('nesam-vm',o[0]);render()}},o[1]));
+      if(o[0]==='grid'&&S.vm==='grid'&&featOn('col3')) [2,3].forEach(function(n){
+        fl.append(h('button',{class:'vmb cn',type:'button','aria-label':n+' columns','aria-pressed':S.gc===n?'true':'false',onclick:function(){S.gc=n;lsSet('nesam-gc',n);render()}},String(n)));
+      });
     });
     if(S.deals.some(function(d){return d.title&&!isExpired(d)&&!isHiddenCat(normCat(d.category))&&endingSoon(d)})||S.last) fl.append(h('button',{class:'chip',type:'button','aria-pressed':S.last?'true':'false',onclick:function(){S.last=!S.last;render()}},'⏳ '+t('lastDay')));
     if(S.zone) fl.append(h('button',{class:'chip',type:'button','aria-pressed':'true',onclick:function(){S.zone='';render()}},'✕ '+zoneLabel(ZONES.filter(function(k){return k.k===S.zone})[0])));
 
-    var feed=$('feed'); feed.replaceChildren(); feed.className='feed'+(S.vm==='grid'?' vm-grid':S.vm==='list'?' vm-list':'');
+    var feed=$('feed'); feed.replaceChildren(); feed.className='feed'+(S.vm==='grid'?' vm-grid'+((S.gc===3&&featOn('col3'))?' g3':''):S.vm==='list'?' vm-list':'');
+    var pn=$('pnote'); if(pn){ var showPn=featOn('pnote')&&(isHome||isCats); pn.hidden=!showPn; pn.textContent=showPn?t('pnote'):'' }
     if(S.loading){ feed.append(h('div',{class:'empty'},h('b',null,t('loading')),t('loadingS'))); renderFooter([]); return; }
     var list=sortList(customerList());
     if(!list.length){
@@ -2377,7 +2398,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
 
   /* ---- settings (everything the owner can change) ---- */
   var SET={sec:'look',apk:'',init:false,msg:'',err:'',socials:[],share:'',logo:'',appName:'',tagline:'',theme:'blue',mode:'light',defLang:'ta',hidden:[],custom:[],about:'',life:'7',annOn:false,annText:'',annUrl:'',feat:{},own:{on:true,name:'',title:'',url:'',line:''},pui:{lay:'grid',bg:'',card:'',ink:'',btn:'',rad:'round',store:'auto'},spl:{on:false,l1:'',l2:'',emo:'',font:'',c1:'',c2:'',bg:'',logo:'',from:'',to:''}};
-  var FEATS=[['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['pop','🆕 புது டீல் பாப்-அப்'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி']];
+  var FEATS=[['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['pop','🆕 புது டீல் பாப்-அப்'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு']];
   function setLoad(){
     var st=S.settings||{};
     SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
@@ -3371,7 +3392,7 @@ html,body{overscroll-behavior-y:contain}#ptr{position:fixed;left:50%;top:0;z-ind
   var _tw=0; (function tw(){ if(lsGet('nesam-welcomed',0)||/seller/.test(location.hash||'')) return; if(S.live&&!S.setReady&&_tw++<10){ setTimeout(tw,500); return } if(featOn('tour')) showWelcome() })();
   var hasLang=lsGet('nesam-lang',null);
   var savedLang=hasLang||'ta'; S.lang=T[savedLang]?savedLang:'ta';
-  S.saved=new Set(lsGet('nesam-saved',[]));{var _ct=lsGet('nesam-ct','');S.ct=(['light','dark','green','purple','orange'].indexOf(_ct)>=0)?_ct:'';var _vm=lsGet('nesam-vm','grid');S.vm=(_vm==='big'||_vm==='list')?_vm:'grid';}
+  S.saved=new Set(lsGet('nesam-saved',[]));{S.gc=(lsGet('nesam-gc',2)===3)?3:2;var _ct=lsGet('nesam-ct','');S.ct=(['light','dark','green','purple','orange'].indexOf(_ct)>=0)?_ct:'';var _vm=lsGet('nesam-vm','grid');S.vm=(_vm==='big'||_vm==='list')?_vm:'grid';}
   function applyDefLang(){
     if(hasLang) return;
     var dl=S.settings&&S.settings.defLang;
