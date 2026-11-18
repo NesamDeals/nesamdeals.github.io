@@ -808,7 +808,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       <span class="bt"><span class="word" id="word">True<b>Pick</b></span><span class="tag" id="tagline"></span></span>
     </button>
     <div class="hdr-r">
-      <select id="lang" aria-label="Language"></select>
+      <span style="position:relative;display:inline-flex"><select id="lang" aria-label="Language" tabindex="-1"></select><button type="button" id="langBtn" aria-label="Language" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;padding:0;margin:0;background:none;cursor:pointer"></button></span>
       <button class="hbtn" id="gameBtn" type="button" hidden aria-label="Guess the price" style="position:relative;font-size:20px;line-height:1;background:rgba(255,255,255,.12);color:#fff">🎯<span class="gdot" id="gameDot" hidden></span></button>
       <button class="hbtn" id="bellBtn" type="button" aria-label="Notifications" style="position:relative;font-size:20px;line-height:1;background:rgba(255,255,255,.12);color:#fff">🔔<span id="bellN" hidden style="position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;border-radius:9px;background:#E11D48;color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 4px"></span></button>
       <button class="hbtn" id="themeBtn" type="button" aria-label="Theme" style="font-size:20px;line-height:1;background:rgba(255,255,255,.12);color:#fff">🎨</button>
@@ -1417,7 +1417,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       $('strip').replaceChildren(h('div',{class:'stl'},h('div',{class:'stt'},h('strong',null,String(today)),h('span',null,t('stripNew'))),(latest&&S.admin)?h('span',{class:'stx'},t('stripLast',{t:ago(latest)})):''),featOn('shr')?shareBtn():'');
       var jh=$('joinhost'); jh.replaceChildren();
       var jl=socialsList().filter(function(x){return x.type==='whatsapp'||x.type==='telegram'}).slice(0,2);
-      if(jl.length) jh.append(h('div',{class:'join'},h('b',null,t('joinT')),h('span',null,jl.map(function(x){return h('a',{href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},SOC[x.type][0])}))));
+      if(false&&jl.length) jh.append(h('div',{class:'join'},h('b',null,t('joinT')),h('span',null,jl.map(function(x){return h('a',{href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},SOC[x.type][0])}))));
     }
 
     /* price zones: Under 99 / 199 / 499 / 999 and Above 1000 */
@@ -3745,8 +3745,19 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(!sel.options.length){
       LANGS.forEach(function(l){sel.append(h('option',{value:l[0]},l[1]))});
       sel.addEventListener('change',function(){S.lang=sel.value;lsSet('nesam-lang',S.lang);render()});
+      $('langBtn').addEventListener('click',openLangSheet);
     }
     sel.value=S.lang;
+  }
+  function openLangSheet(){ /* own list: always starts from the top, Tamil first */
+    if($('lov')) return;
+    var ov=h('div',{class:'ov',id:'lov',role:'dialog','aria-modal':'true'}),sh=h('div',{class:'sheet',style:'padding:8px 0'});
+    function close(){ ov.remove() }
+    LANGS.forEach(function(l){
+      var on=S.lang===l[0];
+      sh.append(h('button',{type:'button',style:'display:flex;justify-content:space-between;align-items:center;width:100%;padding:15px 20px;border:0;border-bottom:1px solid var(--line);background:'+(on?'color-mix(in srgb,var(--brand) 10%,transparent)':'none')+';color:var(--ink);font-size:17px;font-weight:'+(on?'800':'600')+';font-family:inherit;cursor:pointer;text-align:start',onclick:function(){ close(); if(S.lang!==l[0]){ S.lang=l[0]; lsSet('nesam-lang',S.lang); render() } }},h('span',null,l[1]),on?h('b',{style:'color:var(--brand)'},'✓'):null));
+    });
+    ov.append(sh); ov.addEventListener('click',function(e){ if(e.target===ov) close() }); document.body.append(ov); sh.scrollTop=0;
   }
   function render(){
     renderChrome(); try{paintBand()}catch(e){} try{applyTheme();renderFest()}catch(e){}
