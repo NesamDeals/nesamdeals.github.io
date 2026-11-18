@@ -203,6 +203,10 @@ a{color:inherit}
 .ended{position:absolute;inset:0;background:rgba(11,16,34,.66);color:#fff;display:grid;place-items:center;font-family:var(--display);font-size:22px;font-weight:700;pointer-events:none;text-align:center;padding:12px}
 .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
 .meta{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.spill{display:inline-flex;align-items:center;gap:5px;padding:2px 10px 2px 7px;border-radius:99px;background:#FFFFFF;border:1px solid rgba(15,30,60,.22);color:#14213D;font-size:11.5px;font-weight:800;line-height:18px;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.spill i{width:8px;height:8px;border-radius:50%;background:var(--sc);flex:none}
+.feed .meta .spill{display:inline-flex!important}
+.feed.vm-grid.g3 .meta{display:flex!important}.feed.vm-grid.g3 .meta>*:not(.spill){display:none!important}
 .title{margin:0;font-size:17px;font-weight:700;line-height:1.35;text-wrap:balance;overflow-wrap:anywhere}
 .price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .now{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
@@ -327,6 +331,50 @@ a{color:inherit}
 .chk input{width:22px;height:22px}
 .btns.stk{position:sticky;bottom:calc(66px + env(safe-area-inset-bottom));z-index:5;background:var(--card);padding:8px 0;margin-top:10px;box-shadow:0 -8px 10px -6px var(--card)}
 .catline{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:-4px 0 12px}.catline small{opacity:.7;font-size:12px}
+/* top 10 */
+.t10r{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}
+.t10c{flex:0 0 40%;position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;color:var(--ink);text-decoration:none}
+.t10c img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;display:block}
+.t10k{position:absolute;top:6px;left:6px;width:28px;height:28px;border-radius:50%;background:#1546C6;color:#fff;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.t10k.g{background:#D4A017}.t10k.s{background:#8A94A6}.t10k.b{background:#B5651D}
+.t10t{font-size:12.5px;font-weight:700;padding:6px 8px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.t10p{color:var(--save);font-weight:800;padding:2px 8px 8px;font-size:14px}
+/* you may also like */
+.alike{margin:14px 0 6px}.alike h3{margin:0 0 8px;font-size:16px}.alg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.alc{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:var(--ink);text-decoration:none}
+.alc img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;display:block}.alc div{font-size:11.5px;font-weight:700;padding:5px 6px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.alc b{display:block;color:var(--save);font-size:13px;padding:2px 6px 7px}
+/* savings report */
+#svr{margin:4px 0 14px}
+.svc{border-radius:20px;padding:16px;color:#fff;background:linear-gradient(140deg,#0B6B3A 0%,#128C4F 55%,#C99A2E 130%);box-shadow:0 10px 24px rgba(11,107,58,.28);position:relative;overflow:hidden}
+.svc:after{content:'';position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08)}
+.svc .m{font-size:12.5px;opacity:.92;font-weight:700}.svc .big{font-size:40px;font-weight:900;margin:4px 0 2px;font-variant-numeric:tabular-nums}.svc .sub{font-size:13.5px}
+.svyr{border-radius:20px;padding:16px;color:#fff;background:radial-gradient(circle at 20% 10%,#3B2A8F,#140F3A 70%);position:relative;overflow:hidden;margin-bottom:10px}
+.svyr .big{font-size:34px;font-weight:900;color:#FFD54A}.svyr .m{font-weight:800;font-size:13px}.svyr .fw{position:absolute;font-size:18px;animation:svtw 1.6s ease-in-out infinite}
+@keyframes svtw{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+.svbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:10px;color:var(--ink)}
+.svbr{margin:7px 0}.svbr div{display:flex;justify-content:space-between;font-size:13px;font-weight:700}.svbr i{display:block;height:8px;border-radius:9px;background:var(--line);margin-top:4px;overflow:hidden}.svbr i u{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#128C4F,#C99A2E)}
+.svbest{display:flex;gap:10px;align-items:center;background:#FFF9E8;border:1px solid #F3DFA2;border-radius:14px;padding:10px;margin-top:10px;color:#1B2440}.svbest small{display:block;font-size:11.5px;color:#8A6200;font-weight:800}.svbest em{font-style:normal;color:#0B7A43;font-weight:800;font-size:13px}
+.svmon{display:flex;gap:6px;margin-top:10px;overflow-x:auto;scrollbar-width:none}.svmon button{flex:none;padding:6px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);font:inherit;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer}.svmon button[aria-pressed=true]{background:#0B6B3A;color:#fff;border-color:#0B6B3A}
+.svtrust{margin-top:10px;background:color-mix(in srgb,var(--brand) 7%,var(--card));border-radius:14px;padding:12px;font-size:13px;line-height:1.6;color:var(--ink)}
+.svsh{display:block;width:100%;margin-top:10px;background:var(--card);border:2px solid #0B6B3A;color:#0B6B3A;border-radius:12px;text-align:center;font:inherit;font-weight:900;padding:11px;cursor:pointer}
+.svgo{display:block;width:100%;margin-top:8px;background:#FFC61A;border:0;color:#1B2440;border-radius:12px;text-align:center;font:inherit;font-weight:900;padding:12px;cursor:pointer}
+.svline{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#E9F8EF,#FFF6DC);border:1px solid #CFE9D9;border-radius:12px;padding:10px 12px;font-weight:800;font-size:14px;color:#0B5A33;margin:0 0 10px;cursor:pointer;width:100%;font-family:inherit;text-align:start}
+.svline span{flex:1}
+.svov{position:fixed;inset:0;background:rgba(10,15,35,.6);display:flex;align-items:center;justify-content:center;padding:60px 18px;z-index:95;opacity:0;transition:opacity .4s}
+.svov.on{opacity:1}
+.svmb{width:100%;max-width:360px;background:#fff;border-radius:24px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.35);transform:scale(.8);transition:transform .5s cubic-bezier(.2,.9,.3,1.3);color:#1B2440}
+.svov.on .svmb{transform:scale(1)}.svmb h4{margin:2px 0 10px;text-align:center;font-size:16px}
+.svmb img{width:100%;aspect-ratio:1/1;border-radius:16px;display:block;background:#eef}
+.svask{display:flex;gap:8px;margin-top:12px;opacity:0;transform:translateY(8px);transition:all .5s;pointer-events:none}.svask.on{opacity:1;transform:none;pointer-events:auto}
+.svask button{flex:1;padding:13px 6px;border-radius:14px;font:inherit;font-weight:900;font-size:14.5px;cursor:pointer;border:0}
+.svask .y{background:#0B6B3A;color:#fff;box-shadow:0 6px 14px rgba(11,107,58,.35)}.svask .n{background:#F1F3F8;color:#5A6478}
+/* admin today list */
+.todo{margin-bottom:12px}.todo h2{margin:0 0 8px}
+.tdi{display:flex;align-items:center;gap:10px;width:100%;padding:11px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--line);margin-bottom:7px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;text-align:start}
+.tdi b{font-size:18px}.tdi span{flex:1}.tdi i{font-style:normal;font-weight:800;color:var(--brand)}
+.tdi.u{background:#FFF1E6;border-color:#FFD2B0;color:#1B2440}.tdi.ok{background:#E8F7EE;border-color:#BFE6CC;color:#0B6B3A;cursor:default}
+.drb{background:#FFF8E6;border:1.5px solid #FFC61A;border-radius:14px;padding:12px;margin:0 0 12px;color:#1B2440}.drb b{display:block;margin-bottom:4px}.drb small{opacity:.75}
+.drb .btns{margin-top:10px}
 .btns{display:flex;gap:10px;margin-top:8px}
 .btns button{flex:1;height:48px;border-radius:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:var(--card)}
 .btns .go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
@@ -836,6 +884,8 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     <div class="chips" id="chips" role="group"></div>
     <div class="filters" id="filters"></div>
     <div class="pnote" id="pnote" hidden></div>
+    <div id="svr" hidden></div>
+    <div id="top10" class="hot" hidden></div>
     <div id="hot" class="hot" hidden></div>
     <div id="rv" class="hot" hidden></div>
     <div class="feed" id="feed" aria-live="polite"></div>
@@ -989,7 +1039,12 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   ];
   var ZONES=[{k:'u99',n:99,c:'#0A8A5F',e:'🔥'},{k:'u199',n:199,c:'#1546C6',e:'⚡'},{k:'u499',n:499,c:'#7C3AED',e:'💥'},{k:'u999',n:999,c:'#EA580C',e:'🎯'},{k:'o1000',n:1000,over:true,c:'#D81E2D',e:'💎'}];
   var SOC={whatsapp:['WhatsApp','#1FA855'],telegram:['Telegram','#229ED9'],instagram:['Instagram','#D6249F'],facebook:['Facebook','#1877F2'],youtube:['YouTube','#E11D1D'],x:['X (Twitter)','#141B3A'],other:['Other','#5B6385']};
-  var SOURCES=['Amazon','Meesho','Flipkart','Myntra','Wishlink','Digital product','Other'];
+  var SOURCES=['Amazon','Flipkart','Meesho','Myntra','Ajio','Nykaa','Shopsy','Tata CLiQ','Croma','JioMart','Other'];
+  var STC={'Amazon':'#FF9900','Flipkart':'#2874F0','Meesho':'#E91E78','Myntra':'#FF3F6C','Ajio':'#2C4152','Nykaa':'#FC2779','Shopsy':'#8E3BEF','Tata CLiQ':'#1A1A1A','Croma':'#12DAA8','JioMart':'#0078AD'};
+  var STRX=[[/amzn\.|amazon\./i,'Amazon'],[/fkrt\.|flipkart\./i,'Flipkart'],[/meesho\./i,'Meesho'],[/myntr\.it|myntra\./i,'Myntra'],[/ajiio\.|ajio\./i,'Ajio'],[/nykaa/i,'Nykaa'],[/shopsy\./i,'Shopsy'],[/tatacliq\.|tataneu/i,'Tata CLiQ'],[/croma\./i,'Croma'],[/jiomart\./i,'JioMart']];
+  function storeFromLink(u){ var hst=''; try{ hst=new URL(String(u||'').trim()).hostname }catch(e){ return '' } for(var i=0;i<STRX.length;i++) if(STRX[i][0].test(hst)) return STRX[i][1]; return '' }
+  function storeName(d){ var s=String(d.source||''); if(s==='Other') return String(d.storeName||'').trim(); if(/^(wishlink|digital product)$/i.test(s)) return ''; return s }
+  function storePill(d){ var n=storeName(d); if(!n) return null; return h('span',{class:'spill',style:'--sc:'+(STC[n]||'#8A94A6')},h('i',null),n) }
   var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=5;
 
   var S={deals:[],settings:{},cat:(function(){ try{ var c=JSON.parse(localStorage.getItem('nesam-lastcat')||'"all"'); return typeof c==='string'&&c?c:'all' }catch(e){ return 'all' } })(),main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',ct:'',last:false,zone:'',view:'shop',stab:'dash',focus:'',
@@ -1253,6 +1308,196 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       h('div',{class:'vframe'},mp?h('video',{src:u,controls:'true',autoplay:'true',playsinline:'true',style:'width:100%;height:100%;background:#000'}):h('iframe',{src:'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1',allow:'autoplay; encrypted-media; picture-in-picture',allowfullscreen:'true',title:t('vid')})));
     document.body.append(lb);
   }
+  /* ===== savings report (only on this phone; never sent anywhere) ===== */
+  var SVT={ta:{m:['ஜனவரி','பிப்ரவரி','மார்ச்','ஏப்ரல்','மே','ஜூன்','ஜூலை','ஆகஸ்ட்','செப்டம்பர்','அக்டோபர்','நவம்பர்','டிசம்பர்'],
+      head:'💰 உங்கள் {m} சேமிப்பு வாய்ப்பு',sub:'இந்த மாதம் நீங்கள் {n} டீல்களைப் பார்த்தீர்கள் ✨',best:'🏆 உங்கள் சிறந்த கண்டுபிடிப்பு',saved:'₹{a} மிச்சம் · {p}% OFF',
+      trust:'நீங்கள் வாங்கினீர்களா என்பது எங்களுக்குத் தெரியாது. வாங்கியிருந்தால் உங்களுக்கு இவ்வளவு மிச்சமாகியிருக்கும் என்பதை மட்டுமே இங்கே காட்டுகிறோம்.\n🔒 இது உங்கள் தனிப்பட்ட விஷயம் — இதை நாங்கள் பார்ப்பதில்லை.',
+      share:'📤 என் சேமிப்பை ஷேர் பண்ணு',go:'இந்த மாதத்தின் புது டீல்களைப் பார் →',empty:'💰 உங்கள் சேமிப்பு அறிக்கை',emptyS:'டீல்களைப் பார்த்து "வாங்கு" பட்டனைத் தொடுங்கள். நீங்கள் எவ்வளவு மிச்சப்படுத்த முடியும் என்பது இங்கே சேரும்.',
+      line:'உங்கள் {m} சேமிப்பு அறிக்கை தயார்',yr:'🎉 {y}-ல் உங்கள் மொத்த சேமிப்பு வாய்ப்பு',yrS:'{n} டீல்கள் பார்த்தீர்கள் · சிறந்த மாதம்: {m}',yrSh:'📤 என் {y} சேமிப்பை ஷேர் பண்ணு',
+      pop:'🎉 உங்கள் {m} சேமிப்பு கார்டு!',popY:'🎉 உங்கள் {y} சேமிப்பு கார்டு!',yes:'📤 ஆம், ஷேர் பண்றேன்',no:'வேண்டாம்',
+      c1:'{m} மாதத்தில் எனக்கு',c1y:'{y}-ல் எனக்கு',c2:'வரை சேமிக்கும் வாய்ப்பு கிடைத்தது! 🎉',c3:'நீங்களும் சேமிக்கணுமா? 👇',
+      msg:'🎉 {m} மாதத்தில் TruePick-ல் எனக்கு ₹{a} வரை சேமிக்கும் வாய்ப்பு கிடைத்தது!\nநீங்களும் சேமிக்கணுமா? 👇\n{u}',msgY:'🎉 {y}-ல் TruePick-ல் எனக்கு ₹{a} வரை சேமிக்கும் வாய்ப்பு கிடைத்தது!\nநீங்களும் சேமிக்கணுமா? 👇\n{u}'},
+    en:{m:['January','February','March','April','May','June','July','August','September','October','November','December'],
+      head:'💰 Your {m} savings chance',sub:'You checked {n} deals this month ✨',best:'🏆 Your best find',saved:'₹{a} saved · {p}% OFF',
+      trust:"We don't know whether you bought them. We only show how much you would have saved if you did.\n🔒 This is private to you — we never see it.",
+      share:'📤 Share my savings',go:"See this month's new deals →",empty:'💰 Your savings report',emptyS:'Check deals and tap "Get this deal". How much you could save will add up here.',
+      line:'Your {m} savings report is ready',yr:'🎉 Your total savings chance in {y}',yrS:'{n} deals checked · Best month: {m}',yrSh:'📤 Share my {y} savings',
+      pop:'🎉 Your {m} savings card!',popY:'🎉 Your {y} savings card!',yes:'📤 Yes, share it',no:'No thanks',
+      c1:'In {m} I had a chance to save',c1y:'In {y} I had a chance to save',c2:'up to this much! 🎉',c3:'Want to save too? 👇',
+      msg:'🎉 In {m}, TruePick gave me a chance to save up to ₹{a}!\nWant to save too? 👇\n{u}',msgY:'🎉 In {y}, TruePick gave me a chance to save up to ₹{a}!\nWant to save too? 👇\n{u}'}};
+  function svL(){ return S.lang==='ta'?SVT.ta:SVT.en }
+  function svF(s,o){ s=String(s); for(var k in o) s=s.split('{'+k+'}').join(o[k]); return s }
+  function svMK(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2) }
+  function svMName(k){ var p=k.split('-'); return svL().m[(+p[1])-1] }
+  function svGet(){ var o=lsGet('nesam-sv',null); if(!o||typeof o!=='object') o={}; if(!o.m||typeof o.m!=='object') o.m={}; if(!Array.isArray(o.seen)) o.seen=[]; return o }
+  function svPrune(o){ var n=new Date(),cut=svMK(new Date(n.getFullYear(),n.getMonth()-12,1)); Object.keys(o.m).forEach(function(k){ if(k<cut) delete o.m[k] }) }
+  function svAdd(d){
+    try{
+      if(!d||d.sample||!hasPrice(d)||!(d.oldPrice>d.newPrice)) return;
+      var o=svGet(),now=new Date(),dk=ymd(now);
+      if(o.day!==dk){ o.day=dk; o.seen=[] }
+      if(o.seen.indexOf(d.id)>=0) return;            /* one deal counts once per day */
+      o.seen.push(d.id);
+      var mk=svMK(now),m=o.m[mk]||(o.m[mk]={t:0,n:0,c:{},b:null}),amt=Math.round(d.oldPrice-d.newPrice),c=normCat(d.category);
+      m.t+=amt; m.n++; m.c[c]=(m.c[c]||0)+amt;
+      if(!m.b||amt>m.b.a) m.b={a:amt,t:String(dTitle(d)||'').slice(0,60),p:pct(d)};
+      svPrune(o); lsSet('nesam-sv',o);
+    }catch(e){}
+  }
+  function svMonths(){ var o=svGet(); svPrune(o); return Object.keys(o.m).filter(function(k){return o.m[k]&&o.m[k].n>0}).sort().reverse().slice(0,12) }
+  function svUid(){ var u=lsGet('nesam-uid',''); if(!u){ u=Math.random().toString(36).slice(2)+Date.now().toString(36); lsSet('nesam-uid',u) } return u }
+  function svHash(s){ var h2=2166136261; for(var i=0;i<s.length;i++){ h2^=s.charCodeAt(i); h2=Math.imul(h2,16777619) } return h2>>>0 }
+  var SV={sel:'',anim:{},timer:0};
+  function svYear(){ /* January only: last year's summary */
+    var n=new Date(); if(n.getMonth()!==0) return null;
+    var y=n.getFullYear()-1,o=svGet(),t=0,c=0,bm='',bv=-1;
+    Object.keys(o.m).forEach(function(k){ if(k.slice(0,4)===String(y)){ var m=o.m[k]; t+=m.t; c+=m.n; if(m.t>bv){bv=m.t;bm=k} } });
+    return c>0?{y:y,t:t,n:c,bm:bm}:null;
+  }
+  function svCount(el,to,key){
+    if(SV.anim[key]){ el.textContent='₹'+to.toLocaleString('en-IN'); return }
+    SV.anim[key]=1; var st=null;
+    function f(ts){ if(!st) st=ts; var p=Math.min(1,(ts-st)/1400),v=Math.round(to*(1-Math.pow(1-p,3))); el.textContent='₹'+v.toLocaleString('en-IN'); if(p<1) requestAnimationFrame(f) }
+    el.textContent='₹0'; requestAnimationFrame(f);
+  }
+  function paintSv(on){
+    var el=$('svr'); if(!el) return; el.replaceChildren(); el.hidden=true;
+    if(!on){ clearTimeout(SV.timer); SV.timer=0; return }
+    var L=svL(),ms=svMonths(),o=svGet(); el.hidden=false;
+    if(!ms.length){ el.append(h('div',{class:'svbox'},h('b',null,L.empty),h('p',{class:'hint',style:'margin:6px 0 0'},L.emptyS))); return }
+    if(ms.indexOf(SV.sel)<0) SV.sel=ms[0];
+    var yr=svYear();
+    if(yr){
+      el.append(h('div',{class:'svyr'},h('span',{class:'fw',style:'right:18px;top:12px'},'🎆'),h('span',{class:'fw',style:'right:60px;top:30px;animation-delay:.5s'},'✨'),h('span',{class:'fw',style:'right:30px;top:62px;animation-delay:1s'},'🎇'),
+        h('div',{class:'m'},svF(L.yr,{y:yr.y})),h('div',{class:'big'},'₹'+yr.t.toLocaleString('en-IN')),h('div',{style:'font-size:13px'},svF(L.yrS,{n:yr.n,m:svMName(yr.bm)}))),
+        h('button',{type:'button',class:'svsh',style:'margin:0 0 10px',onclick:function(){ svShare({year:yr},true) }},svF(L.yrSh,{y:yr.y})));
+    }
+    var m=o.m[SV.sel],mn=svMName(SV.sel),big=h('div',{class:'big'});
+    el.append(h('div',{class:'svc'},h('div',{class:'m'},svF(L.head,{m:mn})),big,h('div',{class:'sub'},svF(L.sub,{n:m.n}))));
+    svCount(big,m.t,SV.sel);
+    var cats=Object.keys(m.c||{}).map(function(k){return [k,m.c[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0,3),mx=cats.length?cats[0][1]:1;
+    if(cats.length) el.append(h('div',{class:'svbox'},cats.map(function(x){ return h('div',{class:'svbr'},h('div',null,h('span',null,catEmoji(x[0])+' '+catLabel(x[0])),h('span',null,'₹'+x[1].toLocaleString('en-IN'))),h('i',null,h('u',{style:'width:'+Math.max(6,Math.round(x[1]/mx*100))+'%'}))) })));
+    if(m.b) el.append(h('div',{class:'svbest'},h('div',null,h('small',null,L.best),h('b',null,m.b.t),h('br'),h('em',null,svF(L.saved,{a:m.b.a.toLocaleString('en-IN'),p:m.b.p})))));
+    if(ms.length>1) el.append(h('div',{class:'svmon'},ms.map(function(k){ return h('button',{type:'button','aria-pressed':k===SV.sel?'true':'false',onclick:function(){ SV.sel=k; paintSv(true) }},svMName(k)+' '+k.slice(0,4)) })));
+    el.append(h('div',{class:'svtrust',style:'white-space:pre-line'},L.trust),
+      h('button',{type:'button',class:'svsh',onclick:function(){ svShare({mk:SV.sel},true) }},L.share),
+      h('button',{type:'button',class:'svgo',onclick:function(){ S.tab='home'; S.cat='all'; S.q=''; S.sort='new'; try{$('q').value=''}catch(e){} try{location.hash='home'}catch(e){} render(); window.scrollTo(0,0) }},L.go));
+    /* once a month: square share card pops up on the 5th second */
+    var cur=svMK(new Date());
+    if(!SV.timer&&lsGet('nesam-svpop','')!==cur&&m.t>0){
+      SV.timer=setTimeout(function(){ SV.timer=0; if(S.tab==='saved'&&!S.focus&&S.view!=='seller'&&!$('svov')&&lsGet('nesam-svpop','')!==cur){ lsSet('nesam-svpop',cur); svShare({mk:SV.sel},false) } },5000);
+    }
+  }
+  var SVPAL=[['#0B6B3A','#14A35E','#FFD54A'],['#0F3BB5','#3D6BFF','#FFC61A'],['#7A1FA2','#B44CD9','#FFB4E1'],['#B4540A','#F08A24','#FFE08A'],['#0E6B6B','#1FB5A6','#B8F2E6'],['#9B1C3A','#E04565','#FFD1DC'],['#1A2240','#36407A','#FFD54A'],['#A3366E','#E86AA6','#FFF0C2']];
+  var SVDEC=[['🎉','🎊','✨'],['✨','⭐','💫'],['🌸','🌼','🌺'],['💰','🪙','💵'],['🎁','🎀','✨'],['🔥','⚡','✨']];
+  function svDraw(top,amt,seedKey){
+    var W=1080,cv=document.createElement('canvas'); cv.width=W; cv.height=W; var c=cv.getContext('2d');
+    var hs=svHash(svUid()+'|'+seedKey),lay=hs%8,pal=SVPAL[(hs>>>3)%8],dec=SVDEC[(hs>>>6)%6],a=pal[0],b=pal[1],y=pal[2],g;
+    var ff=(getComputedStyle(document.body).fontFamily||'sans-serif');
+    function rr(x,y0,w,hh,r){ c.beginPath(); c.moveTo(x+r,y0); c.arcTo(x+w,y0,x+w,y0+hh,r); c.arcTo(x+w,y0+hh,x,y0+hh,r); c.arcTo(x,y0+hh,x,y0,r); c.arcTo(x,y0,x+w,y0,r); c.closePath() }
+    c.fillStyle=a; c.fillRect(0,0,W,W);
+    if(lay===0){ g=c.createRadialGradient(540,470,40,540,470,700); g.addColorStop(0,b); g.addColorStop(1,a); c.fillStyle=g; c.fillRect(0,0,W,W) }
+    else if(lay===1){ c.fillStyle=b; c.beginPath(); c.moveTo(0,420); c.bezierCurveTo(300,320,700,560,1080,430); c.lineTo(1080,620); c.bezierCurveTo(700,740,300,520,0,640); c.closePath(); c.fill() }
+    else if(lay===2){ c.save(); c.translate(540,480); for(var i=0;i<24;i++){ c.rotate(Math.PI/12); if(i%2){ c.fillStyle=b; c.beginPath(); c.moveTo(0,0); c.lineTo(900,-118); c.lineTo(900,118); c.closePath(); c.fill() } } c.restore() }
+    else if(lay===3){ g=c.createLinearGradient(0,0,W,W); g.addColorStop(0,a); g.addColorStop(1,b); c.fillStyle=g; c.fillRect(0,0,W,W) }
+    else if(lay===4){ c.fillStyle=b; c.beginPath(); c.arc(540,480,330,0,7); c.fill(); c.fillStyle='rgba(255,255,255,.18)'; c.beginPath(); c.arc(540,480,220,0,7); c.fill() }
+    else if(lay===5){ g=c.createLinearGradient(0,0,0,W); g.addColorStop(0,b); g.addColorStop(.75,a); c.fillStyle=g; c.fillRect(0,0,W,W) }
+    else if(lay===6){ c.fillStyle=b; c.beginPath(); c.moveTo(640,0); c.lineTo(1080,0); c.lineTo(1080,1080); c.lineTo(300,1080); c.closePath(); c.fill() }
+    else { c.fillStyle=b; for(var k=-1080;k<1080;k+=110){ c.beginPath(); c.moveTo(k,0); c.lineTo(k+55,0); c.lineTo(k+55+1080,1080); c.lineTo(k+1080,1080); c.closePath(); c.fill() } }
+    c.textAlign='center'; c.textBaseline='middle';
+    c.font='64px '+ff; for(var j=0;j<10;j++){ var dx=60+((j*97+lay*31)%900),dy=(j%2===0)?(170+(j*13)%70):(735+(j*11)%40); c.globalAlpha=.85; c.fillText(dec[j%3],dx,dy) } c.globalAlpha=1;
+    /* logo */
+    c.fillStyle='#0B1F4D'; rr(60,52,92,92,22); c.fill(); c.fillStyle='#fff'; c.font='900 58px '+ff; c.fillText('✔',106,100);
+    c.textAlign='left'; c.font='italic 900 72px '+ff; c.fillStyle='#fff'; c.fillText('True',175,100); var tw=c.measureText('True ').width; c.fillStyle='#FFD54A'; c.fillText('Pick',175+tw,100);
+    c.textAlign='center'; c.shadowColor='rgba(0,0,0,.3)'; c.shadowBlur=14;
+    c.fillStyle='#fff'; c.font='800 48px '+ff; c.fillText(top,540,370);
+    var at='₹'+amt.toLocaleString('en-IN'),fs=200; c.font='900 '+fs+'px '+ff; while(c.measureText(at).width>960&&fs>90){ fs-=10; c.font='900 '+fs+'px '+ff }
+    c.fillStyle=(lay===4)?'#fff':y; c.fillText(at,540,500);
+    c.fillStyle='#fff'; c.font='900 52px '+ff; c.fillText(svL().c2,540,640); c.shadowBlur=0;
+    c.fillStyle='rgba(255,255,255,.97)'; rr(70,830,940,190,34); c.fill();
+    c.fillStyle='#14213D'; c.font='900 52px '+ff; c.fillText(svL().c3,540,890);
+    c.fillStyle='#0F3BB5'; c.font='900 40px '+ff; c.fillText(String(appApkUrl()).replace(/^https?:\/\//,''),540,965);
+    return cv;
+  }
+  function svShare(info,instant){
+    if($('svov')) return;
+    var L=svL(),o=svGet(),amt,top,title,msg,seed,u=appApkUrl();
+    if(info.year){ amt=info.year.t; top=svF(L.c1y,{y:info.year.y}); title=svF(L.popY,{y:info.year.y}); msg=svF(L.msgY,{y:info.year.y,a:amt.toLocaleString('en-IN'),u:u}); seed='Y'+info.year.y }
+    else { var m=o.m[info.mk]; if(!m) return; amt=m.t; var mn=svMName(info.mk); top=svF(L.c1,{m:mn}); title=svF(L.pop,{m:mn}); msg=svF(L.msg,{m:mn,a:amt.toLocaleString('en-IN'),u:u}); seed=info.mk }
+    var img=h('img',{alt:''}),ask=h('div',{class:'svask'}),ov=h('div',{class:'svov',id:'svov',role:'dialog','aria-modal':'true'});
+    var cv=null;
+    function close(){ ov.classList.remove('on'); setTimeout(function(){ ov.remove() },350) }
+    function go(){
+      close();
+      function txt(){ if(navigator.share){ navigator.share({text:msg}).catch(function(){}) } else { window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank') } }
+      try{
+        cv.toBlob(function(bl){
+          try{
+            var f=new File([bl],'truepick-savings.png',{type:'image/png'});
+            if(navigator.canShare&&navigator.canShare({files:[f]})){ navigator.share({files:[f],text:msg}).catch(function(){}) } else txt();
+          }catch(e){ txt() }
+        },'image/png');
+      }catch(e){ txt() }
+    }
+    ask.append(h('button',{type:'button',class:'n',onclick:close},L.no),h('button',{type:'button',class:'y',onclick:go},L.yes));
+    ov.append(h('div',{class:'svmb'},h('h4',null,title),img,ask));
+    ov.addEventListener('click',function(e){ if(e.target===ov) close() });
+    document.body.append(ov);
+    var draw=function(){ try{ cv=svDraw(top,amt,seed); img.src=cv.toDataURL('image/png') }catch(e){} };
+    try{ (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(draw,draw) }catch(e){ draw() }
+    requestAnimationFrame(function(){ ov.classList.add('on') });
+    setTimeout(function(){ ask.classList.add('on') },instant?0:3000);
+  }
+  function svLine(){ /* 1st of the month, home only */
+    var n=new Date(); if(n.getDate()!==1) return null;
+    var pk=svMK(new Date(n.getFullYear(),n.getMonth()-1,1)),o=svGet(); if(!o.m[pk]||!(o.m[pk].n>0)) return null;
+    return h('button',{type:'button',class:'svline',onclick:function(){ SV.sel=pk; S.tab='saved'; try{location.hash='saved'}catch(e){} render(); window.scrollTo(0,0) }},'💰',h('span',null,svF(svL().line,{m:svMName(pk)})),'→');
+  }
+  /* ===== weekly top 10 (real tap counts) ===== */
+  var TOP_ON=false;
+  function paintTop(on){
+    if(typeof on==='boolean') TOP_ON=on; on=TOP_ON;
+    var el=$('top10'); if(!el) return; el.replaceChildren(); el.hidden=true;
+    if(!on||!S.live||!featOn('cnt')) return;
+    var cnt=function(d){ return (S.dc&&S.dc[d.id]&&+S.dc[d.id].c)||0 };
+    var pick=S.deals.filter(function(d){return !d.sample&&nLive(d)&&cnt(d)>0}).sort(function(a,b){return cnt(b)-cnt(a)||(b.createdAt||0)-(a.createdAt||0)}).slice(0,10);
+    if(pick.length<3) return;
+    el.append(h('h3',null,'🏆 '+(S.lang==='ta'?'இந்த வாரத்தின் டாப் 10':'Top 10 this week')),h('div',{class:'t10r'},pick.map(function(d,i){
+      return h('a',{class:'t10c',href:'#deal-'+d.id},h('span',{class:'t10k'+(i===0?' g':i===1?' s':i===2?' b':'')},String(i+1)),h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',{class:'t10t'},dTitle(d)),hasPrice(d)?h('div',{class:'t10p'},d.newPrice===0?t('free'):inr(d.newPrice)):null);
+    })));
+    el.hidden=false;
+  }
+  /* ===== you may also like (same category) ===== */
+  function alikeEl(fd){
+    var c=normCat(fd.category),cnt=function(d){ return (S.dc&&S.dc[d.id]&&+S.dc[d.id].c)||0 };
+    var pick=S.deals.filter(function(d){return d.id!==fd.id&&!d.sample&&nLive(d)&&normCat(d.category)===c}).sort(function(a,b){return cnt(b)-cnt(a)||(b.createdAt||0)-(a.createdAt||0)}).slice(0,3);
+    if(!pick.length) return null;
+    return h('div',{class:'alike'},h('h3',null,'💡 '+(S.lang==='ta'?'இதுவும் பிடிக்கலாம்':'You may also like')),h('div',{class:'alg'},pick.map(function(d){
+      return h('a',{class:'alc',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',null,dTitle(d)),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null);
+    })));
+  }
+  /* ===== new-deal draft auto-save (admin) ===== */
+  var DRK='nesam-draft',DRF=['photos','title','main','sub','catAuto','source','storeName','oldPrice','newPrice','offerText','link','extra','coupon','expires','desc','pinned','pick','comm','video','offers','inGame','allowCmt'];
+  function draftHas(){ var d=lsGet(DRK,null); return (d&&typeof d==='object'&&(d.title||d.link||d.desc||(d.photos&&d.photos.length)||d.newPrice))?d:null }
+  function draftClear(){ try{ localStorage.removeItem(DRK) }catch(e){} }
+  function fEmpty(f){ return !(f.title||f.link||f.desc||(f.photos&&f.photos.length)||f.newPrice||f.oldPrice) }
+  function draftSave(){
+    try{
+      if(typeof F==='undefined'||!F||F.id||F.busy||S.view!=='seller'||S.stab!=='new'||fEmpty(F)) return;
+      var o={}; DRF.forEach(function(k){ o[k]=F[k] }); o.at=Date.now();
+      try{ localStorage.setItem(DRK,JSON.stringify(o)) }catch(e){ o.photos=[]; try{ localStorage.setItem(DRK,JSON.stringify(o)) }catch(e2){} }
+    }catch(e){}
+  }
+  setInterval(draftSave,2000);
+  function draftBanner(){
+    if(F.id||!fEmpty(F)||F.draftSkip) return null;
+    var d=draftHas(); if(!d) return null;
+    var mins=Math.max(1,Math.round((Date.now()-(d.at||Date.now()))/60000)),when=mins<60?A('{n} நிமிடம் முன்பு').replace('{n}',mins):A('{n} மணி நேரம் முன்பு').replace('{n}',Math.round(mins/60));
+    return h('div',{class:'drb'},h('b',null,A('📝 பாதியில் விட்ட டீல் இருக்கு')),h('small',null,'"'+(d.title||A('தலைப்பு இல்லை'))+'"'+(d.newPrice?' · ₹'+d.newPrice:'')+' · '+when),
+      h('div',{class:'btns'},h('button',{type:'button',class:'go',onclick:function(){ var nf=blankForm(); DRF.forEach(function(k){ if(d[k]!==undefined) nf[k]=d[k] }); F=nf; renderSeller() }},A('✍️ தொடர்')),
+        h('button',{type:'button',onclick:function(){ draftClear(); F.draftSkip=true; renderSeller() }},A('🗑️ அழி'))));
+  }
+
   function card(d){
     var p=pct(d),ended=isEnded(d),isNew=Date.now()-(d.createdAt||0)<864e5&&!ended,loot=p>=60&&!ended;
     var link=safeUrl(d.link),title=dTitle(d),desc=dDesc(d);
@@ -1305,7 +1550,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         return m;
       })(),
       h('div',{class:'body'},
-        h('div',{class:'meta'},catBadge(d),S.admin?h('span',null,ago(d.createdAt||Date.now())):null,(S.admin&&!d.sample)?h('button',{class:'adel',type:'button','aria-label':'delete',onclick:function(){ if(window.confirm('இந்த டீலை நீக்கவா?')) removeDeal(d.id) }},'❌'):null),
+        h('div',{class:'meta'},catBadge(d),storePill(d),S.admin?h('span',null,ago(d.createdAt||Date.now())):null,(S.admin&&!d.sample)?h('button',{class:'adel',type:'button','aria-label':'delete',onclick:function(){ if(window.confirm('இந்த டீலை நீக்கவா?')) removeDeal(d.id) }},'❌'):null),
         h('h3',{class:'title'},title),
         priceNode,
         (S.live&&!d.sample&&!ended&&featOn('cnt'))?(function(){ var e=h('div',{class:'dcn','data-dc':d.id}); dcFill(e,d.id); return e })():null,
@@ -1380,6 +1625,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       b.append(au?h('a',{class:'ann',href:au,target:'_blank',rel:'noopener noreferrer'},'📢 '+txt+' →'):h('div',{class:'ann'},'📢 '+txt));
     }
 
+    if(S.tab==='home'&&!S.focus){ try{ var svl=svLine(); if(svl) b.append(svl) }catch(e){} }
     var focusEl=$('focus'),browse=$('browse'),nav=$('nav');
     if(S.focus){
       browse.hidden=true; nav.hidden=true; focusEl.hidden=false; focusEl.replaceChildren();
@@ -1390,6 +1636,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       else if(!fd) focusEl.append(h('div',{class:'empty'},h('b',null,t('notFound'))));
       else {
         focusEl.append(h('div',{class:'feed'},card(fd)));
+        try{ var al=alikeEl(fd); if(al) focusEl.append(al) }catch(e){}
         var lk=safeUrl(fd.link);
         /* Outside claude.ai (hosted site or installed app) a shared deal link goes straight to the shop. */
         if(!window.claude&&lk&&!isEnded(fd)&&!fd.sample&&!S.redirected){S.redirected=true;setTimeout(function(){try{location.replace(lk)}catch(e){}},900)}
@@ -1408,7 +1655,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     show('strip',isHome&&featOn('strip')); show('joinhost',isHome); show('searchbox',!isFollow&&!isPromo&&!gridMode);
     show('zones',(isHome||(isCats&&!!S.main))&&featOn('zones'));
     show('chips',isHome||(isCats&&!!S.main)); show('filters',!isFollow&&!isPromo&&!gridMode); show('feed',!isFollow&&!isPromo&&!gridMode); show('promoview',isPromo);
-    try{paintHot(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){} try{paintRV(isHome&&S.cat==='all'&&!S.q)}catch(e){}
+    try{paintHot(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){} try{paintRV(isHome&&S.cat==='all'&&!S.q)}catch(e){} try{paintTop(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){} try{paintSv(isSaved&&!S.q)}catch(e){}
     show('catgrid',gridMode); show('catbar',isCats&&!!S.main); show('followview',isFollow);
 
     if(isHome){
@@ -1880,10 +2127,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   var F=null;
   Object.assign(AD,{'🔗 லிங்க்ல இருந்து எடு':{"en":'🔗 Take from link',"hi":'🔗 लिंक से भरें'},'லிங்கை ஒட்டிட்டு இந்த பட்டனை அழுத்து. படம், தலைப்பு, விலை தானா வரும். வரலன்னா நீயே போடு.':{"en":'Paste the link and press this button. Image, title and price are filled in automatically. If they do not come, add them yourself.',"hi":'लिंक चिपकाकर यह बटन दबाएं। फोटो, टाइटल और कीमत अपने आप आएंगे। न आए तो खुद डालें।'},'எடுக்கிறேன்… கொஞ்சம் பொறு ⏳':{"en":'Fetching… please wait ⏳',"hi":'ला रहा हूँ… थोड़ा रुकें ⏳'},'முதல்ல affiliate லிங்கை (https://) ஒட்டு.':{"en":'First paste the affiliate link (https://).',"hi":'पहले एफिलिएट लिंक (https://) चिपकाएं।'},'எடுத்தாச்சு ✔':{"en":'Fetched ✔',"hi":'मिल गया ✔'},'வராததை நீயே போடு.':{"en":'Add the missing ones yourself.',"hi":'जो नहीं आया वह खुद डालें।'},'இந்த லிங்கல இருந்து எடுக்க முடியல 😕 படத்தை "+ போட்டோ"ல போடு, விலையை நீயே எழுது.':{"en":'Could not fetch from this link 😕 Add the photo with "+ Photo" and type the price yourself.',"hi":'इस लिंक से नहीं मिल पाया 😕 "+ फोटो" से फोटो डालें और कीमत खुद लिखें।'},'எடுக்க முடியல 😕 நீயே போடு':{"en":'Could not fetch 😕 add it yourself',"hi":'नहीं मिला 😕 खुद डालें'},'கடை':{"en":'Store',"hi":'स्टोर'},'படம்':{"en":'Image',"hi":'फोटो'},'விலை':{"en":'Price',"hi":'कीमत'},'பழைய விலை':{"en":'Old price',"hi":'पुरानी कीमत'},'சந்தை விலை (MRP ₹, optional)':{"en":'Market price (MRP ₹, optional)',"hi":'बाज़ार भाव (MRP ₹, वैकल्पिक)'},'ஆஃபர் விலை (₹, optional)':{"en":'Offer price (₹, optional)',"hi":'ऑफर कीमत (₹, वैकल्पिक)'},'சந்தை விலை கோடிட்டு காட்டும், ஆஃபர் விலை பெருசா தெரியும். ஆஃபர் மட்டும் போட்டாலும் ஓகே.':{"en":'Market price is shown struck through, offer price shown big. Offer price alone is fine too.',"hi":'बाज़ार भाव कटा हुआ दिखेगा, ऑफर कीमत बड़ी। सिर्फ ऑफर कीमत भी चलेगा।'},'🎟 கூப்பன் கோடு (எ.கா. DIWALI50)':{"en":'🎟 Coupon code (e.g. DIWALI50)',"hi":'🎟 कूपन कोड (जैसे DIWALI50)'},'கூப்பன் விவரம் (எ.கா. ₹200 OFF)':{"en":'Coupon details (e.g. ₹200 OFF)',"hi":'कूपन विवरण (जैसे ₹200 OFF)'},'கூப்பன் முடியும் நேரம் (optional)':{"en":'Coupon valid until (optional)',"hi":'कूपन कब तक मान्य (वैकल्पिक)'},'நேரம் முடிஞ்சதும் கூப்பன் தானா மறைஞ்சிடும்.':{"en":'The coupon hides automatically when time is over.',"hi":'समय खत्म होते ही कूपन अपने आप छिप जाएगा।'},'ஆஃபர் விலை சரியா இல்ல.':{"en":'Offer price is not valid.',"hi":'ऑफर कीमत सही नहीं है।'},'சந்தை விலை சரியா இல்ல.':{"en":'Market price is not valid.',"hi":'बाज़ार भाव सही नहीं है।'},'சந்தை விலை, ஆஃபர் விலையை விட அதிகமா இருக்கணும்.':{"en":'Market price must be higher than the offer price.',"hi":'बाज़ार भाव, ऑफर कीमत से ज़्यादा होना चाहिए।'}});
   Object.assign(AD,{'வகை':{'en':'Category','hi':'श्रेणी'},'விவரம்':{'en':'Description','hi':'विवरण'}});
-  function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,pick:false,comm:'',ended:false,sample:false,video:'',err:'',ok:'',busy:false,offers:[],noGame:false,inGame:false,allowCmt:false}}
+  function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',storeName:'',srcAuto:false,oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,pick:false,comm:'',ended:false,sample:false,video:'',err:'',ok:'',busy:false,offers:[],noGame:false,inGame:false,allowCmt:false}}
   function formFrom(d){
     var f=blankForm();
-    f.id=d.id;f.createdAt=d.createdAt;f.photos=dealImgs(d);f.title=d.title||'';f.main=normCat(d.category);f.sub=d.sub||'';f.source=d.source||'Amazon';
+    f.id=d.id;f.createdAt=d.createdAt;f.photos=dealImgs(d);f.title=d.title||'';f.main=normCat(d.category);f.sub=d.sub||'';f.source=d.source||'Amazon';f.storeName=d.storeName||'';
     f.oldPrice=d.oldPrice?String(d.oldPrice):'';f.newPrice=hasPrice(d)?String(d.newPrice):'';f.offerText=d.offerText||'';f.link=d.link||'';f.extra=d.extra||'';f.coupon=d.coupon||'';
     f.expires=d.expiresAt?toLocalInput(d.expiresAt):'';f.desc=d.desc||'';f.video=d.videoUrl||'';f.pinned=!!d.pinned;f.pick=!!d.pick;f.comm=(PRIV.map[d.id]!=null?String(PRIV.map[d.id]):'');f.ended=!!d.ended;f.sample=false;
     f.offers=(Array.isArray(d.offers)?d.offers:[]).map(function(o){return {p:o.p||'Other',price:(typeof o.price==='number')?String(o.price):'',link:o.link||'',at:o.at||null}});f.noGame=!!d.noGame;f.allowCmt=!!d.allowCmt;f.inGame=!!d.inGame;
@@ -2198,11 +2445,23 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       h('div',{class:'gring'},(function(){ var sv=document.createElementNS('http://www.w3.org/2000/svg','svg'); sv.setAttribute('width','84');sv.setAttribute('height','84');sv.setAttribute('viewBox','0 0 84 84');
           sv.innerHTML='<circle cx="42" cy="42" r="'+R+'" fill="none" stroke="#E2E8F0" stroke-width="9"/><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="'+(pc>=1?'#16A34A':'#1546C6')+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(CI*pc).toFixed(1)+' '+CI.toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" font-size="16" font-weight="800" fill="currentColor">'+today+'/'+goal+'</text>'; return sv })(),
         h('div',null,h('b',null,pc>=1?A('இன்றைய இலக்கு முடிந்தது 🎉'):A('இன்றைய இலக்கு')),h('div',{class:'hint'},A('இன்று {n} டீல் போட்டாய்').replace('{n}',today)))));
-    var fban=due?h('button',{type:'button',class:'fban',onclick:function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) }},h('b',null,'🎉'),h('span',null,due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+A(' — தொட்டுத் தேதி வை'))):null;
+    var tdl=[],cmSeen=lsGet('nesam-cmseen',0)||0;
+    if(!CMA.un&&S.live){ try{ CMA.un=S.db.collection('comments').orderBy('at','desc').limit(150).onSnapshot(function(sn){ CMA.list=sn.docs.map(function(x){var o=x.data()||{};o.id=x.id;return o}); try{cmaPaint()}catch(e){} if(S.view==='seller'&&S.stab==='dash') renderSeller() },function(){}) }catch(e){} }
+    var ncm=(CMA.list||[]).filter(function(c){return (c.at||0)>cmSeen}).length;
+    var unck=live.filter(function(d){return !d.sample&&(Date.now()-(d.checkedAt||d.createdAt||0))>2*864e5}).length;
+    function tdi(e,l,fn,u){ return h('button',{type:'button',class:'tdi'+(u?' u':''),onclick:fn},h('b',null,e),h('span',null,l),h('i',null,'→')) }
+    function gotab(x){ return function(){ S.stab=x; renderSeller(); window.scrollTo(0,0) } }
+    if(due) tdl.push(tdi('🎉',due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+' — '+A('தேதி வை'),function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) },true));
+    if(soon) tdl.push(tdi('⏳',A('{n} டீல்கள் இன்று முடிகின்றன').replace('{n}',soon),gotab('list')));
+    if(ncm) tdl.push(tdi('💬',A('{n} புது கருத்துகள்').replace('{n}',ncm),gotab('cmt')));
+    if(unck) tdl.push(tdi('🔍',A('{n} டீல்களின் விலை 2 நாளாகச் சரிபார்க்கவில்லை').replace('{n}',unck),gotab('list')));
+    if(PEND.list&&PEND.list.length) tdl.push(tdi('⏳',A('{n} டீல் நிலுவையில் (ஒப்புதலுக்கு)').replace('{n}',PEND.list.length),gotab('pend')));
+    var todo=h('div',{class:'panel todo'},h('h2',null,A('📋 இன்று செய்ய வேண்டியவை')),tdl.length?tdl:h('div',{class:'tdi ok'},h('b',null,'✅'),h('span',null,A('இன்று எல்லாம் முடிந்தது — ஓய்வெடுங்க!'))));
+    var fban=null&&due?h('button',{type:'button',class:'fban',onclick:function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) }},h('b',null,'🎉'),h('span',null,due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+A(' — தொட்டுத் தேதி வை'))):null;
     var bigs=h('div',null,
       h('button',{type:'button',class:'hbig go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},A('➕ புது டீல் போடு')),
       h('button',{type:'button',class:'hbig',onclick:function(){S.stab='list';renderSeller();window.scrollTo(0,0)}},A('என் டீல்ஸ்')));
-    return h('div',null,fban,ring,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
+    return h('div',null,ring,todo,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
       h('div',{class:'stats'},st(live.length,A('லைவ் டீல்ஸ்'),'#0A8A5F'),st(today,A('இன்று போட்டது'),'#1546C6'),st(soon,A('இன்னிக்குள்ள மறையும்'),'#EA580C'),st(ended,A('முடிஞ்சது / காலாவதி'),'#D81E2D'),st(z99,A('₹99-க்குள்'),'#7C3AED'),st(z1k,A('₹1000-க்கு மேல்'),'#0E7490')),
       h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,A('வகை வாரியா லைவ் டீல்ஸ்')),
         rows.length?rows.map(function(x){return h('div',{class:'bar'},h('span',null,x.m.e+' '+acat(x.m.id)),h('i',{style:'width:'+Math.max(6,Math.round(x.n/mx*100))+'%;background:'+catColor(x.m.id)}),h('b',null,String(x.n)))}):h('p',{class:'hint'},A('இன்னும் லைவ் டீல் இல்ல.'))),
@@ -2446,14 +2705,17 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     });
     if(F.photos.length<MAX_PHOTOS) grid.append(h('label',{class:'addph',for:'f-img'},A('+ போட்டோ'),file));
     var title=bind(h('input',{id:'f-title',type:'text',maxlength:140,value:F.title,placeholder:A('எ.கா. Cotton Kurti Set (3 colours)')}),'title');
-    var src=h('select',{id:'f-src'},SOURCES.map(function(k){return h('option',{value:k,selected:F.source===k?true:null},k)}));
-    src.addEventListener('input',function(){F.source=src.value});
+    var SRCL=SOURCES.slice(); if(F.source&&SRCL.indexOf(F.source)<0) SRCL.splice(SRCL.length-1,0,F.source);
+    var src=h('select',{id:'f-src'},SRCL.map(function(k){return h('option',{value:k,selected:F.source===k?true:null},k==='Other'?A('மற்றவை (பெயர் எழுது)'):k)}));
+    src.addEventListener('change',function(){F.source=src.value;F.srcAuto=false;renderSeller()});
+    var srcName=F.source==='Other'?bind(h('input',{id:'f-srcn',type:'text',maxlength:24,value:F.storeName||'',placeholder:A('கடையின் பெயர் (எ.கா. Lenskart)')}),'storeName'):null;
     var oldP=bind(h('input',{id:'f-old',type:'number',inputmode:'decimal',min:0,step:'any',value:F.oldPrice}),'oldPrice');
     var newP=bind(h('input',{id:'f-new',type:'number',inputmode:'decimal',min:0,step:'any',value:F.newPrice}),'newPrice');
     var zh=h('span',{class:'hint zh'},zoneHintText());
     newP.addEventListener('input',function(){zh.textContent=zoneHintText()});
     var offer=bind(h('input',{id:'f-offer',type:'text',maxlength:60,value:F.offerText,placeholder:A('எ.கா. Flat 50% OFF (விலை இல்லன்னா மட்டும்)')}),'offerText');
     var link=bind(h('input',{id:'f-link',type:'url',inputmode:'url',value:F.link,placeholder:'https://…'}),'link');
+    link.addEventListener('input',function(){ var st=storeFromLink(link.value); if(st&&st!==F.source){ F.source=st; F.srcAuto=true; var se=$('f-src'); if(se){ se.value=st; var an=$('srcauto'); if(an) an.hidden=false; var on=$('f-srcn'); if(on&&on.parentNode) on.parentNode.remove() } } });
     var lkBox=h('div',null,h('button',{type:'button',class:'chip lkbtn',disabled:(F.lk&&F.lk.busy)?true:null,onclick:lkTake},A('🔗 லிங்க்ல இருந்து எடு')),h('span',{class:'hint'},A('லிங்கை ஒட்டிட்டு இந்த பட்டனை அழுத்து. படம், தலைப்பு, விலை தானா வரும். வரலன்னா நீயே போடு.')),(F.lk&&(F.lk.busy||F.lk.msg))?h('div',{class:'lkst '+(F.lk.busy?'busy':F.lk.kind),role:'status'},F.lk.busy?A('எடுக்கிறேன்… கொஞ்சம் பொறு ⏳'):F.lk.msg):null);
     var extra=bind(h('input',{id:'f-extra',type:'text',maxlength:80,value:F.extra,placeholder:A('எ.கா. HDFC card-ல கூடுதலா 10% OFF')}),'extra');
     var coupon=bind(h('input',{id:'f-coupon',type:'text',maxlength:30,value:F.coupon,placeholder:A('எ.கா. NESAM50')}),'coupon');
@@ -2466,7 +2728,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var ng=bind(h('input',{id:'f-ng',type:'checkbox',checked:F.inGame?true:null}),'inGame',true);
     var ac=bind(h('input',{id:'f-ac',type:'checkbox',checked:F.allowCmt?true:null}),'allowCmt',true);
     var go=h('button',{class:'go',type:'button',disabled:F.busy?true:null},F.busy?A('சேமிக்கிறேன்…'):(F.id?A('மாற்றங்களை சேமி'):A('டீலை போடு')));
-    var clear=h('button',{type:'button',onclick:function(){F=blankForm();renderSeller()}},F.id?A('ரத்து'):A('அழி'));
+    var clear=h('button',{type:'button',onclick:function(){ if(!F.id) draftClear(); F=blankForm(); F.draftSkip=true; renderSeller()}},F.id?A('ரத்து'):A('அழி'));
     go.addEventListener('click',submitDeal);
     /* category line: auto-detected from title, change only if wrong */
     var catBox=h('div',{id:'catbox'});
@@ -2491,30 +2753,32 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var pvBtn=h('button',{type:'button',class:'acc',style:'margin:0 0 10px','aria-expanded':F.pvOpen?'true':'false',onclick:function(){F.pvOpen=!F.pvOpen;renderSeller()}},h('span',null,A('👀 ஆப்ல இப்படி தெரியும்')),h('i',{style:'font-style:normal'},F.pvOpen?'⌃':'⌄'));
     var moreBtn=h('button',{type:'button',class:'acc',style:'margin:14px 0 8px','aria-expanded':F.more?'true':'false',onclick:function(){F.more=!F.more;renderSeller()}},h('span',null,A('⚙️ மேலும் விருப்பங்கள்')),h('i',{style:'font-style:normal'},F.more?'⌃':'⌄'));
     var moreBody=F.more?h('div',null,
-      (F.main&&F.sub&&F.catOpen)?null:null,
-      fld(A('கடை (உனக்கு மட்டும் தெரியும்)'),'f-src',src),
-      fld(A('💰 என் கமிஷன் % (உனக்கு மட்டும்)'),'f-comm',commI,A('வாடிக்கையாளருக்கு ஒருபோதும் தெரியாது. எதை pin பண்ணணும்னு பார்க்க மட்டும்.')),
-      h('div',{id:'commAmt',class:'hint',style:'margin:-6px 0 10px;font-weight:700;color:#0a7d2c'}),
-      fld(A('கூடுதல் சலுகை (optional)'),'f-extra',extra),
+      fld(A('விலை இல்லாத சலுகை வாசகம்'),'f-offer',offer),
       fld(A('கூப்பன் கோட் (optional)'),'f-coupon',coupon),
       fld(A('டீல் முடியும் நேரம் (optional)'),'f-exp',exp,A('நேரம் முடிஞ்சதும் டீல் தானா "முடிஞ்சது"னு ஆகிடும்.')),
       fld(A('🎬 பொருளோட வீடியோ லிங்க் (optional)'),'f-vid',vid,A('உன் YouTube / Instagram / Facebook வீடியோ லிங்கை ஒட்டு. வாடிக்கையாளருக்கு "பொருளோட வீடியோ பாரு" பட்டன் மட்டும் தெரியும். YouTube வீடியோ ஆப்குள்ளயே ஓடும்.')),
-      offersBlock(),
-      h('label',{class:'chk',for:'f-pk'},pk,A('⭐ TruePick தேர்வுல காட்டு (கமிஷன் தெரியலன்னா மட்டும் டிக்)'))):null;
+      offersBlock()):null;
+    var srcFld=h('div',{class:'fld'},h('label',{class:'lbl',for:'f-src'},A('🏬 கடை (டீலில் வாடிக்கையாளருக்குத் தெரியும்)')),src,
+      srcName?h('div',{style:'margin-top:8px'},srcName):null,
+      h('span',{class:'hint',id:'srcauto',hidden:F.srcAuto?null:true,style:'color:#0a7d2c;font-weight:700'},A('✔ லிங்கில் இருந்து தானா கண்டுபிடிச்சது. தவறா இருந்தா மாத்துங்க.')));
     var dpanel=h('div',{class:'panel'},
-      h('h2',null,F.id?A('டீலை திருத்து'):A('புது டீல் சேர்')),errP,okP,
+      h('h2',null,F.id?A('டீலை திருத்து'):A('புது டீல் சேர்')),errP,okP,draftBanner(),
       h('div',{class:'fld'},h('span',{class:'lbl'},A('போட்டோஸ் (அதிகபட்சம் {n})').replace('{n}',MAX_PHOTOS)),grid),
       pvBtn,F.pvOpen?h('div',{class:'fld'},h('div',{id:'dprev',class:'pprev'}),h('span',{class:'hint'},A('படம் தானா முழுசா பொருந்தும், வெட்டு இல்ல. வேற மாதிரி வேணும்னா படத்துல ✂ அழுத்தி நீயே வெட்டு.'))):null,
       fld(A('டீல் தலைப்பு'),'f-title',title),
       catBox,
       fld(A('விளக்கம்'),'f-desc',desc),
       h('div',{class:'row2'},fld(A('MRP (₹)'),'f-old',oldP),fld(A('ஆஃபர் விலை (₹)'),'f-new',newP,A('இலவசம்னா 0 போடு'))),zh,
-      fld(A('விலை இல்லாத சலுகை வாசகம்'),'f-offer',offer),
+      fld(A('💰 என் கமிஷன் % (உனக்கு மட்டும்)'),'f-comm',commI,A('வாடிக்கையாளருக்கு ஒருபோதும் தெரியாது. எதை pin பண்ணணும்னு பார்க்க மட்டும்.')),
+      h('div',{id:'commAmt',class:'hint',style:'margin:-6px 0 10px;font-weight:700;color:#0a7d2c'}),
+      fld(A('🎁 கூடுதல் சலுகை (optional)'),'f-extra',extra),
       fld(A('உன் affiliate லிங்க்'),'f-link',link),
       lkBox,
+      srcFld,
       h('label',{class:'chk',for:'f-pin'},pin,A('📌 இதை எப்பவும் மேல வை (pin)')),
       h('label',{class:'chk',for:'f-ng'},ng,A('🎯 இந்த டீலை விலையை ஊகி விளையாட்டுல சேர்')),
       h('label',{class:'chk',for:'f-ac'},ac,A('💬 இந்த டீலுக்கு கருத்து அனுமதி')),
+      h('label',{class:'chk',for:'f-pk'},pk,A('⭐ TruePick தேர்வுல காட்டு (கமிஷன் தெரியலன்னா மட்டும் டிக்)')),
       h('div',{class:'btns stk'},clear,go),
       moreBtn,moreBody);
     dpanel.addEventListener('input',function(){ clearTimeout(dealPrevPaint.t); dealPrevPaint.t=setTimeout(dealPrevPaint,150) });
@@ -2556,6 +2820,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     else if(np!=null&&!(np>=0)) msg=A('விலை சரியா இல்ல.');
     else if(np!=null&&op&&op<=np) msg=A('பழைய விலை இப்போதைய விலையை விட அதிகமா இருக்கணும்.');
     else if(!lk) msg=A('உன் affiliate லிங்கை ஒட்டுங்க.');
+    else if(F.source==='Other'&&!String(F.storeName||'').trim()) msg=A('"மற்றவை" கடைக்கு பெயர் எழுதுங்க.');
     else if(!safeUrl(lk)) msg=A('லிங்க் https:// ஓட தொடங்கணும்.');
     else if(F.video.trim()&&!safeUrl(F.video)) msg=A('வீடியோ லிங்க் https:// ஓட தொடங்கணும்.');
     var nowO=Date.now(),offs=[],obad=false;
@@ -2570,14 +2835,14 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(!photos){F.busy=false;F.err=A('போட்டோஸ் ரொம்ப பெருசா இருக்கு. ஒண்ணு ரெண்டை நீக்கிட்டு மறுபடி போடுங்க.');renderSeller();window.scrollTo(0,0);return}
     var expMs=F.expires?new Date(F.expires).getTime():0;
     var now=Date.now();
-    var data={title:F.title.trim(),category:F.main,sub:F.sub,source:F.source,oldPrice:op||0,link:safeUrl(lk),desc:F.desc.trim(),imgs:photos,
+    var data={title:F.title.trim(),category:F.main,sub:F.sub,source:F.source,storeName:F.source==='Other'?String(F.storeName||'').trim():'',oldPrice:op||0,link:safeUrl(lk),desc:F.desc.trim(),imgs:photos,
       createdAt:F.createdAt||now,checkedAt:now,expiresAt:isFinite(expMs)?expMs:0,coupon:F.coupon.trim(),extra:F.extra.trim(),offerText:F.offerText.trim(),videoUrl:safeUrl(F.video),
       pinned:!!F.pinned,pick:!!F.pick,pk:pkRank(F.comm,F.pick),ended:!!F.ended,sample:false,offers:offs,noGame:!!F.noGame,inGame:!!F.inGame,allowCmt:!!F.allowCmt};
     if(np!=null) data.newPrice=np;
     try{
       var rid=F.id; if(F.id) await setDeal(F.id,data); else rid=await addDeal(data);
       privSave(rid,F.comm);
-      var wasEdit=!!F.id; F=blankForm(); F.ok=wasEdit?A('மாற்றம் சேமிச்சாச்சு ✔'):A('டீல் போட்டாச்சு ✔ வாடிக்கையாளர் பார்வையில பாரு.'); S.stab='new'; renderSeller(); window.scrollTo(0,0);
+      var wasEdit=!!F.id; if(!wasEdit) draftClear(); F=blankForm(); F.ok=wasEdit?A('மாற்றம் சேமிச்சாச்சு ✔'):A('டீல் போட்டாச்சு ✔ வாடிக்கையாளர் பார்வையில பாரு.'); S.stab='new'; renderSeller(); window.scrollTo(0,0);
     }catch(e){
       F.busy=false;F.err=A('சேமிக்க முடியல. இணைப்பை சரிபார்த்து மறுபடி முயற்சி பண்ணுங்க.');renderSeller();window.scrollTo(0,0);
     }
@@ -3030,7 +3295,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(v>=DC_V) el.append(h('span',{class:'dcv'},'👁 '+L.v.split('{n}').join(fmtN(v))));
     el.hidden=!el.firstChild;
   }
-  function dcPaint(){ Array.prototype.forEach.call(document.querySelectorAll('#feed .dcn[data-dc]'),function(el){ dcFill(el,el.getAttribute('data-dc')) }); paintHot() }
+  function dcPaint(){ Array.prototype.forEach.call(document.querySelectorAll('#feed .dcn[data-dc]'),function(el){ dcFill(el,el.getAttribute('data-dc')) }); paintHot(); try{paintTop()}catch(e){} }
   var HOTL={ta:['அதிகம் தொட்ட டீல்ஸ்'],en:['Most tapped deals'],hi:['सबसे ज़्यादा देखे गए डील']},HOT_ON=false,HOTEL=document.getElementById('hot');
   function paintHot(on){
     if(typeof on==='boolean') HOT_ON=on;
@@ -3067,7 +3332,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function engOnce(){ if(lsGet('nesam-eng','')!==dayKey()){ lsSet('nesam-eng',dayKey()); trkAdd(['eng']) } }
   function clk2(id){ dcInc(id,'c'); engOnce() }
   function rvAdd(id){ try{ var a=lsGet('nesam-rv',[]); if(!Array.isArray(a)) a=[]; a=a.filter(function(x){return x!==id}); a.unshift(id); lsSet('nesam-rv',a.slice(0,10)) }catch(e){} }
-  function trkClick(d){ rvAdd(d.id);  trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
+  function trkClick(d){ rvAdd(d.id); svAdd(d);  trkAdd(['clicks']); trkAdd(['c',tk(d.id)]); clk2(d.id); trkAdd(['cc',tk(normCat(d.category))]); trkAdd(['cs',tk(d.source||'other')]); trkFlush() }
   function trkObserve(){
     if(!dcOn()||!('IntersectionObserver' in window)) return;
     if(!TRK.io) TRK.io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ var id=e.target.getAttribute('data-id'); TRK.io.unobserve(e.target); if(id&&!TRK.seen[id]){TRK.seen[id]=1;trkAdd(['v',tk(id)]);dcInc(id,'v')} } }) },{threshold:.5});
@@ -3491,6 +3756,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     });
   }
   function sellerComments(){
+    lsSet('nesam-cmseen',Date.now());
     if(!CMA.un&&S.live){ try{ CMA.un=S.db.collection('comments').orderBy('at','desc').limit(150).onSnapshot(function(sn){ CMA.list=sn.docs.map(function(x){var o=x.data()||{};o.id=x.id;return o}); cmaPaint() },function(){}) }catch(e){} }
     setTimeout(cmaPaint,0);
     return h('div',{class:'panel'},h('h2',null,A('💬 கருத்துகள்')),h('p',{class:'hint'},A('புது கருத்து மேல வரும். தப்பான கருத்தை நீக்கு. அதுக்கு வந்த பதில்களும் சேர்ந்து நீங்கும்.')),h('div',{class:'lst',id:'cmalist'}));
