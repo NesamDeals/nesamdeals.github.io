@@ -267,6 +267,25 @@ a{color:inherit}
 .sb{width:46px;height:46px;border-radius:14px;color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;flex:none;font-family:var(--display)}
 .sn{flex:1;min-width:0;display:flex;flex-direction:column;overflow-wrap:anywhere}
 .sn small{color:var(--muted)}
+.sface{width:50px;height:38px;flex:none;display:inline-flex;margin-inline-end:8px}
+.sface svg{width:100%;height:100%;overflow:visible}
+.sface .sw,.sface .sh,.sface .ss{display:none}
+.sface[data-s=w] .sw,.sface[data-s=h] .sh,.sface[data-s=s] .ss{display:inline}
+.sface[data-s=w] .hd{animation:sfb 1s ease-in-out infinite}
+.sface[data-s=h] .fc{animation:sfh .5s ease-in-out 2}
+.sface[data-s=s] .face{fill:#CFC6A8}
+.sface[data-s=s] svg{opacity:.8}
+.sface[data-s=s] .hd{transform:translateY(5px) rotate(18deg);transform-origin:30px 18px}
+@keyframes sfb{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+@keyframes sfh{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.sface *{animation:none!important}}
+.pvbox{border:1.5px dashed var(--accent,#FFC61A);border-radius:14px;padding:10px;margin:0 0 14px;background:var(--bg,#F7F8FC)}
+.pvl{display:block;font-size:12px;font-weight:700;opacity:.75;margin:0 0 8px}
+.pvhdr{display:flex;align-items:center;gap:10px;background:var(--hdr,#0F3BB5);color:#fff;padding:10px 14px;border-radius:12px;margin:0 0 8px}
+.pvhdr img,.pvlg{width:38px;height:38px;border-radius:10px;object-fit:cover;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex:none}
+.pvhdr b{display:block;font-size:16px}.pvhdr span{font-size:12px;opacity:.85}
+.pvrow{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.pvnote{font-size:12px;opacity:.75;margin:6px 0;line-height:1.5}
 .go2{color:var(--brand);font-weight:700;font-size:14px;flex:none}
 .srow{border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
 .srow input,.srow select{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:16px;width:100%;min-height:44px;min-width:0}
@@ -1068,8 +1087,17 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function zoneMatch(d,z){if(!hasPrice(d)) return false; return z.over?d.newPrice>z.n:d.newPrice<=z.n}
   function zoneLabel(z){return z.over?t('over',{n:z.n}):t('under',{n:z.n})}
   function zoneOf(d){if(!hasPrice(d)) return null; for(var i=0;i<ZONES.length-1;i++){ if(d.newPrice<=ZONES[i].n) return ZONES[i]; } return d.newPrice>ZONES[4].n?ZONES[4]:ZONES[3]}
+  var DL_DEF='https://nesamdeals.github.io/download';
+  var SOC_DEF=[{type:'facebook',label:'TruePick',url:'https://www.facebook.com/share/18nTW4D4zx/'},{type:'instagram',label:'@truepickindia',url:'https://www.instagram.com/truepickindia'},{type:'telegram',label:'TruePick',url:'https://t.me/TruePickIndia'},{type:'whatsapp',label:'TruePick Channel',url:'https://whatsapp.com/channel/0029VbEc2Dh4inoqXz5uET0F'}];
+  var SOCI={
+    facebook:'<svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fff" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"/></svg>',
+    instagram:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.9"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.7"/><circle cx="16.8" cy="7.2" r="1" fill="#fff" stroke="none"/></svg>',
+    telegram:'<svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fff" d="M20.6 4.2L3.5 10.8c-1 .4-1 1 0 1.3l4.4 1.4 1.7 5.2c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.1-2 4.3 3.2c.8.4 1.4.2 1.6-.7l2.9-13.6c.3-1.2-.4-1.7-1.7-1.5zM9 13.3l9-5.6c.4-.3.8-.1.5.2l-7.4 6.7-.3 3.1z"/></svg>',
+    whatsapp:'<svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fff" d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.2 20.8l4.3-1.1A8.8 8.8 0 1 0 12 3.2zm0 1.6a7.2 7.2 0 1 1-3.9 13.3l-.3-.2-2.2.6.6-2.1-.2-.3A7.2 7.2 0 0 1 12 4.8zm-3 3.4c-.2 0-.5.1-.7.4-.3.3-1 1-.9 2.3.1 1.2.9 2.5 2 3.6 1.2 1.2 2.7 2 3.9 2.2 1 .1 1.8-.4 2.1-1 .3-.5.3-1 .1-1.1l-1.6-.8c-.2-.1-.5-.1-.7.2l-.6.7c-.1.2-.3.2-.5.1-.8-.4-2.2-1.1-3-2.4-.1-.2 0-.3.1-.5l.4-.5c.1-.2.1-.4 0-.5l-.8-1.7c-.1-.2-.3-.3-.5-.3z"/></svg>'
+  };
   function socialsList(){
     var st=S.settings||{};
+    if(!Array.isArray(st.socials)) return SOC_DEF.slice();
     if(Array.isArray(st.socials)) return st.socials.filter(function(x){return x&&safeUrl(x.url)});
     var a=[]; if(safeUrl(st.whatsappUrl)) a.push({type:'whatsapp',label:'',url:st.whatsappUrl}); if(safeUrl(st.telegramUrl)) a.push({type:'telegram',label:'',url:st.telegramUrl}); return a;
   }
@@ -1427,13 +1455,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       fv.append(h('h2',{class:'ptitle fsit'},t('sitesT')));
       var sl=socialsList();
       if(!sl.length) fv.append(h('div',{class:'empty'},h('b',null,t('noSocial'))));
-      sl.forEach(function(x){
-        var meta=SOC[x.type]||SOC.other,name=x.type==='other'?(x.label||'Link'):meta[0];
-        fv.append(h('a',{class:'social',href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},
-          h('span',{class:'sb',style:'background:'+meta[1]},name.charAt(0).toUpperCase()),
-          h('span',{class:'sn'},h('b',null,name),x.label&&x.type!=='other'?h('small',null,x.label):null),
-          h('span',{class:'go2'},t('openSoc')+' →')));
-      });
+      sl.forEach(function(x){ fv.append(socRowEl(x,true)) });
       renderFooter([]); return;
     }
 
@@ -1533,7 +1555,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var base=safeUrl(S.settings&&S.settings.shareUrl)||(S.hosted?safeUrl(location.origin+location.pathname):'');
     return base?base.replace(/[#?].*$/,''):'';
   }
-  function appApkUrl(){ return safeUrl(S.settings&&S.settings.apkUrl)||(S.hosted?safeUrl(location.origin+'/download'):'') }
+  function appApkUrl(){ return safeUrl(S.settings&&S.settings.apkUrl)||DL_DEF }
   function shareMsg(lg){
     var u=appShareUrl(),a=appApkUrl(),m=(SHMSG[lg]||SHMSG.ta).split('{n}').join(appName()).split('{u}').join(u||'');
     m=m.split('\n').filter(function(l){return l.indexOf('👉')!==0}).join('\n');
@@ -2009,7 +2031,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(!it.s&&fd){ sI.value=fd; var d2=new Date(fd+'T00:00:00'); d2.setDate(d2.getDate()+3); eI.value=ymd(d2); if(['pongal','navaratri','kanda'].indexOf(fs.id)>=0){ var d3=new Date(fd+'T00:00:00'); d3.setDate(d3.getDate()-2); sI.value=ymd(d3) } }
     var ov=h('div',{class:'fsh'}); function close(){ ov.remove() }
     function put(v){ var f={on:st.on,items:Object.assign({},st.items)}; if(v) f.items[fs.id]=v; else delete f.items[fs.id]; close(); festSave(f) }
-    var box=h('div',null,h('h2',{style:'margin:0 0 4px'},fs.ta+' '+A('தேதிகள்')),
+    var box=h('div',null,h('h2',{style:'margin:0 0 4px'},fs.ta+' '+A('தேதிகள்')),h('p',{class:'hint',style:'margin:0'},A('ஆப்பில் இப்படித் தெரியும்:')),festPreview(fs),
       fd?h('p',{class:'hint'},A('பண்டிகை நாள் (தோராயம்): ')+fdShort(fd)):null,
       h('label',null,A('தொடக்க தேதி')),sI,h('label',null,A('முடிவு தேதி')),eI,er,
       h('div',{class:'btns'},
@@ -2035,7 +2057,9 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var sg=h('button',{type:'button','aria-pressed':c.strip!==false?'true':'false',onclick:function(){ c.strip=!(c.strip!==false); renderSeller() }});
     var looks=h('div',{class:'clk'},CLOOKS.map(function(l,i){ return h('button',{type:'button',title:l.n,'aria-label':l.n,'aria-pressed':+c.look===i?'true':'false',style:'background:'+l.a,onclick:function(){ c.look=i; renderSeller() }}) }));
     var syms=h('div',{class:'clk'},CSYMS.map(function(y){ var b=h('button',{type:'button','aria-pressed':c.sym===y?'true':'false',onclick:function(){ c.sym=y; renderSeller() }}); if(y==='c_none') b.textContent='∅'; else b.innerHTML=FSYM[y]; return b }));
-    card.append(h('label',null,A('பண்டிகை பெயர்')),nI,h('label',null,A('வாழ்த்து வரி')),gI,
+    var pvBox=h('div',null); function upPv(){ pvBox.replaceChildren(festPreview(customFA(c))) } upPv();
+    nI.addEventListener('input',upPv); gI.addEventListener('input',upPv);
+    card.append(h('p',{class:'hint',style:'margin:10px 0 0'},A('ஆப்பில் இப்படித் தெரியும்:')),pvBox,h('label',null,A('பண்டிகை பெயர்')),nI,h('label',null,A('வாழ்த்து வரி')),gI,
       h('div',{class:'tgl',style:'margin:8px 0'},h('span',null,A('"… சிறப்பு சலுகைகள்" வரி வேண்டுமா?')),sg),
       h('label',null,A('நிறம் (12 தேர்வுகள்)')),looks,h('label',null,A('சின்னம்')),syms,
       h('label',null,A('தொடக்க தேதி')),sI,h('label',null,A('முடிவு தேதி')),eI,er,
@@ -2597,7 +2621,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function setLoad(){
     var st=S.settings||{};
     SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
-    SET.disc=st.disc||'';SET.zn=((Array.isArray(st.zn)&&st.zn.length===4)?st.zn:[99,199,499,999]).map(String);SET.share=st.shareUrl||'';SET.apk=st.apkUrl||'';SET.logo=st.logo||'';SET.appName=st.appName||'';SET.tagline=st.tagline||'';SET.theme=st.theme||'blue';SET.mode=st.mode||'light';SET.defLang=st.defLang||'ta';
+    SET.disc=st.disc||'';SET.zn=((Array.isArray(st.zn)&&st.zn.length===4)?st.zn:[99,199,499,999]).map(String);SET.share=st.shareUrl||'';SET.apk=st.apkUrl||DL_DEF;SET.logo=st.logo||'';SET.appName=st.appName||'';SET.tagline=st.tagline||'';SET.theme=st.theme||'blue';SET.mode=st.mode||'light';SET.defLang=st.defLang||'ta';
     SET.hidden=Array.isArray(st.hiddenCats)?st.hiddenCats.slice():[];
     SET.custom=Array.isArray(st.customCats)?st.customCats.map(function(c){return {id:c.id,name:c.name,emoji:c.emoji}}):[];
     SET.cmpNames=(st.cmpNames!==false);SET.about=st.about||'';SET.life=String(lifeDays());
@@ -2642,6 +2666,25 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     catch(e){SET.err=A('சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.');SET.msg=''}
     renderSeller();window.scrollTo(0,0);
   }
+  /* social row + waiting face */
+  var FACE_SVG='<svg viewBox="0 0 44 34" aria-hidden="true"><g class="fc"><circle class="face" cx="15" cy="17" r="13" fill="#FFC61A"/><g class="sw"><circle cx="11" cy="14" r="1.8" fill="#3b2a00"/><circle cx="19" cy="14" r="1.8" fill="#3b2a00"/><path d="M10 21.5q5 3.5 10 0" fill="none" stroke="#3b2a00" stroke-width="1.8" stroke-linecap="round"/></g><g class="sh"><path d="M8.5 15.5q2.5-3.5 5 0M16.5 15.5q2.5-3.5 5 0" fill="none" stroke="#3b2a00" stroke-width="1.8" stroke-linecap="round"/><path d="M9 20.5q6 8 12 0z" fill="#8a2b00"/></g><g class="ss"><circle cx="11" cy="16" r="1.6" fill="#4a4a4a"/><circle cx="19" cy="16" r="1.6" fill="#4a4a4a"/><path d="M8.5 12.5l5 1.2M21.5 12.5l-5 1.2" stroke="#4a4a4a" stroke-width="1.4" stroke-linecap="round"/><path d="M10 24.5q5-4 10 0" fill="none" stroke="#4a4a4a" stroke-width="1.8" stroke-linecap="round"/></g></g><g class="hd"><circle cx="30" cy="18" r="4" fill="#F1B98A"/><rect x="31" y="15.2" width="11" height="5.6" rx="2.8" fill="#F1B98A"/></g></svg>';
+  function socFace(){ var f=h('span',{class:'sface','data-s':'w','aria-hidden':'true'}); f.innerHTML=FACE_SVG; return f }
+  function socRowEl(x,live){
+    var meta=SOC[x.type]||SOC.other,name=x.type==='other'?(x.label||'Link'):meta[0];
+    var sb=h('span',{class:'sb',style:'background:'+meta[1]}); if(SOCI[x.type]) sb.innerHTML=SOCI[x.type]; else sb.textContent=name.charAt(0).toUpperCase();
+    var kids=[sb,h('span',{class:'sn'},h('b',null,name),x.label&&x.type!=='other'?h('small',null,x.label):null),socFace(),h('span',{class:'go2'},t('openSoc')+' →')];
+    if(!live) return h('div',{class:'social'},...kids);
+    var el=h('a',{class:'social',href:safeUrl(x.url),target:'_blank',rel:'noopener noreferrer'},...kids);
+    var face=el.querySelector('.sface'),down=false,clicked=false,tm=0;
+    function set(v){ face.setAttribute('data-s',v) }
+    function later(){ clearTimeout(tm); tm=setTimeout(function(){ set('w') },2200) }
+    function lost(){ if(!down) return; down=false; setTimeout(function(){ if(!clicked){ set('s'); later() } },140) }
+    el.addEventListener('pointerdown',function(){ down=true; clicked=false; clearTimeout(tm); set('h') });
+    el.addEventListener('pointerup',lost); el.addEventListener('pointercancel',lost); el.addEventListener('pointerleave',lost);
+    el.addEventListener('click',function(){ clicked=true; down=false; set('h'); later() });
+    return el;
+  }
+
   function sellerSettings(){
     if(!SET.init) setLoad();
     var errP=h('p',{class:'err',role:'alert',hidden:SET.err?null:true},SET.err),okP=h('p',{class:'ok',hidden:SET.msg?null:true},SET.msg);
@@ -2761,6 +2804,44 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         h('div',{class:'fld'},h('span',{class:'lbl'},A('📢 முகப்புல மேல காட்டும் அறிவிப்பு')),h('label',{class:'chk',for:'s-annon'},an,A('அறிவிப்பை காட்டு')),tin('annText',A('எ.கா. தீபாவளி ஸ்பெஷல் டீல்ஸ் வந்தாச்சு!'),100),h('span',{class:'hint'},A('வாடிக்கையாளர் மொழி எதுவானாலும் இதே வாசகம் தெரியும்.'))),
         fld(A('அறிவிப்பை தொட்டா போற லிங்க் (optional)'),'s-annu',tin('annUrl','https://…',200,'url')));
     }
+    function pvBox(build){
+      var box=h('div',{class:'pvbox'}),inner=h('div',{class:'pvin'});
+      function r(){ try{ inner.replaceChildren(build()) }catch(e){ inner.replaceChildren() } }
+      r(); body.addEventListener('input',r); body.addEventListener('change',r);
+      box.append(h('span',{class:'pvl'},A('👀 வாடிக்கையாளருக்கு இப்படி தெரியும்')),inner); return box;
+    }
+    function pvBrand(){
+      var nm=(SET.appName||'').trim()||'TruePick',tg=(SET.tagline||'').trim()||t('tagline');
+      return h('div',{class:'pvhdr'},SET.logo?h('img',{src:SET.logo,alt:''}):h('div',{class:'pvlg'},'🛍️'),h('div',null,h('b',null,nm),h('span',null,tg)));
+    }
+    var PVB={
+      look:function(){
+        var z=SET.zn||[],d=(SET.disc||'').trim();
+        var chips=[0,1,2].map(function(i){return h('span',{class:'chip'},'< ₹'+(z[i]||'?'))}); chips.push(h('span',{class:'chip'},'> ₹'+(z[3]||'?')));
+        return h('div',null,pvBrand(),h('div',{class:'pvrow'},chips),d?h('p',{class:'pvnote'},d):null);
+      },
+      cats:function(){
+        var arr=TAXALL.filter(function(m){return m.id!=='Others'&&SET.hidden.indexOf(m.id)<0}).map(function(m){return h('span',{class:'chip'},m.e+' '+acat(m.id))});
+        SET.custom.forEach(function(c){ if((c.name||'').trim()) arr.push(h('span',{class:'chip'},(c.emoji||'🏷️')+' '+c.name.trim())) });
+        return h('div',{class:'pvrow'},arr.length?arr:h('span',{class:'pvnote'},A('எந்த வகையும் தெரியாது.')));
+      },
+      soc:function(){
+        var o=SET.own||{},kids=[h('div',{class:'pvhdr pvlight'},SET.logo?h('img',{src:SET.logo,alt:''}):h('div',{class:'pvlg'},'🛍️'),h('div',null,h('b',null,(SET.appName||'').trim()||'TruePick'),h('span',null,(SET.tagline||'').trim()||t('tagline'))))];
+        if(o.on!==false){
+          var u=safeUrl(o.url)||'https://nesamshopping.com';
+          kids.push(h('div',{class:'fown'},h('b',{class:'fon'},(o.name||'').trim()||'S. Raja Mohamed'),h('span',{class:'fot'},(o.title||'').trim()||'Founder & CEO, NesamShopping'),h('span',{class:'fol'},u.replace(/^https?:\/\//,'').replace(/\/$/,'')),h('p',null,(o.line||'').trim()||t('ownLine'))));
+        }
+        var ab=(SET.about||'').trim(); if(ab) kids.push(h('p',{class:'pvnote'},ab));
+        SET.socials.forEach(function(x){ if(String(x.url||'').trim()) kids.push(socRowEl(x,false)) });
+        return h('div',null,kids);
+      },
+      rules:function(){
+        var tx=(SET.annText||'').trim();
+        if(!SET.annOn||!tx) return h('p',{class:'pvnote'},A('அறிவிப்பு ஆஃப் அல்லது வாசகம் காலி. வாடிக்கையாளருக்கு எதுவும் தெரியாது.'));
+        return h('div',{class:'ann'},'📢 '+tx+((SET.annUrl||'').trim()?' →':''));
+      }
+    };
+    if(PVB[SET.sec]) body.prepend(pvBox(PVB[SET.sec]));
     var save=h('button',{class:'go',type:'button'},A('💾 சேமி'));
     save.addEventListener('click',saveAll);
     var acc=h('div',null,secs.map(function(x){ var op=SET.sec===x[0]; return h('div',null,h('button',{type:'button',class:'acc','aria-expanded':op?'true':'false',onclick:function(){ SET.sec=op?'':x[0]; renderSeller() }},h('span',null,x[1]),h('i',{style:'font-style:normal'},op?'⌃':'⌄')),op?h('div',{class:'accb panel'},body):null) }));
@@ -2827,9 +2908,19 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   FSYM.c_gift='<svg viewBox="0 0 56 56"><g class="zbob zfb"><rect x="8" y="22" width="40" height="26" rx="3" fill="#E03131"/><rect x="5" y="16" width="46" height="10" rx="3" fill="#FA5252"/><rect x="25" y="16" width="6" height="32" fill="#FFD43B"/><path d="M28 16c-8-10-16-2-8 0zM28 16c8-10 16-2 8 0z" fill="none" stroke="#FFD43B" stroke-width="3"/></g></svg>';
   FSYM.c_none='';
   function festState(){ var f=S.settings&&S.settings.fest; return {on:!!(f&&f.on),items:(f&&f.items)||{},custom:(f&&f.custom)||null} }
+  function customFA(c){ var lk=CLOOKS[+c.look]||CLOOKS[0],nm=(c.name||'').trim()||'பண்டிகை'; return {id:'custom',custom:true,sy:c.sym||'c_star',ta:nm,en:nm,gta:(c.greet||'').trim()||(nm+' வாழ்த்துகள்'),gen:(c.greet||'').trim()||(nm+' வாழ்த்துகள்'),a:lk.a,bg:lk.bg,b:lk.b,t:lk.t,g:lk.g,strip:c.strip!==false} }
+  function festPreview(fa){
+    var ta=S.lang==='ta',nm=ta?fa.ta:fa.en,tx=ta?(nm+' சிறப்பு சலுகைகள்'):(nm+' Special Offers'),gr=ta?fa.gta:fa.gen;
+    var sym=h('span',{class:'fsym',style:'pointer-events:none'}); sym.innerHTML=FSYM[fa.sy]||'';
+    var band=h('div',{class:'fest'+(fa.custom&&!fa.strip?' nostrip':''),style:'--fa:'+fa.a+';--ft:'+fa.t+';--fbg:'+fa.b+';margin:8px'});
+    if(fa.custom&&!fa.strip) band.append(h('div',{class:'fgr'},h('div',{class:'fg'},gr),sym)); else band.append(h('div',{class:'fg'},gr),h('div',{class:'fl'},h('span',{class:'ftx'},tx),sym));
+    var chips=h('div',{style:'display:flex;gap:6px;padding:0 8px 8px'},['🛍️ '+(ta?'எல்லாம்':'All'),'👗','📱'].map(function(x,i){ return h('span',{style:'padding:5px 10px;border-radius:99px;font-size:12px;font-weight:700;'+(i===0?'background:'+fa.a+';color:#fff':'background:#fff;color:#333;border:1px solid rgba(0,0,0,.12)')},x) }));
+    var card=h('div',{style:'margin:0 8px 8px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:8px;color:#1B2440;display:flex;gap:8px;align-items:center'},h('div',{style:'width:44px;height:44px;border-radius:8px;background:rgba(128,128,128,.2)'}),h('div',null,h('b',{style:'color:#0B7A43;font-size:16px'},'₹457'),h('div',{style:'font-size:11px'},'Save ₹542 · 54% off')),h('span',{style:'margin-left:auto;background:#FFC61A;color:#1B2440;font-weight:800;font-size:12px;padding:7px 10px;border-radius:8px'},'Get this deal'));
+    return h('div',{style:'border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.15);background:'+fa.bg+';margin:8px 0'},h('div',{style:'background:'+fa.a+';color:#fff;font-weight:800;padding:8px 12px;font-size:14px'},'TruePick'),band,chips,card);
+  }
   function festActive(){
     var st=festState(),k=dayKey(),i,it,c=st.custom;
-    if(c&&c.on&&c.name&&c.s&&c.e&&c.s<=k&&k<=c.e){ var lk=CLOOKS[+c.look]||CLOOKS[0]; return {id:'custom',custom:true,sy:c.sym||'c_star',ta:c.name,en:c.name,gta:c.greet||(c.name+' வாழ்த்துகள்'),gen:c.greet||(c.name+' வாழ்த்துகள்'),a:lk.a,bg:lk.bg,b:lk.b,t:lk.t,g:lk.g,strip:c.strip!==false} }
+    if(c&&c.on&&c.name&&c.s&&c.e&&c.s<=k&&k<=c.e) return customFA(c);
     if(!st.on) return null;
     for(i=0;i<FESTS.length;i++){ it=st.items[FESTS[i].id]; if(it&&it.s&&it.e&&it.s<=k&&k<=it.e) return FESTS[i] }
     return null;
