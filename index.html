@@ -2291,7 +2291,20 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     try{ await S.db.collection('autodeals').doc(p.id).delete(); delete PEND.pick[p.id]; toast(A('நிராகரிச்சாச்சு')) }catch(e){ toast(A('செய்ய முடியல. மறுபடி முயற்சி பண்ணு.')) }
   }
 
+  function navSync(){ /* admin: every page change = one history step, so phone Back goes one step back */
+    try{ if(!(S.view==='seller'&&S.admin)) return; var st=history.state;
+      if(!st||!st.sv){ history.replaceState({sv:1,stab:S.stab},''); return }
+      if(st.stab!==S.stab){ st.y=window.scrollY||0; history.replaceState(st,''); history.pushState({sv:1,stab:S.stab,prev:st.stab},'') }
+    }catch(e){}
+  }
+  window.addEventListener('popstate',function(e){
+    var st=e.state; if(!st||!st.sv||!S.admin) return;
+    if((location.hash||'').replace(/^#/,'')!=='seller') return;
+    S.view='seller'; S.stab=st.stab||'dash'; render();
+    var y=st.y||0; setTimeout(function(){ window.scrollTo(0,y) },0);
+  });
   function renderSeller(){
+    navSync();
     var root=$('seller'); root.replaceChildren();
     pendInit();
     if(!F) F=blankForm();
@@ -2306,7 +2319,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     else if(S.stab==='stats') root.append(sellerStats());
     else if(S.stab==='more') root.append(sellerMore());
     else if(isSub){
-      root.append(h('button',{type:'button',class:'mrow',style:'width:auto;padding:8px 14px;margin-bottom:10px',onclick:function(){S.stab='more';renderSeller();window.scrollTo(0,0)}},A('← மேலும்')));
+      root.append(h('button',{type:'button',class:'mrow',style:'width:auto;padding:8px 14px;margin-bottom:10px',onclick:function(){ var st=history.state; if(st&&st.sv&&st.prev==='more'){ history.back(); return } S.stab='more';renderSeller();window.scrollTo(0,0)}},A('← மேலும்')));
       if(S.stab==='pend') root.append(sellerPending());
       else if(S.stab==='promo') root.append(sellerPromo());
       else if(S.stab==='cmt') root.append(sellerComments());
@@ -2511,7 +2524,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(due) tdl.push(tdi('🎉',due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+' — '+A('தேதி வை'),function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) },true));
     if(soon) tdl.push(tdi('⏳',A('{n} டீல்கள் இன்று முடிகின்றன').replace('{n}',soon),gotab('list')));
     if(ncm) tdl.push(tdi('💬',A('{n} புது கருத்துகள்').replace('{n}',ncm),gotab('cmt')));
-    if(unck) tdl.push(tdi('🔍',A('{n} டீல்களின் விலை 2 நாளாகச் சரிபார்க்கவில்லை').replace('{n}',unck),gotab('list')));
+    if(false&&unck) tdl.push(tdi('🔍',A('{n} டீல்களின் விலை 2 நாளாகச் சரிபார்க்கவில்லை').replace('{n}',unck),gotab('list')));
     if(PEND.list&&PEND.list.length) tdl.push(tdi('⏳',A('{n} டீல் நிலுவையில் (ஒப்புதலுக்கு)').replace('{n}',PEND.list.length),gotab('pend')));
     var todo=h('div',{class:'panel todo'},h('h2',null,A('📋 இன்று செய்ய வேண்டியவை')),tdl.length?tdl:h('div',{class:'tdi ok'},h('b',null,'✅'),h('span',null,A('இன்று எல்லாம் முடிந்தது — ஓய்வெடுங்க!'))));
     var fban=null&&due?h('button',{type:'button',class:'fban',onclick:function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) }},h('b',null,'🎉'),h('span',null,due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+A(' — தொட்டுத் தேதி வை'))):null;
@@ -2952,7 +2965,6 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
           h('div',{class:'hint'},A('போட்டது {a}').replace('{a}',ago(d.createdAt||Date.now()))),
           h('div',{class:'racts'},
             h('button',{type:'button',onclick:function(){F=formFrom(d);S.stab='new';renderSeller();window.scrollTo(0,0)}},A('திருத்து')),
-            h('button',{type:'button',onclick:function(){patchUndo(d,{checkedAt:Date.now()},A('விலை சரிபார்த்ததா குறிச்சாச்சு'))}},A('விலை சரிபார்த்தேன்')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{ended:!d.ended},d.ended?A('மறுபடி லைவ் ஆக்கியாச்சு'):A('முடிஞ்சதுனு குறிச்சாச்சு'))}},d.ended?A('மறுபடி லைவ்'):A('முடிஞ்சது')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{pinned:!d.pinned},d.pinned?A('📌 எடுத்தாச்சு'):A('📌 மேல வச்சாச்சு'))}},d.pinned?A('📌 எடு'):A('📌 மேல வை')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{allowCmt:!d.allowCmt},d.allowCmt?A('💬 கருத்து ஆஃப் ஆச்சு'):A('💬 கருத்து ஆன் ஆச்சு'))}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
