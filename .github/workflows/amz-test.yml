@@ -1,0 +1,48 @@
+name: Amazon test
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Try Amazon Creators API
+        env:
+          CID: ${{ secrets.AMZ_CRED_ID }}
+          CSEC: ${{ secrets.AMZ_CRED_SECRET }}
+          TAG: ${{ secrets.AMZ_TAG }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.error
+          def post(url, body, headers):
+              req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers, method='POST')
+              try:
+                  r = urllib.request.urlopen(req, timeout=30)
+                  return r.status, json.loads(r.read().decode())
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read().decode()[:700]
+          st, tok = post('https://api.amazon.co.uk/auth/o2/token',
+                         {'grant_type': 'client_credentials', 'client_id': os.environ['CID'].strip(),
+                          'client_secret': os.environ['CSEC'].strip(), 'scope': 'creatorsapi::default'},
+                         {'Content-Type': 'application/json'})
+          print('TOKEN status:', st)
+          if st != 200 or not isinstance(tok, dict) or 'access_token' not in tok:
+              print('TOKEN failed:', str(tok)[:400]); raise SystemExit(1)
+          at = tok['access_token']
+          tag = os.environ['TAG'].strip()
+          first = None
+          for kw in ['kurti', 'saree', 'watch', 'shoes', 'headphones', 'backpack', 'mixer grinder', 'trimmer']:
+              st, d = post('https://creatorsapi.amazon/catalog/v1/searchItems',
+                           {'keywords': kw, 'partnerTag': tag, 'marketplace': 'www.amazon.in', 'itemCount': 10,
+                            'minSavingPercent': 30,
+                            'resources': ['images.primary.large', 'itemInfo.title', 'offersV2.listings.price']},
+                           {'Authorization': 'Bearer ' + at, 'Content-Type': 'application/json',
+                            'x-marketplace': 'www.amazon.in'})
+              if st != 200:
+                  print(kw, '-> status', st, str(d)[:400]); continue
+              items = (d.get('searchResult') or {}).get('items') or []
+              withimg = sum(1 for i in items if ((i.get('images') or {}).get('primary') or {}).get('large'))
+              print(kw, '-> items:', len(items), ' with image:', withimg)
+              if items and not first: first = items[0]
+          if first:
+              print('--- SAMPLE ITEM ---')
+              print(json.dumps(first, ensure_ascii=False)[:1800])
+          PY
