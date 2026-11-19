@@ -393,6 +393,7 @@ a{color:inherit}
 .alsh .x{position:absolute;right:12px;top:8px;border:0;background:none;font-size:22px;color:var(--muted);cursor:pointer}
 .alsh h3{margin:0 0 3px;font-size:16px}.alsh .s{font-size:12.5px;color:var(--muted);margin-bottom:10px}
 .alsh .alg{grid-template-columns:repeat(3,1fr)}
+.alc .alb{display:flex;align-items:center;justify-content:center;margin:6px;height:30px;border-radius:calc(var(--rad,14px)*.6);background:var(--accent);color:var(--accent-ink,#111);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden}
 .card{cursor:pointer}
 .btns{display:flex;gap:10px;margin-top:8px}
 .btns button{flex:1;height:48px;border-radius:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:var(--card)}
@@ -1487,12 +1488,16 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     el.hidden=false;
   }
   /* ===== you may also like (same category) ===== */
+  var ALBUY={ta:'வாங்க →',en:'Buy →',tl:'Vaanga →',hi:'खरीदें →',te:'కొనండి →',kn:'ಖರೀದಿಸಿ →',ml:'വാങ്ങൂ →',mr:'खरेदी करा →',bn:'কিনুন →',gu:'ખરીદો →',pa:'ਖਰੀਦੋ →',or:'କିଣନ୍ତୁ →',as:'কিনক →',ur:'خریدیں →',ne:'किन्नुहोस् →'};
   function alikeEl(fd){
     var c=normCat(fd.category),cnt=function(d){ return (S.dc&&S.dc[d.id]&&+S.dc[d.id].c)||0 };
     var pick=S.deals.filter(function(d){return d.id!==fd.id&&!d.sample&&nLive(d)&&normCat(d.category)===c}).sort(function(a,b){return cnt(b)-cnt(a)||(b.createdAt||0)-(a.createdAt||0)}).slice(0,3);
     if(!pick.length) return null;
     return h('div',{class:'alike'},h('h3',null,'💡 '+(S.lang==='ta'?'இதுவும் பிடிக்கலாம்':'You may also like')),h('div',{class:'alg'},pick.map(function(d){
-      return h('a',{class:'alc',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',null,dTitle(d)),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null);
+      var lk=safeUrl(d.link);
+      if(!lk) return h('a',{class:'alc',href:'#deal-'+d.id},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',null,dTitle(d)),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null);
+      /* also-like tile: whole tile goes straight to the store (counts like "Get this deal") */
+      return h('a',{class:'alc',href:lk,target:'_blank',rel:'noopener noreferrer sponsored nofollow',onclick:function(){ try{ trkClick(d) }catch(e){} }},h('img',{src:dealImgs(d)[0]||PLACEHOLDER,alt:'',loading:'lazy'}),h('div',null,dTitle(d)),hasPrice(d)?h('b',null,d.newPrice===0?t('free'):inr(d.newPrice)):null,h('span',{class:'alb'},ALBUY[S.lang]||ALBUY.en));
     })));
   }
   function alikeList(fd,n){
@@ -1520,14 +1525,14 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       if(S.view==='seller'||S.focus) return;
       var cd=e.target.closest&&e.target.closest('#feed article.card'); if(!cd) return;
       if(e.target.closest('a,button,input,textarea,select,label,summary,.coupon,.rx,code')) return;
-      var id=cd.getAttribute('data-id'),d=S.deals.filter(function(x){return x.id===id})[0]; if(!d||d.sample) return;
-      svAdd(d); rvAdd(d.id); openAlike(d);
+      var id=cd.getAttribute('data-id'),d=S.deals.filter(function(x){return x.id===id})[0]; if(!d||d.sample||S.focus===id) return;
+      svAdd(d); rvAdd(d.id); location.hash='deal-'+id; /* open the big deal view (also-like shows under it) */
     }catch(err){}
   });
   /* back from the store -> also-like sheet (within 30 min) */
   var OUT=null;
   document.addEventListener('visibilitychange',function(){
-    if(document.visibilityState!=='visible'||!OUT) return;
+    if(document.visibilityState!=='visible'||!OUT) return; OUT=null; return; /* return-from-store sheet turned off */
     var o=OUT; OUT=null;
     if(Date.now()-o.t<1500||Date.now()-o.t>30*60000) return;
     setTimeout(function(){ try{ if(S.view!=='seller'){ var d=S.deals.filter(function(x){return x.id===o.id})[0]; if(d) openAlike(d) } }catch(e){} },400);
@@ -4107,9 +4112,9 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(!id) return;
     var d=S.deals.filter(function(x){return x.id===id})[0];
     if(!d||S.admin&&S.view==='seller'){ location.hash='deal-'+id; return }
+    if(S.focus===id) return;
     try{ svAdd(d); rvAdd(d.id) }catch(e){}
-    if(alikeList(d,1).length) openAlike(d);
-    else { var im=dealImgs(d); if(im.length&&im[0]!==PLACEHOLDER) openLightbox(im,0,dTitle(d)) }
+    location.hash='deal-'+id; /* big deal view, also-like under it */
   }
   function route(){
     var hsh=(location.hash||'').replace(/^#/,'');
