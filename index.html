@@ -606,6 +606,15 @@ span.cbadge{cursor:default}
 .lkst.fail,.lkst.bad{background:#fee2e2;color:#b91c1c}
 .lkst.ok{background:#dcfce7;color:#166534}
 .lkbtn{margin:6px 0;font-weight:800}
+.agrid{display:grid!important;gap:6px;max-width:none}
+.atile{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);overflow:hidden;cursor:pointer;min-width:0;font:inherit}
+.atile.end{opacity:.6}.atile .ai{position:relative;display:block;aspect-ratio:1/1;background:#fff}.atile .ai img{width:100%;height:100%;object-fit:contain;display:block}
+.atile .ast{position:absolute;left:3px;top:3px;font-style:normal;font-size:9.5px;font-weight:800;padding:1px 4px;border-radius:5px;background:#0A8A5F;color:#fff}.atile .ast.r{background:#D81E2D}
+.atile .apin{position:absolute;right:2px;top:1px;font-style:normal;font-size:12px}
+.atile .at{font-size:11px;font-weight:700;line-height:1.25;padding:4px 5px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.atile .ap{display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding:2px 5px 5px;font-size:11px}.atile .ap b{color:var(--save)}.atile .ap em{font-style:normal;font-weight:800;background:#FFC61A;color:#14213D;border-radius:5px;padding:0 4px}
+.alvb{display:flex;align-items:center;gap:8px;margin:0 0 10px}.alvb .sws{display:flex;gap:6px;flex-wrap:wrap}
+.alsheet{max-height:85vh;overflow:auto;padding:8px 12px 14px}.alsheet .row{border:0;box-shadow:none;padding:0}
 .lkrow{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:nowrap}.lkrow .lkbtn{white-space:nowrap;font-size:13px;padding-left:10px;padding-right:10px;min-width:0}.lkgo{margin-left:auto}
 .pprice{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;margin:4px 0}
 .pprice s{opacity:.6}.pprice b{font-size:18px}
@@ -2188,7 +2197,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function asub(x){ return S.lang==='ta'?((SUBT.ta&&SUBT.ta[x])||x):subLabel(x) }
   /* ============ seller studio (admin only, Tamil) ============ */
   var F=null;
-  Object.assign(AD,{'↗ லிங்க் உள்ளே போ':{"en":'↗ Open link',"hi":'↗ लिंक खोलें'},'முதல்ல லிங்கை ஒட்டு':{"en":'Paste the link first',"hi":'पहले लिंक डालें'},'🔗 லிங்க்ல இருந்து எடு':{"en":'🔗 Take from link',"hi":'🔗 लिंक से भरें'},'லிங்கை ஒட்டிட்டு இந்த பட்டனை அழுத்து. படம், தலைப்பு, விலை தானா வரும். வரலன்னா நீயே போடு.':{"en":'Paste the link and press this button. Image, title and price are filled in automatically. If they do not come, add them yourself.',"hi":'लिंक चिपकाकर यह बटन दबाएं। फोटो, टाइटल और कीमत अपने आप आएंगे। न आए तो खुद डालें।'},'எடுக்கிறேன்… கொஞ்சம் பொறு ⏳':{"en":'Fetching… please wait ⏳',"hi":'ला रहा हूँ… थोड़ा रुकें ⏳'},'முதல்ல affiliate லிங்கை (https://) ஒட்டு.':{"en":'First paste the affiliate link (https://).',"hi":'पहले एफिलिएट लिंक (https://) चिपकाएं।'},'எடுத்தாச்சு ✔':{"en":'Fetched ✔',"hi":'मिल गया ✔'},'வராததை நீயே போடு.':{"en":'Add the missing ones yourself.',"hi":'जो नहीं आया वह खुद डालें।'},'இந்த லிங்கல இருந்து எடுக்க முடியல 😕 படத்தை "+ போட்டோ"ல போடு, விலையை நீயே எழுது.':{"en":'Could not fetch from this link 😕 Add the photo with "+ Photo" and type the price yourself.',"hi":'इस लिंक से नहीं मिल पाया 😕 "+ फोटो" से फोटो डालें और कीमत खुद लिखें।'},'எடுக்க முடியல 😕 நீயே போடு':{"en":'Could not fetch 😕 add it yourself',"hi":'नहीं मिला 😕 खुद डालें'},'கடை':{"en":'Store',"hi":'स्टोर'},'படம்':{"en":'Image',"hi":'फोटो'},'விலை':{"en":'Price',"hi":'कीमत'},'பழைய விலை':{"en":'Old price',"hi":'पुरानी कीमत'},'சந்தை விலை (MRP ₹, optional)':{"en":'Market price (MRP ₹, optional)',"hi":'बाज़ार भाव (MRP ₹, वैकल्पिक)'},'ஆஃபர் விலை (₹, optional)':{"en":'Offer price (₹, optional)',"hi":'ऑफर कीमत (₹, वैकल्पिक)'},'சந்தை விலை கோடிட்டு காட்டும், ஆஃபர் விலை பெருசா தெரியும். ஆஃபர் மட்டும் போட்டாலும் ஓகே.':{"en":'Market price is shown struck through, offer price shown big. Offer price alone is fine too.',"hi":'बाज़ार भाव कटा हुआ दिखेगा, ऑफर कीमत बड़ी। सिर्फ ऑफर कीमत भी चलेगा।'},'🎟 கூப்பன் கோடு (எ.கா. DIWALI50)':{"en":'🎟 Coupon code (e.g. DIWALI50)',"hi":'🎟 कूपन कोड (जैसे DIWALI50)'},'கூப்பன் விவரம் (எ.கா. ₹200 OFF)':{"en":'Coupon details (e.g. ₹200 OFF)',"hi":'कूपन विवरण (जैसे ₹200 OFF)'},'கூப்பன் முடியும் நேரம் (optional)':{"en":'Coupon valid until (optional)',"hi":'कूपन कब तक मान्य (वैकल्पिक)'},'நேரம் முடிஞ்சதும் கூப்பன் தானா மறைஞ்சிடும்.':{"en":'The coupon hides automatically when time is over.',"hi":'समय खत्म होते ही कूपन अपने आप छिप जाएगा।'},'ஆஃபர் விலை சரியா இல்ல.':{"en":'Offer price is not valid.',"hi":'ऑफर कीमत सही नहीं है।'},'சந்தை விலை சரியா இல்ல.':{"en":'Market price is not valid.',"hi":'बाज़ार भाव सही नहीं है।'},'சந்தை விலை, ஆஃபர் விலையை விட அதிகமா இருக்கணும்.':{"en":'Market price must be higher than the offer price.',"hi":'बाज़ार भाव, ऑफर कीमत से ज़्यादा होना चाहिए।'}});
+  Object.assign(AD,{'பார்வை':{"en":'View',"hi":'व्यू'},'☰ பட்டியல்':{"en":'☰ List',"hi":'☰ सूची'},'↗ லிங்க் உள்ளே போ':{"en":'↗ Open link',"hi":'↗ लिंक खोलें'},'முதல்ல லிங்கை ஒட்டு':{"en":'Paste the link first',"hi":'पहले लिंक डालें'},'🔗 லிங்க்ல இருந்து எடு':{"en":'🔗 Take from link',"hi":'🔗 लिंक से भरें'},'லிங்கை ஒட்டிட்டு இந்த பட்டனை அழுத்து. படம், தலைப்பு, விலை தானா வரும். வரலன்னா நீயே போடு.':{"en":'Paste the link and press this button. Image, title and price are filled in automatically. If they do not come, add them yourself.',"hi":'लिंक चिपकाकर यह बटन दबाएं। फोटो, टाइटल और कीमत अपने आप आएंगे। न आए तो खुद डालें।'},'எடுக்கிறேன்… கொஞ்சம் பொறு ⏳':{"en":'Fetching… please wait ⏳',"hi":'ला रहा हूँ… थोड़ा रुकें ⏳'},'முதல்ல affiliate லிங்கை (https://) ஒட்டு.':{"en":'First paste the affiliate link (https://).',"hi":'पहले एफिलिएट लिंक (https://) चिपकाएं।'},'எடுத்தாச்சு ✔':{"en":'Fetched ✔',"hi":'मिल गया ✔'},'வராததை நீயே போடு.':{"en":'Add the missing ones yourself.',"hi":'जो नहीं आया वह खुद डालें।'},'இந்த லிங்கல இருந்து எடுக்க முடியல 😕 படத்தை "+ போட்டோ"ல போடு, விலையை நீயே எழுது.':{"en":'Could not fetch from this link 😕 Add the photo with "+ Photo" and type the price yourself.',"hi":'इस लिंक से नहीं मिल पाया 😕 "+ फोटो" से फोटो डालें और कीमत खुद लिखें।'},'எடுக்க முடியல 😕 நீயே போடு':{"en":'Could not fetch 😕 add it yourself',"hi":'नहीं मिला 😕 खुद डालें'},'கடை':{"en":'Store',"hi":'स्टोर'},'படம்':{"en":'Image',"hi":'फोटो'},'விலை':{"en":'Price',"hi":'कीमत'},'பழைய விலை':{"en":'Old price',"hi":'पुरानी कीमत'},'சந்தை விலை (MRP ₹, optional)':{"en":'Market price (MRP ₹, optional)',"hi":'बाज़ार भाव (MRP ₹, वैकल्पिक)'},'ஆஃபர் விலை (₹, optional)':{"en":'Offer price (₹, optional)',"hi":'ऑफर कीमत (₹, वैकल्पिक)'},'சந்தை விலை கோடிட்டு காட்டும், ஆஃபர் விலை பெருசா தெரியும். ஆஃபர் மட்டும் போட்டாலும் ஓகே.':{"en":'Market price is shown struck through, offer price shown big. Offer price alone is fine too.',"hi":'बाज़ार भाव कटा हुआ दिखेगा, ऑफर कीमत बड़ी। सिर्फ ऑफर कीमत भी चलेगा।'},'🎟 கூப்பன் கோடு (எ.கா. DIWALI50)':{"en":'🎟 Coupon code (e.g. DIWALI50)',"hi":'🎟 कूपन कोड (जैसे DIWALI50)'},'கூப்பன் விவரம் (எ.கா. ₹200 OFF)':{"en":'Coupon details (e.g. ₹200 OFF)',"hi":'कूपन विवरण (जैसे ₹200 OFF)'},'கூப்பன் முடியும் நேரம் (optional)':{"en":'Coupon valid until (optional)',"hi":'कूपन कब तक मान्य (वैकल्पिक)'},'நேரம் முடிஞ்சதும் கூப்பன் தானா மறைஞ்சிடும்.':{"en":'The coupon hides automatically when time is over.',"hi":'समय खत्म होते ही कूपन अपने आप छिप जाएगा।'},'ஆஃபர் விலை சரியா இல்ல.':{"en":'Offer price is not valid.',"hi":'ऑफर कीमत सही नहीं है।'},'சந்தை விலை சரியா இல்ல.':{"en":'Market price is not valid.',"hi":'बाज़ार भाव सही नहीं है।'},'சந்தை விலை, ஆஃபர் விலையை விட அதிகமா இருக்கணும்.':{"en":'Market price must be higher than the offer price.',"hi":'बाज़ार भाव, ऑफर कीमत से ज़्यादा होना चाहिए।'}});
   Object.assign(AD,{'வகை':{'en':'Category','hi':'श्रेणी'},'விவரம்':{'en':'Description','hi':'विवरण'}});
   function blankForm(){return {id:null,createdAt:null,photos:[],title:'',main:'',sub:'',source:'Amazon',storeName:'',srcAuto:false,oldPrice:'',newPrice:'',offerText:'',link:'',extra:'',coupon:'',expires:'',desc:'',pinned:false,pick:false,comm:'',ended:false,sample:false,video:'',err:'',ok:'',busy:false,offers:[],noGame:false,inGame:false,allowCmt:false}}
   function formFrom(d){
@@ -2952,7 +2961,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var box=h('div',{class:'lst'});
     var sortBar=h('div',{class:'fld'},h('span',{class:'lbl'},A('வரிசை')),h('div',{class:'sws'},[['new',A('புதுசு மேல')],['comm',A('💰 கமிஷன் அதிகம் மேல')]].map(function(o){return h('button',{type:'button',class:'chip','aria-pressed':PRIV.sort===o[0]?'true':'false',onclick:function(){PRIV.sort=o[0];renderSeller()}},o[1])})),PRIV.err?h('span',{class:'hint'},A('கமிஷன் சேமிக்க/காட்ட ரூல்ஸ்ல ஒரு வரி சேர்க்கணும்.')):null);
     if(!list.length) box.append(h('div',{class:'empty'},h('b',null,A('இன்னும் டீல் எதுவும் இல்ல')),A('"புது டீல்" டேபில் முதல் டீலை போடுங்க.')));
-    list.forEach(function(d){
+    var ALV=lsGet('nesam-alv','4'); if(['4','3','l'].indexOf(ALV)<0) ALV='4';
+    var viewBar=h('div',{class:'alvb'},h('span',{class:'lbl'},A('பார்வை')),h('div',{class:'sws'},[['4','▦ 4'],['3','▦ 3'],['l',A('☰ பட்டியல்')]].map(function(o){return h('button',{type:'button',class:'chip','aria-pressed':ALV===o[0]?'true':'false',onclick:function(){lsSet('nesam-alv',o[0]);renderSeller()}},o[1])})));
+    if(ALV!=='l'){ box.className='lst agrid'; box.style.gridTemplateColumns='repeat('+ALV+',minmax(0,1fr))' }
+    function mkRow(d){
       var imgs=dealImgs(d),ended=isEnded(d),p=pct(d),z=zoneOf(d);
       var del=h('button',{class:'del',type:'button'},A('நீக்கு')),armT;
       del.addEventListener('click',function(){
@@ -2961,7 +2973,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         clearTimeout(armT);armT=setTimeout(function(){del.removeAttribute('data-arm');del.textContent=A('நீக்கு')},3000);
       });
       var open=safeUrl(d.link);
-      box.append(h('div',{class:'row'},
+      return h('div',{class:'row'},
         h('img',{src:imgs[0]||PLACEHOLDER,alt:''}),
         h('div',{class:'info'},
           h('div',{class:'t'},d.title),
@@ -2983,10 +2995,31 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
             h('button',{type:'button',onclick:function(){patchUndo(d,{allowCmt:!d.allowCmt},d.allowCmt?A('💬 கருத்து ஆஃப் ஆச்சு'):A('💬 கருத்து ஆன் ஆச்சு'))}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
             armBtn(A('ரியாக்ஷன் ரீசெட்'),A('உறுதியா?'),function(){var rf=S.db.collection('reacts').doc(d.id);rf.get().then(function(sn){var old=(sn&&sn.exists&&sn.data&&sn.data())||null;return rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)}).then(function(){toast('✔',function(){(old?rf.set(old):rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)})).then(function(){toast(A('பழைய நிலைக்கு மாத்தியாச்சு ✔'))})})})}).catch(function(){toast(A('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'))})}),
             open&&h('a',{class:'tg',href:open,target:'_blank',rel:'noopener noreferrer',style:'min-height:36px;display:inline-flex;align-items:center;text-decoration:none;padding:0 10px'},A('லிங்க் சோதி')),
-            del))));
-    });
+            del)));
+    }
+    function openActs(d){ /* grid tile tapped: same row (all buttons) in a bottom sheet */
+      var old=$('alov'); if(old) old.remove();
+      var ov=h('div',{class:'ov',id:'alov',role:'dialog','aria-modal':'true'}),sh=h('div',{class:'sheet alsheet'});
+      function close(){ ov.remove() }
+      sh.append(h('div',{style:'display:flex;justify-content:flex-end'},h('button',{type:'button',class:'wskip','aria-label':'close',onclick:close},'✕')),mkRow(d));
+      sh.addEventListener('click',function(e){
+        var b=e.target.closest&&e.target.closest('button,a'); if(!b||b.classList.contains('wskip')) return;
+        var wasArm=b.getAttribute('data-arm')==='1';
+        setTimeout(function(){ if(wasArm||b.getAttribute('data-arm')!=='1') close() },60);
+      },true);
+      ov.append(sh); ov.addEventListener('click',function(e){ if(e.target===ov) close() }); document.body.append(ov);
+    }
+    function mkTile(d){
+      var imgs=dealImgs(d),ended=isEnded(d),cm=PRIV.map[d.id];
+      return h('button',{type:'button',class:'atile'+(ended?' end':''),onclick:function(){openActs(d)}},
+        h('span',{class:'ai'},h('img',{src:imgs[0]||PLACEHOLDER,alt:'',loading:'lazy'}),
+          h('i',{class:'ast'+(ended?' r':'')},ended?A('முடிஞ்சது'):A('லைவ்')),d.pinned?h('i',{class:'apin'},'📌'):null),
+        h('span',{class:'at'},d.title||''),
+        h('span',{class:'ap'},hasPrice(d)?h('b',null,inr(d.newPrice)):null,cm!=null?h('em',null,cm+'%'):null));
+    }
+    list.forEach(function(d){ box.append(ALV==='l'?mkRow(d):mkTile(d)) });
     if(S.live&&S.hitLimit) box.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},A('பழைய டீல்ஸும் காட்டு')));
-    return h('div',null,sortBar,box);
+    return h('div',null,sortBar,viewBar,box);
   }
 
   /* ---- settings (everything the owner can change) ---- */
