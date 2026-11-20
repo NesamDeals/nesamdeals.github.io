@@ -1075,7 +1075,8 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function storeFromLink(u){ var hst=''; try{ hst=new URL(String(u||'').trim()).hostname }catch(e){ return '' } for(var i=0;i<STRX.length;i++) if(STRX[i][0].test(hst)) return STRX[i][1]; return '' }
   function storeName(d){ var s=String(d.source||''); if(s==='Other') return String(d.storeName||'').trim(); if(/^(wishlink|digital product)$/i.test(s)) return ''; return s }
   function storePill(d){ var n=storeName(d); if(!n) return null; return h('span',{class:'spill',style:'--sc:'+(STC[n]||'#8A94A6')},h('i',null),n) }
-  var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=5;
+  var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=20;
+  function imgBudget(n){ return IMG_BUDGET+Math.max(0,n-5)*25000 }
 
   var S={deals:[],settings:{},cat:(function(){ try{ var c=JSON.parse(localStorage.getItem('nesam-lastcat')||'"all"'); return typeof c==='string'&&c?c:'all' }catch(e){ return 'all' } })(),main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',ct:'',last:false,zone:'',view:'shop',stab:'dash',focus:'',
     admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null,reacts:{},dc:{},promos:[],replies:[],setReady:false};
@@ -2170,11 +2171,12 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   }
   async function fitPhotos(srcs){
     function total(a){return a.reduce(function(n,s){return n+s.length},0)}
-    if(total(srcs)<=IMG_BUDGET) return srcs;
+    var BUD=imgBudget(srcs.length);
+    if(total(srcs)<=BUD) return srcs;
     var lv=[[640,.66],[560,.6],[480,.55],[420,.5],[360,.45],[300,.4],[260,.35]];
     for(var i=0;i<lv.length;i++){
       var out=[]; for(var j=0;j<srcs.length;j++) out.push(await encode(srcs[j],lv[i][0],lv[i][1]));
-      if(total(out)<=IMG_BUDGET) return out;
+      if(total(out)<=BUD) return out;
     }
     return null;
   }
@@ -2709,7 +2711,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       clearTimeout(tm); if(!r.ok) return null;
       var j=await r.json(); if(!j||!j.ok) return null;
       var image=String(j.image||'').replace(/^http:\/\//i,'https://'); if(!safeImg(image)) image='';
-      var title=String(j.title||'').replace(/\s+/g,' ').trim().slice(0,140); if(lkJunk(title,url)) title='';
+      var title=String(j.title||'').replace(/\s+/g,' ').trim().slice(0,500); if(lkJunk(title,url)) title='';
       if(!title&&!image&&!j.price) return null;
       return {title:title,image:image,price:lkNum(j.price),mrp:lkNum(j.mrp),store:/^(Amazon|Meesho|Flipkart|Myntra)$/.test(j.store)?j.store:'',desc:String(j.desc||'').slice(0,200)};
     }catch(e){ return null }
@@ -2732,7 +2734,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       }).catch(function(){})
     ]);
     var a=pg||{},b=ml||{},c=jn||{};
-    var cl=function(x){return String(x||'').replace(/^Amazon\.in\s*:\s*/i,'').replace(/\s*[:|-]\s*Amazon\.in.*$/i,'').replace(/\s+/g,' ').trim().slice(0,140)};
+    var cl=function(x){return String(x||'').replace(/^Amazon\.in\s*:\s*/i,'').replace(/\s*[:|-]\s*Amazon\.in.*$/i,'').replace(/\s+/g,' ').trim().slice(0,500)};
     var title=[a.title,b.title,c.title].map(cl).filter(function(x){return !lkJunk(x,url)})[0]||'';
     var image=String(a.image||b.image||c.image||'').replace(/^http:\/\//i,'https://'); if(!safeImg(image)) image='';
     var host=''; try{ host=new URL(fin).hostname }catch(e){}
@@ -2791,7 +2793,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         i===0?h('span',{class:'cov'},A('முகப்பு')):h('button',{class:'first',type:'button',onclick:function(){var p=F.photos.splice(i,1)[0];F.photos.unshift(p);renderSeller()}},A('முகப்பாக்கு'))));
     });
     if(F.photos.length<MAX_PHOTOS) grid.append(h('label',{class:'addph',for:'f-img'},A('+ போட்டோ'),file));
-    var title=bind(h('input',{id:'f-title',type:'text',maxlength:140,value:F.title,placeholder:A('எ.கா. Cotton Kurti Set (3 colours)')}),'title');
+    var title=bind(h('input',{id:'f-title',type:'text',value:F.title,placeholder:A('எ.கா. Cotton Kurti Set (3 colours)')}),'title');
     var SRCL=SOURCES.slice(); if(F.source&&SRCL.indexOf(F.source)<0) SRCL.splice(SRCL.length-1,0,F.source);
     var src=h('select',{id:'f-src'},SRCL.map(function(k){return h('option',{value:k,selected:F.source===k?true:null},k==='Other'?A('மற்றவை (பெயர் எழுது)'):k)}));
     src.addEventListener('change',function(){F.source=src.value;F.srcAuto=false;renderSeller()});
@@ -2815,7 +2817,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var commI=bind(h('input',{id:'f-comm',type:'number',inputmode:'decimal',min:0,step:'any',value:F.comm,placeholder:'8'}),'comm');
     var vid=bind(h('input',{id:'f-vid',type:'url',inputmode:'url',value:F.video,placeholder:'https://…'}),'video');
     var exp=bind(h('input',{id:'f-exp',type:'datetime-local',value:F.expires}),'expires');
-    var desc=h('textarea',{id:'f-desc',maxlength:1200,placeholder:A('WhatsApp, Instagram-ல போடற மாதிரியே விளக்கத்தை எழுதுங்க.')}); desc.value=F.desc; bind(desc,'desc');
+    var desc=h('textarea',{id:'f-desc',placeholder:A('WhatsApp, Instagram-ல போடற மாதிரியே விளக்கத்தை எழுதுங்க.')}); desc.value=F.desc; bind(desc,'desc');
     var pk=bind(h('input',{id:'f-pk',type:'checkbox',checked:F.pick?true:null}),'pick',true);
     var pin=bind(h('input',{id:'f-pin',type:'checkbox',checked:F.pinned?true:null}),'pinned',true);
     var ng=bind(h('input',{id:'f-ng',type:'checkbox',checked:F.inGame?true:null}),'inGame',true);
