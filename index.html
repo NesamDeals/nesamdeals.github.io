@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="cuelinks-verification" content="VERIFY-CL-66BQJ8UA">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>TruePick</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#002C9D">
@@ -693,6 +693,14 @@ html[data-model=orange] .gclk{box-shadow:0 0 0 2px #fff}
 .mrow b{font-size:22px}.mrow span{flex:1}.mrow i{font-style:normal;color:var(--muted);font-size:13px;font-weight:600}
 .gring{display:flex;align-items:center;gap:14px}
 .gring svg{flex:none}
+.advc .advh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.advb{background:var(--chip);color:var(--ink);border:0;border-radius:10px;padding:6px 12px;font-size:13px;cursor:pointer}
+.advi{border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.55;margin-top:6px}
+.adv-r{background:#FCEBEB;color:#791F1F}.adv-w{background:#FAEEDA;color:#633806}.adv-i,.adv-i2{background:#E6F1FB;color:#0C447C}.adv-g{background:#EAF3DE;color:#27500A}
+.advm{margin-top:10px}.advm summary{font-size:13px;font-weight:700;cursor:pointer}
+.advt{font-size:13px;font-weight:700;margin:10px 0 6px}
+.advr{display:grid;grid-template-columns:96px 1fr 60px;gap:8px;align-items:center;font-size:12px;margin-bottom:6px}
+.advtr{height:8px;background:var(--chip);border-radius:4px;position:relative}.advtr i{display:block;height:100%;border-radius:4px}.advtr u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.55;text-decoration:none}
 .gr2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .gr2>div{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
 .gmsg{margin-top:12px;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.5;font-weight:600}
@@ -2622,7 +2630,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function statsLoad(){
     if(!S.live||!S.db){ STAT.docs=[]; return }
     STAT.loading=true; STAT.err=false;
-    S.db.collection('stats').get().then(function(sn){ STAT.docs=sn.docs.map(function(d){var x=d.data();x._day=d.id;return x}); STAT.loading=false; if(S.stab==='stats') renderSeller(); else if(S.stab==='promo') prPaintList() }).catch(function(){ STAT.err=true; STAT.loading=false; STAT.docs=[]; if(S.stab==='stats') renderSeller() });
+    S.db.collection('stats').get().then(function(sn){ STAT.docs=sn.docs.map(function(d){var x=d.data();x._day=d.id;return x}); STAT.loading=false; if(S.stab==='stats') renderSeller(); else if(S.stab==='promo') prPaintList(); try{advPaint()}catch(e){} }).catch(function(){ STAT.err=true; STAT.loading=false; STAT.docs=[]; if(S.stab==='stats') renderSeller() });
   }
   function sellerStats(){
     var wrap=h('div',{class:'xstats'});
@@ -2842,10 +2850,133 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     setTimeout(function(){ usgInit(); usgPaint() },0);
     return box;
   }
+
+  /* ===== admin daily advice: rules are baked in here and refreshed with a new index.html every 1-2 months ===== */
+  var ADV={deals:null,at:0,busy:false,err:false};
+  var ADV_GROUPS=[
+    {id:'w',n:'பெண்கள்',c:['Women'],tg:28},{id:'m',n:'ஆண்கள்',c:['Men'],tg:16},{id:'k',n:'கிட்ஸ்',c:['Kids'],tg:10},
+    {id:'e',n:'எலக்ட்ரானிக்ஸ்',c:['Mobiles','Electronics'],tg:12},{id:'h',n:'வீடு',c:['Home','Appliances'],tg:14},
+    {id:'b',n:'அழகு/ஆரோக்கியம்',c:['Beauty','Health'],tg:8},{id:'a',n:'ஆக்சஸரீஸ்/மற்றவை',c:null,tg:12}];
+  var ADV_SEAS=[
+    {f:[11,24],t:[12,1],n:'பிளாக் ஃப்ரைடே சேல்',p:[['Electronics','இயர்பட்ஸ், ஸ்மார்ட் வாட்ச்'],['Mobiles','ஆக்சஸரீஸ்']]},
+    {f:[12,15],t:[1,2],n:'கிறிஸ்துமஸ் + புத்தாண்டு',p:[['Gifts','கிஃப்ட்'],['Home','டெகர்'],['Women','பார்ட்டி உடைகள்']]},
+    {f:[1,5],t:[1,16],n:'பொங்கல்',p:[['Women','புடவை'],['Men','வேட்டி, எத்னிக்'],['Home','பாத்திரம், கிச்சன்'],['Gifts','கிஃப்ட்']]},
+    {f:[1,18],t:[1,27],n:'குடியரசு தின சேல்',p:[['Electronics','இயர்பட்ஸ், வாட்ச்'],['Mobiles','போன், ஆக்சஸரீஸ்'],['Accessories','வாட்ச், பேக்']]},
+    {f:[11,15],t:[2,15],n:'குளிர்காலம் + திருமண சீசன்',p:[['Men','ஹூடி, ஜாக்கெட்'],['Women','புடவை, வெஸ்டர்ன்'],['Home','போர்வை, பெட்ஷீட்'],['Beauty','ஸ்கின்கேர்']]},
+    {f:[3,1],t:[6,10],n:'கோடை',p:[['Appliances','ஃபேன், கூலர்'],['Women','காட்டன் உடைகள்'],['Accessories','பாட்டில், சன்கிளாஸ்']]},
+    {f:[6,11],t:[9,10],n:'மழைக்காலம்',p:[['Accessories','குடை, பேக்'],['Men','ஃபுட்வேர்'],['Women','ஃபுட்வேர்']]},
+    {f:[9,11],t:[11,14],n:'பண்டிகை சீசன்',p:[['Women','புடவை, எத்னிக்'],['Home','டெகர், கிச்சன்'],['Gifts','கிஃப்ட்']]}];
+  function advGrp(c){ var i; for(i=0;i<ADV_GROUPS.length-1;i++){ if(ADV_GROUPS[i].c.indexOf(c)>=0) return ADV_GROUPS[i] } return ADV_GROUPS[ADV_GROUPS.length-1] }
+  function advIn(w,d){ var v=(d.getMonth()+1)*100+d.getDate(),a=w.f[0]*100+w.f[1],b=w.t[0]*100+w.t[1]; return a<=b?(v>=a&&v<=b):(v>=a||v<=b) }
+  function advLoad(force){
+    if(!S.live||!S.db||ADV.busy) return;
+    if(!force&&ADV.deals&&Date.now()-ADV.at<600000) return;
+    ADV.busy=true;
+    var m=new Date(); m.setHours(0,0,0,0);
+    try{
+      S.db.collection('deals').where('createdAt','>=',m.getTime()-6*864e5).limit(500).get().then(function(sn){
+        ADV.deals=sn.docs.map(function(x){ var o=x.data()||{}; return {c:normCat(o.category),p:(typeof o.newPrice==='number'?o.newPrice:0),t:o.createdAt||0,ok:!!o.title&&!o.sample} }).filter(function(o){return o.ok});
+        ADV.at=Date.now(); ADV.busy=false; ADV.err=false;
+        if(S.view==='seller'&&S.stab==='dash') try{renderSeller()}catch(e){}
+      }).catch(function(){ ADV.busy=false; ADV.err=true; ADV.at=Date.now(); try{advPaint()}catch(e){} });
+    }catch(e){ ADV.busy=false; ADV.err=true }
+  }
+  function advTime(now){
+    var hr=now.getHours();
+    if(hr>=20&&hr<23) return {k:'g',t:'இப்போ உச்ச நேரம் (இரவு 8-11). மக்கள் குடும்பத்தோட பார்த்து முடிவு எடுக்கற நேரம்.'};
+    if(hr>=16&&hr<20) return {k:'i',t:'இப்போ நல்ல நேரம் (மாலை 4-7). இரவு 8-11 இன்னும் நல்லது, அதுக்குள்ள டீல்ஸ் ரெடி பண்ணுங்க.'};
+    if(hr>=23||hr<6) return {k:'i',t:'இது ஓய்வு நேரம். நாளைக்கு மாலை 4 மணிக்கு மேல போடுங்க.'};
+    return {k:'i',t:'நல்ல நேரங்கள்: மாலை 4-7 மற்றும் இரவு 8-11. அதுக்குள்ள டீல்ஸ் ரெடி பண்ணுங்க.'};
+  }
+  function advCalc(goal){
+    var D=ADV.deals||[],now=new Date(),tot=D.length,res={n:tot,items:[],bars:[],seas:[],push:[],pr:null,streak:0,last:0},g={},k;
+    ADV_GROUPS.forEach(function(x){ g[x.id]={g:x,p:0,t:0} });
+    D.forEach(function(x){ g[advGrp(x.c).id].p++; if(x.t>res.last) res.last=x.t });
+    var c7=new Date(now.getFullYear(),now.getMonth(),now.getDate()-6),cK=c7.getFullYear()+'-'+('0'+(c7.getMonth()+1)).slice(-2)+'-'+('0'+c7.getDate()).slice(-2),tapT=0;
+    if(STAT.docs&&!STAT.err){ STAT.docs.forEach(function(d){ if(d._day>=cK&&d.cc){ for(k in d.cc){ var n2=+d.cc[k]||0; g[advGrp(k).id].t+=n2; tapT+=n2 } } }) }
+    var act=ADV_SEAS.filter(function(w){return advIn(w,now)}),pm={};
+    res.seas=act.slice(0,2).map(function(w){return w.n});
+    act.forEach(function(w){ w.p.forEach(function(q){ if(!pm[q[0]]) pm[q[0]]=q[1] }) });
+    res.push=Object.keys(pm).slice(0,6).map(function(c){return {c:c,t:pm[c]}});
+    var it=[],gapH=res.last?(now.getTime()-res.last)/36e5:0;
+    if(res.last){ if(gapH>=48) it.push({k:'r',t:'கடைசி டீல் போட்டு '+Math.floor(gapH/24)+' நாள் ஆச்சு. இன்னைக்கே ஆரம்பிங்க.'}); else if(gapH>=24) it.push({k:'w',t:'நேத்துக்கு பிறகு டீல் போடல. இன்னைக்கு தொடங்குங்க.'}) }
+    else if(ADV.deals) it.push({k:'r',t:'கடந்த 7 நாளா டீல் எதுவும் போடல. இன்னைக்கே ஆரம்பிங்க.'});
+    var low=[],miss=[],tapUp=[],tapDn=[];
+    ADV_GROUPS.forEach(function(x){
+      var e=g[x.id],pc=tot?Math.round(e.p*100/tot):0,tp=tapT>=20?Math.round(e.t*100/tapT):null;
+      res.bars.push({n:x.n,tg:x.tg,pc:pc,tp:tp,bad:tot>=10&&(e.p===0||pc<0.4*x.tg)});
+      if(tot>=10){
+        if(e.p===0) miss.push({k:x.tg>=10?'r':'w',t:x.n+': 7 நாளா 0 டீல். இந்த வகையை புஷ் பண்ணுங்க.'});
+        else if(pc<0.4*x.tg) low.push({k:'w',t:x.n+': '+pc+'% மட்டும் (இலக்கு '+x.tg+'%). கொஞ்சம் புஷ் பண்ணுங்க.'});
+        if(tp!==null){
+          if(tp>=15&&tp>=pc*1.5) tapUp.push({k:'i',t:x.n+': மக்கள் அதிகம் தொடறாங்க (தொடல் '+tp+'%, டீல் '+pc+'%). இந்த வகையை இன்னும் புஷ் பண்ணுங்க.'});
+          else if(pc>=15&&tp*2.5<=pc) tapDn.push({k:'w',t:x.n+': நிறைய போடறீங்க ('+pc+'%) ஆனா தொடல் குறைவு ('+tp+'%). இதுல குறைச்சு மத்த வகைகளை புஷ் பண்ணுங்க.'});
+        }
+      }
+    });
+    if(tot>=10&&res.seas.length){
+      var seen={},si=null;
+      res.push.forEach(function(q){ if(si) return; var e=g[advGrp(q.c).id],pc=Math.round(e.p*100/tot); if(!seen[e.g.id]&&pc<e.g.tg){ seen[e.g.id]=1; si={k:'w',t:'இப்போ '+res.seas[0]+': '+e.g.n+' ('+q.t+') புஷ் பண்ணுங்க. இப்போ '+pc+'% தான்.'} } });
+      if(si) it.push(si);
+    }
+    it=it.concat(miss,low,tapUp,tapDn);
+    var pd=D.filter(function(x){return x.p>0}),priced=pd.length,pit=[];
+    if(priced>=10){
+      var a1=pd.filter(function(x){return x.p<=500}).length,a2=pd.filter(function(x){return x.p>500&&x.p<=1000}).length,a3=priced-a1-a2;
+      var q1=Math.round(a1*100/priced),q2=Math.round(a2*100/priced),q3=Math.round(a3*100/priced);
+      res.pr={a:q1,b:q2,c:q3};
+      if(q1<44) pit.push({k:'w',t:'₹500-க்குள்ள டீல்ஸ் '+q1+'% மட்டும் (இலக்கு 55%). இன்னும் கொஞ்சம் புஷ் பண்ணுங்க.'});
+      if(q2<21) pit.push({k:'w',t:'₹501-1,000 டீல்ஸ் '+q2+'% மட்டும் (இலக்கு 30%). இன்னும் கொஞ்சம் புஷ் பண்ணுங்க.'});
+      if(q3>25) pit.push({k:'i',t:'₹1,000-க்கு மேல டீல்ஸ் '+q3+'% (இலக்கு 15%). கொஞ்சம் குறைச்சு, ₹1,000-க்குள்ளதை கூட்டுங்க.'});
+    }
+    var seenT={}; it=it.filter(function(x){ if(seenT[x.t]) return false; seenT[x.t]=1; return true });
+    res.all=it.concat(pit); res.items=pit.length?it.slice(0,2).concat(pit.slice(0,1)):it.slice(0,3);
+    res.all=res.all.filter(function(x){return res.items.indexOf(x)<0});
+    if(!res.items.length&&ADV.deals) res.items=[{k:'g',t:'எல்லாம் சமநிலையா இருக்கு. இப்படியே தொடருங்க.'}];
+    var cnt=[],i2; for(i2=0;i2<7;i2++){ var dd=new Date(now.getFullYear(),now.getMonth(),now.getDate()-i2); cnt.push(D.filter(function(x){return sameDay(new Date(x.t),dd)}).length) }
+    var st0=cnt[0]>=goal?0:1; for(i2=st0;i2<7&&cnt[i2]>=goal;i2++) res.streak++;
+    res.today=cnt[0];
+    return res;
+  }
+  function advBox(){
+    var box=h('div',{id:'advc',class:'panel advc'});
+    setTimeout(function(){ advLoad(); if(STAT.docs===null&&!STAT.loading) statsLoad(); advPaint() },0);
+    return box;
+  }
+  function advPaint(){
+    var box=document.getElementById('advc'); if(!box) return;
+    var later=lsGet('nesam-advlater','')===dayKey(),goal=Math.max(1,Math.min(500,parseInt(S.settings&&S.settings.goal,10)||30));
+    var head=h('div',{class:'advh'},h('b',null,'💡 '+A('இன்றைய ஆலோசனை')),
+      h('button',{type:'button',class:'advb',onclick:function(){ lsSet('nesam-advlater',later?'':dayKey()); advPaint() }},later?A('திற ▾'):A('பிறகு')));
+    var kids=[head];
+    if(!later){
+      if(!ADV.deals){ kids.push(h('p',{class:'hint'},ADV.err?A('படிக்க முடியல. மறுபடி திறந்து பாருங்க.'):A('ஏற்றுது…'))) }
+      else {
+        var R=advCalc(goal),tm=advTime(new Date());
+        if(R.seas.length) kids.push(h('div',{class:'advi adv-i2'},h('b',null,A('இப்போ சீசன்: ')+R.seas.join(' · ')),h('br'),A('இந்த வாரம் போடுங்க: ')+R.push.slice(0,5).map(function(q){return q.t}).join(', ')));
+        kids.push(h('div',{class:'advi adv-'+tm.k},tm.t));
+        R.items.forEach(function(x){ kids.push(h('div',{class:'advi adv-'+x.k},x.t)) });
+        if(R.streak>=2) kids.push(h('div',{class:'advi adv-g'},'👏 '+A('தொடர்ந்து')+' '+R.streak+' '+A('நாள் இலக்கு முடிச்சீங்க')));
+        var det=h('details',{class:'advm'},h('summary',null,A('எல்லாம் பார் ▾')));
+        if(R.all.length){ det.append(h('div',{class:'advt'},A('இன்னும் சில'))); R.all.forEach(function(x){ det.append(h('div',{class:'advi adv-'+x.k},x.t)) }) }
+        if(R.n>=10){
+          det.append(h('div',{class:'advt'},A('வகை சமநிலை (கடந்த 7 நாள்)')));
+          R.bars.forEach(function(b){ det.append(h('div',{class:'advr'},h('span',null,b.n),h('div',{class:'advtr'},h('i',{style:'width:'+Math.min(100,b.pc)+'%;background:'+(b.bad?'#E24B4A':'#378ADD')}),h('u',{style:'left:'+Math.min(100,b.tg)+'%'})),h('span',{style:'text-align:right'},b.pc+'%'+(b.tp!==null?' · '+b.tp:'')))) });
+          det.append(h('p',{class:'hint'},A('நீலம்/சிவப்பு = நீங்க போட்டது %. கோடு = இலக்கு. சிறிய எண் = மக்கள் தொட்ட %.')));
+        } else det.append(h('p',{class:'hint'},A('இன்னும் டீல்ஸ் குறைவு. 10-க்கு மேல ஆனதும் வகை விகிதங்கள் தெரியும்.')));
+        if(R.pr) det.append(h('p',{class:'hint'},A('விலை பிரிவு')+': ₹500-க்குள் '+R.pr.a+'% (55) · ₹501-1,000 '+R.pr.b+'% (30) · ₹1,000+ '+R.pr.c+'% (15)'));
+        det.append(h('p',{class:'hint'},A('மனநிலை: பகல்ல பார்த்து தேர்ந்தெடுப்பாங்க, இரவு குடும்பத்தோட முடிவு எடுப்பாங்க. அதனால இரவுக்கு கிட்ஸ், வீடு, கிஃப்ட் மாதிரி குடும்ப பொருட்கள் நல்லது.')));
+        det.append(h('p',{class:'hint'},A('இந்த விதிகள் இந்திய ஆன்லைன் ஷாப்பிங் ஆய்வுகள் அடிப்படையில். 1-2 மாசத்துக்கு ஒரு தடவை புதுப்பிக்கலாம். "தொடல்" = வாங்கு தொட்ட எண்ணிக்கை, உண்மை விற்பனை இல்ல.')));
+        kids.push(det);
+      }
+    }
+    box.replaceChildren.apply(box,kids.filter(Boolean));
+  }
   function sellerDash(){
     var all=S.deals.filter(function(d){return d.title});
     var live=all.filter(function(d){return !isEnded(d)&&!isExpired(d)});
     var today=live.filter(function(d){return sameDay(new Date(d.createdAt||0),new Date())&&!d.sample}).length;
+    if(ADV.deals){ var tmN=new Date(); today=Math.max(today,ADV.deals.filter(function(x){return sameDay(new Date(x.t),tmN)}).length) }
     var ended=all.filter(function(d){return isEnded(d)||isExpired(d)}).length;
     var soon=live.filter(function(d){return endingSoon(d)}).length;
     var z99=live.filter(function(d){return zoneMatch(d,ZONES[0])}).length,z1k=live.filter(function(d){return zoneMatch(d,ZONES[4])}).length;
@@ -2897,7 +3028,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var bigs=h('div',null,
       h('button',{type:'button',class:'hbig go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},A('➕ புது டீல் போடு')),
       h('button',{type:'button',class:'hbig',onclick:function(){S.stab='list';renderSeller();window.scrollTo(0,0)}},A('என் டீல்ஸ்')));
-    return h('div',null,usgCard(),ring,todo,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
+    return h('div',null,usgCard(),ring,featOn('adv')?advBox():null,todo,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
       h('div',{class:'stats'},st(live.length,A('லைவ் டீல்ஸ்'),'#0A8A5F'),st(today,A('இன்று போட்டது'),'#1546C6'),st(soon,A('இன்னிக்குள்ள மறையும்'),'#EA580C'),st(ended,A('முடிஞ்சது / காலாவதி'),'#D81E2D'),st(z99,A('₹99-க்குள்'),'#7C3AED'),st(z1k,A('₹1000-க்கு மேல்'),'#0E7490')),
       h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,A('வகை வாரியா லைவ் டீல்ஸ்')),
         rows.length?rows.map(function(x){return h('div',{class:'bar'},h('span',null,x.m.e+' '+acat(x.m.id)),h('i',{style:'width:'+Math.max(6,Math.round(x.n/mx*100))+'%;background:'+catColor(x.m.id)}),h('b',null,String(x.n)))}):h('p',{class:'hint'},A('இன்னும் லைவ் டீல் இல்ல.'))),
@@ -3117,6 +3248,33 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     }
     renderSeller();
   }
+  function postText(o){
+    o=o||{title:F.title,link:F.link,desc:F.desc,newPrice:F.newPrice,oldPrice:F.oldPrice,offerText:F.offerText,extra:F.extra,coupon:F.coupon};
+    var t=String(o.title||'').trim(),lk=safeUrl(String(o.link||'').trim()),d=String(o.desc||'').trim();
+    var np=(o.newPrice===''||o.newPrice==null)?null:parseFloat(o.newPrice),op=(o.oldPrice===''||o.oldPrice==null)?0:parseFloat(o.oldPrice),L=[];
+    function inr(n){return '\u20b9'+Number(n).toLocaleString('en-IN')}
+    if(d&&t&&d.indexOf(t.slice(0,20))>=0){ L.push(d) } /* description already has title + price */
+    else {
+      if(t) L.push('\ud83d\udd25 '+t);
+      if(np!=null&&np>=0){ var sv=(op>np)?Math.round(op-np):0; L.push('\ud83d\udcb0 '+(op>np?inr(op)+' \u2192 ':'')+inr(np)+(sv?' ('+inr(sv)+' off)':'')) }
+      else if(o.offerText&&String(o.offerText).trim()) L.push('\ud83d\udcb0 '+String(o.offerText).trim());
+      if(d) L.push(d);
+    }
+    if(o.extra&&String(o.extra).trim()) L.push('\ud83c\udf81 '+String(o.extra).trim());
+    if(o.coupon&&String(o.coupon).trim()) L.push('\ud83c\udff7\ufe0f Coupon: '+String(o.coupon).trim());
+    var out=L.join('\n');
+    if(lk) out+=(out?'\n\n':'')+'\ud83d\uded2 Buy here \ud83d\udc49 '+lk;
+    return out;
+  }
+  async function copyText(txt){
+    try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(txt); return true } }catch(e){}
+    try{ var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.cssText='position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,txt.length); var ok=document.execCommand('copy'); ta.remove(); return !!ok }catch(e){ return false }
+  }
+  async function postCopy(){
+    if(!String(F.title||'').trim()||!safeUrl(String(F.link||'').trim())){ toast(A('முதல்ல தலைப்பு, லிங்க் போடுங்க')); return }
+    var ok=await copyText(postText());
+    toast(ok?A('காப்பி ஆச்சு ✔ இனி Facebook/Telegram-ல ஒட்டுங்க'):A('காப்பி ஆகல 😕 மறுபடி முயற்சி பண்ணுங்க'));
+  }
   function sellerForm(){
     var errP=h('p',{class:'err',role:'alert',hidden:F.err?null:true},F.err);
     var okP=h('p',{class:'ok',hidden:F.ok?null:true},F.ok);
@@ -3223,6 +3381,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       h('label',{class:'chk',for:'f-ac'},ac,A('💬 இந்த டீலுக்கு கருத்து அனுமதி')),
       h('label',{class:'chk',for:'f-pk'},pk,A('⭐ TruePick தேர்வுல காட்டு (கமிஷன் தெரியலன்னா மட்டும் டிக்)')),
       h('div',{class:'btns stk'},clear,go),
+      h('button',{type:'button',class:'chip',id:'postcopy',style:'width:100%;margin:10px 0;padding:12px;font-weight:800',onclick:postCopy},A('📋 போஸ்ட் காப்பி (தலைப்பு, விலை, விவரம், லிங்க்)')),
       moreBtn,moreBody);
     dpanel.addEventListener('input',function(){ clearTimeout(dealPrevPaint.t); dealPrevPaint.t=setTimeout(dealPrevPaint,150) });
     setTimeout(dealPrevPaint,0);
@@ -3440,6 +3599,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
             h('button',{type:'button',onclick:function(){patchUndo(d,{pinned:!d.pinned},d.pinned?A('📌 எடுத்தாச்சு'):A('📌 மேல வச்சாச்சு'))}},d.pinned?A('📌 எடு'):A('📌 மேல வை')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{allowCmt:!d.allowCmt},d.allowCmt?A('💬 கருத்து ஆஃப் ஆச்சு'):A('💬 கருத்து ஆன் ஆச்சு'))}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
             armBtn(A('ரியாக்ஷன் ரீசெட்'),A('உறுதியா?'),function(){var rf=S.db.collection('reacts').doc(d.id);rf.get().then(function(sn){var old=(sn&&sn.exists&&sn.data&&sn.data())||null;return rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)}).then(function(){toast('✔',function(){(old?rf.set(old):rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)})).then(function(){toast(A('பழைய நிலைக்கு மாத்தியாச்சு ✔'))})})})}).catch(function(){toast(A('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'))})}),
+            h('button',{type:'button',onclick:async function(){ var ok=await copyText(postText(d)); toast(ok?A('காப்பி ஆச்சு ✔ இனி Facebook/Telegram-ல ஒட்டுங்க'):A('காப்பி ஆகல 😕')) }},A('📋 போஸ்ட் காப்பி')),
             open&&h('a',{class:'tg',href:open,target:'_blank',rel:'noopener noreferrer',style:'min-height:36px;display:inline-flex;align-items:center;text-decoration:none;padding:0 10px'},A('லிங்க் சோதி')),
             del)));
     }
@@ -3470,7 +3630,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
 
   /* ---- settings (everything the owner can change) ---- */
   var SET={sec:'look',apk:'',init:false,msg:'',err:'',socials:[],share:'',logo:'',appName:'',tagline:'',theme:'blue',mode:'light',defLang:'ta',hidden:[],custom:[],about:'',life:'7',annOn:false,annText:'',annUrl:'',feat:{},own:{on:true,name:'',title:'',url:'',line:''},pui:{lay:'grid',bg:'',card:'',ink:'',btn:'',rad:'round',store:'auto'},spl:{on:false,l1:'',l2:'',emo:'',font:'',c1:'',c2:'',bg:'',logo:'',from:'',to:''}};
-  var FEATS=[['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு'],['offb','🏷 படத்தின் மேல் சிவப்பு "% OFF" பேட்ஜ்']];
+  var FEATS=[['adv','💡 இன்றைய ஆலோசனை (அட்மின் முகப்பு)'],['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு'],['offb','🏷 படத்தின் மேல் சிவப்பு "% OFF" பேட்ஜ்']];
   function setLoad(){
     var st=S.settings||{};
     SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
