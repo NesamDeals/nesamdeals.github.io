@@ -93,6 +93,17 @@ a{color:inherit}
 .topt[aria-pressed="true"]{background:var(--chip);outline:2px solid var(--brand)}
 .xstats{display:block;width:100%;max-width:680px}
 .xsrange{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.xsrange button{min-height:40px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font-weight:700;cursor:pointer;color:var(--ink)}.xsrange button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.xsh{margin:16px 0 8px;font-size:16px}
+.xsum{background:var(--chip);border-radius:12px;padding:12px;margin-bottom:10px}
+.xsum small{color:var(--muted);font-size:12px}.xsum p{margin:2px 0 0;font-size:15px;line-height:1.7}
+.xst{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:1px}
+.xst b{font-size:26px;line-height:1.1}.xst span{font-size:13px}.xst small{font-size:11px;color:var(--muted)}
+.xsmoney{display:flex;justify-content:space-between;align-items:center;gap:10px;border:2px solid var(--save);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--card)}
+.xsmoney b{font-size:28px;color:var(--save);display:block;line-height:1.1}.xsmoney span{font-size:13px}
+.xsmoney em{font-style:normal;font-size:12px;font-weight:700;color:var(--save);background:color-mix(in srgb,var(--save) 14%,transparent);padding:4px 10px;border-radius:10px;text-align:center}
+.xseng{margin-top:8px}.xsel{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:4px}
+.xsbar3{height:8px;background:var(--chip);border-radius:4px;overflow:hidden}.xsbar3 i{display:block;height:100%;background:var(--save)}
+.xsmore{margin:14px 0}.xsmore summary{font-size:15px;font-weight:700;cursor:pointer}
 .xsgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.xscard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}.xscard b{font-size:26px;font-family:var(--display)}.xscard span{font-size:13px;color:var(--mute,#64748B)}
 .xsbars{display:flex;align-items:flex-end;gap:4px;height:84px;margin:10px 0 4px}.xsb{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:1px;height:100%}.xsb i{width:100%;display:block;border-radius:3px 3px 0 0;min-height:1px}.xsb small{font-size:9px;color:var(--mute,#64748B)}.xsleg{display:flex;gap:14px;font-size:12px;font-weight:700}
 .xstab{width:100%;border-collapse:collapse;font-size:13px}.xstab th,.xstab td{padding:6px 4px;text-align:center;border-bottom:1px solid var(--line)}.xstab td:first-child{text-align:start;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -682,6 +693,10 @@ html[data-model=orange] .gclk{box-shadow:0 0 0 2px #fff}
 .mrow b{font-size:22px}.mrow span{flex:1}.mrow i{font-style:normal;color:var(--muted);font-size:13px;font-weight:600}
 .gring{display:flex;align-items:center;gap:14px}
 .gring svg{flex:none}
+.gr2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gr2>div{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.gmsg{margin-top:12px;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.5;font-weight:600}
+.gmsg.ok{background:#EAF3DE;color:#27500A}.gmsg.w{background:#FAEEDA;color:#633806}.gmsg.i{background:#E6F1FB;color:#0C447C}
 .frow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:11px 12px;margin-bottom:6px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
 .frow span{flex:1}
 .frow i{font-style:normal;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--chip);color:var(--muted)}
@@ -730,6 +745,75 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
 @keyframes shm{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.slide:not(.ld){animation:none}}
 .allseen{text-align:center;color:var(--muted);font-weight:700;font-size:15px;padding:18px 12px;margin:8px 0}
+
+/* outfits */
+@media (max-width:430px){.nav button{font-size:11.5px}}
+.mys{display:block;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;font-size:21px;line-height:22px;height:22px;letter-spacing:-.5px}
+.nav button[aria-current="page"] .mys{transform:scale(1.12)}
+#nav-outfits{letter-spacing:.3px}
+.ocard{grid-column:1/-1;display:block;width:100%;padding:0;text-align:left;cursor:pointer;background:var(--card);color:var(--ink);border:2px solid var(--brand);border-radius:var(--rad,20px);overflow:hidden;box-shadow:var(--shadow);min-width:0;margin:2px 0}
+.ocard .oimg{position:relative;aspect-ratio:1/1;background:var(--chip)}
+.ocard .oimg img{width:100%;height:100%;object-fit:cover;display:block}
+.obg{position:absolute;left:10px;top:10px;background:var(--hdr);color:var(--hdr-ink);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.osv{position:absolute;right:10px;top:10px;background:var(--hot);color:#fff;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+.obd{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px}
+.ott{font-size:16px;font-family:var(--display);line-height:1.25}
+.ocnt{font-size:13px;color:var(--muted)}
+.opr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.opr small{color:var(--muted);font-size:12px}.opr s{color:var(--muted);font-size:14px}
+.opr strong{font-size:22px;color:var(--save);font-family:var(--display)}
+.osave{align-self:flex-start;font-size:12.5px;font-weight:700;color:var(--save);background:color-mix(in srgb,var(--save) 14%,transparent);padding:3px 10px;border-radius:999px}
+.oest{font-size:11px;color:var(--muted)}
+.omini{grid-column:1/-1;display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px;background:var(--card);color:var(--ink);border:1.5px solid var(--brand);border-radius:14px;cursor:pointer;min-width:0}
+.omini img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;background:var(--chip)}
+.omb{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.omt{font-size:11px;font-weight:700;color:var(--save)}
+.omb b{font-size:14px;line-height:1.25}
+.omb b em{font-style:normal;font-weight:400;font-size:12px;color:var(--muted)}
+.omp{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.omp s{font-size:12px;color:var(--muted)}.omp strong{font-size:16px;color:var(--save)}
+.omp i{font-style:normal;font-size:11px;font-weight:700;color:var(--save);background:color-mix(in srgb,var(--save) 14%,transparent);padding:1px 8px;border-radius:8px}
+.omc{font-size:22px;color:var(--muted);flex:none}
+.olist{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.opage .back{margin-bottom:8px}
+.ohero{background:var(--chip);border-radius:var(--rad,20px);overflow:hidden;text-align:center}
+.ohero img{width:100%;max-height:68vh;height:auto;object-fit:contain;display:block;margin:0 auto}
+.otot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:10px 0}
+.ovb{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0 10px}
+.ovb .ovn{font-size:13px;color:var(--muted)}
+.ovb .ovs{display:flex;gap:6px}
+.ovb .ovs button{min-width:40px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-weight:700;font-size:13px;color:var(--ink)}
+.ovb .ovs button[aria-pressed="true"]{border-color:var(--brand);color:var(--brand)}
+.oitems.l{display:flex;flex-direction:column;gap:8px}
+.oitems.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.oitems.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.oit{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px;text-decoration:none;color:var(--ink);min-width:0}
+.oit .oi{width:56px;height:56px;border-radius:10px;object-fit:cover;background:var(--chip);flex:none;display:grid;place-items:center}
+.oit .on{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.oit .on b{font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.oit .on small{font-size:12px;color:var(--muted)}
+.oit .op{text-align:right;display:flex;flex-direction:column;align-items:flex-end}
+.oit .op s{font-size:12px;color:var(--muted)}.oit .op strong{font-size:16px}
+.obuy{background:var(--hdr);color:var(--hdr-ink);font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:10px;white-space:nowrap}
+.oitems.g2 .oit,.oitems.g3 .oit{flex-direction:column;align-items:stretch;padding:6px;gap:6px}
+.oitems.g2 .oit .oi,.oitems.g3 .oit .oi{width:100%;height:auto;aspect-ratio:1/1}
+.oitems.g2 .oit .op,.oitems.g3 .oit .op{align-items:flex-start;text-align:left}
+.oitems.g3 .obuy{display:none}.oitems.g3 .on b{font-size:12px}
+.oitems.g2 .obuy{text-align:center}
+.nft{display:flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px;max-width:680px}
+.nft button{flex:1;height:44px;border:0;background:var(--card);font-weight:700;cursor:pointer;color:var(--ink)}
+.nft button[aria-pressed="true"]{background:var(--hdr);color:var(--hdr-ink)}
+.ofrow{border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;background:var(--card)}
+.ofrow .r2{display:flex;gap:8px}.ofrow .r2>*{flex:1;min-width:0}
+.ofrow input,.ofrow select{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;font-size:15px;width:100%;min-height:42px;margin-bottom:6px}
+.ofrow .rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:700;font-size:14px}
+.ofrow .rt{display:flex;gap:8px;align-items:center}
+.ofrow .rt img,.ofrow .rt .noimg{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--chip);flex:none}
+.oflr{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:8px;margin-bottom:8px;background:var(--card)}
+.oflr img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:none}
+.oflr .on{flex:1;min-width:0;font-size:14px}
+.oflr .on small{display:block;color:var(--muted)}
+.oflr button{height:36px;padding:0 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-weight:700;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -921,6 +1005,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     <div class="feed" id="feed" aria-live="polite"></div>
     <div class="catgrid" id="catgrid" hidden></div>
     <div id="followview" hidden></div>
+    <div id="outview" hidden></div>
     <div id="promoview" hidden></div>
   </div>
   <footer class="foot">
@@ -935,6 +1020,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     <button id="tab-home" aria-current="page">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
       <span id="nav-home"></span>
+    </button>
+    <button id="tab-outfits">
+      <span class="mys" aria-hidden="true">My</span>
+      <span id="nav-outfits"></span>
     </button>
     <button id="tab-cats">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
@@ -1075,11 +1164,12 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function storeFromLink(u){ var hst=''; try{ hst=new URL(String(u||'').trim()).hostname }catch(e){ return '' } for(var i=0;i<STRX.length;i++) if(STRX[i][0].test(hst)) return STRX[i][1]; return '' }
   function storeName(d){ var s=String(d.source||''); if(s==='Other') return String(d.storeName||'').trim(); if(/^(wishlink|digital product)$/i.test(s)) return ''; return s }
   function storePill(d){ var n=storeName(d); if(!n) return null; return h('span',{class:'spill',style:'--sc:'+(STC[n]||'#8A94A6')},h('i',null),n) }
-  var PAGE=40, IMG_BUDGET=160000, MAX_PHOTOS=20;
+  var PAGE=20, IMG_BUDGET=160000, MAX_PHOTOS=20;
   function imgBudget(n){ return IMG_BUDGET+Math.max(0,n-5)*25000 }
 
   var S={deals:[],settings:{},cat:(function(){ try{ var c=JSON.parse(localStorage.getItem('nesam-lastcat')||'"all"'); return typeof c==='string'&&c?c:'all' }catch(e){ return 'all' } })(),main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',ct:'',last:false,zone:'',view:'shop',stab:'dash',focus:'',
-    admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null,reacts:{},dc:{},promos:[],replies:[],setReady:false};
+    admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null,reacts:{},dc:{},promos:[],replies:[],setReady:false,outfits:[],oid:'',og:'',olimit:10,oLoaded:false,ohit:false,oFrom:'',oY:0,oHist:false,nf:'deal',ooff:0,ovm:'list'};
+  try{ S.og=lsGet('nesam-og','')||''; if(S.og!=='m'&&S.og!=='f') S.og=''; S.ovm=lsGet('nesam-ovm','list'); if(['l','g2','g3','list'].indexOf(S.ovm)<0) S.ovm='list'; var _oo=parseInt(lsGet('nesam-ooff',0),10)||0; S.ooff=_oo; lsSet('nesam-ooff',_oo+1) }catch(e){}
 
   /* ============ helpers ============ */
   function h(tag,attrs){
@@ -1719,15 +1809,15 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     focusEl.hidden=true; browse.hidden=false; nav.hidden=false;
 
     var tab=S.tab; if(tab==='promo'&&!featOn('promo')){S.tab=tab='home'}
-    var isHome=tab==='home',isCats=tab==='cats',isSaved=tab==='saved',isFollow=tab==='follow',isPromo=tab==='promo';
+    var isHome=tab==='home',isCats=tab==='cats',isSaved=tab==='saved',isFollow=tab==='follow',isPromo=tab==='promo',isOut=tab==='outfits';
     var gridMode=isCats&&!S.main;
     var live=S.deals.filter(function(d){return d.title&&!isEnded(d)&&!isExpired(d)&&!isHiddenCat(normCat(d.category))});
 
-    ['home','cats','saved','follow','promo'].forEach(function(k){$('tab-'+k).setAttribute('aria-current',tab===k?'page':'false')});
+    ['home','outfits','cats','saved','follow','promo'].forEach(function(k){$('tab-'+k).setAttribute('aria-current',tab===k?'page':'false')});
     var sc=$('savedcount'); sc.hidden=S.saved.size===0; sc.textContent=String(S.saved.size);
-    show('strip',isHome&&featOn('strip')); show('joinhost',isHome); show('searchbox',!isFollow&&!isPromo&&!gridMode);
+    show('strip',isHome&&featOn('strip')); show('joinhost',isHome); show('searchbox',!isFollow&&!isPromo&&!isOut&&!gridMode);
     show('zones',(isHome||(isCats&&!!S.main))&&featOn('zones'));
-    show('chips',isHome||(isCats&&!!S.main)); show('filters',!isFollow&&!isPromo&&!gridMode); show('feed',!isFollow&&!isPromo&&!gridMode); show('promoview',isPromo);
+    show('chips',isHome||(isCats&&!!S.main)); show('filters',!isFollow&&!isPromo&&!isOut&&!gridMode); show('feed',!isFollow&&!isPromo&&!isOut&&!gridMode); show('promoview',isPromo); show('outview',isOut);
     try{paintHot(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){} try{paintRV(isHome&&S.cat==='all'&&!S.q)}catch(e){} try{paintTop(isHome&&S.cat==='all'&&!S.q&&!gridMode)}catch(e){} try{paintSv(isSaved&&!S.q)}catch(e){}
     show('catgrid',gridMode); show('catbar',isCats&&!!S.main); show('followview',isFollow);
 
@@ -1752,6 +1842,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     }
 
     if(isPromo){ renderPromo(); renderFooter([]); return }
+    if(isOut){ var pn0=$('pnote'); if(pn0) pn0.hidden=true; renderOutfits(); renderFooter([]); return }
     if(gridMode){
       var g=$('catgrid'); g.replaceChildren();
       g.append(h('h2',{class:'ptitle',style:'grid-column:1/-1'},t('catsTitle')));
@@ -1833,9 +1924,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       var pins=list.filter(function(d){return d.pinned}),rest=list.filter(function(d){return !d.pinned});
       if(pins.length){ feed.append(h('div',{class:'day star'},'📌 '+t('pinned'))); pins.forEach(function(d){feed.append(card(d));shown.push(d)}); }
       if(HOTEL) feed.append(HOTEL);
-      var shc=false;
-      rest.forEach(function(d){
+      var shc=false,oSlot=0,oOk=(S.cat==='all'&&!S.last&&S.outfits.length>0);
+      rest.forEach(function(d,ix){
         feed.append(card(d)); shown.push(d);
+        if(oOk&&(ix+1)%10===0){ var oc=oFeedCard(oSlot); if(oc){ oSlot++; feed.append(oc) } }
       });
     } else { list.forEach(function(d,i){feed.append(card(d));shown.push(d)}); }
     if(S.live&&S.hitLimit){
@@ -1851,6 +1943,106 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     Array.prototype.forEach.call(feed.querySelectorAll('.slide img'),function(im){ var w=im.parentNode; if(im.complete){ w.classList.add('ld') } else { im.addEventListener('load',function(){w.classList.add('ld')}); im.addEventListener('error',function(){w.classList.add('ld')}) } });
     if(!RS.done&&!S.loading&&shown.length&&S.tab==='home'&&S.view==='shop'){ RS.done=true; try{ var rs=lsGet('nesam-rs',null); if(rs&&rs.y>300&&Date.now()-rs.t<1800000&&rs.cat===S.cat&&!location.hash.replace('#','').replace('home','')) setTimeout(function(){ window.scrollTo(0,rs.y) },120) }catch(e){} }
     renderFooter(shown);
+  }
+
+  /* ============ outfits (customer) ============ */
+  var OT={
+    ta:{navO:'Stylist',outfit:'My Stylist',m:'ஆண்',f:'பெண்',all:'எல்லாம்',title:'My Stylist',items:'{n} பொருட்கள்',allBuy:'எல்லாம் வாங்கினா',save:'{x} மிச்சம்',pct:'{n}% சேமிப்பு',est:'விலை தோராயம், கடையில் மாறலாம்',buy:'வாங்கு',none:'இன்னும் அவுட்ஃபிட் இல்ல. சீக்கிரம் வரும்.',more:'மேலும் காட்டு',vl:'லிஸ்ட்',backO:'பின்'},
+    en:{navO:'Stylist',outfit:'My Stylist',m:'Men',f:'Women',all:'All',title:'My Stylist',items:'{n} items',allBuy:'Buy the full look',save:'Save {x}',pct:'{n}% OFF',est:'Prices are estimates and may change in store',buy:'Buy',none:'No outfits yet. Coming soon.',more:'Show more',vl:'List',backO:'Back'},
+    hi:{navO:'Stylist',outfit:'My Stylist',m:'पुरुष',f:'महिला',all:'सभी',title:'My Stylist',items:'{n} आइटम',allBuy:'पूरा लुक खरीदें',save:'{x} बचत',pct:'{n}% छूट',est:'कीमतें अनुमानित हैं, दुकान पर बदल सकती हैं',buy:'खरीदें',none:'अभी कोई आउटफिट नहीं।',more:'और दिखाएं',vl:'सूची',backO:'वापस'}
+  };
+  function ot(k,v){ var s=(OT[S.lang]&&OT[S.lang][k]); if(s==null) s=OT.en[k]; if(s==null) s=k; if(v) for(var x in v) s=s.split('{'+x+'}').join(v[x]); return s }
+  function oTot(o){ var m=0,n=0,c=0; (o.items||[]).forEach(function(x){ var np=Number(x.np)||0,mr=Number(x.mrp)||0; if(mr<np) mr=np; m+=mr; n+=np; c++ }); var sv=Math.max(0,m-n); return {m:m,n:n,c:c,sv:sv,pc:m>0?Math.round(sv/m*100):0} }
+  function oName(o){ return String(o.title||'').trim()||((o.gender==='f'?"Women's":"Men's")+' Look') }
+  function oCard(o){
+    var tt=oTot(o);
+    return h('button',{type:'button',class:'ocard','data-oid':o.id,onclick:function(){ openOutfit(o.id) }},
+      h('div',{class:'oimg'},h('img',{src:safeImg(o.img)||PLACEHOLDER,alt:oName(o),loading:'lazy'}),h('span',{class:'obg'},'👕👗 '+ot('outfit')+' · '+(o.gender==='f'?ot('f'):ot('m'))),tt.pc>=5?h('span',{class:'osv'},ot('pct',{n:tt.pc})):null),
+      h('div',{class:'obd'},h('b',{class:'ott'},oName(o)),h('span',{class:'ocnt'},ot('items',{n:tt.c})),
+        h('div',{class:'opr'},h('small',null,ot('allBuy')),tt.m>tt.n?h('s',null,inr(tt.m)):null,h('strong',null,inr(tt.n))),
+        tt.sv>0?h('span',{class:'osave'},ot('save',{x:inr(tt.sv)})):null,h('small',{class:'oest'},ot('est'))));
+  }
+  function oFeedList(){ var a=S.outfits; if(S.og==='m'||S.og==='f'){ var b=a.filter(function(x){return x.gender===S.og}); if(b.length) a=b } return a }
+  function oMini(o){
+    var tt=oTot(o);
+    return h('button',{type:'button',class:'omini','data-oid':o.id,onclick:function(){ openOutfit(o.id) }},
+      h('img',{src:safeImg(o.img)||PLACEHOLDER,alt:oName(o),loading:'lazy'}),
+      h('span',{class:'omb'},h('small',{class:'omt'},'✨ My Stylist · '+(o.gender==='f'?ot('f'):ot('m'))),
+        h('b',null,oName(o),h('em',null,' · '+ot('items',{n:tt.c}))),
+        h('span',{class:'omp'},tt.m>tt.n?h('s',null,inr(tt.m)):null,h('strong',null,inr(tt.n)),tt.sv>0?h('i',null,ot('save',{x:inr(tt.sv)})):null)),
+      h('span',{class:'omc','aria-hidden':'true'},'›'));
+  }
+  function oFeedCard(slot){ var a=oFeedList(),n=a.length; if(!n||slot>=n) return null; return oMini(a[(S.ooff+slot)%n]) }
+  function openOutfit(id){
+    S.oFrom=(S.tab==='outfits')?'':S.tab; S.oY=window.scrollY||0; S.oHist=true; S.oid=id; S.tab='outfits';
+    if(location.hash==='#outfit-'+id) route(); else { try{ location.hash='outfit-'+id }catch(e){ render(); window.scrollTo(0,0) } }
+  }
+  function closeOutfit(){
+    if(S.oHist){ S.oHist=false; history.back() }
+    else { S.oid=''; if(location.hash==='#outfits') route(); else { try{ location.hash='outfits' }catch(e){ render() } } }
+  }
+  function oSaveState(){ try{ if(S.view==='shop'&&S.tab==='outfits'&&S.oid&&!S.focus) lsSet('nesam-olast',{id:S.oid,y:Math.round(window.scrollY),t:Date.now()}); else lsSet('nesam-olast',null) }catch(e){} }
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') oSaveState() });
+  window.addEventListener('pagehide',oSaveState);
+  function oRestore(){
+    try{
+      var ol=lsGet('nesam-olast',null);
+      if(!ol||!ol.id||Date.now()-(ol.t||0)>864e5) return;
+      if(S.view!=='shop'||S.focus||S.tab!=='home'||location.hash.replace('#','').replace('home','')) return;
+      if(!S.outfits.some(function(x){return x.id===ol.id})) return;
+      S.oid=ol.id; S.oFrom=''; S.oHist=false; S.tab='outfits'; render(); setTimeout(function(){ window.scrollTo(0,ol.y||0) },60);
+    }catch(e){}
+  }
+  function oItem(it,vm){
+    var im=safeImg(it.i),np=Number(it.np)||0,mr=Number(it.mrp)||0;
+    return h('a',{class:'oit',href:safeUrl(it.l)||'#',target:'_blank',rel:'noopener noreferrer sponsored',onclick:function(){ try{ trkAdd(['clicks']) }catch(e){} }},
+      im?h('img',{class:'oi',src:im,alt:'',loading:'lazy',referrerpolicy:'no-referrer'}):h('span',{class:'oi'},'🛍️'),
+      h('span',{class:'on'},h('b',null,String(it.n||'')),it.s?h('small',null,it.s):null),
+      h('span',{class:'op'},mr>np?h('s',null,inr(mr)):null,h('strong',null,inr(np))),
+      h('span',{class:'obuy'},ot('buy')));
+  }
+  function outfitPage(o){
+    var tt=oTot(o),box=h('div',{class:'opage'});
+    box.append(h('button',{class:'back',type:'button',onclick:closeOutfit},'← '+ot('backO')));
+    box.append(h('div',{class:'ohero'},h('img',{src:safeImg(o.img)||PLACEHOLDER,alt:oName(o)})));
+    box.append(h('h2',{class:'ptitle',style:'margin:10px 0 0'},oName(o)));
+    box.append(h('div',{class:'otot'},h('div',{class:'opr'},h('small',null,ot('allBuy')),tt.m>tt.n?h('s',null,inr(tt.m)):null,h('strong',null,inr(tt.n))),tt.sv>0?h('span',{class:'osave'},ot('save',{x:inr(tt.sv)})):null));
+    var list=h('div',{class:'oitems'}),btns=[];
+    function paint(){ list.className='oitems '+(S.ovm==='g2'?'g2':S.ovm==='g3'?'g3':'l'); list.replaceChildren.apply(list,(o.items||[]).map(function(it){return oItem(it,S.ovm)})); btns.forEach(function(b){ b[0].setAttribute('aria-pressed',(S.ovm===b[1]||(b[1]==='l'&&S.ovm==='list'))?'true':'false') }) }
+    var vs=h('div',{class:'ovs'});
+    [['l','☰'],['g2','▦ 2'],['g3','▦ 3']].forEach(function(m){ var b=h('button',{type:'button','aria-label':m[0],onclick:function(){ S.ovm=m[0]; lsSet('nesam-ovm',m[0]); paint() }},m[1]); btns.push([b,m[0]]); vs.append(b) });
+    box.append(h('div',{class:'ovb'},h('span',{class:'ovn'},ot('items',{n:tt.c})),vs));
+    box.append(list); paint();
+    box.append(h('small',{class:'oest',style:'display:block;margin-top:8px'},ot('est')));
+    return box;
+  }
+  function renderOutfits(){
+    var v=$('outview'); v.replaceChildren();
+    var o=S.oid?S.outfits.filter(function(x){return x.id===S.oid})[0]:null;
+    if(S.oid&&!o&&S.oLoaded){ S.oid='' }
+    if(S.oid&&o){ v.append(outfitPage(o)); return }
+    if(S.oid&&!o){ v.append(h('div',{class:'empty'},h('b',null,t('loading')))); return }
+    v.append(h('h2',{class:'ptitle'},'👕👗 '+ot('title')));
+    var chips=h('div',{class:'chips',style:'margin-bottom:10px'});
+    [['',ot('all')],['m','👕 '+ot('m')],['f','👗 '+ot('f')]].forEach(function(c){ chips.append(h('button',{class:'chip',type:'button','aria-pressed':S.og===c[0]?'true':'false',onclick:function(){ S.og=c[0]; lsSet('nesam-og',c[0]); render() }},c[1])) });
+    v.append(chips);
+    var a=S.outfits.filter(function(x){return !S.og||x.gender===S.og});
+    if(!a.length){ v.append(h('div',{class:'empty'},h('b',null,ot('none')))); return }
+    v.append(h('div',{class:'olist'},a.map(oCard)));
+    if(S.ohit) v.append(h('button',{class:'moreb',type:'button',onclick:function(){ S.olimit+=10; subscribeOutfits() }},ot('more')));
+  }
+  function subscribeOutfits(){
+    if(!S.live||!S.db) return;
+    if(S.ounsub){ try{S.ounsub()}catch(e){} }
+    S.ounsub=S.db.collection('outfits').orderBy('createdAt','desc').limit(S.olimit).onSnapshot(function(sn){
+      S.outfits=sn.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return Array.isArray(x.items)&&x.items.length});
+      S.ohit=sn.size>=S.olimit;
+      var first=!S.oLoaded; S.oLoaded=true;
+      if(first) oRestore();
+      if(S.view==='seller'){ try{ ofListPaint() }catch(e){} if(S.stab==='dash') try{ renderSeller() }catch(e){} return }
+      if(S.focus) return;
+      render();
+    },function(){ S.oLoaded=true });
   }
   var RS={done:false};
   function rsSave(){ try{ if(S.view==='shop'&&S.tab==='home'&&!S.focus&&RS.done) lsSet('nesam-rs',{y:Math.round(window.scrollY),t:Date.now(),cat:S.cat}) }catch(e){} }
@@ -2331,7 +2523,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         S.hosted&&h('button',{type:'button',style:'background:#fff',onclick:function(){window.NESAM.signOut()}},A('வெளியேறு')))));
     var SUB=['pend','promo','cmt','fest','set'],isSub=SUB.indexOf(S.stab)>=0;
     if(S.stab==='dash') root.append(sellerDash());
-    else if(S.stab==='new') root.append(sellerForm());
+    else if(S.stab==='new'){ root.append(newTabs()); root.append(S.nf==='outfit'?outfitAdmin():sellerForm()) }
     else if(S.stab==='list') root.append(sellerList());
     else if(S.stab==='stats') root.append(sellerStats());
     else if(S.stab==='more') root.append(sellerMore());
@@ -2446,11 +2638,20 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     docs.forEach(function(x){ for(var k in tot) tot[k]+=(+x[k]||0); add(V,x.v);add(C,x.c);add(Sv,x.s);add(H,x.h);add(CC,x.cc);add(CS,x.cs);add(LG,x.lg) });
     if(!docs.length){ wrap.append(h('p',{class:'hint'},A('இன்னும் தரவு இல்ல. வாடிக்கையாளர் ஆப் பயன்படுத்த ஆரம்பிச்சதும் இங்க தெரியும்.'))); return wrap }
     var rate=tot.opens?Math.round(tot.clicks*1000/tot.opens)/10:0;
-    var cards=[['ஆப் திறந்த முறை',tot.opens,'#1D4ED8'],['தனி நபர்கள்',tot.visitors,'#0A8A5F'],['புது நபர்கள்',tot.newv,'#6D28D9'],['இன்ஸ்டால் ஆப்ல திறந்தது',tot.appopen,'#0E7490'],['வாங்கு பட்டன் தொட்டது',tot.clicks,'#EA580C'],['திரும்ப வந்தவங்க',Math.max(0,tot.visitors-tot.newv),'#7C3AED'],['டீல் தொட்ட நபர்கள்',tot.eng,'#EA580C'],['தொடாம போனவங்க',Math.max(0,tot.visitors-tot.eng),'#64748B'],['WhatsApp பகிர்வு',tot.shares,'#16A34A'],['சேமிப்பு ❤️',tot.saves,'#E11D48'],['ஒப்பீடு திறந்தது',tot.cmpo,'#0E7490'],['விளையாட்டு திறந்தவர்',tot.gopen,'#6D28D9'],['விளையாட்டு முடிச்சவர்',tot.gdone,'#16A34A'],['தொடும் விகிதம் (தொட்டது ÷ திறந்தது)',rate+'%','#B45309']];
-    wrap.append(h('p',{class:'hint'},A('எண்கள் நாள் வாரியா எண்ணப்படும். ஒரே ஆள் தினமும் வந்தா தினமும் ஒரு தடவை எண்ணப்படுவார்.')));
+    var uniq=tot.visitors,retN=Math.max(0,tot.visitors-tot.newv),notEng=Math.max(0,tot.visitors-tot.eng);
     var savedNow=0; Object.keys(S.dc||{}).forEach(function(k){ savedNow+=Math.max(0,+(S.dc[k]||{}).s||0) });
-    cards.push(['📲 புது இன்ஸ்டால் (ஆப்ல முதல் தடவை)',tot.inst,'#0E7490'],['❤️ இப்போ சேமிச்சிருப்பவங்க (மொத்தம்)',savedNow,'#E11D48']);
-    wrap.append(h('div',{class:'xsgrid'},cards.map(function(c){return h('div',{class:'xscard',style:'border-inline-start:4px solid '+c[2]},h('b',{style:'color:'+c[2]},String(c[1])),h('span',null,A(c[0])))})));
+    var rtx=STAT.range===1?A('இன்னைக்கு'):STAT.range===7?A('கடந்த 7 நாள்ல'):STAT.range===30?A('கடந்த 30 நாள்ல'):A('இதுவரை மொத்தமா');
+    function xt(n,l,note,col){ return h('div',{class:'xst'},h('b',{style:col?'color:'+col:''},String(n)),h('span',null,A(l)),note?h('small',null,A(note)):null) }
+    wrap.append(h('div',{class:'xsum'},h('small',null,A('சுருக்கமா சொல்றேன்')),h('p',null,rtx+' ',h('b',null,uniq+' '+A('பேர்')),A(' ஆப் பார்த்தாங்க. அதுல '),h('b',null,tot.newv+' '+A('பேர் புதுசு')),', '+retN+' '+A('பேர் திரும்ப வந்தவங்க. '),h('b',null,tot.clicks+' '+A('தடவை')),A(' "வாங்கு" பட்டனை தொட்டாங்க.'))));
+    wrap.append(h('p',{class:'hint'},A('பேர் = ஒரு நாளைக்கு ஒரு ஆள் ஒரு தடவை மட்டும். 7/30 நாள்ல ஒரே ஆள் தினமும் வந்தா தினமும் எண்ணப்படுவார்.')));
+    wrap.append(h('h3',{class:'xsh'},'👥 '+A('எத்தனை பேர் வந்தாங்க')),
+      h('div',{class:'xsgrid'},xt(uniq,'பேர் வந்தாங்க','ஒரே ஆள் ஒரு தடவைதான்','#0A8A5F'),xt(tot.opens,'தடவை ஆப் திறந்தாங்க','இதே ஆள் பல தடவை சேரும்','#1D4ED8'),xt(tot.newv,'புது ஆட்கள்','','#6D28D9'),xt(retN,'திரும்ப வந்தவங்க','','#7C3AED')),
+      h('p',{class:'hint'},'📲 '+A('ஆப்பா திறந்தவை')+': '+tot.appopen+' '+A('தடவை')+' · '+A('புது இன்ஸ்டால்')+': '+tot.inst));
+    wrap.append(h('h3',{class:'xsh'},'🛒 '+A('என்ன செய்தாங்க')),
+      h('div',{class:'xsmoney'},h('div',null,h('b',null,String(tot.clicks)),h('span',null,A('"வாங்கு" தொட்டது (உங்க வருமான வழி)'))),h('em',null,A('ஆப் 100 தடவை திறந்தா')+' '+rate+' '+A('தடவை'))),
+      h('div',{class:'xsgrid'},xt(tot.saves,'❤️ சேமிச்சது','','#E11D48'),xt(tot.shares,'WhatsApp பகிர்வு','','#16A34A'),xt(savedNow,'❤️ இப்போ சேமிச்சிருப்பவங்க (மொத்தம்)','','#E11D48')),
+      h('div',{class:'xseng'},h('div',{class:'xsel'},h('span',null,A('டீல் தொட்டவங்க')+' '+tot.eng+' '+A('பேர்')),h('span',null,A('தொடாம போனவங்க')+' '+notEng+' '+A('பேர்'))),h('div',{class:'xsbar3'},h('i',{style:'width:'+(uniq?Math.min(100,Math.round(tot.eng*100/uniq)):0)+'%'}))));
+    wrap.append(h('details',{class:'xsmore'},h('summary',null,'🎮 '+A('மத்தது (விளையாட்டு, ஒப்பீடு)')+' ▾'),h('p',{class:'hint'},A('விளையாட்டு திறந்தது')+' '+tot.gopen+' · '+A('முடிச்சது')+' '+tot.gdone+' · '+A('விலை ஒப்பீடு')+' '+tot.cmpo)));
     var devp=h('section',{class:'panel'},h('h3',null,A('📱 போன்கள் (இன்னைக்கு முதல் எண்ணிக்கை ஆரம்பம்)')),h('p',{class:'hint',id:'devtxt'},'…'));
     wrap.append(devp);
     try{
@@ -2505,6 +2706,142 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     }catch(e){toast(A('சில டீல்ஸை நீக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.'))}
     renderSeller();
   }
+
+  /* ============ outfits (admin) ============ */
+  var OF=null;
+  function ofItem(){ return {n:'',s:'Amazon',mrp:'',np:'',l:'',i:'',busy:false,msg:''} }
+  function ofBlank(){ return {id:'',title:'',gender:'m',img:'',items:[ofItem()],createdAt:0,busy:false,err:'',ok:''} }
+  function ofNextTitle(g){ var mx=0; S.outfits.forEach(function(o){ if(o.gender!==g) return; var m=/Look (\d+)/.exec(String(o.title||'')); if(m) mx=Math.max(mx,parseInt(m[1],10)) }); return (g==='f'?"Women's":"Men's")+' Look '+(mx+1) }
+  function newTabs(){
+    return h('div',{class:'nft'},[['deal','🏷️ '+A('டீல்')],['outfit','👗 '+A('அவுட்ஃபிட்')]].map(function(o){ return h('button',{type:'button','aria-pressed':S.nf===o[0]?'true':'false',onclick:function(){ if(S.nf===o[0]) return; S.nf=o[0]; renderSeller() }},o[1]) }));
+  }
+  async function ofFill(i){
+    var it=OF.items[i]; if(!it||it.busy) return;
+    var u=String(it.l||'').trim();
+    if(!safeUrl(u)){ it.msg=A('முதல்ல லிங்கை (https://) ஒட்டு.'); renderSeller(); return }
+    it.busy=true; it.msg=''; renderSeller();
+    var res=null; try{ res=await previewFetch(u) }catch(e){}
+    if(res){
+      if(res.title&&!String(it.n).trim()) it.n=res.title.slice(0,90);
+      if(res.store) it.s=res.store;
+      if(res.price&&it.np==='') it.np=String(res.price);
+      if(res.mrp&&res.price&&res.mrp>res.price&&it.mrp==='') it.mrp=String(res.mrp);
+      if(res.image&&!it.i){ try{ it.i=await encode(res.image,220,.62) }catch(e){ if(safeImg(res.image)) it.i=res.image } }
+      it.msg=A('எடுத்தாச்சு ✔ சரிபாரு. வராததை நீயே எழுது.');
+    } else it.msg=A('எடுக்க முடியல 😕 நீயே எழுது.');
+    it.busy=false; renderSeller();
+  }
+  async function ofSave(){
+    if(OF.busy) return; OF.err=''; OF.ok='';
+    var items=OF.items.filter(function(x){ return String(x.n).trim()||String(x.l).trim()||x.np!==''||x.i });
+    if(!OF.img){ OF.err=A('அவுட்ஃபிட் போட்டோ போடு.'); renderSeller(); return }
+    if(!items.length){ OF.err=A('குறைஞ்சது ஒரு பொருள் சேர்.'); renderSeller(); return }
+    var out=[],k;
+    for(k=0;k<items.length;k++){
+      var x=items[k],np=parseFloat(x.np),mr=parseFloat(x.mrp),lk=safeUrl(String(x.l).trim());
+      if(!String(x.n).trim()){ OF.err=A('பொருள் {n}: பேரு எழுது.').replace('{n}',k+1); renderSeller(); return }
+      if(!(np>=0)||x.np===''){ OF.err=A('பொருள் {n}: ஆஃபர் விலை எழுது.').replace('{n}',k+1); renderSeller(); return }
+      if(!lk){ OF.err=A('பொருள் {n}: சரியான லிங்க் (https://) போடு.').replace('{n}',k+1); renderSeller(); return }
+      out.push({n:String(x.n).trim().slice(0,160),s:String(x.s||'').slice(0,30),mrp:(mr>0?mr:0),np:np,l:lk,i:x.i||''});
+    }
+    var data={title:String(OF.title||'').trim()||ofNextTitle(OF.gender),gender:OF.gender==='f'?'f':'m',img:OF.img,items:out,createdAt:OF.createdAt||Date.now()};
+    if(JSON.stringify(data).length>950000){ OF.err=A('போட்டோஸ் ரொம்ப பெரிசு. சில பொருள் போட்டோவை நீக்கு.'); renderSeller(); return }
+    OF.busy=true; renderSeller();
+    try{
+      if(OF.id) await S.db.collection('outfits').doc(OF.id).set(data); else await S.db.collection('outfits').add(data);
+      var was=!!OF.id; OF=ofBlank(); OF.ok=was?A('மாத்தியாச்சு ✔'):A('அவுட்ஃபிட் போட்டாச்சு ✔ வாடிக்கையாளர் பார்வையில பாரு.');
+    }catch(e){ OF.busy=false; OF.err=A('சேமிக்க முடியல. ரூல்ஸ்ல outfits சேர்த்தியா? இல்ல இணையம் சரியா?') }
+    renderSeller(); window.scrollTo(0,0);
+  }
+  function ofListPaint(){
+    var box=document.getElementById('oflist'); if(!box) return;
+    box.replaceChildren();
+    if(!S.outfits.length){ box.append(h('p',{class:'hint'},S.oLoaded?A('இன்னும் அவுட்ஃபிட் இல்ல.'):A('ஏத்துது…'))); return }
+    S.outfits.forEach(function(o){
+      var tt=oTot(o);
+      box.append(h('div',{class:'oflr'},h('img',{src:safeImg(o.img)||PLACEHOLDER,alt:''}),
+        h('div',{class:'on'},h('b',null,oName(o)),h('small',null,(o.gender==='f'?A('பெண்'):A('ஆண்'))+' · '+tt.c+' '+A('பொருள்')+' · '+inr(tt.n))),
+        h('button',{type:'button',onclick:function(){
+          OF={id:o.id,title:o.title||'',gender:o.gender==='f'?'f':'m',img:o.img||'',createdAt:o.createdAt||0,busy:false,err:'',ok:'',
+            items:(o.items||[]).map(function(x){ return {n:x.n||'',s:x.s||'Amazon',mrp:x.mrp?String(x.mrp):'',np:String(x.np==null?'':x.np),l:x.l||'',i:x.i||'',busy:false,msg:''} })};
+          renderSeller(); window.scrollTo(0,0) }},'✏️'),
+        armBtn('🗑️',A('உறுதியா?'),function(){ S.db.collection('outfits').doc(o.id).delete().then(function(){ if(S.oid===o.id) S.oid=''; if(OF&&OF.id===o.id) OF=ofBlank() }).catch(function(){ try{ toast(A('நீக்க முடியல')) }catch(e){} }) })));
+    });
+    if(S.ohit) box.append(h('button',{type:'button',class:'moreb',onclick:function(){ S.olimit+=10; subscribeOutfits() }},A('மேலும் காட்டு')));
+  }
+  function outfitAdmin(){
+    if(!OF) OF=ofBlank();
+    var wrap=h('div',null),root=h('div',{class:'panel'});
+    root.append(h('h2',null,OF.id?A('✏️ அவுட்ஃபிட் மாத்து'):A('👗 புது அவுட்ஃபிட்')),h('p',{class:'err',role:'alert',hidden:OF.err?null:true},OF.err),h('p',{class:'ok',hidden:OF.ok?null:true},OF.ok));
+    var hf=h('input',{type:'file',id:'of-img',accept:'image/*'});
+    hf.addEventListener('change',async function(){ var f=hf.files&&hf.files[0]; if(!f) return; try{ OF.img=await encode(await readFile(f),720,.7); OF.err='' }catch(e){ OF.err=A('போட்டோவை படிக்க முடியல.') } renderSeller() });
+    root.append(h('div',{class:'fld'},h('label',null,A('அவுட்ஃபிட் போட்டோ')),h('div',{class:'photos'},
+      OF.img?h('div',{class:'ph'},h('img',{src:OF.img,alt:''}),h('button',{class:'x',type:'button','aria-label':A('நீக்கு'),onclick:function(){ OF.img=''; renderSeller() }},'×')):null,
+      h('label',{class:'addph',for:'of-img'},OF.img?A('மாத்து'):A('+ போட்டோ'),hf))));
+    root.append(h('div',{class:'fld'},h('label',null,A('யாருக்கு')),h('div',{class:'nft',style:'margin:0'},[['m','👕 '+A('ஆண்')],['f','👗 '+A('பெண்')]].map(function(o){ return h('button',{type:'button','aria-pressed':OF.gender===o[0]?'true':'false',onclick:function(){ OF.gender=o[0]; renderSeller() }},o[1]) }))));
+    var tt=h('input',{type:'text',value:OF.title,placeholder:ofNextTitle(OF.gender)}); tt.addEventListener('input',function(){ OF.title=tt.value });
+    root.append(h('div',{class:'fld'},h('label',null,A('பேரு (காலியா விட்டா தானா வரும்)')),tt));
+    root.append(h('div',{class:'lbl',style:'margin:6px 0'},A('பொருட்கள் (வரம்பு இல்ல)')));
+    OF.items.forEach(function(it,i){
+      var fi=h('input',{type:'file',id:'ofi-'+i,accept:'image/*',style:'display:none'});
+      fi.addEventListener('change',async function(){ var f=fi.files&&fi.files[0]; if(!f) return; try{ it.i=await encode(await readFile(f),220,.62) }catch(e){} renderSeller() });
+      var lk=h('input',{type:'url',inputmode:'url',value:it.l,placeholder:'affiliate link https://…'}); lk.addEventListener('input',function(){ it.l=lk.value });
+      var nm=h('input',{type:'text',value:it.n,placeholder:A('பொருள் பேரு (எ.கா. சட்டை)')}); nm.addEventListener('input',function(){ it.n=nm.value });
+      var mr=h('input',{type:'number',inputmode:'decimal',value:it.mrp,placeholder:'MRP ₹'}); mr.addEventListener('input',function(){ it.mrp=mr.value });
+      var np=h('input',{type:'number',inputmode:'decimal',value:it.np,placeholder:A('ஆஃபர் ₹')}); np.addEventListener('input',function(){ it.np=np.value });
+      var SL=['Amazon','Meesho','Flipkart','Myntra','Other']; if(it.s&&SL.indexOf(it.s)<0) SL.splice(SL.length-1,0,it.s);
+      var st=h('select',null,SL.map(function(k){ return h('option',{value:k,selected:it.s===k?true:null},k) })); st.addEventListener('change',function(){ it.s=st.value });
+      root.append(h('div',{class:'ofrow'},
+        h('div',{class:'rh'},h('span',null,A('பொருள்')+' '+(i+1)),OF.items.length>1?h('button',{type:'button','aria-label':A('நீக்கு'),onclick:function(){ OF.items.splice(i,1); renderSeller() }},'🗑️'):null),
+        lk,h('button',{type:'button',style:'width:100%;height:42px;margin-bottom:6px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:700;cursor:pointer;color:var(--ink)',onclick:function(){ ofFill(i) }},it.busy?A('எடுக்குது…'):A('⚡ லிங்கல இருந்து எடு')),
+        it.msg?h('p',{class:'hint',style:'margin:0 0 6px'},it.msg):null,
+        nm,h('div',{class:'r2'},mr,np),st,
+        h('div',{class:'rt'},it.i?h('img',{src:it.i,alt:'',referrerpolicy:'no-referrer'}):h('span',{class:'noimg'}),h('label',{for:'ofi-'+i,style:'font-weight:700;color:var(--brand);cursor:pointer'},it.i?A('படம் மாத்து'):A('+ பொருள் படம்'),fi))));
+    });
+    root.append(h('button',{type:'button',style:'width:100%;height:46px;border-radius:12px;border:1.5px dashed var(--line);background:var(--bg);font-weight:700;cursor:pointer;color:var(--brand)',onclick:function(){ OF.items.push(ofItem()); renderSeller() }},A('+ பொருள் சேர்')));
+    root.append(h('div',{class:'btns'},
+      OF.id?h('button',{type:'button',onclick:function(){ OF=ofBlank(); renderSeller() }},A('ரத்து')):null,
+      h('button',{type:'button',class:'go',onclick:ofSave},OF.busy?A('சேமிக்குது…'):(OF.id?A('மாத்தி சேமி'):A('👗 அவுட்ஃபிட் போடு')))));
+    wrap.append(root,h('h3',{style:'margin:16px 0 8px'},A('போட்ட அவுட்ஃபிட்ஸ்')),h('div',{id:'oflist'}));
+    setTimeout(ofListPaint,0);
+    return wrap;
+  }
+  var USG={un:null,d:null,day:''};
+  function usgInit(){
+    try{
+      var day; try{ day=new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'}) }catch(e){ day=new Date().toISOString().slice(0,10) } if(!S.db||!S.db.doc) return;
+      if(USG.un&&USG.day===day) return;
+      if(USG.un){ try{USG.un()}catch(e){} }
+      USG.day=day;
+      USG.un=S.db.doc('usage/'+day).onSnapshot(function(r){ USG.d=r.exists?(r.data()||{}):{}; usgPaint() },function(){ USG.d=null; USG.err=true; usgPaint() });
+    }catch(e){}
+  }
+  function usgBar(l,n,max,c){
+    var p=Math.min(100,Math.round(n/max*100));
+    return h('div',{style:'margin-top:8px'},h('div',{style:'display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px'},h('span',null,l),h('b',null,n.toLocaleString('en-IN')+' / '+max.toLocaleString('en-IN'))),
+      h('div',{style:'height:8px;background:rgba(0,0,0,.08);border-radius:4px;overflow:hidden'},h('i',{style:'display:block;height:100%;width:'+Math.max(1,p)+'%;background:'+c})));
+  }
+  function usgPaint(){
+    var box=document.getElementById('usgc'); if(!box) return;
+    var d=USG.d, rd=Math.max(0,(d&&d.rd)||0), wr=Math.max(0,(d&&d.wr)||0);
+    var pr=rd/50000, pw=wr/20000, pm=Math.max(pr,pw);
+    var lv=pm>=0.95?2:pm>=0.8?1:0, c=['#1D9E75','#BA7517','#E24B4A'][lv];
+    box.style.background=['#fff','#FFF4D6','#FDE8E8'][lv]; box.style.borderColor=['#E2E8F0','#E8B93C','#E24B4A'][lv];
+    var kids=[
+      h('div',{style:'display:flex;justify-content:space-between;align-items:center'},
+        h('b',{style:'font-size:14px;color:'+(lv===2?'#A32D2D':lv===1?'#7A5300':'#0f172a')},lv===2?A('🚨 அவசரம்: வரம்பு கிட்டத்தட்ட தீர்ந்தது'):lv===1?A('⚠️ இலவச வரம்பு நெருங்குது'):A('📊 இன்றைய பயன்பாடு')),
+        h('span',{class:'hint',style:'margin:0'},A('தோராயம்'))),
+      usgBar(A('படிப்புகள் (reads)'),rd,50000,c),
+      usgBar(A('எழுத்துகள் (writes)'),wr,20000,c),
+      lv>0?h('p',{style:'font-size:13px;margin:10px 0 0;line-height:1.5'},lv===2?A('இப்பவே Blaze-க்கு மாறுங்க. இல்லனா ரீசெட் வரை டீல்ஸ் தெரியாது. ரீசெட்: மதியம் 1:30.'):A('இன்னும் கொஞ்சம் தான் மீதி. வரம்பு தாண்டினா புது டீல்ஸ் ஏறாது. ரீசெட்: மதியம் 1:30.')):null,
+      USG.err?h('p',{class:'hint',style:'margin:8px 0 0'},A('எண்ணிக்கை படிக்க முடியல. ரூல்ஸ் அப்டேட் ஆகலன்னா இப்படி வரும்.')):null];
+    box.replaceChildren.apply(box,kids.filter(Boolean));
+  }
+  function usgCard(){
+    var box=h('div',{id:'usgc',style:'background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px 14px;margin-bottom:12px'});
+    setTimeout(function(){ usgInit(); usgPaint() },0);
+    return box;
+  }
   function sellerDash(){
     var all=S.deals.filter(function(d){return d.title});
     var live=all.filter(function(d){return !isEnded(d)&&!isExpired(d)});
@@ -2528,10 +2865,20 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       h('p',{style:'margin:4px 0 10px;font-weight:700'},wmsg),
       h('div',{style:'display:flex;gap:6px;align-items:flex-end;height:80px'},dn.map(function(x,i){ return h('div',{style:'flex:1;text-align:center;font-size:11px'},h('div',{style:'font-weight:700'},String(x.n)),h('div',{style:'height:'+Math.max(3,Math.round(x.n*48/wmx))+'px;background:'+(i===6?'#1546C6':'#9DB4F0')+';border-radius:4px;margin:2px 0'}),h('div',null,String(x.d.getDate()))) })));
     var goal=Math.max(1,Math.min(500,parseInt(S.settings&&S.settings.goal,10)||30)),pc=Math.min(1,today/goal),R=34,CI=2*Math.PI*R,hr=new Date().getHours(),gm=hr<12?A('காலை வணக்கம்'):hr<17?A('மதிய வணக்கம்'):A('மாலை வணக்கம்'),due=festDue();
+    var oGoal=Math.max(1,Math.min(100,parseInt(S.settings&&S.settings.ogoal,10)||5)),oToday=S.outfits.filter(function(o){return sameDay(new Date(o.createdAt||0),new Date())}).length;
+    function gringSvg(n,g,col){ var pc2=Math.min(1,n/g),sv=document.createElementNS('http://www.w3.org/2000/svg','svg'); sv.setAttribute('width','84');sv.setAttribute('height','84');sv.setAttribute('viewBox','0 0 84 84');
+      sv.innerHTML='<circle cx="42" cy="42" r="'+R+'" fill="none" stroke="#E2E8F0" stroke-width="9"/><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="'+(pc2>=1?'#16A34A':col)+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(CI*pc2).toFixed(1)+' '+CI.toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" font-size="'+(pc2>=1?22:16)+'" font-weight="800" fill="currentColor">'+(pc2>=1?'🎉':n+'/'+g)+'</text>'; return sv }
+    var dDone=today>=goal,oDone=oToday>=oGoal,gmsg,glv;
+    if(dDone&&oDone){ gmsg=A('🎉 இன்னைக்கு ரெண்டு இலக்கும் முடிஞ்சது! சூப்பர் சார், ஓய்வெடுங்க.'); glv='ok' }
+    else if(oDone){ gmsg=A('👗 அவுட்ஃபிட் இலக்கு முடிஞ்சது ✔ இனி டீல்ஸ் {n} மட்டும் மீதி.').replace('{n}',goal-today); glv='ok' }
+    else if(dDone){ gmsg=A('🏷️ டீல்ஸ் இலக்கு முடிஞ்சது ✔ இனி {n} அவுட்ஃபிட் மட்டும்.').replace('{n}',oGoal-oToday); glv='ok' }
+    else if(oToday===0){ gmsg=A('இன்னும் அவுட்ஃபிட் தொடங்கல. ஒண்ணு போடுங்க, நல்ல தொடக்கமா இருக்கும் 💪'); glv='w' }
+    else { gmsg=A('நல்லா போகுது! டீல்ஸ் {d}, அவுட்ஃபிட் {o} மீதி.').replace('{d}',goal-today).replace('{o}',oGoal-oToday); glv='i' }
     var ring=h('div',{class:'panel',style:'margin-bottom:12px'},h('div',{class:'hint',style:'margin:0'},gm),h('h2',{style:'margin:0 0 10px;font-size:22px'},A('ராஜா, இன்று நல்ல நாள்')),
-      h('div',{class:'gring'},(function(){ var sv=document.createElementNS('http://www.w3.org/2000/svg','svg'); sv.setAttribute('width','84');sv.setAttribute('height','84');sv.setAttribute('viewBox','0 0 84 84');
-          sv.innerHTML='<circle cx="42" cy="42" r="'+R+'" fill="none" stroke="#E2E8F0" stroke-width="9"/><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="'+(pc>=1?'#16A34A':'#1546C6')+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+(CI*pc).toFixed(1)+' '+CI.toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" font-size="16" font-weight="800" fill="currentColor">'+today+'/'+goal+'</text>'; return sv })(),
-        h('div',null,h('b',null,pc>=1?A('இன்றைய இலக்கு முடிந்தது 🎉'):A('இன்றைய இலக்கு')),h('div',{class:'hint'},A('இன்று {n} டீல் போட்டாய்').replace('{n}',today)))));
+      h('div',{class:'gr2'},
+        h('div',null,gringSvg(today,goal,'#1546C6'),h('b',null,'🏷️ '+A('டீல்ஸ்')),h('div',{class:'hint',style:'margin:0'},dDone?A('முடிந்தது'):A('இன்னும் {n} போடணும்').replace('{n}',goal-today))),
+        h('div',null,gringSvg(oToday,oGoal,'#D4537E'),h('b',null,'👗 My Stylist'),h('div',{class:'hint',style:'margin:0'},oDone?A('முடிந்தது'):A('இன்னும் {n} போடணும்').replace('{n}',oGoal-oToday)))),
+      h('div',{class:'gmsg '+glv},gmsg));
     var tdl=[],cmSeen=lsGet('nesam-cmseen',0)||0;
     if(!CMA.un&&S.live){ try{ CMA.un=S.db.collection('comments').orderBy('at','desc').limit(150).onSnapshot(function(sn){ CMA.list=sn.docs.map(function(x){var o=x.data()||{};o.id=x.id;return o}); try{cmaPaint()}catch(e){} if(S.view==='seller'&&S.stab==='dash') renderSeller() },function(){}) }catch(e){} }
     var ncm=(CMA.list||[]).filter(function(c){return (c.at||0)>cmSeen}).length;
@@ -2539,6 +2886,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     function tdi(e,l,fn,u){ return h('button',{type:'button',class:'tdi'+(u?' u':''),onclick:fn},h('b',null,e),h('span',null,l),h('i',null,'→')) }
     function gotab(x){ return function(){ S.stab=x; renderSeller(); window.scrollTo(0,0) } }
     if(due) tdl.push(tdi('🎉',due.f.ta+' '+(due.days===0?A('இன்று'):due.days===1?A('நாளை'):A('இன்னும் 2 நாளில்'))+' — '+A('தேதி வை'),function(){ S.stab='fest'; S.festHi=due.f.id; renderSeller(); window.scrollTo(0,0) },true));
+    if(oToday<oGoal) tdl.push(tdi('👗',A('இன்னும் {n} அவுட்ஃபிட் போட வேண்டும்').replace('{n}',oGoal-oToday),function(){S.nf='outfit';S.stab='new';renderSeller();window.scrollTo(0,0)}));
     if(today<goal) tdl.push(tdi('🎯',A('இன்னும் {n} டீல் போட வேண்டும்').replace('{n}',goal-today),function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}));
     if(false&&soon) tdl.push(tdi('⏳',A('{n} டீல்கள் இன்று முடிகின்றன').replace('{n}',soon),gotab('list')));
     if(ncm) tdl.push(tdi('💬',A('{n} புது கருத்துகள்').replace('{n}',ncm),gotab('cmt')));
@@ -2549,7 +2897,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var bigs=h('div',null,
       h('button',{type:'button',class:'hbig go',onclick:function(){F=blankForm();S.stab='new';renderSeller();window.scrollTo(0,0)}},A('➕ புது டீல் போடு')),
       h('button',{type:'button',class:'hbig',onclick:function(){S.stab='list';renderSeller();window.scrollTo(0,0)}},A('என் டீல்ஸ்')));
-    return h('div',null,ring,todo,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
+    return h('div',null,usgCard(),ring,todo,bigs,h('details',{class:'more'},h('summary',null,A('மேலும் விவரம் ▾')),wbox,
       h('div',{class:'stats'},st(live.length,A('லைவ் டீல்ஸ்'),'#0A8A5F'),st(today,A('இன்று போட்டது'),'#1546C6'),st(soon,A('இன்னிக்குள்ள மறையும்'),'#EA580C'),st(ended,A('முடிஞ்சது / காலாவதி'),'#D81E2D'),st(z99,A('₹99-க்குள்'),'#7C3AED'),st(z1k,A('₹1000-க்கு மேல்'),'#0E7490')),
       h('div',{class:'panel',style:'margin-bottom:12px'},h('h2',null,A('வகை வாரியா லைவ் டீல்ஸ்')),
         rows.length?rows.map(function(x){return h('div',{class:'bar'},h('span',null,x.m.e+' '+acat(x.m.id)),h('i',{style:'width:'+Math.max(6,Math.round(x.n/mx*100))+'%;background:'+catColor(x.m.id)}),h('b',null,String(x.n)))}):h('p',{class:'hint'},A('இன்னும் லைவ் டீல் இல்ல.'))),
@@ -3134,7 +3482,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var sp0=st.spl||{}; SET.spl={on:!!sp0.on,l1:sp0.l1||'',l2:sp0.l2||'',emo:sp0.emo||'',bg:/^#[0-9a-fA-F]{6}$/.test(sp0.bg||'')?sp0.bg:'',from:dInput(sp0.from),to:dInput(sp0.to),t:splT(sp0.t)}; SPLP=SET.spl.on?1:0;
     var ow0=st.own||{}; SET.own={on:ow0.on!==false,name:ow0.name||'',title:ow0.title||'',url:ow0.url||'',line:ow0.line||''};
     var pu0=st.pui||{}; SET.pui={lay:({list:1,grid:1,big:1})[pu0.lay]?pu0.lay:'grid',bg:pu0.bg||'',card:pu0.card||'',ink:pu0.ink||'',btn:pu0.btn||'',rad:({round:1,soft:1,sharp:1})[pu0.rad]?pu0.rad:'round'};
-    SET.feat={}; FEATS.forEach(function(f){ SET.feat[f[0]]=(f[0]==='offb')?!!(st.feat&&st.feat.offb===true):!(st.feat&&st.feat[f[0]]===false) }); SET.goal=String((st.goal>0&&st.goal<=500)?st.goal:30);
+    SET.feat={}; FEATS.forEach(function(f){ SET.feat[f[0]]=(f[0]==='offb')?!!(st.feat&&st.feat.offb===true):!(st.feat&&st.feat[f[0]]===false) }); SET.goal=String((st.goal>0&&st.goal<=500)?st.goal:30); SET.ogoal=String((st.ogoal>0&&st.ogoal<=100)?st.ogoal:5);
     SET.init=true;
   }
   function tin2(obj,key,ph,max,type){var i=h('input',{type:type||'text',maxlength:max||80,value:obj[key],placeholder:ph||''});i.addEventListener('input',function(){obj[key]=i.value});return i}
@@ -3166,7 +3514,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(bad){SET.err=bad;SET.msg='';renderSeller();window.scrollTo(0,0);return}
     var data={socials:out,shareUrl:safeUrl(SET.share),apkUrl:safeUrl(SET.apk||''),logo:SET.logo||'',appName:SET.appName.trim(),tagline:SET.tagline.trim(),theme:SET.theme,mode:SET.mode,defLang:SET.defLang,
       hiddenCats:SET.hidden.filter(function(x){return x!=='Others'}),customCats:cust,cmpNames:!!SET.cmpNames,about:SET.about.trim(),
-      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),goal:Math.max(1,Math.min(500,parseInt(SET.goal,10)||30)),fest:(S.settings&&S.settings.fest)||null,pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn};
+      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),goal:Math.max(1,Math.min(500,parseInt(SET.goal,10)||30)),ogoal:Math.max(1,Math.min(100,parseInt(SET.ogoal,10)||5)),fest:(S.settings&&S.settings.fest)||null,pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn};
     try{ await saveSettings(data); SET.err='';SET.msg=A('அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.'); if(!S.live) SET.init=false; }
     catch(e){SET.err=A('சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.');SET.msg=''}
     renderSeller();window.scrollTo(0,0);
@@ -3212,6 +3560,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         h('div',{class:'fld'},h('span',{class:'lbl'},A('💰 விலை பட்டன்கள் (₹)')),h('div',{style:'display:flex;gap:8px'},[0,1,2,3].map(function(i){var e=h('input',{type:'number',inputmode:'numeric',min:1,value:SET.zn[i],'aria-label':'Price '+(i+1)});e.addEventListener('input',function(){SET.zn[i]=e.value});return e})),h('span',{class:'hint'},A('4 எண்கள், சின்னதுல இருந்து பெருசா. கடைசியா "Above" பட்டன் தானா வரும்.'))),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('ஆப் லோகோ')),h('div',{style:'display:flex;gap:12px;align-items:center'},SET.logo?h('img',{class:'logoprev',src:SET.logo,alt:'Logo'}):h('div',{class:'logoprev'}),lf,SET.logo?h('button',{type:'button',class:'chip',onclick:function(){SET.logo='';renderSeller()}},A('நீக்கு')):null),h('span',{class:'hint'},A('சதுர படம் நல்லது. கடை லோகோக்கள் இல்லாத சுத்தமான லோகோ போடு.'))),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('🎯 ஒரு நாளைக்கான டீல் இலக்கு')),tin('goal','30',3,'number'),h('span',{class:'hint'},A('அட்மின் முகப்பில் வட்டமாகத் தெரியும். இப்போது 30.'))),
+        h('div',{class:'fld'},h('span',{class:'lbl'},A('👗 ஒரு நாளைக்கான அவுட்ஃபிட் இலக்கு')),tin('ogoal','5',2,'number'),h('span',{class:'hint'},A('இப்போது 5.'))),
         fld(A('புது வாடிக்கையாளருக்கு முதல் மொழி'),'s-dl',dl,A('வாடிக்கையாளர் மேல உள்ள மொழி பட்டனால எப்ப வேணா மாத்திக்கலாம்.')),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('ஒப்பீட்டுல தளம் பெயர் காட்டு')),h('div',{class:'sws'},[[true,A('ஆன்')],[false,A('ஆஃப்')]].map(function(o){return h('button',{type:'button',class:'chip','aria-pressed':SET.cmpNames===o[0]?'true':'false',onclick:function(){SET.cmpNames=o[0];renderSeller()}},o[1])})),h('span',{class:'hint'},A('ஆஃப் பண்ணா வாடிக்கையாளருக்கு "தளம் 1, 2" னு மட்டும் தெரியும்.'))));
     } else if(SET.sec==='cats'){
@@ -4211,7 +4560,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     document.title=nm; $('brand').setAttribute('aria-label',nm);
     $('tagline').textContent=String((S.settings&&S.settings.tagline)||'').trim()||t('tagline');
     $('q').placeholder=t('search');
-    $('nav-home').textContent=t('navDeals'); $('nav-saved').textContent=t('navSaved'); $('nav-cats').textContent=t('navCats'); $('nav-follow').textContent=t('navFollow'); $('nav-promo').textContent=t('pTab'); $('tab-promo').hidden=!featOn('promo'); $('bellBtn').hidden=!featOn('bell'); updatePdot();
+    $('nav-home').textContent=t('navDeals'); $('nav-saved').textContent=t('navSaved'); $('nav-cats').textContent=t('navCats'); $('nav-follow').textContent=t('navFollow'); $('nav-promo').textContent=t('pTab'); $('nav-outfits').textContent=ot('navO'); $('tab-promo').hidden=!featOn('promo'); $('bellBtn').hidden=!featOn('bell'); updatePdot();
     var mk=$('mark'); mk.replaceChildren();
     var lg=S.settings.logo&&/^data:image\//.test(S.settings.logo)?S.settings.logo:'';
     if(!lg&&S.hosted) lg='logo.png';
@@ -4257,15 +4606,19 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function route(){
     var hsh=(location.hash||'').replace(/^#/,'');
     S.focus=''; S.view='shop';
+    var mo=/^outfit-([A-Za-z0-9_-]+)$/.exec(hsh),backY=-1;
     if(hsh==='seller'&&S.admin) S.view='seller';
     else if(/^deal-[A-Za-z0-9_-]+$/.test(hsh)) S.focus=hsh.slice(5);
-    render(); window.scrollTo(0,0);
+    else if(mo){ S.oid=mo[1]; S.tab='outfits' }
+    else if(S.oid){ S.oid=''; if(S.oFrom){ S.tab=S.oFrom; S.oFrom=''; backY=S.oY||0 } }
+    render(); window.scrollTo(0,backY>=0?backY:0);
   }
   window.addEventListener('hashchange',route);
 
   $('q').addEventListener('input',function(e){S.q=e.target.value;renderShop()});
   $('tab-home').addEventListener('click',function(){S.tab='home';S.zone='';render();window.scrollTo(0,0)});
   $('tab-saved').addEventListener('click',function(){S.tab='saved';render();window.scrollTo(0,0)});
+  $('tab-outfits').addEventListener('click',function(){ if(S.tab==='outfits'&&S.oid){ closeOutfit(); return } S.tab='outfits'; render(); window.scrollTo(0,0) });
   $('tab-cats').addEventListener('click',function(){S.tab='cats';S.main='';S.sub='';S.zone='';render();window.scrollTo(0,0)});
   $('tab-follow').addEventListener('click',function(){S.tab='follow';render();window.scrollTo(0,0)});
   $('tab-promo').addEventListener('click',function(){S.tab='promo';render();window.scrollTo(0,0)});
@@ -4371,6 +4724,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       S.deals=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return S.admin||!x.auto||(dealImgs(x).length>0&&hasPrice(x)&&x.newPrice>0)});
       S.hitLimit=snap.size>=S.limit; S.loading=false;S.slow=false;
       if(typeof S.todayN!=='number') loadTodayCount();
+      if(!S.ounsub) { try{ subscribeOutfits() }catch(e){} }
       if(S.admin&&!S.cleaned){S.cleaned=true;cleanupOld();}
       if(S.view==='seller'&&S.stab==='new') { renderChrome(); return; }
       render();
@@ -4433,6 +4787,15 @@ let fs;
 try{fs=initializeFirestore(app,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})})}catch(e){fs=getFirestore(app)}
 const auth=getAuth(app);
 const wrap=s=>({docs:s.docs.map(d=>({id:d.id,data:()=>d.data()})),size:s.size});
+const ptDay=()=>{try{return new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'})}catch(e){return new Date().toISOString().slice(0,10)}};
+const U={rd:0,wr:0,t:null};
+function uflush(){
+  U.t=null; if(!U.rd&&!U.wr) return;
+  const r=U.rd,w=U.wr+1; U.rd=0; U.wr=0;
+  try{ setDoc(fdoc(fs,'usage',ptDay()),{rd:finc(r),wr:finc(w)},{merge:true}).catch(()=>{}) }catch(e){}
+}
+function ucount(r,w){ U.rd+=r||0; U.wr+=w||0; if(!U.t) U.t=setTimeout(uflush,20000) }
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&(U.rd||U.wr)){ if(U.t){clearTimeout(U.t)} uflush() } });
 
 class Q{
   constructor(name,cs){this.name=name;this.cs=cs||[]}
@@ -4440,22 +4803,22 @@ class Q{
   orderBy(f,d){return new Q(this.name,this.cs.concat([forder(f,d||'asc')]))}
   limit(n){return new Q(this.name,this.cs.concat([flimit(n)]))}
   _q(){return query(fcol(fs,this.name),...this.cs)}
-  get(){return getDocs(this._q()).then(wrap)}
-  onSnapshot(ok,err){return onSnapshot(this._q(),s=>ok(wrap(s)),err)}
-  count(){return getCountFromServer(this._q()).then(s=>s.data().count)}
+  get(){return getDocs(this._q()).then(s=>{ if(this.name!=='usage') ucount(Math.max(1,s.size),0); return wrap(s) })}
+  onSnapshot(ok,err){return onSnapshot(this._q(),s=>{ if(!s.metadata.fromCache) ucount(Math.max(1,s.docChanges().length),0); ok(wrap(s)) },err)}
+  count(){ucount(1,0);return getCountFromServer(this._q()).then(s=>s.data().count)}
 }
 const db={
   collection(name){
     const q=new Q(name);
     return {
-      add:d=>addDoc(fcol(fs,name),d),
-      doc:id=>({set:d=>setDoc(fdoc(fs,name,id),d),update:p=>updateDoc(fdoc(fs,name,id),p),delete:()=>deleteDoc(fdoc(fs,name,id))}),
+      add:d=>{ucount(0,1);return addDoc(fcol(fs,name),d)},
+      doc:id=>({set:d=>{ucount(0,1);return setDoc(fdoc(fs,name,id),d)},update:p=>{ucount(0,1);return updateDoc(fdoc(fs,name,id),p)},delete:()=>{ucount(0,1);return deleteDoc(fdoc(fs,name,id))}}),
       where:(f,o,v)=>q.where(f,o,v),orderBy:(f,d)=>q.orderBy(f,d),limit:n=>q.limit(n),get:()=>q.get(),onSnapshot:(a,b)=>q.onSnapshot(a,b)
     };
   },
   doc(path){
     const [c,i]=path.split('/'),ref=fdoc(fs,c,i);
-    return {set:d=>setDoc(ref,d),onSnapshot:(ok,err)=>onSnapshot(ref,s=>ok({exists:s.exists(),data:()=>s.data()}),err)};
+    return {set:d=>{ucount(0,1);return setDoc(ref,d)},onSnapshot:(ok,err)=>onSnapshot(ref,s=>{ if(c!=='usage'&&!s.metadata.fromCache) ucount(1,0); ok({exists:s.exists(),data:()=>s.data()}) },err)};
   }
 };
 /* Admin test: the Firestore rules only let the owner's Google account read admin/ping. Nobody else can. */
@@ -4471,9 +4834,9 @@ async function checkAdmin(u){
 const provider=new GoogleAuthProvider();
 function incConv(o){const r={};for(const k in o){r[k]=(typeof o[k]==='number')?finc(o[k]):incConv(o[k])}return r}
 window.NESAM={
-  db,
-  inc(col,id,obj){ return setDoc(fdoc(fs,col,id),incConv(obj),{merge:true}) },
-  track(day,obj){ try{ return setDoc(fdoc(fs,'stats',day),incConv(obj),{merge:true}).catch(()=>{}) }catch(e){} },
+  db,ptDay,
+  inc(col,id,obj){ ucount(0,1); return setDoc(fdoc(fs,col,id),incConv(obj),{merge:true}) },
+  track(day,obj){ try{ ucount(0,1); return setDoc(fdoc(fs,'stats',day),incConv(obj),{merge:true}).catch(()=>{}) }catch(e){} },
   onAuth(cb){ onAuthStateChanged(auth,async u=>{ cb(await checkAdmin(u),u); }); },
   async signIn(){
     try{ const r=await signInWithPopup(auth,provider); return {signedIn:true,admin:await checkAdmin(r.user)}; }
