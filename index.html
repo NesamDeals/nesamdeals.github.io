@@ -149,16 +149,12 @@ a{color:inherit}
 .feed.vm-grid.g3 .body{padding:6px 6px 8px;gap:3px}
 .feed.vm-grid.g3 .title{font-size:11.5px;line-height:1.25}
 .feed.vm-grid.g3 .now{font-size:14.5px}
-.feed.vm-grid.g3 .was,.feed.vm-grid.g3 .meta,.feed.vm-grid.g3 .desc,.feed.vm-grid.g3 .rx,.feed.vm-grid.g3 .cmtb,.feed.vm-grid.g3 .actions .ico,.feed.vm-grid.g3 .dbtn{display:none}
+.feed.vm-grid.g3 .was,.feed.vm-grid.g3 .meta,.feed.vm-grid.g3 .desc,.feed.vm-grid.g3 .cmtb,.feed.vm-grid.g3 .actions .ico,.feed.vm-grid.g3 .dbtn{display:none}
 .feed.vm-grid.g3 .saving{font-size:11px;padding:1px 6px}
 .feed.vm-grid.g3 .buy{height:30px;font-size:11.5px;border-radius:8px;padding:0 4px}
 .feed.vm-grid.g3 .off{font-size:10px;padding:1px 5px;left:4px;top:4px}
 .media{overflow:hidden}.media .track{position:absolute;inset:0}
 .feed.vm-grid .cmpb,.feed.vm-list .cmpb{display:none}
-.feed.vm-grid .rx,.feed.vm-list .rx{gap:4px;margin:2px 0}
-.feed.vm-grid .rxb,.feed.vm-list .rxb{min-height:34px;border-radius:9px;padding:0}
-.feed.vm-grid .rxb small,.feed.vm-list .rxb small{display:none}
-.feed.vm-grid .rxe,.feed.vm-list .rxe{font-size:13px;gap:2px}.feed.vm-grid .rxe b,.feed.vm-list .rxe b{font-size:11px}
 .feed.vm-grid .cmtb,.feed.vm-list .cmtb{display:block;min-height:34px;padding:0 8px;font-size:13px}
 .feed.vm-grid .desc,.feed.vm-list .desc{display:-webkit-box;-webkit-line-clamp:2;font-size:12.5px;line-height:1.3}
 .dbtn{display:none;align-self:flex-start;background:none;border:1.5px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--brand);font-weight:700;font-size:12.5px;cursor:pointer}
@@ -507,11 +503,6 @@ span.cbadge{cursor:default}
 .pdot{position:absolute;top:5px;right:calc(50% - 20px);width:10px;height:10px;border-radius:50%;background:#E11D48;animation:gpulse 1.3s infinite}
 .nav button{position:relative}
 @media (prefers-reduced-motion:reduce){.pdot{animation:none}}
-.rx{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0 4px}
-.rxb{min-height:56px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:3px 2px;min-width:0}
-.rxb[aria-pressed="true"]{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 14%,var(--card))}
-.rxe{font-size:15px;display:flex;gap:4px;align-items:center}.rxe b{font-size:13px}
-.rxb small{font-size:10px;line-height:1.15;color:var(--muted);max-width:100%;text-align:center;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .cmtb{width:100%;min-height:42px;margin:4px 0;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;cursor:pointer}
 .cmsh{display:flex;flex-direction:column}
 .cmlist{max-height:46vh;overflow:auto;margin-bottom:8px}
@@ -1729,7 +1720,6 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         hasCmp(d)&&h('button',{class:'cmpb',type:'button',onclick:function(){openCompare(d)}},'🔍 '+t('cmpBtn')),
         showTimer&&h('div',{class:'timer'},t('endsIn',{t:left(d.expiresAt)})),
         descEl,more,dbtn,vbtn,
-        (S.live&&!d.sample&&featOn('react'))?rxRow(d):null,
         (S.live&&!d.sample&&d.allowCmt&&featOn('cmt'))?h('button',{class:'cmtb',type:'button','data-cid':d.id,onclick:function(){openComments(d)}},'💬 '+t('cmtT')+' (',h('b',null,String(cmtN(d.id))),')'):null,
         h('div',{class:'actions'},
           ended?h('a',{class:'buy','aria-disabled':'true',href:'#',tabindex:'-1'},t('ended')):buy,
@@ -3598,7 +3588,6 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
             h('button',{type:'button',onclick:function(){patchUndo(d,{ended:!d.ended},d.ended?A('மறுபடி லைவ் ஆக்கியாச்சு'):A('முடிஞ்சதுனு குறிச்சாச்சு'))}},d.ended?A('மறுபடி லைவ்'):A('முடிஞ்சது')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{pinned:!d.pinned},d.pinned?A('📌 எடுத்தாச்சு'):A('📌 மேல வச்சாச்சு'))}},d.pinned?A('📌 எடு'):A('📌 மேல வை')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{allowCmt:!d.allowCmt},d.allowCmt?A('💬 கருத்து ஆஃப் ஆச்சு'):A('💬 கருத்து ஆன் ஆச்சு'))}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
-            armBtn(A('ரியாக்ஷன் ரீசெட்'),A('உறுதியா?'),function(){var rf=S.db.collection('reacts').doc(d.id);rf.get().then(function(sn){var old=(sn&&sn.exists&&sn.data&&sn.data())||null;return rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)}).then(function(){toast('✔',function(){(old?rf.set(old):rf.set({ok:0,no:0,exp:0,bad:0,cn:cmtN(d.id)})).then(function(){toast(A('பழைய நிலைக்கு மாத்தியாச்சு ✔'))})})})}).catch(function(){toast(A('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'))})}),
             h('button',{type:'button',onclick:async function(){ var ok=await copyText(postText(d)); toast(ok?A('காப்பி ஆச்சு ✔ இனி Facebook/Telegram-ல ஒட்டுங்க'):A('காப்பி ஆகல 😕')) }},A('📋 போஸ்ட் காப்பி')),
             open&&h('a',{class:'tg',href:open,target:'_blank',rel:'noopener noreferrer',style:'min-height:36px;display:inline-flex;align-items:center;text-decoration:none;padding:0 10px'},A('லிங்க் சோதி')),
             del)));
@@ -3630,7 +3619,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
 
   /* ---- settings (everything the owner can change) ---- */
   var SET={sec:'look',apk:'',init:false,msg:'',err:'',socials:[],share:'',logo:'',appName:'',tagline:'',theme:'blue',mode:'light',defLang:'ta',hidden:[],custom:[],about:'',life:'7',annOn:false,annText:'',annUrl:'',feat:{},own:{on:true,name:'',title:'',url:'',line:''},pui:{lay:'grid',bg:'',card:'',ink:'',btn:'',rad:'round',store:'auto'},spl:{on:false,l1:'',l2:'',emo:'',font:'',c1:'',c2:'',bg:'',logo:'',from:'',to:''}};
-  var FEATS=[['adv','💡 இன்றைய ஆலோசனை (அட்மின் முகப்பு)'],['react','👍 ரியாக்ஷன் (✅❌⌛👎)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு'],['offb','🏷 படத்தின் மேல் சிவப்பு "% OFF" பேட்ஜ்']];
+  var FEATS=[['adv','💡 இன்றைய ஆலோசனை (அட்மின் முகப்பு)'],['cnt','👁 பார்வை/கிளிக் எண்ணிக்கை + 🔥 அதிகம் தொட்டது (உண்மை எண்)'],['cmt','💬 கருத்துகள்'],['cmp','🔍 விலை ஒப்பீடு'],['game','🎯 விலை ஊகி விளையாட்டு'],['tour','👋 முதல் முறை வரவேற்பு'],['bell','🔔 மணி (அறிவிப்பு)'],['promo','📢 Promo டேப்'],['splash','✨ ஆப் திறக்கும்போது அனிமேஷன்'],['strip','📊 "இன்னைக்கு புது டீல்" பட்டி'],['zones','💰 விலை வாரியா பட்டன்கள் (Under ₹99…)'],['greet','🌅 வாழ்த்து பட்டை + கிளாக்'],['stk','🔥 தொடர்ச்சி (streak)'],['shr','📤 "இந்த ஆப்பை பகிர" பட்டன் + ஷேர் வாசகம்'],['pull','⬇ கீழ இழுத்து புதுப்பி'],['pnote','💬 "விலை மாறலாம்" வரி (டீல்களுக்கு மேலே)'],['col3','▦ கிரிட்டில் 2/3 வரிசை தேர்வு'],['offb','🏷 படத்தின் மேல் சிவப்பு "% OFF" பேட்ஜ்']];
   function setLoad(){
     var st=S.settings||{};
     SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
@@ -4150,31 +4139,8 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   /* ===== v3: feature switches, reactions, comments, promos ===== */
   function featOn(k){ var f=S.settings&&S.settings.feat; if(k==='offb') return !!(f&&f.offb===true); return !(f&&f[k]===false) }
   function myVid(){ var v=lsGet('nesam-vid',''); if(!v||typeof v!=='string'){ v='v'+Math.random().toString(36).slice(2,12)+Date.now().toString(36); lsSet('nesam-vid',v) } return v }
-  var RX=[['ok','✅','rOk'],['no','❌','rNo'],['exp','⌛','rExp'],['bad','👎','rBad']];
-  function rxCount(id,k){ var r=S.reacts[id]; return Math.max(0,(r&&+r[k])||0) }
   function cmtN(id){ var r=S.reacts[id]; return Math.max(0,(r&&+r.cn)||0) }
-  function rxRow(d){
-    var mine=(lsGet('nesam-rx',{})||{})[d.id]||'';
-    return h('div',{class:'rx','data-rxid':d.id},RX.map(function(x){
-      return h('button',{type:'button',class:'rxb','data-k':x[0],'aria-pressed':mine===x[0]?'true':'false','aria-label':t(x[2]),onclick:function(){rxTap(d.id,x[0])}},
-        h('span',{class:'rxe'},x[1],h('b',null,String(rxCount(d.id,x[0])))),h('small',null,t(x[2])));
-    }));
-  }
-  function rxTap(id,k){
-    if(!S.live||!window.NESAM||!window.NESAM.inc){ toast(t('cmtErr')); return }
-    var m=lsGet('nesam-rx',{})||{},old=m[id]||'',o={};
-    if(old===k){ o[k]=-1; delete m[id] } else { o[k]=1; if(old) o[old]=-1; m[id]=k }
-    lsSet('nesam-rx',m);
-    var r=S.reacts[id]=Object.assign({},S.reacts[id]); for(var q in o) r[q]=(+r[q]||0)+o[q];
-    rxPaint();
-    window.NESAM.inc('reacts',id,o).catch(function(){toast(t('cmtErr'))});
-  }
   function rxPaint(){
-    var m=lsGet('nesam-rx',{})||{};
-    document.querySelectorAll('.rx[data-rxid]').forEach(function(box){
-      var id=box.getAttribute('data-rxid');
-      box.querySelectorAll('.rxb').forEach(function(b){ var k=b.getAttribute('data-k'); b.setAttribute('aria-pressed',m[id]===k?'true':'false'); b.querySelector('b').textContent=String(rxCount(id,k)) });
-    });
     document.querySelectorAll('.cmtb[data-cid]').forEach(function(b){ b.querySelector('b').textContent=String(cmtN(b.getAttribute('data-cid'))) });
   }
   /* ---- comments (customer) ---- */
