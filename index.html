@@ -956,6 +956,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   };
   var skip=ls('nesam-splash')===0;
   var hs=(location.hash||'').replace('#',''); if(hs&&hs!=='home') skip=true;
+  try{ var _inst=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||/^android-app:/.test(document.referrer||'')||window.navigator.standalone===true; if(!_inst) skip=true }catch(e){ skip=true } /* splash only for people who installed the app */
   try{ if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches) skip=true }catch(e){}
   try{ if(!skip){ var _sd=new Date(),_sk=_sd.getFullYear()+'-'+(_sd.getMonth()+1)+'-'+_sd.getDate(); if(localStorage.getItem('nesam-splashday')===_sk) skip=true; else localStorage.setItem('nesam-splashday',_sk) } }catch(e){}
   if(skip) return;
@@ -1106,23 +1107,23 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   var LANGS=[['ta','தமிழ்'],['en','English'],['tl','Thanglish'],['hi','हिन्दी'],['te','తెలుగు'],['kn','ಕನ್ನಡ'],['ml','മലയാളം'],['mr','मराठी'],['bn','বাংলা'],['gu','ગુજરાતી'],['pa','ਪੰਜਾਬੀ'],['or','ଓଡ଼ିଆ'],['as','অসমীয়া'],['ur','اردو'],['ne','नेपाली']];
   var LOCALES={ta:'ta-IN',en:'en-IN',hi:'hi-IN',te:'te-IN',kn:'kn-IN',ml:'ml-IN',mr:'mr-IN',bn:'bn-IN',gu:'gu-IN',pa:'pa-IN',or:'or-IN',as:'as-IN',ur:'ur-IN',ne:'ne-NP'};
   var BASE_TAX=[
-    {id:'Women',e:'👗',subs:['Sarees','Kurtis & Ethnic Wear','Western Wear','Nightwear & Lounge','Innerwear','Jewellery','Footwear','Handbags']},
-    {id:'Men',e:'👔',subs:['T-Shirts','Shirts','Jeans & Trousers','Ethnic Wear','Hoodies & Jackets','Innerwear','Footwear','Grooming']},
-    {id:'Kids',e:'🧸',subs:['Boys Clothing','Girls Clothing','Baby Clothing','Toys & Games','School Bags & Stationery','Footwear','Baby Care','Books']},
-    {id:'Mobiles',e:'📱',subs:['Smartphones','Tablets','Cases & Covers','Chargers & Cables','Power Banks','Screen Guards']},
-    {id:'Electronics',e:'🎧',subs:['Earbuds & Audio','Smart Watches','Speakers','Laptops & Computers','Computer Accessories','TV & Displays','Cameras','Gaming','Storage Devices']},
-    {id:'Appliances',e:'🔌',subs:['Kitchen Appliances','Fans & Coolers','AC & Refrigerators','Washing Machines','Irons & Garment Care','Water Heaters & Purifiers','Vacuum & Cleaning Appliances']},
-    {id:'Home',e:'🏠',subs:['Kitchenware','Cookware & Dinnerware','Home Decor','Bedding & Furnishing','Furniture','Cleaning','Storage & Organisers','Lighting','Clocks','Curtains & Mats']},
-    {id:'Beauty',e:'💄',subs:['Skincare','Haircare','Makeup','Fragrances','Personal Care','Trimmers & Grooming Tools']},
-    {id:'Health',e:'💊',subs:['Vitamins & Supplements','Fitness Equipment','Medical Devices','Wellness']},
-    {id:'Accessories',e:'⌚',subs:['Watches','Bags & Wallets','Sunglasses','Caps & Belts','Umbrellas','Bottles & Lunch Boxes']},
-    {id:'Sports',e:'🏏',subs:['Gym & Yoga','Cricket & Outdoor','Cycling','Sportswear']},
-    {id:'Grocery',e:'🛒',subs:['Groceries','Snacks & Food','Organic & Health Food','Beverages']},
-    {id:'Stationery',e:'📚',subs:['Books','Stationery & Office','Art & Craft']},
-    {id:'Auto',e:'🚗',subs:['Car Accessories','Bike Accessories','Helmets','Tools']},
-    {id:'Pets',e:'🐾',subs:['Pet Food','Pet Accessories']},
-    {id:'Luggage',e:'🧳',subs:['Luggage & Trolley','Backpacks','Travel Accessories']},
-    {id:'Gifts',e:'🎁',subs:['Festival Gifts','Corporate Gifts','Personalised Gifts']},
+    {id:'Women',e:'👗',subs:['Sarees','Kurtis & Ethnic Wear','Western Wear','Nightwear & Lounge','Innerwear','Jewellery','Footwear','Handbags','Rings','Necklaces & Chains','Earrings','Bangles & Bracelets','Anklets & Toe Rings','Makeup & Lipstick','Hair Accessories','Leggings & Bottoms','Tops & Tunics','Dupattas & Stoles','Blouses & Dress Material','Maternity Wear']},
+    {id:'Men',e:'👔',subs:['T-Shirts','Shirts','Jeans & Trousers','Ethnic Wear','Hoodies & Jackets','Innerwear','Footwear','Grooming','Shorts & Track Pants','Kurtas','Chains & Rings','Wallets & Belts','Socks','Sweaters & Winterwear','Suits & Blazers']},
+    {id:'Kids',e:'🧸',subs:['Boys Clothing','Girls Clothing','Baby Clothing','Toys & Games','School Bags & Stationery','Footwear','Baby Care','Books','Kids Ethnic Wear','Kids Nightwear','Kids Accessories','Baby Toys & Gear']},
+    {id:'Mobiles',e:'📱',subs:['Smartphones','Tablets','Cases & Covers','Chargers & Cables','Power Banks','Screen Guards','Mobile Holders & Stands','Memory Cards & OTG','Selfie Sticks & Tripods']},
+    {id:'Electronics',e:'🎧',subs:['Earbuds & Audio','Smart Watches','Speakers','Laptops & Computers','Computer Accessories','TV & Displays','Cameras','Gaming','Storage Devices','Printers & Ink','Routers & Networking','Smart Home & Bulbs']},
+    {id:'Appliances',e:'🔌',subs:['Kitchen Appliances','Fans & Coolers','AC & Refrigerators','Washing Machines','Irons & Garment Care','Water Heaters & Purifiers','Vacuum & Cleaning Appliances','Air Purifiers & Heaters','Inverters & Batteries']},
+    {id:'Home',e:'🏠',subs:['Kitchenware','Cookware & Dinnerware','Home Decor','Bedding & Furnishing','Furniture','Cleaning','Storage & Organisers','Lighting','Clocks','Curtains & Mats','Kitchen Tools & Gadgets','Pooja & Festival Items','Wall Art & Frames','Gardening & Plants','Bathroom & Laundry','Tools & Hardware']},
+    {id:'Beauty',e:'💄',subs:['Skincare','Haircare','Makeup','Fragrances','Personal Care','Trimmers & Grooming Tools','Lipstick & Lip Care','Eye Makeup','Nail Care','Bath & Body','Bindi & Mehendi']},
+    {id:'Health',e:'💊',subs:['Vitamins & Supplements','Fitness Equipment','Medical Devices','Wellness','Ayurveda & Herbal','Hygiene & Safety']},
+    {id:'Accessories',e:'⌚',subs:['Watches','Bags & Wallets','Sunglasses','Caps & Belts','Umbrellas','Bottles & Lunch Boxes','Scarves & Gloves','Keychains & Charms','Hair Bands & Clips']},
+    {id:'Sports',e:'🏏',subs:['Gym & Yoga','Cricket & Outdoor','Cycling','Sportswear','Badminton & Racquets','Football & Team Games','Running & Walking','Indoor Games']},
+    {id:'Grocery',e:'🛒',subs:['Groceries','Snacks & Food','Organic & Health Food','Beverages','Dry Fruits & Nuts','Oils & Ghee','Spices & Masalas','Tea & Coffee','Sweets & Chocolates','Rice, Atta & Pulses']},
+    {id:'Stationery',e:'📚',subs:['Books','Stationery & Office','Art & Craft','Notebooks & Diaries','Pens & Writing']},
+    {id:'Auto',e:'🚗',subs:['Car Accessories','Bike Accessories','Helmets','Tools','Car Care & Cleaning','Car Electronics','Spare Parts']},
+    {id:'Pets',e:'🐾',subs:['Pet Food','Pet Accessories','Pet Toys & Beds','Pet Grooming']},
+    {id:'Luggage',e:'🧳',subs:['Luggage & Trolley','Backpacks','Travel Accessories','Duffel & Gym Bags','Laptop Bags']},
+    {id:'Gifts',e:'🎁',subs:['Festival Gifts','Corporate Gifts','Personalised Gifts','Couple Gifts','Photo & Mug Gifts','Hampers & Combos']},
     {id:'Digital',e:'💻',subs:['Courses & eBooks','Software & Apps','Subscriptions','Travel & Tickets','Recharge & Bills']},
     {id:'Others',e:'✨',subs:['Other']}
   ];
@@ -1142,7 +1143,8 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   var SUBT={
     ta:{'Sarees':'புடவைகள்','Kurtis & Ethnic Wear':'குர்தி & பாரம்பரிய உடை','Western Wear':'வெஸ்டர்ன் உடைகள்','Nightwear & Lounge':'இரவு & வீட்டு உடைகள்','Innerwear':'உள்ளாடைகள்','Jewellery':'நகைகள்','Footwear':'காலணிகள்','Handbags':'கைப்பைகள்','T-Shirts':'டி-ஷர்ட்','Shirts':'சட்டைகள்','Jeans & Trousers':'ஜீன்ஸ் & பேன்ட்','Ethnic Wear':'பாரம்பரிய உடை','Hoodies & Jackets':'ஹூடி & ஜாக்கெட்','Grooming':'கிரூமிங்','Boys Clothing':'ஆண் குழந்தை உடைகள்','Girls Clothing':'பெண் குழந்தை உடைகள்','Baby Clothing':'கைக்குழந்தை உடைகள்','Toys & Games':'பொம்மைகள் & விளையாட்டு','School Bags & Stationery':'ஸ்கூல் பேக் & எழுதுபொருள்','Baby Care':'குழந்தை பராமரிப்பு','Books':'புத்தகங்கள்','Mobiles':'மொபைல்','Earbuds & Audio':'இயர்பட்ஸ் & ஆடியோ','Smart Watches':'ஸ்மார்ட் வாட்ச்','Chargers & Accessories':'சார்ஜர் & ஆக்சஸரீஸ்','Laptops & Tablets':'லேப்டாப் & டேப்லெட்','TV & Appliances':'டிவி & உபகரணங்கள்','Cameras':'கேமராக்கள்','Kitchenware':'சமையலறை பொருட்கள்','Home Decor':'வீட்டு அலங்காரம்','Bedding & Furnishing':'படுக்கை & திரைச்சீலை','Furniture':'மரச்சாமான்கள்','Cleaning':'சுத்தம் செய்ய','Storage & Organisers':'சேமிப்பு & ஆர்கனைசர்','Lighting':'விளக்குகள்','Clocks':'சுவர் கடிகாரங்கள்','Skincare':'சருமப் பராமரிப்பு','Haircare':'முடி பராமரிப்பு','Makeup':'மேக்கப்','Personal Care':'தனிப்பட்ட பராமரிப்பு','Health & Wellness':'ஆரோக்கியம்','Watches':'கைக்கடிகாரங்கள்','Bags & Wallets':'பைகள் & பர்ஸ்','Sunglasses':'கூலிங் கிளாஸ்','Caps & Belts':'தொப்பி & பெல்ட்','Umbrellas':'குடைகள்','Bottles & Lunch Boxes':'பாட்டில் & லஞ்ச் பாக்ஸ்','Groceries':'மளிகைப் பொருட்கள்','Snacks & Food':'தின்பண்டம் & உணவு','Organic & Health Food':'இயற்கை & ஆரோக்கிய உணவு','Festival Gifts':'பண்டிகை பரிசுகள்','Corporate Gifts':'நிறுவன பரிசுகள்','Personalised Gifts':'தனிப்பயன் பரிசுகள்','Courses & eBooks':'கோர்ஸ் & இ-புக்','Software & Apps':'மென்பொருள் & ஆப்ஸ்','Subscriptions':'சந்தாக்கள்','Travel & Tickets':'பயணம் & டிக்கெட்','Recharge & Bills':'ரீசார்ஜ் & பில்','Other':'மற்றவை'},
     hi:{'Sarees':'साड़ियां','Kurtis & Ethnic Wear':'कुर्ती और एथनिक','Western Wear':'वेस्टर्न वियर','Nightwear & Lounge':'नाइटवियर और लाउंज','Innerwear':'इनरवियर','Jewellery':'ज्वेलरी','Footwear':'जूते-चप्पल','Handbags':'हैंडबैग','T-Shirts':'टी-शर्ट','Shirts':'शर्ट','Jeans & Trousers':'जींस और ट्राउज़र','Ethnic Wear':'एथनिक वियर','Hoodies & Jackets':'हुडी और जैकेट','Grooming':'ग्रूमिंग','Boys Clothing':'लड़कों के कपड़े','Girls Clothing':'लड़कियों के कपड़े','Baby Clothing':'बेबी कपड़े','Toys & Games':'खिलौने और गेम','School Bags & Stationery':'स्कूल बैग और स्टेशनरी','Baby Care':'बेबी केयर','Books':'किताबें','Mobiles':'मोबाइल','Earbuds & Audio':'इयरबड्स और ऑडियो','Smart Watches':'स्मार्ट वॉच','Chargers & Accessories':'चार्जर और एक्सेसरीज़','Laptops & Tablets':'लैपटॉप और टैबलेट','TV & Appliances':'टीवी और उपकरण','Cameras':'कैमरा','Kitchenware':'किचन का सामान','Home Decor':'होम डेकोर','Bedding & Furnishing':'बिस्तर और फर्निशिंग','Furniture':'फर्नीचर','Cleaning':'सफाई','Storage & Organisers':'स्टोरेज और ऑर्गनाइज़र','Lighting':'लाइटिंग','Clocks':'घड़ियां','Skincare':'स्किनकेयर','Haircare':'हेयरकेयर','Makeup':'मेकअप','Personal Care':'पर्सनल केयर','Health & Wellness':'सेहत','Watches':'घड़ियां','Bags & Wallets':'बैग और वॉलेट','Sunglasses':'धूप के चश्मे','Caps & Belts':'टोपी और बेल्ट','Umbrellas':'छाते','Bottles & Lunch Boxes':'बोतल और लंच बॉक्स','Groceries':'किराना सामान','Snacks & Food':'स्नैक्स और खाना','Organic & Health Food':'ऑर्गेनिक और हेल्थ फूड','Festival Gifts':'त्योहार के गिफ्ट','Corporate Gifts':'कॉर्पोरेट गिफ्ट','Personalised Gifts':'पर्सनलाइज़्ड गिफ्ट','Courses & eBooks':'कोर्स और ई-बुक','Software & Apps':'सॉफ्टवेयर और ऐप','Subscriptions':'सब्सक्रिप्शन','Travel & Tickets':'यात्रा और टिकट','Recharge & Bills':'रिचार्ज और बिल','Other':'अन्य'}
-  };
+  };  Object.assign(SUBT.ta,{'Rings':'மோதிரங்கள்','Necklaces & Chains':'கழுத்து செயின் & மாலை','Earrings':'காதணிகள்','Bangles & Bracelets':'வளையல் & கைச்செயின்','Anklets & Toe Rings':'கொலுசு & மெட்டி','Makeup & Lipstick':'மேக்கப் & லிப்ஸ்டிக்','Hair Accessories':'முடி அலங்காரப் பொருட்கள்','Leggings & Bottoms':'லெகிங்ஸ் & பாட்டம்ஸ்','Tops & Tunics':'டாப்ஸ் & டூனிக்','Dupattas & Stoles':'துப்பட்டா & ஸ்டோல்','Blouses & Dress Material':'ரவிக்கை & துணி','Maternity Wear':'கர்ப்பகால உடைகள்','Shorts & Track Pants':'ஷார்ட்ஸ் & ட்ராக் பேன்ட்','Kurtas':'குர்தா','Chains & Rings':'செயின் & மோதிரம்','Wallets & Belts':'பர்ஸ் & பெல்ட்','Socks':'சாக்ஸ்','Sweaters & Winterwear':'ஸ்வெட்டர் & குளிர்கால உடை','Suits & Blazers':'சூட் & பிளேசர்','Kids Ethnic Wear':'குழந்தைகள் பாரம்பரிய உடை','Kids Nightwear':'குழந்தைகள் இரவு உடை','Kids Accessories':'குழந்தைகள் அணிகலன்கள்','Baby Toys & Gear':'குழந்தை பொம்மை & பொருட்கள்','Mobile Holders & Stands':'மொபைல் ஸ்டாண்ட்','Memory Cards & OTG':'மெமரி கார்டு & OTG','Selfie Sticks & Tripods':'செல்ஃபி ஸ்டிக் & ட்ரைபாட்','Printers & Ink':'பிரிண்டர் & மை','Routers & Networking':'ரவுட்டர் & நெட்வொர்க்','Smart Home & Bulbs':'ஸ்மார்ட் ஹோம் & பல்ப்','Air Purifiers & Heaters':'காற்று சுத்திகரிப்பு & ஹீட்டர்','Inverters & Batteries':'இன்வெர்ட்டர் & பேட்டரி','Kitchen Tools & Gadgets':'சமையலறை கருவிகள்','Pooja & Festival Items':'பூஜை & பண்டிகை பொருட்கள்','Wall Art & Frames':'சுவர் அலங்காரம் & ஃபிரேம்','Gardening & Plants':'தோட்டம் & செடிகள்','Bathroom & Laundry':'குளியலறை & துணி துவைக்க','Tools & Hardware':'கருவிகள் & ஹார்டுவேர்','Lipstick & Lip Care':'லிப்ஸ்டிக் & உதடு பராமரிப்பு','Eye Makeup':'கண் மேக்கப்','Nail Care':'நக பராமரிப்பு','Bath & Body':'குளியல் & உடல் பராமரிப்பு','Bindi & Mehendi':'பொட்டு & மருதாணி','Ayurveda & Herbal':'ஆயுர்வேதம் & மூலிகை','Hygiene & Safety':'சுகாதாரம் & பாதுகாப்பு','Scarves & Gloves':'ஸ்கார்ஃப் & கையுறை','Keychains & Charms':'சாவிக்கொத்து & சார்ம்','Hair Bands & Clips':'ஹேர் பேண்ட் & கிளிப்','Badminton & Racquets':'பேட்மிண்டன் & ராக்கெட்','Football & Team Games':'கால்பந்து & குழு விளையாட்டு','Running & Walking':'ஓட்டம் & நடைப்பயிற்சி','Indoor Games':'உள்ளரங்க விளையாட்டு','Dry Fruits & Nuts':'உலர் பழங்கள் & நட்ஸ்','Oils & Ghee':'எண்ணெய் & நெய்','Spices & Masalas':'மசாலா & மசாலாப் பொடி','Tea & Coffee':'தேநீர் & காபி','Sweets & Chocolates':'இனிப்பு & சாக்லேட்','Rice, Atta & Pulses':'அரிசி, மாவு & பருப்பு','Notebooks & Diaries':'நோட்டுப் புத்தகம் & டைரி','Pens & Writing':'பேனா & எழுதுபொருள்','Car Care & Cleaning':'கார் பராமரிப்பு & சுத்தம்','Car Electronics':'கார் எலக்ட்ரானிக்ஸ்','Spare Parts':'உதிரி பாகங்கள்','Pet Toys & Beds':'செல்லப்பிராணி பொம்மை & படுக்கை','Pet Grooming':'செல்லப்பிராணி பராமரிப்பு','Duffel & Gym Bags':'டஃபில் & ஜிம் பை','Laptop Bags':'லேப்டாப் பைகள்','Couple Gifts':'ஜோடி பரிசுகள்','Photo & Mug Gifts':'போட்டோ & குவளை பரிசு','Hampers & Combos':'காம்போ & பரிசுப் பெட்டி'});Object.assign(SUBT.hi,{'Rings':'अंगूठियां','Necklaces & Chains':'नेकलेस और चेन','Earrings':'झुमके और ईयररिंग','Bangles & Bracelets':'चूड़ियां और ब्रेसलेट','Anklets & Toe Rings':'पायल और बिछिया','Makeup & Lipstick':'मेकअप और लिपस्टिक','Hair Accessories':'हेयर एक्सेसरीज़','Leggings & Bottoms':'लेगिंग्स और बॉटम्स','Tops & Tunics':'टॉप और ट्यूनिक','Dupattas & Stoles':'दुपट्टे और स्टोल','Blouses & Dress Material':'ब्लाउज़ और ड्रेस मटेरियल','Maternity Wear':'मैटरनिटी वियर','Shorts & Track Pants':'शॉर्ट्स और ट्रैक पैंट','Kurtas':'कुर्ता','Chains & Rings':'चेन और अंगूठी','Wallets & Belts':'वॉलेट और बेल्ट','Socks':'मोज़े','Sweaters & Winterwear':'स्वेटर और विंटर वियर','Suits & Blazers':'सूट और ब्लेज़र','Kids Ethnic Wear':'किड्स एथनिक वियर','Kids Nightwear':'किड्स नाइटवियर','Kids Accessories':'किड्स एक्सेसरीज़','Baby Toys & Gear':'बेबी टॉयज़ और गियर','Mobile Holders & Stands':'मोबाइल स्टैंड','Memory Cards & OTG':'मेमोरी कार्ड और OTG','Selfie Sticks & Tripods':'सेल्फी स्टिक और ट्राइपॉड','Printers & Ink':'प्रिंटर और इंक','Routers & Networking':'राउटर और नेटवर्किंग','Smart Home & Bulbs':'स्मार्ट होम और बल्ब','Air Purifiers & Heaters':'एयर प्यूरीफायर और हीटर','Inverters & Batteries':'इन्वर्टर और बैटरी','Kitchen Tools & Gadgets':'किचन टूल्स और गैजेट्स','Pooja & Festival Items':'पूजा और त्योहार सामान','Wall Art & Frames':'वॉल आर्ट और फ्रेम','Gardening & Plants':'गार्डनिंग और पौधे','Bathroom & Laundry':'बाथरूम और लॉन्ड्री','Tools & Hardware':'टूल्स और हार्डवेयर','Lipstick & Lip Care':'लिपस्टिक और लिप केयर','Eye Makeup':'आई मेकअप','Nail Care':'नेल केयर','Bath & Body':'बाथ और बॉडी','Bindi & Mehendi':'बिंदी और मेहंदी','Ayurveda & Herbal':'आयुर्वेद और हर्बल','Hygiene & Safety':'हाइजीन और सेफ्टी','Scarves & Gloves':'स्कार्फ और दस्ताने','Keychains & Charms':'कीचेन और चार्म','Hair Bands & Clips':'हेयर बैंड और क्लिप','Badminton & Racquets':'बैडमिंटन और रैकेट','Football & Team Games':'फुटबॉल और टीम गेम्स','Running & Walking':'रनिंग और वॉकिंग','Indoor Games':'इनडोर गेम्स','Dry Fruits & Nuts':'ड्राई फ्रूट्स और नट्स','Oils & Ghee':'तेल और घी','Spices & Masalas':'मसाले','Tea & Coffee':'चाय और कॉफी','Sweets & Chocolates':'मिठाई और चॉकलेट','Rice, Atta & Pulses':'चावल, आटा और दालें','Notebooks & Diaries':'नोटबुक और डायरी','Pens & Writing':'पेन और राइटिंग','Car Care & Cleaning':'कार केयर और क्लीनिंग','Car Electronics':'कार इलेक्ट्रॉनिक्स','Spare Parts':'स्पेयर पार्ट्स','Pet Toys & Beds':'पेट टॉयज़ और बेड','Pet Grooming':'पेट ग्रूमिंग','Duffel & Gym Bags':'डफल और जिम बैग','Laptop Bags':'लैपटॉप बैग','Couple Gifts':'कपल गिफ्ट्स','Photo & Mug Gifts':'फोटो और मग गिफ्ट्स','Hampers & Combos':'हैम्पर और कॉम्बो'});
+
   Object.assign(SUBT.ta,{'Smartphones':'ஸ்மார்ட்போன்கள்','Tablets':'டேப்லெட்கள்','Cases & Covers':'கேஸ் & கவர்','Chargers & Cables':'சார்ஜர் & கேபிள்','Power Banks':'பவர் பேங்க்','Screen Guards':'ஸ்கிரீன் கார்டு','Speakers':'ஸ்பீக்கர்கள்','Laptops & Computers':'லேப்டாப் & கம்ப்யூட்டர்','Computer Accessories':'கம்ப்யூட்டர் ஆக்சஸரீஸ்','TV & Displays':'டிவி & டிஸ்ப்ளே','Gaming':'கேமிங்','Storage Devices':'பென்டிரைவ் & ஸ்டோரேஜ்','Kitchen Appliances':'சமையலறை உபகரணங்கள்','Fans & Coolers':'ஃபேன் & கூலர்','AC & Refrigerators':'ஏசி & ஃப்ரிட்ஜ்','Washing Machines':'வாஷிங் மெஷின்','Irons & Garment Care':'அயர்ன் பாக்ஸ் & துணி பராமரிப்பு','Water Heaters & Purifiers':'வாட்டர் ஹீட்டர் & ப்யூரிஃபையர்','Vacuum & Cleaning Appliances':'வேக்யூம் & சுத்தம் செய்யும் கருவிகள்','Cookware & Dinnerware':'சமையல் பாத்திரம் & தட்டு','Curtains & Mats':'திரைச்சீலை & மேட்','Fragrances':'வாசனை திரவியம்','Trimmers & Grooming Tools':'டிரிம்மர் & கிரூமிங் கருவிகள்','Vitamins & Supplements':'வைட்டமின் & சப்ளிமெண்ட்','Fitness Equipment':'ஃபிட்னஸ் உபகரணங்கள்','Medical Devices':'மருத்துவ கருவிகள்','Wellness':'நலம்','Gym & Yoga':'ஜிம் & யோகா','Cricket & Outdoor':'கிரிக்கெட் & வெளிப்புற விளையாட்டு','Cycling':'சைக்கிள்','Sportswear':'விளையாட்டு உடை','Beverages':'பானங்கள்','Stationery & Office':'எழுதுபொருள் & அலுவலகம்','Art & Craft':'ஓவியம் & கைவினை','Car Accessories':'கார் ஆக்சஸரீஸ்','Bike Accessories':'பைக் ஆக்சஸரீஸ்','Helmets':'ஹெல்மெட்','Tools':'கருவிகள்','Pet Food':'செல்லப்பிராணி உணவு','Pet Accessories':'செல்லப்பிராணி பொருட்கள்','Luggage & Trolley':'லக்கேஜ் & ட்ராலி','Backpacks':'முதுகுப் பைகள்','Travel Accessories':'பயண ஆக்சஸரீஸ்'});
   Object.assign(SUBT.hi,{'Smartphones':'स्मार्टफोन','Tablets':'टैबलेट','Cases & Covers':'केस और कवर','Chargers & Cables':'चार्जर और केबल','Power Banks':'पावर बैंक','Screen Guards':'स्क्रीन गार्ड','Speakers':'स्पीकर','Laptops & Computers':'लैपटॉप और कंप्यूटर','Computer Accessories':'कंप्यूटर एक्सेसरीज़','TV & Displays':'टीवी और डिस्प्ले','Gaming':'गेमिंग','Storage Devices':'पेनड्राइव और स्टोरेज','Kitchen Appliances':'किचन उपकरण','Fans & Coolers':'पंखे और कूलर','AC & Refrigerators':'एसी और फ्रिज','Washing Machines':'वाशिंग मशीन','Irons & Garment Care':'प्रेस और कपड़ों की देखभाल','Water Heaters & Purifiers':'वॉटर हीटर और प्यूरीफायर','Vacuum & Cleaning Appliances':'वैक्यूम और सफाई उपकरण','Cookware & Dinnerware':'कुकवेयर और डिनरवेयर','Curtains & Mats':'पर्दे और मैट','Fragrances':'परफ्यूम','Trimmers & Grooming Tools':'ट्रिमर और ग्रूमिंग टूल','Vitamins & Supplements':'विटामिन और सप्लीमेंट','Fitness Equipment':'फिटनेस उपकरण','Medical Devices':'मेडिकल उपकरण','Wellness':'वेलनेस','Gym & Yoga':'जिम और योग','Cricket & Outdoor':'क्रिकेट और आउटडोर','Cycling':'साइकिलिंग','Sportswear':'स्पोर्ट्सवियर','Beverages':'पेय','Stationery & Office':'स्टेशनरी और ऑफिस','Art & Craft':'आर्ट और क्राफ्ट','Car Accessories':'कार एक्सेसरीज़','Bike Accessories':'बाइक एक्सेसरीज़','Helmets':'हेलमेट','Tools':'औज़ार','Pet Food':'पेट फूड','Pet Accessories':'पेट एक्सेसरीज़','Luggage & Trolley':'सामान और ट्रॉली','Backpacks':'बैकपैक','Travel Accessories':'यात्रा एक्सेसरीज़'});
   var THEMES=[
@@ -3055,6 +3057,40 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function lkFetch(u,ms,hd){ var c=new AbortController(),tm=setTimeout(function(){c.abort()},ms||14000); return fetch(u,{signal:c.signal,headers:hd||{}}).then(function(r){clearTimeout(tm); if(!r.ok) throw new Error('http'); return r},function(e){clearTimeout(tm); throw e}) }
 
   var CATRULES=[
+    [/\b(finger )?rings?\b(?!.*(ear|toe|key))|\bsolitaire|couple ring|adjustable ring/i,'Women','Rings'],
+    [/necklace|pendant|\bchains?\b|mangalsutra|choker|neck ?chain/i,'Women','Necklaces & Chains'],
+    [/earrings?|jhumka|jhumki|studs|chandbali/i,'Women','Earrings'],
+    [/bangles?|bracelet|\bkada\b|kangan|hand ?chain/i,'Women','Bangles & Bracelets'],
+    [/anklet|payal|toe ring|metti|kolusu/i,'Women','Anklets & Toe Rings'],
+    [/lipstick|lip gloss|lip colou?r|lip balm|lip liner|lip tint|lip crayon/i,'Beauty','Lipstick & Lip Care'],
+    [/kajal|eyeliner|mascara|eye ?shadow|eyebrow|kohl/i,'Beauty','Eye Makeup'],
+    [/nail polish|nail paint|nail art|nail remover/i,'Beauty','Nail Care'],
+    [/bindi|mehendi|mehndi|henna/i,'Beauty','Bindi & Mehendi'],
+    [/hair (clip|band|pin|accessor)|scrunchie|hair clutcher|claw clip|hairband/i,'Women','Hair Accessories'],
+    [/legging|jegging|palazzo pant|culottes/i,'Women','Leggings & Bottoms'],
+    [/dupatta|stole|shawl/i,'Women','Dupattas & Stoles'],
+    [/maternity|feeding kurti|nursing/i,'Women','Maternity Wear'],
+    [/blouse|dress material|unstitched/i,'Women','Blouses & Dress Material'],
+    [/track ?pant|shorts|boxer shorts|bermuda/i,'Men','Shorts & Track Pants'],
+    [/socks?\b/i,'Men','Socks'],
+    [/blazer|\bsuit\b|waistcoat/i,'Men','Suits & Blazers'],
+    [/pooja|puja|diya|agarbatti|incense|idol|lakshmi|ganesh|kolam|rangoli/i,'Home','Pooja & Festival Items'],
+    [/wall (art|hanging|sticker|decor)|photo frame|painting|canvas art/i,'Home','Wall Art & Frames'],
+    [/plant|planter|gardening|seeds|flower pot|grow bag/i,'Home','Gardening & Plants'],
+    [/dry fruit|almond|cashew|pista|walnut|raisin|dates\b|\bnuts\b/i,'Grocery','Dry Fruits & Nuts'],
+    [/ghee|cooking oil|sunflower oil|coconut oil|groundnut oil|sesame oil/i,'Grocery','Oils & Ghee'],
+    [/masala|turmeric|chilli powder|spice|cumin|pepper/i,'Grocery','Spices & Masalas'],
+    [/\btea\b|coffee|green tea/i,'Grocery','Tea & Coffee'],
+    [/chocolate|sweets|mithai|candy|cookies|biscuit/i,'Grocery','Sweets & Chocolates'],
+    [/notebook|diary|journal|planner/i,'Stationery','Notebooks & Diaries'],
+    [/\bpens?\b|ball ?pen|gel pen|pencil|marker|highlighter/i,'Stationery','Pens & Writing'],
+    [/car (cover|polish|wash|perfume|vacuum|seat)|car cleaning/i,'Auto','Car Care & Cleaning'],
+    [/dash ?cam|car charger|car bluetooth|car mount|car stereo/i,'Auto','Car Electronics'],
+    [/pet (toy|bed|shampoo|brush|collar)|dog (toy|bed|collar)|cat (toy|bed)/i,'Pets','Pet Toys & Beds'],
+    [/duffel|gym bag|travel bag|sports bag/i,'Luggage','Duffel & Gym Bags'],
+    [/couple (gift|mug|frame)|anniversary gift|valentine/i,'Gifts','Couple Gifts'],
+    [/gift (hamper|box|combo|set)|hamper/i,'Gifts','Hampers & Combos'],
+    [/personali[sz]ed|custom (mug|photo)|photo (mug|cushion|lamp)/i,'Gifts','Photo & Mug Gifts'],
     [/smart\s?watch|fitness band|smartband/i,'Electronics','Smart Watches'],
     [/earbud|earphone|headphone|headset|neckband|\btws\b|airdopes|bluetooth speaker|soundbar|speaker/i,'Electronics','Earbuds & Audio'],
     [/laptop|notebook pc|macbook|chromebook/i,'Electronics','Laptops & Computers'],
@@ -3406,18 +3442,18 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   async function submitDeal(){
     var np=F.newPrice===''?null:parseFloat(F.newPrice),op=F.oldPrice===''?0:parseFloat(F.oldPrice),lk=F.link.trim(),msg='';
     if(!F.title.trim()) msg=A('தலைப்பை எழுதுங்க.');
-    else if(!F.main) msg=A('வகையை தேர்ந்தெடுங்க. (தலைப்புக்கு கீழ)');
-    else if(!F.sub) msg=A('உள் வகையை தேர்ந்தெடுங்க. (தலைப்புக்கு கீழ)');
     else if(np==null&&!F.offerText.trim()) msg=A('இப்போதைய விலை அல்லது சலுகை வாசகம் ஒண்ணாவது எழுதுங்க.');
     else if(np!=null&&!(np>=0)) msg=A('விலை சரியா இல்ல.');
-    else if(np!=null&&op&&op<=np) msg=A('பழைய விலை இப்போதைய விலையை விட அதிகமா இருக்கணும்.');
     else if(!lk) msg=A('உன் affiliate லிங்கை ஒட்டுங்க.');
-    else if(F.source==='Other'&&!String(F.storeName||'').trim()) msg=A('"மற்றவை" கடைக்கு பெயர் எழுதுங்க.');
     else if(!safeUrl(lk)) msg=A('லிங்க் https:// ஓட தொடங்கணும்.');
-    else if(F.video.trim()&&!safeUrl(F.video)) msg=A('வீடியோ லிங்க் https:// ஓட தொடங்கணும்.');
+    /* only title, price, link (and photo) are needed; anything optional that is missing/invalid is filled or ignored */
+    if(!msg){
+      if(np!=null&&op&&op<=np) op=0;
+      if(!F.main||!F.sub){ var _r=null; try{ _r=lkCat(F.title+' '+(F.desc||'')) }catch(e){} if(_r){ F.main=_r.main; F.sub=_r.sub } else { F.main=F.main||'Others'; var _tx=TAXALL.filter(function(m){return m.id===F.main})[0]; F.sub=(_tx&&_tx.subs.indexOf('Other')>-1)?'Other':((_tx&&_tx.subs[0])||'Other') } }
+      if(F.video&&F.video.trim()&&!safeUrl(F.video)) F.video='';
+    }
     var nowO=Date.now(),offs=[],obad=false;
     F.offers.forEach(function(o){ var pr=(o.price===''||o.price==null)?null:parseFloat(o.price),l2=(o.link||'').trim(); if(pr==null&&!l2) return; if(!(pr>=0)||!safeUrl(l2)){obad=true;return} offs.push({p:o.p||'Other',price:pr,link:safeUrl(l2),at:o.at||nowO}) });
-    if(!msg&&obad) msg=A('ஒப்பீட்டு தளத்துக்கு விலை, https:// லிங்க் ரெண்டும் வேணும்.');
     if(msg){F.err=msg;F.ok='';renderSeller();window.scrollTo(0,0);return}
     var dg=null; try{ dg=await dupGate() }catch(e){}
     if(dg){ dupPop(dg.kind,dg.r,function(){ F_DUPOK[dg.key]=1; submitDeal() }); return }
@@ -4061,7 +4097,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(lsGet('nesam-dvday','')!==today){ lsSet('nesam-dvday',today); try{ S.db.collection('devices').doc(vid).set({last:Date.now(),app:st?1:0}).catch(function(){}) }catch(e){} }
     trkFlush();
   }
-  setTimeout(trkOpen,3500);
+  /* count the visit as soon as Firebase + sign-in check are ready; keep retrying (slow in-app browsers), and once more when the page closes */
+  function trkTry(n){ if(TRK.done) return; if(trkOn()&&(S._au||n>=4)){ TRK.done=1; trkOpen(); return } if(n<20) setTimeout(function(){trkTry(n+1)},1500) }
+  setTimeout(function(){trkTry(0)},2000);
+  window.addEventListener('pagehide',function(){ if(!TRK.done&&trkOn()&&S._au){ TRK.done=1; trkOpen() } });
   setInterval(trkFlush,15000);
   document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') trkFlush() });
   window.addEventListener('pagehide',trkFlush);
@@ -4875,7 +4914,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     try{S.admin=!!(user&&user.canEdit&&user.canEdit())}catch(e){S.admin=false}
     if(S.hosted){
       window.NESAM.onAuth(function(isAdmin,info){
-        var was=S.admin; S.admin=!!isAdmin;
+        var was=S.admin; S.admin=!!isAdmin; S._au=true;
         if(S.admin&&!was){ toast('வணக்கம்! 🛠️ அட்மின் பட்டன் மேல இருக்கு'); if(!S.cleaned&&!S.loading){S.cleaned=true;cleanupOld();} }
         if(!S.admin&&S.view==='seller'){ location.hash='home'; }
         route();
