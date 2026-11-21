@@ -1,0 +1,22 @@
+name: EarnPe API probe
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe earn.pe
+        env:
+          T: ${{ secrets.EARNPE_API_TOKEN }}
+        run: |
+          for host in earn.pe api.earn.pe; do
+            for path in "" /api /api/ /api/docs /docs /swagger /openapi.json /api/v1 /api/convert /api/v1/convert /api/link /api/v1/link /api/affiliate /api/v1/affiliate; do
+              url="https://$host$path"
+              rm -f /tmp/b
+              res=$(curl -sS -m 15 -o /tmp/b -w '%{http_code} %{content_type}' \
+                -H "Authorization: Bearer $T" -H "x-api-key: $T" -H "token: $T" \
+                "$url" 2>&1) || true
+              echo "== $url -> $res"
+              head -c 150 /tmp/b 2>/dev/null | tr '\n' ' '
+              echo
+            done
+          done
