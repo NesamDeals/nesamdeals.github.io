@@ -3583,10 +3583,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function totPaint(){ var el=document.getElementById('totn'); if(el) el.textContent=String(totShow()) }
   function totLoad(){
     var L=S.deals.length; if(TOT.busy||(Date.now()-TOT.at<3000&&TOT.len===L)) return; TOT.len=L;
-    var q=null; try{ q=S.live&&S.db&&S.db.collection('deals') }catch(e){}
-    if(!q||typeof q.count!=='function'){ TOT.n=null; return }
+    var qa=null,qe=null; try{ if(S.live&&S.db){ var c=S.db.collection('deals'); qa=c.limit(100000); qe=c.where('ended','==',true) } }catch(e){}
+    if(!qa||!qe||typeof qa.count!=='function'||typeof qe.count!=='function'){ TOT.n=null; return }
     TOT.busy=true; TOT.at=Date.now();
-    Promise.all([q.count(),q.where('ended','==',true).count()]).then(function(r){ TOT.busy=false; if(typeof r[0]==='number'&&typeof r[1]==='number'){ TOT.n=r[0]; TOT.e=r[1]; totPaint() } }).catch(function(){ TOT.busy=false });
+    Promise.all([qa.count(),qe.count()]).then(function(r){ TOT.busy=false; if(typeof r[0]==='number'&&typeof r[1]==='number'){ TOT.n=r[0]; TOT.e=r[1]; totPaint() } }).catch(function(){ TOT.busy=false });
   }
   function totCircle(){
     totLoad();
