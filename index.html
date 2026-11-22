@@ -2274,7 +2274,8 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   }
   async function patchDeal(id,patch){
     try{
-      if(S.live){ await S.db.collection('deals').doc(id).update(patch); }
+      if(S.live){ await S.db.collection('deals').doc(id).update(patch);
+        if(S.pinX&&('pinned' in patch)){ S.pinX=S.pinX.map(function(x){return x.id===id?Object.assign({},x,patch):x}); S.deals=S.deals.map(function(x){return x.id===id?Object.assign({},x,patch):x}); render(); } }
       else { S.deals=S.deals.map(function(d){return d.id===id?Object.assign({},d,patch):d}); demoPersist(); render(); }
     }catch(e){ toast('மாத்த முடியல. மறுபடி முயற்சி பண்ணுங்க.'); }
   }
@@ -4918,6 +4919,22 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     }catch(e){}
   }
   setInterval(function(){ try{loadTodayCount()}catch(e){} },600000);
+  /* pinned deals older than the loaded page: fetched once so they always sit on top */
+  S.pinX=null;
+  function pinXMerge(){
+    if(!S.pinX||!S.pinX.length) return;
+    var have={}; S.deals.forEach(function(d){have[d.id]=1});
+    S.pinX.forEach(function(x){ if(!have[x.id]&&x.pinned) S.deals.push(x) });
+  }
+  function loadPinX(){
+    if(S.pinX!==null||S.pinXBusy||!S.live||!S.db) return; S.pinXBusy=true;
+    try{ S.db.collection('deals').where('pinned','==',true).get().then(function(snap){
+      S.pinXBusy=false;
+      S.pinX=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return S.admin||!x.auto||(dealImgs(x).length>0&&hasPrice(x)&&x.newPrice>0)});
+      var n=S.deals.length; pinXMerge();
+      if(S.deals.length!==n&&!(S.view==='seller'&&S.stab==='new')) render();
+    }).catch(function(){S.pinXBusy=false;S.pinX=[]}) }catch(e){S.pinXBusy=false;S.pinX=[]}
+  }
   function subscribeDeals(){
     if(S.unsub){try{S.unsub()}catch(e){}}
     var slowT=setTimeout(function(){S.slow=true;render()},10000);
@@ -4925,6 +4942,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       clearTimeout(slowT);
       S.deals=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return S.admin||!x.auto||(dealImgs(x).length>0&&hasPrice(x)&&x.newPrice>0)});
       S.hitLimit=snap.size>=S.limit; S.loading=false;S.slow=false;
+      pinXMerge(); loadPinX();
       if(typeof S.todayN!=='number') loadTodayCount();
       if(!S.ounsub) { try{ subscribeOutfits() }catch(e){} }
       if(S.admin&&!S.cleaned){S.cleaned=true;cleanupOld();}
