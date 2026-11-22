@@ -615,6 +615,7 @@ span.cbadge{cursor:default}
 .atile .apin{position:absolute;right:2px;top:1px;font-style:normal;font-size:12px}
 .atile .at{font-size:11px;font-weight:700;line-height:1.25;padding:4px 5px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .atile .ap{display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding:2px 5px 5px;font-size:11px}.atile .ap b{color:var(--save)}.atile .ap em{font-style:normal;font-weight:800;background:#FFC61A;color:#14213D;border-radius:5px;padding:0 4px}
+.pins{margin:0 0 10px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.pinr{display:flex;gap:8px;overflow-x:auto;padding:4px 0}.pinc{flex:0 0 96px;display:flex;flex-direction:column;gap:3px}.pinc img{width:96px;height:96px;object-fit:contain;background:#fff;border-radius:8px;border:1px solid var(--line)}.pinc .pt{font-size:11px;line-height:1.25;max-height:2.5em;overflow:hidden}.pinc .pp{font-size:12px;font-weight:800}.pinc .pun{min-height:36px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-weight:700;font-size:12px;cursor:pointer}
 .alvb{display:flex;align-items:center;gap:8px;margin:0 0 10px}.alvb .sws{display:flex;gap:6px;flex-wrap:wrap}.totc{margin-left:auto;flex:0 0 auto;width:52px;height:52px;border-radius:50%;background:#0f6b52;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}.totc b{font-size:17px;font-weight:800}.totc span{font-size:10px;opacity:.9}
 .dupsh{max-width:360px;margin:auto;padding:16px}.duph{display:flex;align-items:center;gap:8px;margin-bottom:8px}.duph b{font-size:16px}.dupi{width:34px;height:34px;border-radius:50%;background:#fde8e0;display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto}.dups{font-size:13px;opacity:.75;margin:0 0 10px}.dupc{display:flex;gap:10px;align-items:center;border:1px solid var(--line,#dde3ea);border-radius:12px;padding:8px;margin-bottom:12px}.dupc img,.dupe{width:56px;height:56px;border-radius:8px;object-fit:cover;flex:0 0 auto;background:#e6ecf7}.dupt{min-width:0;display:flex;flex-direction:column;gap:2px}.dupt b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dupp{font-size:12px;color:#0f6b52;font-weight:700}.dupt small{font-size:11px;opacity:.65}.dupb{display:block;width:100%;border-radius:22px;padding:11px;font-size:14px;margin-bottom:8px;border:1px solid var(--line,#cfd8d3);background:var(--card,#fff);color:inherit}.dupb.go{background:var(--accent);border:0;color:#1a1a1a;font-weight:700}.dupx{display:block;width:100%;background:none;border:0;opacity:.7;padding:6px;font-size:13px;color:inherit}.alsheet{max-height:85vh;overflow:auto;padding:8px 12px 14px}.alsheet .row{border:0;box-shadow:none;padding:0}
 .lkrow{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:nowrap}.lkrow .lkbtn{white-space:nowrap;font-size:13px;padding-left:10px;padding-right:10px;min-width:0}.lkgo{margin-left:auto}
@@ -3571,19 +3572,55 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     return null;
   }
   /* ---- admin: total deals circle ---- */
-  var TOT={n:null,busy:false,at:0};
-  function totLocal(){ return S.deals.filter(function(d){return d&&!d.sample}).length }
-  function totPaint(){ var el=document.getElementById('totn'); if(el) el.textContent=String(TOT.n==null?totLocal():TOT.n) }
+  var TOT={n:null,e:null,busy:false,at:0};
+  function totLive(d){ return d&&!d.sample&&!isEnded(d) }
+  function totLocal(){ return S.deals.filter(totLive).length }
+  function totShow(){
+    if(TOT.n==null||TOT.e==null) return totLocal();
+    var ex=S.deals.filter(function(d){return d&&!d.sample&&!d.ended&&isEnded(d)}).length;
+    return Math.max(0,TOT.n-TOT.e-ex);
+  }
+  function totPaint(){ var el=document.getElementById('totn'); if(el) el.textContent=String(totShow()) }
   function totLoad(){
     var L=S.deals.length; if(TOT.busy||(Date.now()-TOT.at<3000&&TOT.len===L)) return; TOT.len=L;
     var q=null; try{ q=S.live&&S.db&&S.db.collection('deals') }catch(e){}
     if(!q||typeof q.count!=='function'){ TOT.n=null; return }
     TOT.busy=true; TOT.at=Date.now();
-    q.count().then(function(n){ TOT.busy=false; if(typeof n==='number'){ TOT.n=n; totPaint() } }).catch(function(){ TOT.busy=false });
+    Promise.all([q.count(),q.where('ended','==',true).count()]).then(function(r){ TOT.busy=false; if(typeof r[0]==='number'&&typeof r[1]==='number'){ TOT.n=r[0]; TOT.e=r[1]; totPaint() } }).catch(function(){ TOT.busy=false });
   }
   function totCircle(){
     totLoad();
-    return h('div',{class:'totc',title:A('மொத்த டீல்ஸ்')},h('b',{id:'totn'},String(TOT.n==null?totLocal():TOT.n)),h('span',null,A('மொத்தம் ')));
+    return h('div',{class:'totc',title:A('லைவ் டீல்ஸ்')},h('b',{id:'totn'},String(totShow())),h('span',null,A('லைவ்')));
+  }
+  /* ---- admin: pinned strip (all pinned deals, shown at top) ---- */
+  var PINX={list:[],loaded:false,busy:false};
+  function pinLoad(){
+    if(PINX.loaded||PINX.busy||!(S.live&&S.db)) return; PINX.busy=true;
+    try{ S.db.collection('deals').where('pinned','==',true).get().then(function(snap){
+      PINX.busy=false;PINX.loaded=true;
+      PINX.list=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x});
+      if(S.view==='seller'&&S.stab!=='new') renderSeller();
+    }).catch(function(){PINX.busy=false;PINX.loaded=true}) }catch(e){PINX.busy=false}
+  }
+  function pinStrip(){
+    pinLoad();
+    var seen={},arr=[];
+    S.deals.forEach(function(d){ seen[d.id]=1; if(d.pinned&&!d.sample) arr.push(d) });
+    PINX.list.forEach(function(d){ if(!seen[d.id]&&d.pinned&&!d.sample) arr.push(d) });
+    if(!arr.length) return null;
+    var row=h('div',{class:'pinr'});
+    arr.forEach(function(d){
+      var im=dealImgs(d);
+      row.append(h('div',{class:'pinc'},
+        h('img',{src:im[0]||PLACEHOLDER,alt:''}),
+        h('div',{class:'pt'},d.title||''),
+        h('div',{class:'pp'},hasPrice(d)?inr(d.newPrice):'\u00a0'),
+        h('button',{type:'button',class:'pun',onclick:function(){
+          PINX.list=PINX.list.filter(function(x){return x.id!==d.id});
+          patchUndo(d,{pinned:false},A('📌 எடுத்தாச்சு'));
+        }},A('📌 எடு'))));
+    });
+    return h('div',{class:'pins'},h('div',{class:'lbl'},'📌 '+A('பின் பண்ணவை')+' ('+arr.length+')'),row);
   }
   /* ---- deals list ---- */
   function sellerList(){
@@ -3650,7 +3687,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     }
     list.forEach(function(d){ box.append(ALV==='l'?mkRow(d):mkTile(d)) });
     if(S.live&&S.hitLimit) box.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},A('பழைய டீல்ஸும் காட்டு')));
-    return h('div',null,sortBar,viewBar,box);
+    return h('div',null,pinStrip(),sortBar,viewBar,box);
   }
 
   /* ---- settings (everything the owner can change) ---- */
