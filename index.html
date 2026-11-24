@@ -2677,7 +2677,11 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     // top deals
     var ids=Object.keys(C).concat(Object.keys(V).filter(function(k){return !(k in C)}));
     ids.sort(function(a,b){return ((C[b]||0)-(C[a]||0))||((V[b]||0)-(V[a]||0))});
-    function dealName(id){ var d=S.deals.filter(function(x){return tk(x.id)===id})[0]; return d?dTitle(d):'(removed)' }
+    var NMX=window.__nmx||(window.__nmx={});
+    function dealName(id){ var d=S.deals.filter(function(x){return tk(x.id)===id})[0]; if(d) return dTitle(d);
+      var c=NMX[id]; if(c==='gone') return '(removed)'; if(c) return c;
+      if(c===undefined&&S.live&&S.db){ NMX[id]=0; try{ S.db.collection('deals').doc(id).get().then(function(sn){ var x=sn&&sn.exists?sn.data():null; NMX[id]=x?dTitle(x):'gone'; if(S.stab==='stats') renderSeller() }).catch(function(){ delete NMX[id] }) }catch(e){ delete NMX[id] } }
+      return '…' }
     wrap.append(h('section',{class:'panel'},h('h3',null,A('அதிகம் தொட்ட டீல்ஸ்')),
       h('table',{class:'xstab'},h('tr',null,h('th',null,''),h('th',null,A('👁 பார்த்தது')),h('th',null,A('👆 தொட்டது')),h('th',null,'❤️'),h('th',null,'WA')),
         ids.slice(0,15).map(function(id){return h('tr',null,h('td',null,dealName(id)),h('td',null,String(V[id]||0)),h('td',null,String(C[id]||0)),h('td',null,String(H[id]||0)),h('td',null,String(Sv[id]||0)))}))));
