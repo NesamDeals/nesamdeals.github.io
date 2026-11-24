@@ -3703,7 +3703,13 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         h('span',{class:'ap'},hasPrice(d)?h('b',null,inr(d.newPrice)):null,cm!=null?h('em',null,cm+'%'):null));
     }
     list.forEach(function(d){ box.append(ALV==='l'?mkRow(d):mkTile(d)) });
-    if(S.live&&S.hitLimit) box.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},A('பழைய டீல்ஸும் காட்டு')));
+    if(S.live&&S.hitLimit){
+      if('IntersectionObserver' in window){
+        var amb=h('div',{class:'moreb auto','aria-hidden':'true',style:'grid-column:1/-1'},'⏳');
+        box.append(amb);
+        var amio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ amio.disconnect(); S.limit+=PAGE; subscribeDeals() } },{rootMargin:'600px'}); amio.observe(amb);
+      } else box.append(h('button',{class:'moreb',type:'button',onclick:function(){S.limit+=PAGE;subscribeDeals()}},A('பழைய டீல்ஸும் காட்டு')));
+    }
     return h('div',null,pinStrip(),totCircle(),sortBar,viewBar,box);
   }
 
@@ -5048,7 +5054,7 @@ const db={
     const q=new Q(name);
     return {
       add:d=>{ucount(0,1);return addDoc(fcol(fs,name),d)},
-      doc:id=>({set:d=>{ucount(0,1);return setDoc(fdoc(fs,name,id),d)},update:p=>{ucount(0,1);return updateDoc(fdoc(fs,name,id),p)},delete:()=>{ucount(0,1);return deleteDoc(fdoc(fs,name,id))}}),
+      doc:id=>({set:d=>{ucount(0,1);return setDoc(fdoc(fs,name,id),d)},update:p=>{ucount(0,1);return updateDoc(fdoc(fs,name,id),p)},delete:()=>{ucount(0,1);return deleteDoc(fdoc(fs,name,id))},get:()=>{ucount(1,0);return getDoc(fdoc(fs,name,id)).then(s=>({exists:s.exists(),data:()=>s.data()}))}}),
       where:(f,o,v)=>q.where(f,o,v),orderBy:(f,d)=>q.orderBy(f,d),limit:n=>q.limit(n),get:()=>q.get(),onSnapshot:(a,b)=>q.onSnapshot(a,b)
     };
   },
