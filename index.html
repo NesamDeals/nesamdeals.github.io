@@ -3310,6 +3310,31 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(lk) out+=(out?'\n\n':'')+'\ud83d\uded2 Buy here \ud83d\udc49 '+lk;
     return out;
   }
+  var DEF_TAGS='#TruePick #TamilDeals #LootDeals #OffersToday #DealsInTamil #OnlineShoppingTamil #TamilNadu #Discount';
+  var SHARE_DL='nesamdeals.github.io/download';
+  var SHARE_APP='📲 தினமும் இதே மாதிரி டீல்ஸ், இலவசம் 👉 '+SHARE_DL;
+  function tagList(str){ var seen={},o=[]; String(str||'').split(/[\s,]+/).forEach(function(x){ x=x.replace(/^#+/,'').replace(/[^0-9A-Za-z_஀-௿]/g,''); if(!x) return; var k=x.toLowerCase(); if(seen[k]) return; seen[k]=1; o.push('#'+x) }); return o }
+  function dealAutoTags(d){ var r=[]; function cl(v){ return String(v||'').replace(/[^0-9A-Za-z]/g,'') } var a=cl(d.source); if(a) r.push('#'+a); var c=cl((d.sub&&d.sub!=='Other')?d.sub:d.category); if(c) r.push('#'+c); return r }
+  function shareText(d,plat){
+    var out=postText(d),src=String(d.source||'').trim(),ls=out.split('\n');
+    if(src&&src!=='-'&&ls[0].toLowerCase().indexOf(src.toLowerCase())<0) ls[0]=ls[0]+' ('+src+')';
+    out=ls.join('\n')+'\n\n'+SHARE_APP;
+    if(plat==='fb'||plat==='ig'){
+      var fx=tagList((S.settings&&typeof S.settings.tags==='string')?S.settings.tags:DEF_TAGS),all=(plat==='fb'?fx.slice(0,3):fx).concat(dealAutoTags(d)),seen={};
+      all=all.filter(function(x){ var k=x.toLowerCase(); if(seen[k]) return false; seen[k]=1; return true });
+      if(all.length) out+='\n\n'+all.join(' ');
+    }
+    return out;
+  }
+  async function shareGo(d,plat){
+    var txt=shareText(d,plat),ok;
+    if(plat==='wa'){ window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank','noopener'); return }
+    ok=await copyText(txt);
+    if(!ok){ toast(A('காப்பி ஆகல 😕 மறுபடி முயற்சி பண்ணுங்க')); return }
+    if(plat==='tg'){ toast(A('எழுத்து தயார் ✔ Telegram திறக்குது')); window.open('https://t.me/share/url?url='+encodeURIComponent('https://'+SHARE_DL)+'&text='+encodeURIComponent(txt.replace(' 👉 '+SHARE_DL,'')),'_blank','noopener'); return }
+    if(plat==='fb'){ toast(A('காப்பி ஆச்சு ✔ Facebook-ல ஒட்டுங்க')); window.open('https://www.facebook.com/','_blank','noopener'); return }
+    toast(A('காப்பி ஆச்சு ✔ Instagram-ல ஒட்டுங்க')); window.open('https://www.instagram.com/','_blank','noopener');
+  }
   async function copyText(txt){
     try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(txt); return true } }catch(e){}
     try{ var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.cssText='position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,txt.length); var ok=document.execCommand('copy'); ta.remove(); return !!ok }catch(e){ return false }
@@ -3687,6 +3712,10 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
             h('button',{type:'button',onclick:function(){patchUndo(d,{pinned:!d.pinned},d.pinned?A('📌 எடுத்தாச்சு'):A('📌 மேல வச்சாச்சு'))}},d.pinned?A('📌 எடு'):A('📌 மேல வை')),
             h('button',{type:'button',onclick:function(){patchUndo(d,{allowCmt:!d.allowCmt},d.allowCmt?A('💬 கருத்து ஆஃப் ஆச்சு'):A('💬 கருத்து ஆன் ஆச்சு'))}},d.allowCmt?A('💬 கருத்து: ஆன்'):A('💬 கருத்து: ஆஃப்')),
             h('button',{type:'button',onclick:async function(){ var ok=await copyText(postText(d)); toast(ok?A('காப்பி ஆச்சு ✔ இனி Facebook/Telegram-ல ஒட்டுங்க'):A('காப்பி ஆகல 😕')) }},A('📋 போஸ்ட் காப்பி')),
+            h('button',{type:'button',onclick:function(){ shareGo(d,'wa') }},'WhatsApp'),
+            h('button',{type:'button',onclick:function(){ shareGo(d,'tg') }},'Telegram'),
+            h('button',{type:'button',onclick:function(){ shareGo(d,'fb') }},'Facebook'),
+            h('button',{type:'button',onclick:function(){ shareGo(d,'ig') }},'Instagram'),
             open&&h('a',{class:'tg',href:open,target:'_blank',rel:'noopener noreferrer',style:'min-height:36px;display:inline-flex;align-items:center;text-decoration:none;padding:0 10px'},A('லிங்க் சோதி')),
             del)));
     }
@@ -3728,6 +3757,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var st=S.settings||{};
     SET.socials=socialsList().map(function(x){return {type:SOC[x.type]?x.type:'other',label:x.label||'',url:x.url||''}});
     SET.disc=st.disc||'';SET.zn=((Array.isArray(st.zn)&&st.zn.length===4)?st.zn:[99,199,499,999]).map(String);SET.share=st.shareUrl||'';SET.apk=st.apkUrl||DL_DEF;SET.logo=st.logo||'';SET.appName=st.appName||'';SET.tagline=st.tagline||'';SET.theme=st.theme||'blue';SET.mode=st.mode||'light';SET.defLang=st.defLang||'ta';
+    SET.tags=(typeof st.tags==='string')?st.tags:DEF_TAGS;
     SET.hidden=Array.isArray(st.hiddenCats)?st.hiddenCats.slice():[];
     SET.custom=Array.isArray(st.customCats)?st.customCats.map(function(c){return {id:c.id,name:c.name,emoji:c.emoji}}):[];
     SET.cmpNames=(st.cmpNames!==false);SET.about=st.about||'';SET.life=String(lifeDays());
@@ -3767,7 +3797,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     if(bad){SET.err=bad;SET.msg='';renderSeller();window.scrollTo(0,0);return}
     var data={socials:out,shareUrl:safeUrl(SET.share),apkUrl:safeUrl(SET.apk||''),logo:SET.logo||'',appName:SET.appName.trim(),tagline:SET.tagline.trim(),theme:SET.theme,mode:SET.mode,defLang:SET.defLang,
       hiddenCats:SET.hidden.filter(function(x){return x!=='Others'}),customCats:cust,cmpNames:!!SET.cmpNames,about:SET.about.trim(),
-      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),goal:Math.max(1,Math.min(500,parseInt(SET.goal,10)||30)),ogoal:Math.max(1,Math.min(100,parseInt(SET.ogoal,10)||5)),fest:(S.settings&&S.settings.fest)||null,pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn};
+      ann:{on:!!SET.annOn,text:SET.annText.trim(),url:safeUrl(SET.annUrl)},feat:Object.assign({},SET.feat),goal:Math.max(1,Math.min(500,parseInt(SET.goal,10)||30)),ogoal:Math.max(1,Math.min(100,parseInt(SET.ogoal,10)||5)),fest:(S.settings&&S.settings.fest)||null,pui:puiOut(),own:ownOut(),spl:splOut(),disc:String(SET.disc||'').trim().slice(0,200),zn:zn,tags:String(SET.tags||'').trim().slice(0,600)};
     try{ await saveSettings(data); SET.err='';SET.msg=A('அமைப்புகள் சேமிச்சாச்சு ✔ வாடிக்கையாளர் ஆப்ல இப்பவே மாறிடும்.'); if(!S.live) SET.init=false; }
     catch(e){SET.err=A('சேமிக்க முடியல. மறுபடி முயற்சி பண்ணுங்க.');SET.msg=''}
     renderSeller();window.scrollTo(0,0);
@@ -3810,6 +3840,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
         fld(A('ஆப் பெயர்'),'s-name',tin('appName','TruePick',30),A('மேல தெரியும் பெயர். காலியா விட்டா "TruePick".')),
         fld(A('டேக்லைன் (optional)'),'s-tag',tin('tagline',A('எ.கா. தினமும் புது டீல்ஸ்'),60),A('காலியா விட்டா, வாடிக்கையாளர் மொழிக்கேத்த டேக்லைன் வரும். எழுதினா எல்லா மொழிலயும் இதே வரும்.')),
         fld(A('கீழ உள்ள எச்சரிக்கை வரி (optional)'),'s-disc',tin('disc','',200),A('காலியா விட்டா தானா வர்ற வரி வரும். இங்க எழுதினா எல்லா மொழிலயும் இந்த வரி தான் வரும்.')),
+        fld(A('📣 ஹேஷ்டேக்ஸ் (Facebook, Instagram)'),'s-tags',tin('tags',DEF_TAGS,600),A('இடைவெளி விட்டு எழுதுங்க. Facebook-க்கு முதல் 3 + டீலோட 2, Instagram-க்கு எல்லாமே + டீலோட 2 தானா சேரும். காலியா விட்டா டீலோட 2 மட்டும் வரும்.')),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('💰 விலை பட்டன்கள் (₹)')),h('div',{style:'display:flex;gap:8px'},[0,1,2,3].map(function(i){var e=h('input',{type:'number',inputmode:'numeric',min:1,value:SET.zn[i],'aria-label':'Price '+(i+1)});e.addEventListener('input',function(){SET.zn[i]=e.value});return e})),h('span',{class:'hint'},A('4 எண்கள், சின்னதுல இருந்து பெருசா. கடைசியா "Above" பட்டன் தானா வரும்.'))),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('ஆப் லோகோ')),h('div',{style:'display:flex;gap:12px;align-items:center'},SET.logo?h('img',{class:'logoprev',src:SET.logo,alt:'Logo'}):h('div',{class:'logoprev'}),lf,SET.logo?h('button',{type:'button',class:'chip',onclick:function(){SET.logo='';renderSeller()}},A('நீக்கு')):null),h('span',{class:'hint'},A('சதுர படம் நல்லது. கடை லோகோக்கள் இல்லாத சுத்தமான லோகோ போடு.'))),
         h('div',{class:'fld'},h('span',{class:'lbl'},A('🎯 ஒரு நாளைக்கான டீல் இலக்கு')),tin('goal','30',3,'number'),h('span',{class:'hint'},A('அட்மின் முகப்பில் வட்டமாகத் தெரியும். இப்போது 30.'))),
