@@ -2,6 +2,7 @@
 <html lang="ta">
 <head>
 <meta charset="utf-8">
+<meta name="mitgo-verification" content="005017fc-1a76-493f-9d9f-3247d788da53" />
 <meta name="cuelinks-verification" content="VERIFY-CL-66BQJ8UA">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>TruePick</title>
@@ -11,6 +12,11 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="mobile-web-app-capable" content="yes">
 
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js">
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@600;700;800&family=Arima+Madurai:wght@700;800&family=Kavivanar&family=Noto+Serif+Tamil:wght@700;800&family=Mukta+Malar:wght@700;800&family=Hind+Madurai:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Malayalam:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&family=Noto+Sans+Gurmukhi:wght@400;600;700&family=Noto+Sans+Oriya:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
@@ -1169,11 +1175,11 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
   function storeFromLink(u){ var hst=''; try{ hst=new URL(String(u||'').trim()).hostname }catch(e){ return '' } for(var i=0;i<STRX.length;i++) if(STRX[i][0].test(hst)) return STRX[i][1]; return '' }
   function storeName(d){ var s=String(d.source||''); if(s==='Other') return String(d.storeName||'').trim(); if(/^(wishlink|digital product)$/i.test(s)) return ''; return s }
   function storePill(d){ var n=storeName(d); if(!n) return null; return h('span',{class:'spill',style:'--sc:'+(STC[n]||'#8A94A6')},h('i',null),n) }
-  var PAGE=20, IMG_BUDGET=160000, MAX_PHOTOS=20;
+  var PAGE=20, FIRST=10, IMG_BUDGET=160000, MAX_PHOTOS=20;
   function imgBudget(n){ return IMG_BUDGET+Math.max(0,n-5)*25000 }
 
   var S={deals:[],settings:{},cat:(function(){ try{ var c=JSON.parse(localStorage.getItem('nesam-lastcat')||'"all"'); return typeof c==='string'&&c?c:'all' }catch(e){ return 'all' } })(),main:'',sub:'',redirected:false,cleaned:false,q:'',tab:'home',sort:'new',vm:'grid',ct:'',last:false,zone:'',view:'shop',stab:'dash',focus:'',
-    admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:PAGE,hitLimit:false,unsub:null,reacts:{},dc:{},promos:[],replies:[],setReady:false,outfits:[],oid:'',og:'',olimit:10,oLoaded:false,ohit:false,oFrom:'',oY:0,oHist:false,nf:'deal',ooff:0,ovm:'list'};
+    admin:false,hosted:false,live:false,loading:true,slow:false,saved:new Set(),db:null,lang:'ta',limit:FIRST,hitLimit:false,unsub:null,reacts:{},dc:{},promos:[],replies:[],setReady:false,outfits:[],oid:'',og:'',olimit:10,oLoaded:false,ohit:false,oFrom:'',oY:0,oHist:false,nf:'deal',ooff:0,ovm:'list'};
   try{ S.og=lsGet('nesam-og','')||''; if(S.og!=='m'&&S.og!=='f') S.og=''; S.ovm=lsGet('nesam-ovm','list'); if(['l','g2','g3','list'].indexOf(S.ovm)<0) S.ovm='list'; var _oo=parseInt(lsGet('nesam-ooff',0),10)||0; S.ooff=_oo; lsSet('nesam-ooff',_oo+1) }catch(e){}
 
   /* ============ helpers ============ */
@@ -4152,17 +4158,18 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     var st=false; try{ st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||/^android-app:/.test(document.referrer||'') }catch(e){}
     if(st) trkAdd(['appopen']);
     if(st&&lsGet('nesam-inst','')!=='1'){ lsSet('nesam-inst','1'); trkAdd(['inst']) }
-    trkAdd(['lg',tk(S.lang)]);
-    var vid=lsGet('nesam-vid',''),today=dayKey();
-    if(!vid){ vid=Math.random().toString(36).slice(2); lsSet('nesam-vid',vid); trkAdd(['newv']) }
+    setTimeout(function(){ trkAdd(['lg',tk(S.lang)]); trkFlush() },3500);
+    var vid=lsGet('nesam-vid',''),today=dayKey(),firstEver=!lsGet('nesam-vday','');
+    if(!vid){ vid=Math.random().toString(36).slice(2); lsSet('nesam-vid',vid) }
+    if(firstEver) trkAdd(['newv']);
     if(lsGet('nesam-vday','')!==today){ lsSet('nesam-vday',today); trkAdd(['visitors']) }
     if(lsGet('nesam-dvday','')!==today){ lsSet('nesam-dvday',today); try{ S.db.collection('devices').doc(vid).set({last:Date.now(),app:st?1:0}).catch(function(){}) }catch(e){} }
     trkFlush();
   }
   /* count the visit as soon as Firebase + sign-in check are ready; keep retrying (slow in-app browsers), and once more when the page closes */
-  function trkTry(n){ if(TRK.done) return; if(trkOn()&&(S._au||n>=4)){ TRK.done=1; trkOpen(); return } if(n<20) setTimeout(function(){trkTry(n+1)},1500) }
-  setTimeout(function(){trkTry(0)},2000);
-  window.addEventListener('pagehide',function(){ if(!TRK.done&&trkOn()&&S._au){ TRK.done=1; trkOpen() } });
+  function trkTry(n){ if(TRK.done) return; if(trkOn()&&(S._au||n>=4||lsGet('nesam-admdev','')!=='1')){ TRK.done=1; trkOpen(); return } if(n<40) setTimeout(function(){trkTry(n+1)},n<10?400:1500) }
+  setTimeout(function(){trkTry(0)},300);
+  window.addEventListener('pagehide',function(){ if(!TRK.done&&trkOn()&&(S._au||lsGet('nesam-admdev','')!=='1')){ TRK.done=1; trkOpen() } });
   setInterval(trkFlush,15000);
   document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') trkFlush() });
   window.addEventListener('pagehide',trkFlush);
@@ -4989,6 +4996,7 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       clearTimeout(slowT);
       S.deals=snap.docs.map(function(d){var x=d.data()||{};x.id=d.id;return x}).filter(function(x){return S.admin||!x.auto||(dealImgs(x).length>0&&hasPrice(x)&&x.newPrice>0)});
       S.hitLimit=snap.size>=S.limit; S.loading=false;S.slow=false;
+      if(!S.topUp&&S.limit<PAGE){ S.topUp=1; setTimeout(function(){ if(S.limit<PAGE){ S.limit=PAGE; subscribeDeals() } },4000) }
       pinXMerge(); loadPinX();
       if(typeof S.todayN!=='number') loadTodayCount();
       if(!S.ounsub) { try{ subscribeOutfits() }catch(e){} }
@@ -5016,7 +5024,8 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
     try{S.admin=!!(user&&user.canEdit&&user.canEdit())}catch(e){S.admin=false}
     if(S.hosted){
       window.NESAM.onAuth(function(isAdmin,info){
-        var was=S.admin; S.admin=!!isAdmin; S._au=true;
+        var was=S.admin; S.admin=!!isAdmin; S._au=true; lsSet('nesam-admdev',S.admin?'1':'0');
+        if(S.admin&&S.dcSub) S.dcSub(true);
         if(S.admin&&!was){ toast('வணக்கம்! 🛠️ அட்மின் பட்டன் மேல இருக்கு'); if(!S.cleaned&&!S.loading){S.cleaned=true;cleanupOld();} }
         if(!S.admin&&S.view==='seller'){ location.hash='home'; }
         route();
@@ -5029,7 +5038,9 @@ details.more>summary{min-height:48px;display:flex;align-items:center;font-weight
       if(!(S.view==='seller'&&S.stab!=='list'&&S.stab!=='dash')) render(); else renderChrome();
     },function(){ S.setReady=true });
     subscribeDeals();
-    try{ db.collection('dcount').onSnapshot(function(sn){ var m={}; sn.docs.forEach(function(x){m[x.id]=x.data()||{}}); S.dc=m; dcPaint(); },function(){}) }catch(e){}
+    S.dcLive=false;
+    function dcSub(live){ try{ var cb=function(sn){ var m={}; sn.docs.forEach(function(x){m[x.id]=x.data()||{}}); S.dc=m; dcPaint(); }; if(live){ if(!S.dcLive){ S.dcLive=true; db.collection('dcount').onSnapshot(cb,function(){}) } } else db.collection('dcount').get().then(cb).catch(function(){}) }catch(e){} }
+    S.dcSub=dcSub; dcSub(false);
     try{ db.collection('reacts').onSnapshot(function(sn){ var m={}; sn.docs.forEach(function(x){m[x.id]=x.data()||{}}); S.reacts=m; rxPaint() },function(){}) }catch(e){}
     try{ db.collection('promos').onSnapshot(function(sn){ S.promos=sn.docs.map(function(x){var o=x.data()||{};o.id=x.id;return o}); updatePdot(); if(S.view==='seller'){ if(S.stab==='promo') prPaintList() } else if(S.tab==='promo'&&!S.focus) render() },function(){}) }catch(e){}
     route();
